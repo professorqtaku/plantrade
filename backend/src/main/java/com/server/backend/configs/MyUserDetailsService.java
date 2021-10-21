@@ -23,7 +23,11 @@ public class MyUserDetailsService implements UserDetailsService {
     @PostConstruct
     private void createDefaultUsers(){
         if (userRepository.findByUsername("user") == null) {
-            addUser(new User("user", "password"));
+            User user = User.builder()
+                    .username("user")
+                    .password("password")
+                    .build();
+            addUser(user);
         }
     }
 
