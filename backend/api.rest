@@ -1,6 +1,10 @@
 ### USERS
 
 ### AUCTIONS
+GET http://localhost:4000/rest/auctions
+
+###
+GET http://localhost:4000/rest/auctions/1
 
 
 
