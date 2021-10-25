@@ -24,7 +24,7 @@ public class Message {
     private User writer;
 
     private String message;
-    private Date createDate;
+    private Date createdDate;
     @Column(name="is_read", columnDefinition = "BOOLEAN", nullable=false)
     private Boolean isRead;
 
