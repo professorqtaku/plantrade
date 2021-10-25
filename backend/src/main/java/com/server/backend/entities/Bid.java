@@ -15,9 +15,8 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class Bid {
-
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;
 
   @ManyToOne

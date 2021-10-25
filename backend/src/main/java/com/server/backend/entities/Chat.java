@@ -11,14 +11,14 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name="chats")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class Chat {
-
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     // connection to User.chats (one user has many chats, one chat = one creator || one receiver)

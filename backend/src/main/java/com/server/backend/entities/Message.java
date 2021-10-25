@@ -10,13 +10,14 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name="messages")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class Message {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne
