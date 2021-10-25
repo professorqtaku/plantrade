@@ -30,6 +30,7 @@ public class Auction {
     @ManyToOne
     private User host;
 
+/*
   @ManyToMany(cascade = CascadeType.DETACH)
   @JoinTable(
         name = "AuctionXCategory",
@@ -68,6 +69,7 @@ public class Auction {
         bids.remove(bid);
     }
 
+*/
 
 
 
