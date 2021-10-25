@@ -1,15 +1,15 @@
 package com.server.backend.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -22,7 +22,20 @@ public class User {
     private Long id;
 
     private String username;
+    private String email;
     private String password;
+
+//    @OneToMany(mappedBy = "chat", fetch = FetchType.LAZY)
+//    @JsonIncludeProperties({"id"})
+//    private List<Chat> chats;
+
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+//    @JoinTable(
+//            name="won_auctions",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "auction_id")
+//    )
+//    private List<Auction> wonAuctions;
 
 
     @JsonIgnore
@@ -34,6 +47,14 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+//    public void addChat(Chat chat) {
+//        this.chats.add(chat);
+//    }
+
+//    public void addWonAuction(Auction auction) {
+//        this.wonAuctions.add(auction);
+//    }
 
 
 }
