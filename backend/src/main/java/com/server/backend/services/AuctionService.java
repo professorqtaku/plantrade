@@ -14,7 +14,7 @@ public class AuctionService {
     @Autowired
     private AuctionRepository auctionRepository;
 
-    public void createAuction(Auction auction){
+    public Auction createAuction(Auction auction){
         Date date = new Date();
         var inputDate = auction.getEndDate().getTime();
         Long oneDayinMillis = date.getTime() + 86400000;
@@ -24,7 +24,7 @@ public class AuctionService {
 
         }
 
-        //auction.setStatus(Status.OPEN);
-        //auctionRepository.save(auction);
+        auction.setStatus(Status.OPEN);
+        return auctionRepository.save(auction);
     }
 }

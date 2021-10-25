@@ -16,5 +16,5 @@ public class AuctionController {
     private AuctionService auctionService;
 
     @PostMapping("/auctions")
-    public void createAuction(@RequestBody Auction auction){ auctionService.createAuction(auction); }
+    public Auction createAuction(@RequestBody Auction auction){ return auctionService.createAuction(auction); }
 }
