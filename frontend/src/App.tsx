@@ -1,18 +1,24 @@
-import { useState } from 'react'
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import './App.css'
+import AuctionProvider from "./contexts/AuctionContext";
+import AuctionListPage from './pages/AuctionListPage';
+import HomePage from './pages/HomePage';
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <div className="App">
-      <Router>
-        <header className="App-header">
-        </header>
-        <main>
-        </main>
-      </Router>
+      <AuctionProvider>
+        <Router>
+          <header className="App-header">
+          </header>
+          <main>
+            {/* temporary path */}
+            <Route exact path="/" component={HomePage} />
+            <Route exact path="/auctions" component={AuctionListPage} />
+          </main>
+        </Router>
+      </AuctionProvider>
     </div>
   )
 }
