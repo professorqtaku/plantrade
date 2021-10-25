@@ -21,8 +21,13 @@ public class Auction {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(nullable = false)
     private String title;
+
+    @Column(nullable = false)
     private String description;
+
+    @Column(nullable = false)
     private Integer startPrice;
     private Status status;
     private Date endDate;
@@ -30,6 +35,7 @@ public class Auction {
     @ManyToOne
     private User host;
 
+/*
   @ManyToMany(cascade = CascadeType.DETACH)
   @JoinTable(
         name = "AuctionXCategory",
@@ -68,6 +74,7 @@ public class Auction {
         bids.remove(bid);
     }
 
+*/
 
 
 
