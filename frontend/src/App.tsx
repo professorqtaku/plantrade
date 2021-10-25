@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import './App.css'
-import AuctionProvider from "./Kontext/AuctionContext";
+import AuctionProvider from "./Contexts/AuctionContext";
 import AllRoutes from './Router/AllRoutes';
 
 function App() {
