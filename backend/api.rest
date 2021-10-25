@@ -28,11 +28,21 @@ DELETE http://localhost:4000/api/logout
 
 
 ### AUCTIONS
+### Get all auctions
+GET http://localhost:4000/rest/auctions
+
+### Get auctions by id
+GET http://localhost:4000/rest/auctions/7
+
+### Get current users auctions
+GET http://localhost:4000/rest/auctions/user
+
+###
 POST http://localhost:4000/rest/auctions
 Content-Type: application/json
 
 {
-  "title": "Test",
+  "title": "Test4",
   "description": "Test",
   "startPrice": 1000,
   "endDate": 1637934097000
