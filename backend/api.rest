@@ -1,5 +1,14 @@
 ### USERS
 
+POST http://localhost:4000/api/register
+Content-Type: application/json
+
+{
+  "username": "postila",
+  "email": "postila@haha.se",
+  "password": 123
+}
+
 ### AUCTIONS
 
 
