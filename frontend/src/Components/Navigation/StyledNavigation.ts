@@ -15,7 +15,7 @@ export const StyledAppBar = styled(AppBar)`
   bottom: 0;
   width: 100%;
   background: #122522;
-  max-height: 4rem;          
+  max-height: 4rem;
 `;
 
 export const StyledIconWrapper = styled.div`
@@ -39,20 +39,25 @@ export const StyledInnerWrapper = styled.div<NavProps>`
 
 export const StyledHomeIcon = styled(HomeIcon)<NavProps>`
   color: ${(props) => props.selected && "#FFE600"};
+  cursor: pointer;
 `;
 
 export const StyledHammerIcon = styled(GavelIcon)<NavProps>`
   color: ${(props) => props.selected && "#FFE600"};
+  cursor: pointer;
 `;
 
 export const StyledNotisIcon = styled(NotificationsIcon)<NavProps>`
   color: ${(props) => props.selected && "#FFE600"};
+  cursor: pointer;
 `;
 
 export const StyledMsgIcon = styled(EmailIcon)<NavProps>`
   color: ${(props) => props.selected && "#FFE600"};
+  cursor: pointer;
 `;
 
 export const StyledAccountIcon = styled(AccountBoxIcon)<NavProps>`
   color: ${(props) => props.selected && "#FFE600"};
+  cursor: pointer;
 `;

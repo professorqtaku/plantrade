@@ -6,10 +6,10 @@ function App() {
   const [count, setCount] = useState(0);
 
   return (
-    <div className="App" style={{minHeight: "100vh"}}>
+    <div className="App" style={{ minHeight: "100vh" }}>
       <Router>
-        {/* <header className="App-header"></header>
-        <main></main> */}
+        <header className="App-header"></header>
+        <main></main>
         <Navigation />
       </Router>
     </div>
