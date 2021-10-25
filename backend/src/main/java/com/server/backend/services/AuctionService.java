@@ -23,13 +23,14 @@ public class AuctionService {
     public Optional<Auction> getAuctionById(long id) {
         return auctionRepository.findById(id);
     }
-    public Auction createAuction(Auction auction){ return auctionRepository.save(auction); }
 
     public List<Auction> getAuctionsByCurrentUser(User user) {
+
         return auctionRepository.findByHost(user);
     }
-    public Auction createAuction(Auction auction){
+    public Auction createAuction(Auction auction, User user){
         auction.setStatus(Status.OPEN);
+        auction.setHost(user);
         return auctionRepository.save(auction);
     }
 }

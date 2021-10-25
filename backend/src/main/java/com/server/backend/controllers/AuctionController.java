@@ -47,7 +47,19 @@ public class AuctionController {
     }
 
     @PostMapping
-    public Auction createAuction(@RequestBody Auction auction){ return auctionService.createAuction(auction); }
+    public ResponseEntity<Auction> createAuction(@RequestBody Auction auction){
+        var user = userService.findCurrentUser();
+        if(user != null) {
+            Auction savedAuction = auctionService.createAuction(auction, user);
+            if(savedAuction != null) {
+                return ResponseEntity.ok(savedAuction);
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
     
     @GetMapping("/user")
     public ResponseEntity<List<Auction>> getAuctionsByCurrentUser() {
