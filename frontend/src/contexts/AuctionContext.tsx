@@ -11,9 +11,18 @@ export const useAuction = () => useContext(AuctionContext);
 const AuctionProvider = ({ children }: any) => {
   const [auctions, setAuctions] = useState(defaultState.auctions);
 
+  const getAllAuctions = async () => {
+    let res: Response = await fetch('/rest/auctions');
+    let newAuctions = await res.json();
+    setAuctions(newAuctions);
+    return newAuctions;
+  }
+
+
   const values = {
     auctions,
-    setAuctions
+    setAuctions,
+    getAllAuctions
   }
 
   return (
