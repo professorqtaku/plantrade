@@ -21,4 +21,5 @@ public class AuctionService {
     public Optional<Auction> getAuctionById(long id) {
         return auctionRepository.findById(id);
     }
+    public Auction createAuction(Auction auction){ return auctionRepository.save(auction); }
 }

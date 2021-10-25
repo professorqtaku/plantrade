@@ -1,18 +1,18 @@
-import { useState } from 'react'
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import './App.css'
+import AllContextProviders from './Contexts/AllContextProviders';
 import AllRoutes from './Router/AllRoutes';
+import Navigation from './Components/Navigation/Navigation';
 
 function App() {
 
   return (
     <div className="App">
- 
-      <AllRoutes>
-      {/* nav */}
-      </AllRoutes>
+      <AllContextProviders>
+        <AllRoutes>
+          <Navigation/>
+        </AllRoutes>
+      </AllContextProviders>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

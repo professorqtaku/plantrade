@@ -30,44 +30,46 @@ public class Auction {
     @ManyToOne
     private User host;
 
-//    @ManyToMany(cascade = CascadeType.DETACH)
-//    @JoinTable(
-//            name = "AuctionXCategory",
-//            joinColumns = @JoinColumn(name = "auction_id"),
-//            inverseJoinColumns = @JoinColumn(name = "category_id")
-//    )
-//    private List<Category> categories;
+/*
+  @ManyToMany(cascade = CascadeType.DETACH)
+  @JoinTable(
+        name = "AuctionXCategory",
+        joinColumns = @JoinColumn(name = "auction_id"),
+        inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private List<Category> categories;
 
-//    @OneToMany(mappedBy = "auction_id", cascade = CascadeType.REMOVE)
-//    private List<Bid> bids;
+    @OneToMany(mappedBy = "auction_id", cascade = CascadeType.REMOVE)
+   private List<Bid> bids;
 
-//    @OneToMany(mappedBy = "auction", cascade = CascadeType.REMOVE)
-//    private List<Image> images;
+    @OneToMany(mappedBy = "auction", cascade = CascadeType.REMOVE)
+    private List<Image> images;
 
-//    public void addCategory(Category category) {
-//        categories.add(category);
-//    }
-//
-//    public void removeCategory(Category category) {
-//        categories.remove(category);
-//    }
-//
-//    public void addImage(Image image) {
-//        images.add(image);
-//    }
+    public void addCategory(Category category) {
+        categories.add(category);
+   }
 
-//    public void removeImage(Image image) {
-//        images.remove(image);
-//    }
+    public void removeCategory(Category category) {
+        categories.remove(category);
+    }
 
-//    public void addBid(Bid bid) {
-//        bids.add(bid);
-//    }
-//
-//    public void removeBid(Bid bid) {
-//        bids.remove(bid);
-//    }
+    public void addImage(Image image) {
+        images.add(image);
+    }
 
+    public void removeImage(Image image) {
+        images.remove(image);
+    }
+
+    public void addBid(Bid bid) {
+        bids.add(bid);
+    }
+
+    public void removeBid(Bid bid) {
+        bids.remove(bid);
+    }
+
+*/
 
 
 

@@ -9,9 +9,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/rest/auctions")
+@RequestMapping("/rest")
 public class AuctionController {
 
     @Autowired
@@ -37,4 +41,6 @@ public class AuctionController {
         }
     }
 
+    @PostMapping("/auctions")
+    public Auction createAuction(@RequestBody Auction auction){ return auctionService.createAuction(auction); }
 }
