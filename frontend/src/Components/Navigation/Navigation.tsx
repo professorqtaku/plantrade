@@ -70,7 +70,7 @@ const Navigation = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <StyledAppBar>{renderIcons()}</StyledAppBar>
+      <StyledAppBar position="static">{renderIcons()}</StyledAppBar>
     </Box>
   );
 };

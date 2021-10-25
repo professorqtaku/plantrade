@@ -11,10 +11,11 @@ interface NavProps {
 }
 
 export const StyledAppBar = styled(AppBar)`
-  position: absolute;
-  top: 93.5%;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
   background: #122522;
-  max-height: 4rem;
+  max-height: 4rem;          
 `;
 
 export const StyledIconWrapper = styled.div`
@@ -26,7 +27,7 @@ export const StyledIconWrapper = styled.div`
 `;
 
 export const StyledInnerWrapper = styled.div<NavProps>`
-  margin-top: ${(props) => props.selected && "1.5rem"};
+  margin-bottom: ${(props) => props.selected && "1.5rem"};
   display: grid;
   align-items: center;
   justify-items: center;
