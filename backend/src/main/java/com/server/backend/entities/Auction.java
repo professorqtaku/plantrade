@@ -16,14 +16,13 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class Auction {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String title;
     private String description;
-    private Integer startPrice;
+    private double startPrice;
     private Status status;
     private Date endDate;
 
