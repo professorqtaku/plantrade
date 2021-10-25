@@ -20,5 +20,8 @@ public class Notification {
     private String message;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private User userId;
+    private User user;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Auction auction;
 }
