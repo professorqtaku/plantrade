@@ -6,7 +6,7 @@ import CardContent from "@mui/material/CardContent";
 export const StyledCard = styled(Card)`
   max-width: 90%;
   height: 25vh;
-  margin: 0 auto;
+  margin: 1rem auto;
   display: grid;
   grid-template-columns: 35% 1fr;
 `;
