@@ -1,3 +1,4 @@
+import AllContextProviders from './Contexts/AllContextProviders';
 import AllRoutes from './Router/AllRoutes';
 import Navigation from './Components/Navigation/Navigation';
 
@@ -5,10 +6,11 @@ function App() {
 
   return (
     <div className="App">
- 
-      <AllRoutes>
-        <Navigation/>
-      </AllRoutes>
+      <AllContextProviders>
+        <AllRoutes>
+          <Navigation/>
+        </AllRoutes>
+      </AllContextProviders>
     </div>
   );
 }
