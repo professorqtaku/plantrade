@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import AuctionPage from "../Pages/AuctionPage/AuctionPage";
 import HomePage from "../Pages/HomePage/HomePage";
+import MyPage from "../Pages/MyPage/MyPage";
 
 interface Props {
   children: JSX.Element[]
@@ -14,6 +15,7 @@ const AllRoutes: React.FC<Props> = ({children}) => {
       <Switch>
         <Route path="/" exact={true} component={HomePage} />
         <Route path="/auctions" exact={true} component={AuctionPage} />
+        <Route path="/myPage" exact={true} component={MyPage}/>
       </Switch>
     </Router>
   );
