@@ -7,16 +7,14 @@ import AuctionCard from "../../Components/AuctionCard/AuctionCard";
 import { AuctionContext } from "../../Contexts/AuctionContext";
 import { useContext, useEffect } from "react";
 
-
-
-interface Host {
+export interface Host {
   id: number;
   username: String;
-  email: String
+  email: String;
   password: String;
 }
 
-interface Auction {
+export interface Auction {
   id: number;
   title: String;
   description: String;
@@ -41,7 +39,8 @@ const AuctionPage = () => {
     <StyledWrapper>
       <StyledImg src="https://i.pinimg.com/564x/63/5e/b1/635eb177eef29242e96352f1206298da.jpg" />
       <StyledContentWrapper>
-        {auctions && auctions.map((auction: Auction) => <AuctionCard />)}
+        {auctions &&
+          auctions.map((auction: Auction) => <AuctionCard auction={auction} />)}
       </StyledContentWrapper>
     </StyledWrapper>
   );

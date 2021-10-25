@@ -7,8 +7,13 @@ import {
   StyledButton,
   StyledCardContent,
 } from "./StyledAuctionCard";
+import { Auction } from "../../Pages/AuctionPage/AuctionPage";
 
-const AuctionCard = () => {
+interface Props {
+  auction: Auction;
+}
+
+const AuctionCard = ({ auction }: Props) => {
   return (
     <StyledCard>
       <StyledImg src="https://i.pinimg.com/564x/9e/8b/dc/9e8bdc74df3cb2f87fae194a18ba569a.jpg" />
