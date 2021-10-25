@@ -21,6 +21,10 @@ public class Chat {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIncludeProperties({"id"})
+    private Auction auction;
+
     // connection to User.chats (one user has many chats, one chat = one creator || one receiver)
     @ManyToOne(fetch = FetchType.EAGER)
     @JsonIncludeProperties({"id", "username"})
