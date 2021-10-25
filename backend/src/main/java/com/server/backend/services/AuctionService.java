@@ -14,7 +14,7 @@ public class AuctionService {
     @Autowired
     private AuctionRepository auctionRepository;
 
-    public List<Auction> getAuctions() {
+    public List<Auction> getAllAuctions() {
         return auctionRepository.findAll();
     }
 

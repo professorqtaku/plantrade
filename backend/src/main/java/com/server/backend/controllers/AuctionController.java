@@ -19,7 +19,7 @@ public class AuctionController {
 
     @GetMapping
     public ResponseEntity<List<Auction>> getAllAuctions() {
-        List<Auction> auctions = auctionService.getAuctions();
+        List<Auction> auctions = auctionService.getAllAuctions();
         if(auctions.size() > 0) {
             return ResponseEntity.ok(auctions);
         } else {
