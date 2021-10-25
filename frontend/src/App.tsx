@@ -9,7 +9,7 @@ function App() {
     <div className="App">
  
       <AllRoutes>
-        {/* Navbar goes here. */}
+      {/* nav */}
       </AllRoutes>
     </div>
   )
