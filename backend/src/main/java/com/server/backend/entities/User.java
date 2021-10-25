@@ -21,26 +21,15 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
 
     private String username;
     private String email;
     private String password;
 
-    @OneToMany(mappedBy ="creator", fetch = FetchType.EAGER) // connects relation to the chat list of creators
-    @JsonIgnoreProperties({"creator", "receiver"})
-    private List<Chat> chats;
-//    @OneToMany(mappedBy = "chat", fetch = FetchType.LAZY)
-//    @JsonIncludeProperties({"id"})
-//    private List<Chat> chats;
-
-//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
-//    @JoinTable(
-//            name="won_auctions",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "auction_id")
-//    )
-//    private List<Auction> wonAuctions;
+    @OneToMany(mappedBy = "winner", fetch = FetchType.LAZY)
+    @JsonIncludeProperties({"id"})
+    private List<Auction> wonAuctions;
 
 
     @JsonIgnore
@@ -53,13 +42,7 @@ public class User {
         this.password = password;
     }
 
-//    public void addChat(Chat chat) {
-//        this.chats.add(chat);
-//    }
-
-//    public void addWonAuction(Auction auction) {
-//        this.wonAuctions.add(auction);
-//    }
-
-
+    public void addWonAuction(Auction auction) {
+        this.wonAuctions.add(auction);
+    }
 }
