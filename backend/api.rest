@@ -4,12 +4,48 @@ POST http://localhost:4000/api/register
 Content-Type: application/json
 
 {
-  "username": "postila",
-  "email": "postila@haha.se",
+  "username": "rebbe",
+  "email": "rebbe@haha.se",
   "password": 123
 }
 
+### 
+GET http://localhost:4000/api/whoami
+
+### 
+POST http://localhost:4000/api/login
+Content-Type: application/json
+
+{
+  "id": 5,
+  "username": "rebbe",
+  "email": "rebbe@haha.se",
+  "password": 123
+}
+
+###
+DELETE http://localhost:4000/api/logout
+
+
 ### AUCTIONS
+### Get all auctions
+GET http://localhost:4000/rest/auctions
 
+### Get auctions by id
+GET http://localhost:4000/rest/auctions/7
 
+### Get current users auctions
+GET http://localhost:4000/rest/auctions/user
 
+###
+POST http://localhost:4000/rest/auctions
+Content-Type: application/json
+
+{
+  "title": "Test4",
+  "description": "Test",
+  "startPrice": 1000,
+  "endDate": 1637843777000
+}
+
+###
