@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const StyledWrapper = styled.div`
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 25vh 1fr;
 `;
 
 export const StyledImg = styled.img`
@@ -12,5 +12,5 @@ export const StyledImg = styled.img`
 `;
 
 export const StyledContentWrapper = styled.div`
-
+  margin: 0 auto;
 `;
