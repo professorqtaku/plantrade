@@ -10,8 +10,12 @@ import {
   StyledAccountIcon,
 } from "./StyledNavigation";
 import { useState } from "react";
+import { useHistory } from "react-router";
 
 const Navigation = () => {
+
+  const history = useHistory();
+
   const [selected1, setSelected1] = useState(false);
   const [selected2, setSelected2] = useState(false);
   const [selected3, setSelected3] = useState(false);
@@ -19,7 +23,8 @@ const Navigation = () => {
   const [selected5, setSelected5] = useState(false);
 
   const handleSelect = (
-    select: React.Dispatch<React.SetStateAction<boolean>>
+    select: React.Dispatch<React.SetStateAction<boolean>>,
+    url?: string
   ) => {
     setSelected1(false);
     setSelected2(false);
@@ -27,6 +32,8 @@ const Navigation = () => {
     setSelected4(false);
     setSelected5(false);
     select(true);
+
+    url && history.push(url);
   };
 
   const renderIcons = () => (
@@ -34,14 +41,14 @@ const Navigation = () => {
       <StyledInnerWrapper selected={selected1}>
         <StyledHomeIcon
           selected={selected1}
-          onClick={() => handleSelect(setSelected1)}
+          onClick={() => handleSelect(setSelected1, "/")}
         />
       </StyledInnerWrapper>
 
       <StyledInnerWrapper selected={selected2}>
         <StyledHammerIcon
           selected={selected2}
-          onClick={() => handleSelect(setSelected2)}
+          onClick={() => handleSelect(setSelected2, "/auctions")}
         />
       </StyledInnerWrapper>
 
@@ -62,7 +69,7 @@ const Navigation = () => {
       <StyledInnerWrapper selected={selected5}>
         <StyledAccountIcon
           selected={selected5}
-          onClick={() => handleSelect(setSelected5)}
+          onClick={() => handleSelect(setSelected5, "/myPage")}
         />
       </StyledInnerWrapper>
     </StyledIconWrapper>

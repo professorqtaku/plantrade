@@ -1,7 +1,5 @@
-import { useState } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import './App.css'
 import AllRoutes from './Router/AllRoutes';
+import Navigation from './Components/Navigation/Navigation';
 
 function App() {
 
@@ -9,7 +7,7 @@ function App() {
     <div className="App">
  
       <AllRoutes>
-      {/* nav */}
+        <Navigation/>
       </AllRoutes>
     </div>
   );
