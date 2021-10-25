@@ -16,9 +16,10 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class Auction {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
 
     private String title;
     private String description;
@@ -29,23 +30,23 @@ public class Auction {
     @ManyToOne
     private User host;
 
-  @ManyToMany(cascade = CascadeType.DETACH)
-  @JoinTable(
-        name = "AuctionXCategory",
-        joinColumns = @JoinColumn(name = "auction_id"),
-        inverseJoinColumns = @JoinColumn(name = "category_id")
+    @ManyToMany(cascade = CascadeType.DETACH)
+    @JoinTable(
+            name = "AuctionXCategory",
+            joinColumns = @JoinColumn(name = "auction_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     private List<Category> categories;
 
-    @OneToMany(mappedBy = "auction_id", cascade = CascadeType.REMOVE)
-   private List<Bid> bids;
+    @OneToMany(mappedBy = "auction", cascade = CascadeType.REMOVE)
+    private List<Bid> bids;
 
     @OneToMany(mappedBy = "auction", cascade = CascadeType.REMOVE)
     private List<Image> images;
 
     public void addCategory(Category category) {
         categories.add(category);
-   }
+    }
 
     public void removeCategory(Category category) {
         categories.remove(category);
@@ -66,9 +67,5 @@ public class Auction {
     public void removeBid(Bid bid) {
         bids.remove(bid);
     }
-
-
-
-
 
 }
