@@ -1,6 +1,41 @@
 ### USERS
 
+POST http://localhost:4000/api/register
+Content-Type: application/json
+
+{
+  "username": "rebbe",
+  "email": "rebbe@haha.se",
+  "password": 123
+}
+
+### 
+GET http://localhost:4000/api/whoami
+
+### 
+POST http://localhost:4000/api/login
+Content-Type: application/json
+
+{
+  "id": 5,
+  "username": "rebbe",
+  "email": "rebbe@haha.se",
+  "password": 123
+}
+
+###
+DELETE http://localhost:4000/api/logout
+
+
 ### AUCTIONS
+POST http://localhost:4000/rest/auctions
+Content-Type: application/json
 
+{
+  "title": "Test",
+  "description": "Test",
+  "startPrice": 1000,
+  "endDate": 1637843777000
+}
 
-
+###
