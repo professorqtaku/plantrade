@@ -1,0 +1,34 @@
+package com.server.backend.entities;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.util.Date;
+
+@Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class Message {
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    // should be also some connection ?
+    private Long writerId;
+
+    private String message;
+    private Date createDate;
+    @Column(name="is_read", columnDefinition = "BOOLEAN", nullable=false)
+    private Boolean isRead;
+
+//    private Long chatId;
+    @OneToOne(fetch = FetchType.EAGER) // connects relation to the chat list of messages
+    @JsonIgnoreProperties("messages")
+    private Chat chat;
+}
