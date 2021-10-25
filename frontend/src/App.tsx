@@ -1,7 +1,6 @@
-import './App.css'
-import AllRoutes from './Router/AllRoutes';
-// import Navigation from './Components/Navigation/Navigation';
 import AllContextProviders from './Contexts/AllContextProviders';
+import AllRoutes from './Router/AllRoutes';
+import Navigation from './Components/Navigation/Navigation';
 
 function App() {
 
@@ -9,11 +8,11 @@ function App() {
     <div className="App">
       <AllContextProviders>
         <AllRoutes>
-          {/* <Navigation/> */}
+          <Navigation/>
         </AllRoutes>
       </AllContextProviders>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
