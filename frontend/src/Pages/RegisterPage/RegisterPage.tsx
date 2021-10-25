@@ -1,11 +1,15 @@
-import { Ref } from "react";
-import { RefObject } from "react";
-import { MutableRefObject } from "react";
-import { useRef } from "react";
+import { useRef, useContext} from "react";
 import { StyledWrapper } from "./StyledRegisterPage";
-
+import { AuthContext } from "../../Contexts/AuthContextProvider"
+interface User {
+  username: string,
+  email: string,
+  password: string
+}
 
 const RegisterPage = () => {
+
+  const { registerUser } = useContext(AuthContext);
 
   const usernameRef = useRef<any>();
   const emailRef = useRef<any>();
@@ -14,10 +18,14 @@ const RegisterPage = () => {
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
  
-    const user = {
-
+    const userObject: User = {
+      username: usernameRef.current.value,
+      email: emailRef.current.value,
+      password: passwordRef.current.value
     }
-    // Create user-object and call on the register func from AuthContext.
+
+    console.log(userObject ,'obj?')
+    // registerUser(userObject);
   }
 
   return (

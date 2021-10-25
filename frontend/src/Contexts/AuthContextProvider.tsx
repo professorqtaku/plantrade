@@ -9,10 +9,9 @@ type User = {
   email: string,
   password: string
 }
-
+export const AuthContext = createContext<any>(null);
+  
 export const AuthProvider: React.FC<Props> = ({children}) => {
-
-  const AuthContext = createContext<any>(null);
 
   const [user, setUser] = useState({});
   
