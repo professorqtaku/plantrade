@@ -1,20 +1,18 @@
-import { useState } from 'react'
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import './App.css'
+import AllContextProviders from './Contexts/AllContextProviders';
+import AllRoutes from './Router/AllRoutes';
+import Navigation from './Components/Navigation/Navigation';
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <div className="App">
-      <Router>
-        <header className="App-header">
-        </header>
-        <main>
-        </main>
-      </Router>
+      <AllContextProviders>
+        <AllRoutes>
+          <Navigation/>
+        </AllRoutes>
+      </AllContextProviders>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
