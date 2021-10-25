@@ -1,6 +1,8 @@
-import { useRef, useContext} from "react";
+import { useRef, useContext } from "react";
+import { useHistory } from "react-router-dom";
+import { AuthContext } from "../../Contexts/AuthContextProvider";
 import { StyledWrapper } from "./StyledRegisterPage";
-import { AuthContext } from "../../Contexts/AuthContextProvider"
+
 interface User {
   username: string,
   email: string,
@@ -9,13 +11,13 @@ interface User {
 
 const RegisterPage = () => {
 
-  const { registerUser } = useContext(AuthContext);
-
+  const { registerUser } = useContext(AuthContext)
+  const history = useHistory();
   const usernameRef = useRef<any>();
   const emailRef = useRef<any>();
   const passwordRef = useRef<any>();
 
-  const handleRegister = (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
  
     const userObject: User = {
@@ -24,19 +26,19 @@ const RegisterPage = () => {
       password: passwordRef.current.value
     }
 
-    console.log(userObject ,'obj?')
-    // registerUser(userObject);
+
+    await registerUser(userObject);
+    // history.push('/');
   }
 
   return (
     <StyledWrapper>
       <h3>Register Page</h3>
-
       <form onSubmit={(e) => handleRegister(e)}>
 
         <input ref={usernameRef} type="text" placeholder="Username" />
-        <input ref={emailRef} type="text" placeholder="Email" />
-        <input ref={passwordRef} type="text" placeholder="Password" />
+        <input ref={emailRef} type="email" placeholder="Email" />
+        <input ref={passwordRef} type="password" placeholder="Password" />
 
         <button>Skapa Konto</button>
       </form>

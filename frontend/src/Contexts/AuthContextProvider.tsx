@@ -1,4 +1,4 @@
-import { createContext, useContext, useState} from "react";
+import { createContext, useState} from "react";
 
 interface Props {
   children?: JSX.Element
@@ -11,7 +11,7 @@ type User = {
 }
 export const AuthContext = createContext<any>(null);
   
-export const AuthProvider: React.FC<Props> = ({children}) => {
+export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
 
   const [user, setUser] = useState({});
   

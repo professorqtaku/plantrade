@@ -1,4 +1,5 @@
 import AuctionProvider from "./AuctionContext";
+import { AuthProvider } from "./AuthContextProvider";
 import ModalProvider from "./ModalContext";
 
 interface Props {
@@ -8,11 +9,13 @@ interface Props {
 const AllContextProviders: React.FC<Props> = ({ children }) => {
   return (
     <>
-      <AuctionProvider>
+      <AuthProvider>
+        <AuctionProvider>
           <ModalProvider>
             {children}
           </ModalProvider>
-      </AuctionProvider>
+        </AuctionProvider>
+      </AuthProvider>
     </>
   );
 };
