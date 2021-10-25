@@ -1,17 +1,17 @@
-import { BrowserRouter as Router, Route } from "react-router-dom";
 import './App.css'
-import AuctionProvider from "./Contexts/AuctionContext";
 import AllRoutes from './Router/AllRoutes';
+// import Navigation from './Components/Navigation/Navigation';
+import AllContextProviders from './Contexts/AllContextProviders';
 
 function App() {
 
   return (
     <div className="App">
-      <AuctionProvider>
+      <AllContextProviders>
         <AllRoutes>
-        {/* nav */}
+          {/* <Navigation/> */}
         </AllRoutes>
-      </AuctionProvider>
+      </AllContextProviders>
     </div>
   )
 }
