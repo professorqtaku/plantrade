@@ -9,13 +9,8 @@ import java.awt.*;
 import java.util.Date;
 import java.util.List;
 
-enum Status {
-    OPEN,
-    NOT_SOLD,
-    SOLD
-}
-
 @Entity
+@Table(name="auctions")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,26 +27,26 @@ public class Auction {
     private Status status;
     private Date endDate;
 
-    @OneToOne(mappedBy = "user_id")
+    @ManyToOne
     private User host;
 
-    @ManyToMany(cascade = CascadeType.DETACH)
-    @JoinTable(
-            name = "AuctionXCategory",
-            joinColumns = @JoinColumn(name = "auction_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id")
+  @ManyToMany(cascade = CascadeType.DETACH)
+  @JoinTable(
+        name = "AuctionXCategory",
+        joinColumns = @JoinColumn(name = "auction_id"),
+        inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     private List<Category> categories;
 
     @OneToMany(mappedBy = "auction_id", cascade = CascadeType.REMOVE)
-    private List<Bid> bids;
+   private List<Bid> bids;
 
-    @OneToMany(mappedBy = "auction_id", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "auction", cascade = CascadeType.REMOVE)
     private List<Image> images;
 
     public void addCategory(Category category) {
         categories.add(category);
-    }
+   }
 
     public void removeCategory(Category category) {
         categories.remove(category);
