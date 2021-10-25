@@ -1,6 +1,14 @@
 ### USERS
 
 ### AUCTIONS
+POST http://localhost:4000/rest/auctions
+Content-Type: application/json
 
+{
+  "title": "Test",
+  "description": "Test",
+  "startPrice": 1000,
+  "endDate": 1637843777000
+}
 
-
+###
