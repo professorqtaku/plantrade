@@ -1,5 +1,6 @@
 package com.server.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jdk.jfr.Category;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
@@ -28,7 +29,12 @@ public class Auction {
     private Date endDate;
 
     @ManyToOne
+    @JsonIncludeProperties({"id", "username"})
     private User host;
+
+    @ManyToOne
+    @JsonIncludeProperties({"id", "username"})
+    private User winner;
 
     @ManyToMany(cascade = CascadeType.DETACH)
     @JoinTable(
