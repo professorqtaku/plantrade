@@ -19,7 +19,7 @@ import java.util.List;
 public class Chat {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
 
     // connection to User.chats (one user has many chats, one chat = one creator || one receiver)
     @ManyToOne(fetch = FetchType.EAGER)
@@ -29,7 +29,7 @@ public class Chat {
 //    private Auction auction;
 
     // mappedBy="chat" is the variable in the Message class
-    @OneToMany(mappedBy = "chat", fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+    @OneToMany(mappedBy = "chat", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JsonIgnoreProperties({"chat"}) // prevent circular reference between relations
     private List<Message> messages;
 }
