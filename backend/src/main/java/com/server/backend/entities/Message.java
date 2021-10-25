@@ -19,8 +19,8 @@ public class Message {
     @GeneratedValue
     private Long id;
 
-    // should be also some connection ?
-    private Long writerId;
+    @ManyToOne
+    private User writer;
 
     private String message;
     private Date createDate;
