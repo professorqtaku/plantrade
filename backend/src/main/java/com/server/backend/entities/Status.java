@@ -1,6 +1,6 @@
 package com.server.backend.entities;
 
-enum Status {
+public enum Status {
     OPEN,
     NOT_SOLD,
     SOLD
