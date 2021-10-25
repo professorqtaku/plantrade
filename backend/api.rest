@@ -35,7 +35,7 @@ Content-Type: application/json
   "title": "Test",
   "description": "Test",
   "startPrice": 1000,
-  "endDate": 1637843777000
+  "endDate": 1637934097000
 }
 
 ###
