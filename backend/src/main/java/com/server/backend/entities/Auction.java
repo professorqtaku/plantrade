@@ -1,6 +1,6 @@
 package com.server.backend.entities;
 
-import jdk.jfr.Category;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
 
@@ -19,40 +19,45 @@ public class Auction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
 
     @Column(nullable = false)
     private String title;
 
     @Column(nullable = false)
     private String description;
+    private double startPrice;
 
-    @Column(nullable = false)
-    private Integer startPrice;
+    @Enumerated(EnumType.STRING)
+    @Column(name="status", columnDefinition = "TEXT", length=50, nullable=false, unique=false)
     private Status status;
     private Date endDate;
 
     @ManyToOne
+    @JsonIncludeProperties({"id", "username"})
     private User host;
 
-/*
-  @ManyToMany(cascade = CascadeType.DETACH)
-  @JoinTable(
-        name = "AuctionXCategory",
-        joinColumns = @JoinColumn(name = "auction_id"),
-        inverseJoinColumns = @JoinColumn(name = "category_id")
+    @ManyToOne
+    @JsonIncludeProperties({"id", "username"})
+    private User winner;
+
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "auction_x_category",
+            joinColumns = @JoinColumn(name = "auction_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     private List<Category> categories;
 
-    @OneToMany(mappedBy = "auction_id", cascade = CascadeType.REMOVE)
-   private List<Bid> bids;
+    @OneToMany(mappedBy = "auction", cascade = CascadeType.REMOVE)
+    private List<Bid> bids;
 
     @OneToMany(mappedBy = "auction", cascade = CascadeType.REMOVE)
     private List<Image> images;
 
     public void addCategory(Category category) {
         categories.add(category);
-   }
+    }
 
     public void removeCategory(Category category) {
         categories.remove(category);
@@ -73,10 +78,5 @@ public class Auction {
     public void removeBid(Bid bid) {
         bids.remove(bid);
     }
-
-*/
-
-
-
 
 }
