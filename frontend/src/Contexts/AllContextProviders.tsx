@@ -1,4 +1,5 @@
 import AuctionProvider from "./AuctionContext";
+import ModalProvider from "./ModalContext";
 
 interface Props {
   children: JSX.Element;
@@ -8,7 +9,9 @@ const AllContextProviders: React.FC<Props> = ({ children }) => {
   return (
     <>
       <AuctionProvider>
-        {children}
+          <ModalProvider>
+            {children}
+          </ModalProvider>
       </AuctionProvider>
     </>
   );
