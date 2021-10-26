@@ -28,17 +28,22 @@ public class BidService {
     User currentUser =  userRepository.findById((long) (int) values.get("userId")).get();
     Auction currentAuction = auctionRepository.findById((long) (int) values.get("auctionId")).get();
 
-    try{
-      Bid bid = Bid.builder()
-              .user(currentUser)
-              .auction(currentAuction)
-              .price((int) values.get("price"))
-              .createdDate((long) values.get("createdDate"))
-              .build();
+    int index = currentAuction.getBids().size();
+    double oldPrice = currentAuction.getBids().get(index - 1).getPrice();
 
-      return bidRepository.save(bid);
-    } catch(Exception e) {
-      e.printStackTrace();
+    if(oldPrice < (double) (int) values.get("price") || currentAuction.getBids().isEmpty()){
+      try{
+        Bid bid = Bid.builder()
+                .user(currentUser)
+                .auction(currentAuction)
+                .price((int) values.get("price"))
+                .createdDate((long) values.get("createdDate"))
+                .build();
+
+        return bidRepository.save(bid);
+      } catch(Exception e) {
+        e.printStackTrace();
+      }
     }
 
     return null;
