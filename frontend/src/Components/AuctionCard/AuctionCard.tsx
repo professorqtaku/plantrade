@@ -16,10 +16,9 @@ interface Props {
   fetchAuctions: () => Promise<void>;
 }
 
-const AuctionCard = ({ auction }: Props) => {
-  const ONE_DAY_IN_MILLIS = 86400000;
-  const ONE_HOUR_IN_MILLIS = 3600000;
-  const ONE_MINUTE_IN_MILLIS = 60000;
+const ONE_DAY_IN_MILLIS = 86400000;
+const ONE_HOUR_IN_MILLIS = 3600000;
+const ONE_MINUTE_IN_MILLIS = 60000;
 
 const AuctionCard = ({ auction, fetchAuctions }: Props) => {
   const [daysLeft, setDaysLeft] = useState<number | null>(null);
