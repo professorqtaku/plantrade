@@ -40,6 +40,8 @@ public class BidService {
                 .createdDate((long) values.get("createdDate"))
                 .build();
 
+        currentAuction.addBid(bid);
+
         return bidRepository.save(bid);
       } catch(Exception e) {
         e.printStackTrace();
