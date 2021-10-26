@@ -16,7 +16,7 @@ public class BidController {
   @Autowired
   private BidService bidService;
 
-  @PostMapping("/auctions/{id}")
+  @PostMapping("/bid")
   public ResponseEntity<Bid> createBid(@RequestBody Map values) {
     Bid bid = bidService.createBid(values);
     

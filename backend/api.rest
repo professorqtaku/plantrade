@@ -49,7 +49,7 @@ Content-Type: application/json
 }
 
 ### Create Bid on an auction
-POST http://localhost:4000/api/auctions/6
+POST http://localhost:4000/api/bid
 Content-Type: application/json
 
 {
