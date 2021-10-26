@@ -64,31 +64,39 @@ public class AuctionService {
         return auctionRepository.findByHost(user);
     }
 
-    public List<Auction> getAuctionByTitle(String title) {
+    public List<Auction> getAuctionByTitleAndStatus(String title, Status status) {
         try{
             title = URLDecoder.decode(title, StandardCharsets.UTF_8.name());
         } catch (UnsupportedEncodingException e) {
             return null;
         }
         List<String> words = Arrays.asList(title.split(" "));
-        return getAuctionsWhereTitleContainsAnyWord(words);
+        return getAuctionsWhereTitleContainsAnyWord(words, status);
     }
 
-    public List<Auction> getAuctionsWhereTitleContainsAnyWord(List<String> words) {
+    public List<Auction> getAuctionsWhereTitleContainsAnyWord(List<String> words, Status status) {
         if(words.isEmpty()) {
             return Collections.emptyList();
         }
 
-        Specification<Auction> specification = null;
+        Specification<Auction> totalSpecification;
+
+        Specification<Auction> wordSpecification = null;
         for(String word : words) {
-            Specification<Auction> wordSpecification = AuctionSpecification.titleContains(word);
-            if (specification == null) {
-                specification = wordSpecification;
+            Specification<Auction> specification = AuctionSpecification.titleContains(word);
+            if (wordSpecification == null) {
+                wordSpecification = specification;
             } else {
-                specification = specification.or(wordSpecification);
+                wordSpecification = wordSpecification.or(specification);
             }
         }
+        totalSpecification = Specification.where(wordSpecification);
 
-        return auctionRepository.findAll(specification);
+        if (status != null) {
+            Specification<Auction> statusSpecification = AuctionSpecification.hasStatus(status);
+            totalSpecification = totalSpecification.and(statusSpecification);
+        }
+
+        return auctionRepository.findAll(totalSpecification);
     }
 }
