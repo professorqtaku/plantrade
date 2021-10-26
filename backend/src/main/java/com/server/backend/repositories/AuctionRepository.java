@@ -15,7 +15,7 @@ public interface AuctionRepository extends JpaRepository<Auction, Long> {
 
     List<Auction> findByHost(User user);
 
-    List<Auction> findAllByTitle(String title);
+    List<Auction> findAllByTitleContaining(String title);
 
 //    List<Auction> findAllByStatusToUpperCase(String status);
 }
