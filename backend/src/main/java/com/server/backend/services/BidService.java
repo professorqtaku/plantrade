@@ -25,15 +25,22 @@ public class BidService {
   @Autowired
   private AuctionRepository auctionRepository;
 
+  public Boolean validateUser(User user) {
+    return user.getUsername().equals(SecurityContextHolder.getContext().getAuthentication().getName());
+  }
+
+  public Boolean validateBid(Auction auction, int bidPrice) {
+    int index = auction.getBids().size();
+    double latestPrice = auction.getBids().get(index - 1).getPrice();
+
+    return auction.getBids().isEmpty() || latestPrice < bidPrice;
+  }
+
   public Bid createBid(Map values) {
     User currentUser =  userRepository.findById((long) (int) values.get("userId")).get();
     Auction currentAuction = auctionRepository.findById((long) (int) values.get("auctionId")).get();
 
-    int index = currentAuction.getBids().size();
-    double latestPrice = currentAuction.getBids().get(index - 1).getPrice();
-
-    if(currentUser.getUsername().equals(SecurityContextHolder.getContext().getAuthentication().getName())){
-      if(latestPrice < (double) (int) values.get("price") || currentAuction.getBids().isEmpty()){
+    if(validateUser(currentUser) && validateBid(currentAuction, (int) values.get("price"))){
         try{
           Bid bid = Bid.builder()
                   .user(currentUser)
@@ -43,13 +50,10 @@ public class BidService {
                   .build();
 
           currentAuction.addBid(bid);
-
           return bidRepository.save(bid);
         } catch(Exception e) {
           e.printStackTrace();
         }
-      }
-      return null;
     }
     return null;
   }
