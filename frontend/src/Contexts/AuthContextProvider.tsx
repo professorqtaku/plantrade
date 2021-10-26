@@ -12,7 +12,6 @@ type User = {
 export const AuthContext = createContext<any>(null);
   
 export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
-
   const [whoAmI, setWhoAmI] = useState(null);
   const [wrongPassword, setWrongPassword] = useState(false);
 
@@ -42,7 +41,7 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
       setWrongPassword(true)
        }
     let resUser = await res.json();
-    setWhoAmI(resUser)
+    setWhoAmI(resUser);
     whoIsOnline();
 
   }
@@ -60,14 +59,13 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
         }));
   }
 
-    const logout = async () => {
-    fetch('/api/logout', {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
+  const logout = async () => {
+    await fetch('/api/logout', {
+      method: 'DELETE',
+      headers: { 'content-type': 'application/json' },
     })
-      setWhoAmI(null);
+    setWhoAmI(null);
   }
- 
   
   const values = {
     registerUser,

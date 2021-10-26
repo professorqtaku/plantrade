@@ -1,5 +1,4 @@
 import { FormEvent } from "react";
-import { MutableRefObject } from "react";
 import { useRef, useContext } from "react";
 import { useHistory } from "react-router";
 import BasicModal from "../../Components/Modal/BaiscModal";
@@ -32,8 +31,8 @@ const MyPage = () => {
     login(userObj)
   }
 
-  const handleLogout = async () => {
-    await logout();
+  const handleLogout = () => {
+    logout();
     history.push('/')
   }
 
@@ -41,7 +40,7 @@ const MyPage = () => {
     <StyledWrapper>
       <h3>MyPage</h3>
       {whoAmI && whoAmI.username ? <p>Välkommen, {whoAmI.username}</p> : ''}
-      {whoAmI ? <button onClick={handleLogout}>Logga ut</button> : <button onClick={handleLogin}>Logga in</button>}
+      {whoAmI ? <button onClick={handleLogout}>Logga ut</button> : 'Not logged in'}
       <BasicModal>
         <Styledh3>LOGGA IN</Styledh3>
         <StyledForm onSubmit={e => handleLogin(e)}>
