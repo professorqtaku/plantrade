@@ -16,11 +16,11 @@ interface Props {
   fetchAuctions: () => Promise<void>;
 }
 
-const ONE_DAY_IN_MILLIS = 86400000;
-const ONE_HOUR_IN_MILLIS = 3600000;
-const ONE_MINUTE_IN_MILLIS = 60000;
-
 const AuctionCard = ({ auction, fetchAuctions }: Props) => {
+  const ONE_DAY_IN_MILLIS = 86400000;
+  const ONE_HOUR_IN_MILLIS = 3600000;
+  const ONE_MINUTE_IN_MILLIS = 60000;
+
   const [daysLeft, setDaysLeft] = useState<number | null>(null);
   const [differenceInMillis, setDifferenceInMillis] = useState(0);
   const [counter, setCounter] = useState<number | null>(null);
@@ -42,7 +42,7 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
     const todayInMillis = new Date().getTime();
     setDifferenceInMillis(endDateInMillis - todayInMillis);
     differenceInMillis <= 0 && fetchAuctions();
-    differenceInMillis <= 86400000 && setCounter(differenceInMillis);
+    differenceInMillis <= ONE_DAY_IN_MILLIS && setCounter(differenceInMillis);
     setDaysLeft(Math.round(differenceInMillis / (60 * 60 * 24 * 1000)));
   };
 
@@ -69,7 +69,7 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
       }
 
       // Seconds
-      if (counter >= 6000 && counter < 60000) {
+      if (counter >= 0 && counter < ONE_MINUTE_IN_MILLIS) {
         setDaysLeft(Math.floor((differenceInMillis / 1000) % 60));
         setRemainingTime("Sekunder kvar:");
         setTimeout(async () => {
@@ -97,7 +97,7 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
 
   const handleBid = () => {
     // Post to add a bid..
-  }
+  };
 
   return (
     <StyledCard>
@@ -118,7 +118,9 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
             <StyledSpan>{remainingTime}</StyledSpan> {daysLeft}
           </StyledDesc>
         </div>
-        <StyledButton onClick={() => handleBid()}>Snabb bud {bid} SEK</StyledButton>
+        <StyledButton onClick={() => handleBid()}>
+          Snabb bud {bid} SEK
+        </StyledButton>
       </StyledCardContent>
     </StyledCard>
   );
