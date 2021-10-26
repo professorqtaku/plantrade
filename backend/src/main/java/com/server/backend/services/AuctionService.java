@@ -19,6 +19,18 @@ public class AuctionService {
     private AuctionRepository auctionRepository;
 
     public List<Auction> getAllOpenAuctions(Status status) {
+        List<Auction> openAuctions = auctionRepository.findByStatus(status);
+        Date date = new Date();
+        for(var auction : openAuctions) {
+            if(auction.getEndDate().getTime() < date.getTime()){
+                if(auction.getBids().size() > 0){
+                    auction.setStatus(Status.SOLD);
+                } else {
+                    auction.setStatus(Status.NOT_SOLD);
+                }
+                auctionRepository.save(auction);
+            }
+        }
         return auctionRepository.findByStatus(status);
     }
     
@@ -27,6 +39,7 @@ public class AuctionService {
         var inputDate = auction.getEndDate().getTime();
         if(Long.toString(inputDate).length() < 13) {
             inputDate *= 1000;
+            auction.setEndDate(new Date(inputDate));
         }
         Long oneDayinMillis = date.getTime() + 86400000;
         Long oneMonthInMillis = date.getTime() + 2592000000L;
