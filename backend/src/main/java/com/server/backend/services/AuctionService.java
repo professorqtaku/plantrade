@@ -63,12 +63,6 @@ public class AuctionService {
     public List<Auction> getAuctionsByCurrentUser(User user) {
         return auctionRepository.findByHost(user);
     }
-    
-    public Auction createAuction(Auction auction, User user){
-        auction.setStatus(Status.OPEN);
-        auction.setHost(user);
-        return auctionRepository.save(auction);
-    }
 
     public List<Auction> getAuctionByTitle(String title) {
         try{

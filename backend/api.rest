@@ -50,6 +50,6 @@ Content-Type: application/json
 
 ###
 # get auctions by title
-GET http://localhost:4000/rest/auctions/search?title=lotus
+GET http://localhost:4000/rest/auctions/search?title=test
 
 ###
