@@ -20,8 +20,12 @@ const AuctionCard = ({ auction }: Props) => {
   const [differenceInMillis, setDifferenceInMillis] = useState(0);
   const [counter, setCounter] = useState<number | null>(null);
   const [remainingTime, setRemainingTime] = useState("Dagar kvar:");
+  const [bid, setBid] = useState(0);
+  // Delete when the auction got bids..
+  const [highestBid, setHighestBid] = useState(1000);
 
   useEffect(() => {
+    handleFastBid();
     handleTime();
   }, [daysLeft]);
 
@@ -62,10 +66,25 @@ const AuctionCard = ({ auction }: Props) => {
         setTimeout(async () => {
           await handleTime();
           setCounter(counter - 1);
-        }, 6000);
+        }, 1000);
       }
     }
   }, [counter]);
+
+  const handleFastBid = () => {
+    if (highestBid <= 0) {
+      setBid(1);
+    }
+    if (highestBid < 100) {
+      setBid(10);
+    }
+    if (highestBid < 1000 && highestBid > 100) {
+      setBid(100);
+    }
+    if (highestBid > 1000) {
+      setBid(1000);
+    }
+  };
 
   return (
     <StyledCard>
@@ -80,13 +99,13 @@ const AuctionCard = ({ auction }: Props) => {
             <StyledSpan>Pris:</StyledSpan> {auction.startPrice} SEK
           </StyledDesc>
           <StyledDesc>
-            <StyledSpan>Bud:</StyledSpan> Inget bud för tillfället
+            <StyledSpan>Högsta bud:</StyledSpan> {highestBid} SEK
           </StyledDesc>
           <StyledDesc>
             <StyledSpan>{remainingTime}</StyledSpan> {daysLeft}
           </StyledDesc>
         </div>
-        <StyledButton>Snabb bud</StyledButton>
+        <StyledButton>Snabb bud {bid} SEK</StyledButton>
       </StyledCardContent>
     </StyledCard>
   );
