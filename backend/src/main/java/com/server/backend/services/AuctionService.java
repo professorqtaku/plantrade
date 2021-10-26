@@ -33,4 +33,8 @@ public class AuctionService {
         auction.setHost(user);
         return auctionRepository.save(auction);
     }
+
+    public List<Auction> getAuctionByTitle(String title) {
+        return auctionRepository.findAllByTitle(title);
+    }
 }
