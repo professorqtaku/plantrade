@@ -22,10 +22,13 @@ const AuctionCard = ({ auction }: Props) => {
   const [remainingTime, setRemainingTime] = useState("Dagar kvar:");
   const [bid, setBid] = useState(0);
   // Delete when the auction got bids..
-  const [highestBid, setHighestBid] = useState(1000);
+  const [highestBid, setHighestBid] = useState(100);
 
   useEffect(() => {
     handleFastBid();
+  }, []);
+
+  useEffect(() => {
     handleTime();
   }, [daysLeft]);
 
@@ -72,13 +75,13 @@ const AuctionCard = ({ auction }: Props) => {
   }, [counter]);
 
   const handleFastBid = () => {
-    if (highestBid <= 0) {
+    if (highestBid <= 10) {
       setBid(1);
     }
-    if (highestBid < 100) {
+    if (highestBid <= 100 && highestBid > 10) {
       setBid(10);
     }
-    if (highestBid < 1000 && highestBid > 100) {
+    if (highestBid <= 1000 && highestBid > 100) {
       setBid(100);
     }
     if (highestBid > 1000) {
