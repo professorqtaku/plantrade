@@ -25,9 +25,9 @@ const RegisterPage = () => {
       email: emailRef.current.value,
       password: passwordRef.current.value
     }
-    
+
     await registerUser(userObject);
-    history.push('/');
+    // history.push('/');
   }
 
   return (

@@ -25,9 +25,14 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public User register(@RequestBody User user){
-        return userService.createUser(user);
+    public ResponseEntity<User> register(@RequestBody User user){
+        var newUser = userService.createUser(user);
+        if(newUser == null){
+            return ResponseEntity.badRequest().build();
+        }
+            return ResponseEntity.ok(newUser);
     }
+
 
     @GetMapping("/whoami")
     public User whoAmI(){

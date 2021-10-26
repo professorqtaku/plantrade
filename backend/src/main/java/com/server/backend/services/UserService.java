@@ -35,9 +35,14 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-    public User createUser(User user){
-        return myUserDetailsService.addUser(user);
+    public User createUser(User user) {
+        var test = userRepository.findByEmail(user.getEmail());
+        if(test == null){
+            return myUserDetailsService.addUser(user);
+        }
+        return null;
     }
+
 
     public void logout(HttpServletRequest req){
         SecurityContext sc = SecurityContextHolder.createEmptyContext();
