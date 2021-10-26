@@ -35,6 +35,6 @@ public class AuctionService {
     }
 
     public List<Auction> getAuctionByTitle(String title) {
-        return auctionRepository.findAllByTitleContaining(title);
+        return auctionRepository.costumFindAllByTitle(title);
     }
 }
