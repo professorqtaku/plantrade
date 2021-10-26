@@ -16,13 +16,13 @@ import {
 
 const MyPage = () => {
 
-  const { login, wrongPassword } = useContext(AuthContext)
+  const { login, wrongPassword, logout, whoAmI } = useContext(AuthContext)
   const usernameRef = useRef<any>();
   const passwordRef = useRef<any>();
 
   const handleLogin = (e: FormEvent) => {
     e.preventDefault();
-    
+
     const userObj = {
       username: usernameRef.current.value,
       password: passwordRef.current.value
@@ -33,7 +33,8 @@ const MyPage = () => {
   return (
     <StyledWrapper>
       <h3>MyPage</h3>
-
+      {whoAmI.username ? <p>Välkommen, {whoAmI.username}</p> : ''}
+      <button onClick={() => logout()}>Logga ut</button>
       <BasicModal>
         <Styledh3>LOGGA IN</Styledh3>
         <StyledForm onSubmit={e => handleLogin(e)}>

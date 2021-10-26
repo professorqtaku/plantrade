@@ -1,4 +1,4 @@
-import { createContext, useState} from "react";
+import { createContext, useState, useEffect} from "react";
 
 interface Props {
   children?: JSX.Element
@@ -15,6 +15,13 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
 
   const [whoAmI, setWhoAmI] = useState({});
   const [wrongPassword, setWrongPassword] = useState(false);
+
+
+  useEffect(() => {
+    whoIsOnline();
+    console.log(whoAmI, 'online?')
+  },[!whoAmI]);
+
 
   const registerUser = async (user: User) => {
     let res = await fetch("/api/register", {
@@ -36,15 +43,32 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
        }
     let resUser = await res.json();
     setWhoAmI(resUser)
+    console.log(resUser , 'user?')
+    console.log(whoAmI , 'who?')
     
   }
  
+  const whoIsOnline = () => {
+    fetch('/api/whoami')
+      .then(res => res.json()
+      .then(data => setWhoAmI(data)));
+  }
+
+    const logout = async () => {
+    fetch('/api/logout', {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    }) 
+  }
  
   
   const values = {
     registerUser,
     login,
-    wrongPassword
+    logout,
+    wrongPassword,
+    whoIsOnline,
+    whoAmI
   }
 
   return (
