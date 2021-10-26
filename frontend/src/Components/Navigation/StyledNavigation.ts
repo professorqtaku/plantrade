@@ -16,6 +16,7 @@ export const StyledAppBar = styled(AppBar)`
   width: 100%;
   background: #122522;
   max-height: 4rem;
+  z-index: 100;
 `;
 
 export const StyledIconWrapper = styled.div`
