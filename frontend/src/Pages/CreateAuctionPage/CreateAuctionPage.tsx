@@ -5,6 +5,7 @@ import {
   StyledTitle,
   StyledButton,
 } from "./StyledCreateAuctionPage";
+import AuctionDatePicker from "../../Components/AuctionDatePicker/AuctionDatePicker";
 
 const CreateAuctionPage = () => {
 
@@ -19,7 +20,7 @@ const CreateAuctionPage = () => {
         <StyledInput placeholder="Titel" />
         <StyledInput placeholder="Beskrivning" />
         <StyledInput placeholder="Start pris" />
-        <StyledInput placeholder="Slut datum" />
+        <AuctionDatePicker />
         <StyledButton>Skapa auktion</StyledButton>
       </StyledForm>
     </StyledWrapper>
