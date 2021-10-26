@@ -11,11 +11,12 @@ import {
 } from "./StyledNavigation";
 import { useState } from "react";
 import { useHistory } from "react-router";
+import {useModal} from "../../Contexts/ModalContext"
 
 const Navigation = () => {
 
   const history = useHistory();
-
+  const { toggleLogin } = useModal();
   const [selected1, setSelected1] = useState(false);
   const [selected2, setSelected2] = useState(false);
   const [selected3, setSelected3] = useState(false);
@@ -26,6 +27,9 @@ const Navigation = () => {
     select: React.Dispatch<React.SetStateAction<boolean>>,
     url?: string
   ) => {
+    if (select === setSelected5) {
+      toggleLogin();
+    }
     setSelected1(false);
     setSelected2(false);
     setSelected3(false);
