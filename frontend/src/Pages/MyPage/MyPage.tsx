@@ -2,14 +2,20 @@ import { FormEvent } from "react";
 import BasicModal from "../../Components/Modal/BaiscModal";
 import {
   StyledWrapper,
-  Styledh3
+  Styledh3,
+  StyledForm,
+  StyledDiv,
+  StyledInput,
+  StyledLoginBtn,
+  StyledPorfileIcon,
+  StyledPwIcon
 } from "./StyledMyPage";
 
 const MyPage = () => {
 
   const handleLogin = (e: FormEvent) => {
     e.preventDefault();
-    
+
     console.log("login logic here..")
   }
 
@@ -19,11 +25,13 @@ const MyPage = () => {
 
       <BasicModal>
         <Styledh3>LOGGA IN</Styledh3>
-        <form onSubmit={e => handleLogin(e)}>
-          <input type="text" placeholder="Användarnamn" />
-          <input type="password" placeholder="Lösenord" />
-          <button>Logga in</button>
-        </form>
+        <StyledForm onSubmit={e => handleLogin(e)}>
+        <StyledDiv>
+          <StyledPorfileIcon/><StyledInput type="text" placeholder="Användarnamn" />
+          <StyledPwIcon/><StyledInput type="password" placeholder="Lösenord" />
+          </StyledDiv>
+            <StyledLoginBtn>Logga in</StyledLoginBtn>
+        </StyledForm>
       </BasicModal>
 
     </StyledWrapper>
