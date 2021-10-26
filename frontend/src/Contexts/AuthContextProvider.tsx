@@ -13,8 +13,8 @@ export const AuthContext = createContext<any>(null);
   
 export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
 
-  const [user, setUser] = useState({});
-  
+  const [whoAmI, setWhoAmI] = useState({});
+  const [wrongPassword, setWrongPassword] = useState(false);
 
   const registerUser = async (user: User) => {
     let res = await fetch("/api/register", {
@@ -31,6 +31,11 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(user)
     })
+       if(res.status == 404) {
+      setWrongPassword(true)
+       }
+    let resUser = await res.json();
+    setWhoAmI(resUser)
     
   }
  
@@ -38,7 +43,8 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
   
   const values = {
     registerUser,
-    login
+    login,
+    wrongPassword
   }
 
   return (

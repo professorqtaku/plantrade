@@ -15,6 +15,7 @@ const ModalProvider: FC<Props> = ({ children }: Props) => {
 
   const values = {
     showLogin,
+    setShowLogin,
     toggleLogin
   };
 

@@ -1,5 +1,8 @@
 import { FormEvent } from "react";
+import { MutableRefObject } from "react";
+import { useRef, useContext} from "react";
 import BasicModal from "../../Components/Modal/BaiscModal";
+import { AuthContext } from "../../Contexts/AuthContextProvider";
 import {
   StyledWrapper,
   Styledh3,
@@ -13,10 +16,18 @@ import {
 
 const MyPage = () => {
 
+  const { login, wrongPassword } = useContext(AuthContext)
+  const usernameRef = useRef<any>();
+  const passwordRef = useRef<any>();
+
   const handleLogin = (e: FormEvent) => {
     e.preventDefault();
-
-    console.log("login logic here..")
+    
+    const userObj = {
+      username: usernameRef.current.value,
+      password: passwordRef.current.value
+    }
+    login(userObj)
   }
 
   return (
@@ -27,9 +38,10 @@ const MyPage = () => {
         <Styledh3>LOGGA IN</Styledh3>
         <StyledForm onSubmit={e => handleLogin(e)}>
         <StyledDiv>
-          <StyledPorfileIcon/><StyledInput type="text" placeholder="Användarnamn" />
-          <StyledPwIcon/><StyledInput type="password" placeholder="Lösenord" />
+          <StyledPorfileIcon/><StyledInput ref={usernameRef} type="text" placeholder="Användarnamn" />
+          <StyledPwIcon/><StyledInput ref={passwordRef} type="password" placeholder="Lösenord" />
           </StyledDiv>
+          {wrongPassword && <p>Wrong username/password</p>}
             <StyledLoginBtn>Logga in</StyledLoginBtn>
         </StyledForm>
       </BasicModal>
