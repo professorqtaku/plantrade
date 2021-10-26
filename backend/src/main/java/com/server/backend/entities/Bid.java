@@ -1,5 +1,6 @@
 package com.server.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,14 +18,17 @@ import java.util.Date;
 public class Bid {
 
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;
 
   @ManyToOne
+  @JsonIgnoreProperties({"bids"})
   private User user;
-  @ManyToOne
-  private Auction auction;
-  private int price;
-  private Date createdDate;
 
+  @ManyToOne
+  @JsonIgnoreProperties({"bids"})
+  private Auction auction;
+
+  private double price;
+  private Date createdDate;
 }
