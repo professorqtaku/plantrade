@@ -21,6 +21,9 @@ public class AuctionService {
     public Auction createAuction(Auction auction, User user) {
         Date date = new Date();
         var inputDate = auction.getEndDate().getTime();
+        if(Long.toString(inputDate).length() < 13) {
+            inputDate *= 1000;
+        }
         Long oneDayinMillis = date.getTime() + 86400000;
         Long oneMonthInMillis = date.getTime() + 2592000000L;
 
