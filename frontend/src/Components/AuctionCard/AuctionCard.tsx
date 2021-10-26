@@ -16,6 +16,10 @@ interface Props {
 }
 
 const AuctionCard = ({ auction }: Props) => {
+  const ONE_DAY_IN_MILLIS = 86400000;
+  const ONE_HOUR_IN_MILLIS = 3600000;
+  const ONE_MINUTE_IN_MILLIS = 60000;
+
   const [daysLeft, setDaysLeft] = useState<number | null>(null);
   const [differenceInMillis, setDifferenceInMillis] = useState(0);
   const [counter, setCounter] = useState<number | null>(null);
@@ -36,30 +40,30 @@ const AuctionCard = ({ auction }: Props) => {
     const endDateInMillis = new Date(auction.endDate + "").getTime();
     const todayInMillis = new Date().getTime();
     setDifferenceInMillis(endDateInMillis - todayInMillis);
-    differenceInMillis <= 86400000 && setCounter(differenceInMillis);
+    differenceInMillis <= ONE_DAY_IN_MILLIS && setCounter(differenceInMillis);
     setDaysLeft(Math.round(differenceInMillis / (60 * 60 * 24 * 1000)));
   };
 
   useEffect(() => {
     if (counter !== null) {
       // Hours
-      if (counter > 3600000) {
+      if (counter > ONE_HOUR_IN_MILLIS) {
         setDaysLeft(Math.floor((differenceInMillis / (1000 * 60 * 60)) % 24));
         setRemainingTime("Timmar kvar:");
         setTimeout(async () => {
           await handleTime();
           setCounter(counter - 1);
-        }, 3600000);
+        }, ONE_HOUR_IN_MILLIS);
       }
 
       // Minutes
-      if (counter >= 60000 && counter < 3600000) {
+      if (counter >= ONE_MINUTE_IN_MILLIS && counter < ONE_HOUR_IN_MILLIS) {
         setDaysLeft(Math.floor((differenceInMillis / (1000 * 60)) % 60));
         setRemainingTime("Minuter kvar:");
         setTimeout(async () => {
           await handleTime();
           setCounter(counter - 1);
-        }, 60000);
+        }, ONE_MINUTE_IN_MILLIS);
       }
 
       // Seconds
