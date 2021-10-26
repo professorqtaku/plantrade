@@ -2,11 +2,12 @@ package com.server.backend.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
-import lombok.*;
-import org.hibernate.annotations.Cascade;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.awt.*;
 import java.util.Date;
 import java.util.List;
 
