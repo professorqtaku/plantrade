@@ -29,7 +29,7 @@ export const StyledTitle = styled.p`
 `;
 
 export const StyledDesc = styled.p`
-  font-size: 0.5rem;
+  font-size: 0.6rem;
   text-transform: uppercase;
   letter-spacing: 1.5px;
   margin-top: 0;
@@ -48,3 +48,7 @@ export const StyledButton = styled.button`
   letter-spacing: 3px;
   padding: 0.5rem;
 `;
+
+export const StyledSpan = styled.span`
+  font-weight: bolder;
+`
