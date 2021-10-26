@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { useModal } from "../../Contexts/ModalContext"
 type Props = {
-  children?: JSX.Element;
+  children?: JSX.Element | JSX.Element[];
 };
 
 const style = {
