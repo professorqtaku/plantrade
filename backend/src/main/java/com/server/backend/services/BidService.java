@@ -63,7 +63,7 @@ public class BidService {
                   .user(user)
                   .auction(auction)
                   .price((int) values.get("price"))
-                  .createdDate((long) values.get("createdDate"))
+                  .createdDate(new Date((long) values.get("createdDate")))
                   .build();
 
           auction.addBid(bid);

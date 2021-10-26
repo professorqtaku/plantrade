@@ -30,6 +30,6 @@ public class Bid {
   @JsonIgnoreProperties({"bids"})
   private Auction auction;
   private double price;
-  private long createdDate;
+  private Date createdDate;
 
 }
