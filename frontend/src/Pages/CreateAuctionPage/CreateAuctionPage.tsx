@@ -1,8 +1,10 @@
+import {StyledWrapper} from './StyledCreateAuctionPage'
+
 const CreateAuctionPage = () => {
   return (
-    <div>
+    <StyledWrapper>
       Create auction..
-    </div>  
+    </StyledWrapper>  
   )
 }
 
