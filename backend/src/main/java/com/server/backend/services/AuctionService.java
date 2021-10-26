@@ -8,6 +8,7 @@ import com.server.backend.specifications.AuctionSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -19,6 +20,9 @@ public class AuctionService {
 
     @Autowired
     private AuctionRepository auctionRepository;
+
+    @Autowired
+    private UploadImagesService uploadImagesService;
 
     public List<Auction> getAllOpenAuctions(Status status) {
         List<Auction> openAuctions = auctionRepository.findByStatus(status);
@@ -36,7 +40,7 @@ public class AuctionService {
         return auctionRepository.findByStatus(status);
     }
     
-    public Auction createAuction(Auction auction, User user) {
+    public Auction createAuction(Auction auction, User user, List<MultipartFile> files) {
         Date date = new Date();
         var inputDate = auction.getEndDate().getTime();
         if(Long.toString(inputDate).length() < 13) {
@@ -53,6 +57,12 @@ public class AuctionService {
         auction.setHost(user);
         Auction savedAuction = auctionRepository.save(auction);
         System.out.println(savedAuction.getId() + " saved auction id is here");
+        if(savedAuction != null) {
+            var urls = uploadImagesService.saveFiles(files);
+            urls.forEach(url -> {
+                System.out.println(url + " is the url");
+            });
+        }
         return savedAuction;
     }
 
