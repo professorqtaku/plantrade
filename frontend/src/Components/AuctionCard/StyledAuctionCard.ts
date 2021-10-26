@@ -48,6 +48,7 @@ export const StyledButton = styled.button`
   color: white;
   border: none;
   text-transform: uppercase;
+  font-size: 0.7rem;
   letter-spacing: 3px;
   padding: 0.5rem;
 `;

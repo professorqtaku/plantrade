@@ -4,13 +4,16 @@ import com.server.backend.entities.Auction;
 import com.server.backend.entities.User;
 import com.server.backend.entities.Status;
 import com.server.backend.repositories.AuctionRepository;
+import com.server.backend.specifications.AuctionSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 @Service
 public class AuctionService {
@@ -59,5 +62,33 @@ public class AuctionService {
 
     public List<Auction> getAuctionsByCurrentUser(User user) {
         return auctionRepository.findByHost(user);
+    }
+
+    public List<Auction> getAuctionByTitle(String title) {
+        try{
+            title = URLDecoder.decode(title, StandardCharsets.UTF_8.name());
+        } catch (UnsupportedEncodingException e) {
+            return null;
+        }
+        List<String> words = Arrays.asList(title.split(" "));
+        return getAuctionsWhereTitleContainsAnyWord(words);
+    }
+
+    public List<Auction> getAuctionsWhereTitleContainsAnyWord(List<String> words) {
+        if(words.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        Specification<Auction> specification = null;
+        for(String word : words) {
+            Specification<Auction> wordSpecification = AuctionSpecification.titleContains(word);
+            if (specification == null) {
+                specification = wordSpecification;
+            } else {
+                specification = specification.or(wordSpecification);
+            }
+        }
+
+        return auctionRepository.findAll(specification);
     }
 }
