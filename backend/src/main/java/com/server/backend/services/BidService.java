@@ -33,23 +33,40 @@ public class BidService {
     int index = auction.getBids().size();
     double latestPrice = auction.getBids().get(index - 1).getPrice();
 
-    return auction.getBids().isEmpty() || latestPrice < bidPrice;
+    if (auction.getStartPrice() < bidPrice && latestPrice < bidPrice){
+      // price placed by user must be higher than both startPrice and latestPrice
+      return true;
+    } else if (auction.getStartPrice() > bidPrice || latestPrice > bidPrice) {
+      // if startPrice or latestPrice is higher than bidPrice
+      return false;
+    } else {
+      // if list of bids is empty and bidPrice is higher than startPrice return true
+      // otherwise return false
+      return auction.getBids().isEmpty() && auction.getStartPrice() < bidPrice;
+    }
+
+  }
+
+  public Boolean validateTime(Auction auction, long time) {
+    // validate so endDate has not passed
+    return auction.getEndDate().getTime() > time;
   }
 
   public Bid createBid(Map values) {
-    User currentUser =  userRepository.findById((long) (int) values.get("userId")).get();
-    Auction currentAuction = auctionRepository.findById((long) (int) values.get("auctionId")).get();
+    User user =  userRepository.findById((long) (int) values.get("userId")).get();
+    Auction auction = auctionRepository.findById((long) (int) values.get("auctionId")).get();
 
-    if(validateUser(currentUser) && validateBid(currentAuction, (int) values.get("price"))){
+    // validate user, bid price and time before creating a new bid
+    if(validateUser(user) && validateBid(auction, (int) values.get("price")) && validateTime(auction, (long) values.get("createdDate"))){
         try{
           Bid bid = Bid.builder()
-                  .user(currentUser)
-                  .auction(currentAuction)
+                  .user(user)
+                  .auction(auction)
                   .price((int) values.get("price"))
                   .createdDate((long) values.get("createdDate"))
                   .build();
 
-          currentAuction.addBid(bid);
+          auction.addBid(bid);
           return bidRepository.save(bid);
         } catch(Exception e) {
           e.printStackTrace();
