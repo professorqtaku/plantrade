@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @Service
@@ -36,6 +39,11 @@ public class AuctionService {
     }
 
     public List<Auction> getAuctionByTitle(String title) {
+        try{
+            title = URLDecoder.decode(title, StandardCharsets.UTF_8.name());
+        } catch (UnsupportedEncodingException e) {
+            return null;
+        }
         List<String> words = Arrays.asList(title.split(" "));
         return getAuctionsWhereTitleContainsAnyWord(words);
     }

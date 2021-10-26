@@ -19,12 +19,15 @@ public class SearchController {
 
     @GetMapping("/search")
     public ResponseEntity<List<Auction>> getAuctionsByTitle(@RequestParam String title) {
-        List<Auction> auctions = auctionService.getAuctionByTitle(title);
-        if (auctions.size() > 0) {
-            return ResponseEntity.ok(auctions);
-        }
-        else {
-            return ResponseEntity.noContent().build();
+        try {
+            List<Auction> auctions = auctionService.getAuctionByTitle(title);
+            if (auctions.size() > 0) {
+                return ResponseEntity.ok(auctions);
+            } else {
+                return ResponseEntity.noContent().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
         }
     }
 }
