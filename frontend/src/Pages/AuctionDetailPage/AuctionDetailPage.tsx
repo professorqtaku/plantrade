@@ -1,5 +1,7 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
+
+import  { useAuction } from '../../Contexts/AuctionContext';
 
 import {
   StyledWrapper
@@ -8,6 +10,18 @@ import {
 
 const AuctionDetailPage = () => {
   const { id }: any = useParams();
+  const { getAuctionById } = useAuction();
+
+  useEffect(() => {
+    handleGetAuctionById();
+  }, [])
+
+  const handleGetAuctionById = async () => {
+    const res = await getAuctionById(id);
+    console.log(res, 'what do we get here')
+  }
+
+
   return (
     <StyledWrapper>
       <h3>AuctionDetailPage</h3>
