@@ -39,3 +39,13 @@ Content-Type: application/json
 }
 
 ###
+
+POST http://localhost:4000/api/auctions/6
+Content-Type: application/json
+
+{
+  "userId": 3,
+  "auctionId": 6,
+  "price": 2,
+  "createdDate": 1637843777000
+}
