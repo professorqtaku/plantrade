@@ -6,7 +6,7 @@ interface Props {
 
 type User = {
   username: string,
-  email: string,
+  email?: string,
   password: string
 }
 export const AuthContext = createContext<any>(null);
@@ -24,11 +24,21 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
       body: JSON.stringify(user)
     })
   }
+
+  const login = async (user: User) => {
+    let res = await fetch("/api/login", {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(user)
+    })
+    
+  }
  
  
   
   const values = {
-    registerUser
+    registerUser,
+    login
   }
 
   return (
