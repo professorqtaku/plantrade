@@ -25,14 +25,17 @@ public class User {
 
     @Column(length=50, nullable=false, unique=true)
     private String username;
-    @Column(length=50, nullable=false, unique=true)
+
+    @Column(length=50, unique=true)
     private String email;
+
+    @Column(nullable=false)
     private String password;
 
     @OneToMany(mappedBy = "winner", fetch = FetchType.LAZY)
     @JsonIncludeProperties({"id"})
     private List<Auction> wonAuctions;
-
+    
 
     @JsonIgnore
     public String getPassword() {
