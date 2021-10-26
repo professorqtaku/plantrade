@@ -28,7 +28,7 @@ DELETE http://localhost:4000/api/logout
 
 
 ### AUCTIONS
-### Get all auctions
+### Get all OPEN auctions
 GET http://localhost:4000/rest/auctions
 
 ### Get auctions by id
@@ -45,7 +45,7 @@ Content-Type: application/json
   "title": "Sötis blomma",
   "description": "Test",
   "startPrice": 1000,
-  "endDate": 1637843777000
+  "endDate": 1637934097000
 }
 
 ###
