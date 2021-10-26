@@ -13,13 +13,13 @@ export const AuthContext = createContext<any>(null);
   
 export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
 
-  const [whoAmI, setWhoAmI] = useState({});
+  const [whoAmI, setWhoAmI] = useState(null);
   const [wrongPassword, setWrongPassword] = useState(false);
 
 
   useEffect(() => {
     whoIsOnline();
-    console.log(whoAmI, 'online?')
+    console.log(whoAmI, 'who?')
   },[!whoAmI]);
 
 
@@ -43,22 +43,29 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
        }
     let resUser = await res.json();
     setWhoAmI(resUser)
-    console.log(resUser , 'user?')
-    console.log(whoAmI , 'who?')
-    
+    whoIsOnline();
+
   }
  
   const whoIsOnline = () => {
     fetch('/api/whoami')
       .then(res => res.json()
-      .then(data => setWhoAmI(data)));
+        .then(data => {
+          if (!data) {
+            setWhoAmI(null);
+            return null;
+          }
+          setWhoAmI({ ...data });
+          return data;
+        }));
   }
 
     const logout = async () => {
     fetch('/api/logout', {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
-    }) 
+    })
+      setWhoAmI(null);
   }
  
   
