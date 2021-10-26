@@ -43,6 +43,7 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
     let resUser = await res.json();
     setWhoAmI(resUser);
     whoIsOnline();
+    setWrongPassword(false);
 
   }
  
