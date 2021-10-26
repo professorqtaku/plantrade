@@ -89,6 +89,10 @@ const AuctionCard = ({ auction }: Props) => {
     }
   };
 
+  const handleBid = () => {
+    // Post to add a bid..
+  }
+
   return (
     <StyledCard>
       <StyledImg src="https://i.pinimg.com/564x/9e/8b/dc/9e8bdc74df3cb2f87fae194a18ba569a.jpg" />
@@ -108,7 +112,7 @@ const AuctionCard = ({ auction }: Props) => {
             <StyledSpan>{remainingTime}</StyledSpan> {daysLeft}
           </StyledDesc>
         </div>
-        <StyledButton>Snabb bud {bid} SEK</StyledButton>
+        <StyledButton onClick={() => handleBid()}>Snabb bud {bid} SEK</StyledButton>
       </StyledCardContent>
     </StyledCard>
   );
