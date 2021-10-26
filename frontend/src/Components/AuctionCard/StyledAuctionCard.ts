@@ -9,6 +9,9 @@ export const StyledCard = styled(Card)`
   margin: 1rem auto;
   display: grid;
   grid-template-columns: 35% 1fr;
+  &:last-child {
+    margin-bottom: 5rem;
+  }
 `;
 
 export const StyledCardContent = styled(CardContent)`

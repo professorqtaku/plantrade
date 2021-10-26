@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const StyledWrapper = styled.div`
+  max-height: 80vh;
   display: grid;
   grid-template-rows: 25vh 1fr;
 `;

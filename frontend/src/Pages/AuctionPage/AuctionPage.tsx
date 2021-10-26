@@ -40,7 +40,7 @@ const AuctionPage = () => {
       <StyledImg src="https://i.pinimg.com/564x/63/5e/b1/635eb177eef29242e96352f1206298da.jpg" />
       <StyledContentWrapper>
         {auctions &&
-          auctions.map((auction: Auction) => <AuctionCard auction={auction} />)}
+          auctions.map((auction: Auction) => <AuctionCard key={auction.id} auction={auction} />)}
       </StyledContentWrapper>
     </StyledWrapper>
   );
