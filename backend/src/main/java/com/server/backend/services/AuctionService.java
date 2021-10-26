@@ -1,13 +1,12 @@
 package com.server.backend.services;
 
 import com.server.backend.entities.Auction;
-import com.server.backend.entities.User;
 import com.server.backend.entities.Status;
+import com.server.backend.entities.User;
 import com.server.backend.repositories.AuctionRepository;
 import com.server.backend.specifications.AuctionSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
@@ -44,16 +43,17 @@ public class AuctionService {
             inputDate *= 1000;
             auction.setEndDate(new Date(inputDate));
         }
-        Long oneDayinMillis = date.getTime() + 86400000;
-        Long oneMonthInMillis = date.getTime() + 2592000000L;
+        long oneDayInMillis = date.getTime() + 86400000L;
+        long oneMonthInMillis = date.getTime() + 2592000000L;
 
-        if (inputDate < oneDayinMillis || inputDate > oneMonthInMillis) {
+        if (inputDate < oneDayInMillis || inputDate > oneMonthInMillis) {
             return null;
         }
         auction.setStatus(Status.OPEN);
         auction.setHost(user);
-        return auctionRepository.save(auction);
-
+        Auction savedAuction = auctionRepository.save(auction);
+        System.out.println(savedAuction.getId() + " saved auction id is here");
+        return savedAuction;
     }
 
     public Optional<Auction> getAuctionById(long id) {
