@@ -79,8 +79,6 @@ public class AuctionService {
             return Collections.emptyList();
         }
 
-        Specification<Auction> totalSpecification;
-
         Specification<Auction> wordSpecification = null;
         for(String word : words) {
             Specification<Auction> specification = AuctionSpecification.titleContains(word);
@@ -90,12 +88,10 @@ public class AuctionService {
                 wordSpecification = wordSpecification.or(specification);
             }
         }
-        totalSpecification = Specification.where(wordSpecification);
 
-        if (status != null) {
-            Specification<Auction> statusSpecification = AuctionSpecification.hasStatus(status);
-            totalSpecification = totalSpecification.and(statusSpecification);
-        }
+        Specification<Auction> statusSpecification = AuctionSpecification.hasStatus(Objects.requireNonNullElse(status, Status.OPEN));
+
+        Specification<Auction> totalSpecification = Specification.where(wordSpecification).and(statusSpecification);
 
         return auctionRepository.findAll(totalSpecification);
     }
