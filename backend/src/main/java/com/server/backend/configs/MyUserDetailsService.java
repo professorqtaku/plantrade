@@ -24,6 +24,7 @@ public class MyUserDetailsService implements UserDetailsService {
     private void createDefaultUsers(){
         if (userRepository.findByUsername("user") == null) {
             User user = User.builder()
+                    .email("user@user.se")
                     .username("user")
                     .password("password")
                     .build();
