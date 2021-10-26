@@ -13,9 +13,10 @@ import { useEffect, useState } from "react";
 
 interface Props {
   auction: Auction;
+  fetchAuctions: () => Promise<void>;
 }
 
-const AuctionCard = ({ auction }: Props) => {
+const AuctionCard = ({ auction, fetchAuctions }: Props) => {
   const [daysLeft, setDaysLeft] = useState<number | null>(null);
   const [differenceInMillis, setDifferenceInMillis] = useState(0);
   const [counter, setCounter] = useState<number | null>(null);
@@ -29,6 +30,7 @@ const AuctionCard = ({ auction }: Props) => {
     const endDateInMillis = new Date(auction.endDate + "").getTime();
     const todayInMillis = new Date().getTime();
     setDifferenceInMillis(endDateInMillis - todayInMillis);
+    differenceInMillis <= 0 && fetchAuctions();
     differenceInMillis <= 86400000 && setCounter(differenceInMillis);
     setDaysLeft(Math.round(differenceInMillis / (60 * 60 * 24 * 1000)));
   };
