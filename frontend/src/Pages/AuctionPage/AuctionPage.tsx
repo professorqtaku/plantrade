@@ -4,8 +4,8 @@ import {
   StyledContentWrapper,
 } from "./StyledAuctionPage";
 import AuctionCard from "../../Components/AuctionCard/AuctionCard";
-import { AuctionContext } from "../../Contexts/AuctionContext";
-import { useContext, useEffect } from "react";
+import { useAuction } from "../../Contexts/AuctionContext";
+import { useEffect } from "react";
 
 export interface Host {
   id: number;
@@ -25,7 +25,7 @@ export interface Auction {
 }
 
 const AuctionPage = () => {
-  const { getAllAuctions, auctions } = useContext(AuctionContext);
+  const { getAllAuctions, auctions } = useAuction();
 
   useEffect(() => {
     handleGetAuctions();
@@ -40,7 +40,13 @@ const AuctionPage = () => {
       <StyledImg src="https://i.pinimg.com/564x/63/5e/b1/635eb177eef29242e96352f1206298da.jpg" />
       <StyledContentWrapper>
         {auctions &&
-          auctions.map((auction: Auction) => <AuctionCard key={auction.id} auction={auction} />)}
+          auctions.map((auction: Auction) => (
+            <AuctionCard
+              key={auction.id}
+              auction={auction}
+              fetchAuctions={handleGetAuctions}
+            />
+          ))}
       </StyledContentWrapper>
     </StyledWrapper>
   );

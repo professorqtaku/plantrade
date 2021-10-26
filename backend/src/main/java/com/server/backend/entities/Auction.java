@@ -1,5 +1,6 @@
 package com.server.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
@@ -50,6 +51,7 @@ public class Auction {
     private List<Category> categories;
 
     @OneToMany(mappedBy = "auction", cascade = CascadeType.REMOVE)
+    @JsonIgnoreProperties({"auction"})
     private List<Bid> bids;
 
     @OneToMany(mappedBy = "auction", cascade = CascadeType.REMOVE)
