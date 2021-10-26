@@ -22,37 +22,47 @@ const AuctionCard = ({ auction }: Props) => {
   const [remainingTime, setRemainingTime] = useState("Dagar kvar:");
 
   useEffect(() => {
-     console.log("1");
+    handleTime();
+  }, [daysLeft]);
+
+  const handleTime = async () => {
     const endDateInMillis = new Date(auction.endDate + "").getTime();
     const todayInMillis = new Date().getTime();
     setDifferenceInMillis(endDateInMillis - todayInMillis);
     differenceInMillis <= 86400000 && setCounter(differenceInMillis);
     setDaysLeft(Math.round(differenceInMillis / (60 * 60 * 24 * 1000)));
-  }, [counter]);
+  };
 
   useEffect(() => {
-    console.log('2');
-    
     if (counter !== null) {
       // Hours
       if (counter > 3600000) {
         setDaysLeft(Math.floor((differenceInMillis / (1000 * 60 * 60)) % 24));
         setRemainingTime("Timmar kvar:");
-        setTimeout(() => setCounter(counter - 1), 3600000);
+        setTimeout(async () => {
+          await handleTime();
+          setCounter(counter - 1);
+        }, 3600000);
       }
 
       // Minutes
       if (counter >= 60000 && counter < 3600000) {
         setDaysLeft(Math.floor((differenceInMillis / (1000 * 60)) % 60));
         setRemainingTime("Minuter kvar:");
-        setTimeout(() => setCounter(counter - 1), 60000);
+        setTimeout(async () => {
+          await handleTime();
+          setCounter(counter - 1);
+        }, 60000);
       }
 
       // Seconds
       if (counter > 6000 && counter < 60000) {
         setDaysLeft(Math.floor((differenceInMillis / 1000) % 60));
         setRemainingTime("Sekunder kvar:");
-        setTimeout(() => setCounter(counter - 1), 6000);
+        setTimeout(async () => {
+          await handleTime();
+          setCounter(counter - 1);
+        }, 6000);
       }
     }
   }, [counter]);
