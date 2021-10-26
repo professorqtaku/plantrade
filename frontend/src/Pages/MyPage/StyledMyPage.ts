@@ -6,14 +6,15 @@ export const StyledWrapper = styled.div`
   
 `;
 
-export const Styledh3 = styled.h3`
+export const Styledh3 = styled.p`
   text-align: center;
+  font-size: 20px;
+  letter-spacing: 1.5px;
 `;
 
 export const StyledDiv = styled.div`
   display: grid;
   grid-template-columns: 12% 1fr;
-
 `;
 
 export const StyledForm = styled.form`
@@ -28,6 +29,8 @@ export const StyledInput = styled.input`
    display: flex;
    flex-direction: column;
    font-size: 17px;
+     margin-top: 20px;
+     padding: 10px;
   &:focus{
     border-bottom: 1px solid darkgreen;
   }
@@ -43,16 +46,17 @@ export const StyledLoginBtn = styled.button`
   width: 200px; 
   align-items: center;
   margin-left: 25px;
-  font-size: 15px;
+  font-size: px;
 `;
 
 export const StyledPorfileIcon = styled(PersonIcon)`
   width: 20px;
   color: grey;
+  margin-top: 27px;
 `;
 
 export const StyledPwIcon = styled(VpnKeyIcon)`
   width: 20px;
   color: grey;
-  
+  margin-top: 27px;
 `;
