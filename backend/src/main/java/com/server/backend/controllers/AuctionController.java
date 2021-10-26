@@ -7,6 +7,7 @@ import com.server.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -42,10 +43,11 @@ public class AuctionController {
     }
 
     @PostMapping
-    public ResponseEntity<Auction> createAuction(@RequestBody Auction auction){
+    public ResponseEntity<Auction> createAuction(@RequestBody Auction auction,
+                                                 @RequestParam List<MultipartFile> files){
         var user = userService.findCurrentUser();
         if(user != null) {
-            Auction savedAuction = auctionService.createAuction(auction, user);
+            Auction savedAuction = auctionService.createAuction(auction, user, files);
             if(savedAuction != null) {
                 return ResponseEntity.ok(savedAuction);
             } else {
