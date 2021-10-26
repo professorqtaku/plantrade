@@ -42,10 +42,10 @@ POST http://localhost:4000/rest/auctions
 Content-Type: application/json
 
 {
-  "title": "Sötis blomma",
-  "description": "Test",
+  "title": "sötis2",
+  "description": "Test blablablalball blabla22",
   "startPrice": 1000,
-  "endDate": 1637934097000
+  "endDate": 1635409384
 }
 
 ###
