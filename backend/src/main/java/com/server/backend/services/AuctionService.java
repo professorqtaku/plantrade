@@ -18,6 +18,10 @@ public class AuctionService {
     @Autowired
     private AuctionRepository auctionRepository;
 
+    public List<Auction> getAllOpenAuctions(Status status) {
+        return auctionRepository.findByStatus(status);
+    }
+    
     public Auction createAuction(Auction auction, User user) {
         Date date = new Date();
         var inputDate = auction.getEndDate().getTime();
@@ -36,16 +40,11 @@ public class AuctionService {
 
     }
 
-    public List<Auction> getAllAuctions() {
-        return auctionRepository.findAll();
-    }
-
     public Optional<Auction> getAuctionById(long id) {
         return auctionRepository.findById(id);
     }
 
     public List<Auction> getAuctionsByCurrentUser(User user) {
-
         return auctionRepository.findByHost(user);
     }
 }
