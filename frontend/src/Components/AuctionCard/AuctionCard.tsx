@@ -56,7 +56,7 @@ const AuctionCard = ({ auction }: Props) => {
       }
 
       // Seconds
-      if (counter > 6000 && counter < 60000) {
+      if (counter >= 6000 && counter < 60000) {
         setDaysLeft(Math.floor((differenceInMillis / 1000) % 60));
         setRemainingTime("Sekunder kvar:");
         setTimeout(async () => {
