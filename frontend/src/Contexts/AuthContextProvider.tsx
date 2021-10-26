@@ -19,15 +19,14 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
   const registerUser = async (user: User) => {
     let res = await fetch("/api/register", {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' }
-    },
-    )
-    let newUser = await res.json();
-    setUser(newUser);
-    console.log(newUser , 'new User?')
+      headers: { 'Content-Type': 'application/json' },
     
+      body: JSON.stringify(user)
+    })
   }
-
+ 
+ 
+  
   const values = {
     registerUser
   }
