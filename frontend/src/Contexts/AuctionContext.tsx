@@ -14,7 +14,7 @@ type Auction = {
   status: Object;
 }
 
-const AuctionContext = createContext<any>(null);
+export const AuctionContext = createContext<any>(null);
 
 export const useAuction = () => useContext(AuctionContext);
 
