@@ -16,8 +16,8 @@ public class AuctionService {
     @Autowired
     private AuctionRepository auctionRepository;
 
-    public List<Auction> getAllAuctions() {
-        return auctionRepository.findAll();
+    public List<Auction> getAllOpenAuctions(Status status) {
+        return auctionRepository.findByStatus(status);
     }
 
     public Optional<Auction> getAuctionById(long id) {
@@ -25,7 +25,6 @@ public class AuctionService {
     }
 
     public List<Auction> getAuctionsByCurrentUser(User user) {
-
         return auctionRepository.findByHost(user);
     }
     public Auction createAuction(Auction auction, User user){
