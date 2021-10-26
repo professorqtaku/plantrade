@@ -25,6 +25,6 @@ public class Bid {
   @ManyToOne
   private Auction auction;
   private int price;
-  private Date createdDate;
+  private long createdDate;
 
 }
