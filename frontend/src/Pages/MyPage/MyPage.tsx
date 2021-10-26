@@ -2,6 +2,7 @@ import { FormEvent } from "react";
 import { useRef, useContext } from "react";
 import { useHistory } from "react-router";
 import BasicModal from "../../Components/Modal/BaiscModal";
+import Divider from '@mui/material/Divider';
 import { AuthContext } from "../../Contexts/AuthContextProvider";
 import {
   StyledWrapper,
@@ -49,7 +50,9 @@ const MyPage = () => {
           <StyledPwIcon/><StyledInput ref={passwordRef} type="password" placeholder="Lösenord" />
           </StyledDiv>
           {wrongPassword && <p>Wrong username/password</p>}
-            <StyledLoginBtn>Logga in</StyledLoginBtn>
+          <StyledLoginBtn>Logga in</StyledLoginBtn>
+          <Divider />
+          <p>Har du inte ett konto? <span style={{color: '#006fd0'}}>Skapa ett</span></p>
         </StyledForm>
       </BasicModal>
 
