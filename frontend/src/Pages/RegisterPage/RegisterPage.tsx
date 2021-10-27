@@ -4,7 +4,12 @@ import { AuthContext } from "../../Contexts/AuthContextProvider";
 import {
   StyledWrapper,
   StyledForm,
-  StyledInput
+  StyledInput,
+  StyledBtn,
+  StyledPorfileIcon,
+  StyledPwIcon,
+  StyledEmailIcon,
+  StyledInputDiv
 } from "./StyledRegisterPage";
 
 interface User {
@@ -39,11 +44,15 @@ const RegisterPage = () => {
       <h3>Register Page</h3>
       <StyledForm onSubmit={(e) => handleRegister(e)}>
 
-        <StyledInput ref={usernameRef} required type="text" placeholder="Username" />
-        <StyledInput ref={emailRef} required type="email" placeholder="Email" />
-        <StyledInput ref={passwordRef} required type="password" placeholder="Password" />
+        <StyledInputDiv>
 
-        <button>Skapa Konto</button>
+        <StyledPorfileIcon/><StyledInput ref={usernameRef} required type="text" placeholder="Username" />
+        <StyledPwIcon/><StyledInput ref={emailRef} required type="email" placeholder="Email" />
+        <StyledEmailIcon/><StyledInput ref={passwordRef} required type="password" placeholder="Password" />
+
+        </StyledInputDiv>
+
+        <StyledBtn>Skapa Konto</StyledBtn>
       </StyledForm>
     </StyledWrapper>
   );
