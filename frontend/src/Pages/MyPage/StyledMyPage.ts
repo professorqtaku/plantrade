@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import PersonIcon from '@mui/icons-material/Person';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
+import Divider from '@mui/material/Divider';
 
 export const StyledWrapper = styled.div`
   
@@ -18,7 +19,7 @@ export const StyledDiv = styled.div`
 `;
 
 export const StyledForm = styled.form`
-width: 220px;
+width: 230px;
 margin: 0 auto;
 `;
 
@@ -59,4 +60,19 @@ export const StyledPwIcon = styled(VpnKeyIcon)`
   width: 20px;
   color: grey;
   margin-top: 27px;
+`;
+
+
+export const StyledSpan = styled.span`
+
+`;
+export const StyledText= styled.p`
+  padding-top: 40px;
+`;
+
+export const StyledDivider = styled(Divider)`
+  margin-top: 35px;
+  min-width: 100%;
+  position: absolute;
+  left: 0;
 `;

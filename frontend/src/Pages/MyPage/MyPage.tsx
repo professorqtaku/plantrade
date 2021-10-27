@@ -12,7 +12,10 @@ import {
   StyledInput,
   StyledLoginBtn,
   StyledPorfileIcon,
-  StyledPwIcon
+  StyledPwIcon,
+  StyledText,
+  StyledSpan,
+  StyledDivider
 } from "./StyledMyPage";
 
 const MyPage = () => {
@@ -46,13 +49,13 @@ const MyPage = () => {
         <Styledh3>LOGGA IN</Styledh3>
         <StyledForm onSubmit={e => handleLogin(e)}>
         <StyledDiv>
-          <StyledPorfileIcon/><StyledInput ref={usernameRef} type="text" placeholder="Användarnamn" />
-          <StyledPwIcon/><StyledInput ref={passwordRef} type="password" placeholder="Lösenord" />
+          <StyledPorfileIcon/><StyledInput required ref={usernameRef} type="text" placeholder="Användarnamn" />
+          <StyledPwIcon/><StyledInput required ref={passwordRef} type="password" placeholder="Lösenord" />
           </StyledDiv>
           {wrongPassword && <p>Wrong username/password</p>}
           <StyledLoginBtn>Logga in</StyledLoginBtn>
-          <Divider />
-          <p>Har du inte ett konto? <span style={{color: '#006fd0'}}>Skapa ett</span></p>
+          <StyledDivider />
+          <StyledText>Har du inte ett konto? <StyledSpan style={{color: '#006fd0'}}>Skapa ett</StyledSpan></StyledText>
         </StyledForm>
       </BasicModal>
 
