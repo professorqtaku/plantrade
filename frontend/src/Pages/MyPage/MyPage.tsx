@@ -24,6 +24,7 @@ import {
 const MyPage = () => {
 
   const history = useHistory();
+  const [showRegisterForm, setShowRegisterForm] = useState<boolean>(false);
   const { login, wrongPassword, logout, whoAmI } = useContext(AuthContext)
   const usernameRef = useRef<any>();
   const passwordRef = useRef<any>();
@@ -49,25 +50,26 @@ const MyPage = () => {
       {whoAmI && whoAmI.username ? <p>Välkommen, {whoAmI.username}</p> : ''}
       {whoAmI ? <button onClick={handleLogout}>Logga ut</button> : 'Not logged in'}
       <BasicModal>
-        <StyledLoginContainer>
+        {!showRegisterForm ? <StyledLoginContainer>
 
           <Styledh3>LOGGA IN</Styledh3>
-        <StyledForm onSubmit={e => handleLogin(e)}>
-        <StyledDiv>
-          <StyledPorfileIcon/><StyledInput required ref={usernameRef} type="text" placeholder="Användarnamn" />
-          <StyledPwIcon/><StyledInput required ref={passwordRef} type="password" placeholder="Lösenord" />
-          </StyledDiv>
-          {wrongPassword && <p>Wrong username/password</p>}
-          <StyledLoginBtn>Logga in</StyledLoginBtn>
-          <StyledDivider />
-          <StyledText>Har du inte ett konto? <StyledSpan onClick={() => history.push('/register')}>Skapa ett</StyledSpan></StyledText>
-        </StyledForm>
+          <StyledForm onSubmit={e => handleLogin(e)}>
+            <StyledDiv>
+              <StyledPorfileIcon /><StyledInput required ref={usernameRef} type="text" placeholder="Användarnamn" />
+              <StyledPwIcon /><StyledInput required ref={passwordRef} type="password" placeholder="Lösenord" />
+            </StyledDiv>
+            {wrongPassword && <p>Wrong username/password</p>}
+            <StyledLoginBtn>Logga in</StyledLoginBtn>
+            <StyledDivider />
+            <StyledText>Har du inte ett konto? <StyledSpan onClick={() => setShowRegisterForm(true)}>Skapa ett</StyledSpan></StyledText>
+          </StyledForm>
 
-        </StyledLoginContainer>
+        </StyledLoginContainer> :
+          <StyledRegisterContainer>
+            <RegisterForm />
+          </StyledRegisterContainer>}
 
-        <StyledRegisterContainer>
-        <RegisterForm/>
-        </StyledRegisterContainer>
+  
 
       </BasicModal>
 
