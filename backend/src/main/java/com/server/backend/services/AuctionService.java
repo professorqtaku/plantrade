@@ -45,7 +45,7 @@ public class AuctionService {
         return auctionRepository.findByStatus(status);
     }
     
-    public Auction createAuction(Auction auction, User user) {
+    public Auction createAuction(Auction auction, User user, List<MultipartFile> files) {
         Date date = new Date();
         var inputDate = auction.getEndDate().getTime();
         if(Long.toString(inputDate).length() < 13) {
@@ -61,19 +61,17 @@ public class AuctionService {
         auction.setStatus(Status.OPEN);
         auction.setHost(user);
         Auction savedAuction = auctionRepository.save(auction);
-        System.out.println("do we get here?");
 
-//        if(files != null) {
-//            System.out.println("do we get here?");
-//            var urls = uploadImagesService.saveFiles(files);
-//            urls.forEach(url -> {
-//                Image image = Image.builder()
-//                        .path(url)
-//                        .auction(savedAuction)
-//                        .build();
-//                var savedImage = imageRepository.save(image);
-//            });
-//        }
+        if(files != null) {
+            var urls = uploadImagesService.saveFiles(files);
+            urls.forEach(url -> {
+                Image image = Image.builder()
+                        .path(url)
+                        .auction(savedAuction)
+                        .build();
+                imageRepository.save(image);
+            });
+        }
         return savedAuction;
     }
 
