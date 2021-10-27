@@ -14,6 +14,13 @@ type Auction = {
   status: Object;
 }
 
+type Bid = {
+  userId: Number;
+  auctionId: Number;
+  price: Number;
+  createdDate: Date;
+}
+
 export const AuctionContext = createContext<any>(null);
 
 export const useAuction = () => useContext(AuctionContext);
@@ -33,12 +40,18 @@ const AuctionProvider: FC<Props> = ({ children }: Props) => {
     let auction = await res.json();
     return auction;
   }
+
+  const createBid = async (newBid: Bid) => {
+    console.log(newBid)
+    // let res: Response = await fetch('/api/bid');
+  }
   
   const values = {
     auctions,
     setAuctions,
     getAllAuctions,
-    getAuctionById
+    getAuctionById,
+    createBid
   }
 
   return (
