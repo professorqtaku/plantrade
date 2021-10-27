@@ -5,13 +5,15 @@ interface Props {
   label: string;
   type?: string;
   updateState: React.Dispatch<React.SetStateAction<any>>;
+  value: string | number;
 }
 
-const InputField = ({ label, type, updateState }: Props) => {
+const InputField = ({ label, type, updateState, value }: Props) => {
   return (
     <StyledInput
       onChange={(e) => updateState(e.target.value)}
       fullWidth
+      value={value}
       type={type ? type : "text"}
       label={label}
       id={label}
