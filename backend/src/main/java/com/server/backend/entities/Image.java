@@ -1,5 +1,7 @@
 package com.server.backend.entities;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import lombok.AllArgsConstructor;
@@ -8,28 +10,23 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
-@Table(name = "bids")
+@Table(name = "images")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Bid {
+public class Image {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
-  @ManyToOne
-  @JsonIncludeProperties({"id", "username"})
-  private User user;
+    private String path;
 
-  @ManyToOne
-  @JsonIgnoreProperties({"bids"})
-  private Auction auction;
+    @ManyToOne
+    @JsonIncludeProperties({"id"})
+    private Auction auction;
 
-  private double price;
-  private Date createdDate;
 }

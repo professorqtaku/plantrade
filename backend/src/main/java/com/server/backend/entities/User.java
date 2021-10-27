@@ -1,6 +1,7 @@
 package com.server.backend.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -19,25 +20,22 @@ import java.util.List;
 @Builder
 public class User {
     @Id
-    @GeneratedValue
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
+    @Column(length=50, nullable=false, unique=true)
     private String username;
+
+    @Column(length=50, unique=true)
     private String email;
+
+    @Column(nullable=false)
     private String password;
 
-//    @OneToMany(mappedBy = "chat", fetch = FetchType.LAZY)
-//    @JsonIncludeProperties({"id"})
-//    private List<Chat> chats;
-
-//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
-//    @JoinTable(
-//            name="won_auctions",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "auction_id")
-//    )
-//    private List<Auction> wonAuctions;
-
+    @OneToMany(mappedBy = "winner", fetch = FetchType.LAZY)
+    @JsonIncludeProperties({"id"})
+    private List<Auction> wonAuctions;
+    
 
     @JsonIgnore
     public String getPassword() {
@@ -49,13 +47,7 @@ public class User {
         this.password = password;
     }
 
-//    public void addChat(Chat chat) {
-//        this.chats.add(chat);
-//    }
-
-//    public void addWonAuction(Auction auction) {
-//        this.wonAuctions.add(auction);
-//    }
-
-
+    public void addWonAuction(Auction auction) {
+        this.wonAuctions.add(auction);
+    }
 }

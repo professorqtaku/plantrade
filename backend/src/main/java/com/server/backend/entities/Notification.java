@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class Notification {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String message;
 
