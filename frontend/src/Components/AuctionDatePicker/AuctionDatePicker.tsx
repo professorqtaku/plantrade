@@ -4,7 +4,11 @@ import { StyledDatePicker } from "./StyledAuctionDatePicket";
 
 import "react-datepicker/dist/react-datepicker.css";
 
-const AuctionDatePicker = () => {
+interface Props {
+  endDate: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const AuctionDatePicker = ({ endDate }: Props) => {
   let oneMonth = new Date();
   oneMonth.setDate(oneMonth.getDate() + 30);
 
@@ -12,10 +16,15 @@ const AuctionDatePicker = () => {
   oneDay.setDate(oneDay.getDate() + 1);
   const [startDate, setStartDate] = useState(oneDay);
 
+  const handleChange = (date: Date) => {
+    setStartDate(date);
+    endDate(date.getTime());
+  };
+
   return (
     <StyledDatePicker
       selected={startDate}
-      onChange={(date: Date) => setStartDate(date)}
+      onChange={(date: Date) => handleChange(date)}
       maxDate={oneMonth}
       minDate={oneDay}
     />

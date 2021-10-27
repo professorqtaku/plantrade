@@ -6,8 +6,11 @@ import {
   StyledButton,
 } from "./StyledCreateAuctionPage";
 import AuctionDatePicker from "../../Components/AuctionDatePicker/AuctionDatePicker";
+import { useState } from "react";
 
 const CreateAuctionPage = () => {
+
+  const [endDate, setEndDate] = useState(0);
 
   const handleAddAuction = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();    
@@ -20,7 +23,7 @@ const CreateAuctionPage = () => {
         <StyledInput placeholder="Titel" />
         <StyledInput placeholder="Beskrivning" />
         <StyledInput placeholder="Start pris" />
-        <AuctionDatePicker />
+        <AuctionDatePicker endDate={setEndDate}/>
         <StyledButton>Skapa auktion</StyledButton>
       </StyledForm>
     </StyledWrapper>
