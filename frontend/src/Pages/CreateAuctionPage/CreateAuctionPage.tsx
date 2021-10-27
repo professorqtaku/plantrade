@@ -19,6 +19,7 @@ const CreateAuctionPage = () => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [price, setPrice] = useState();
+  const [images, setImages] = useState < String[] | undefined>();
   const [endDate, setEndDate] = useState<number | null>(null);
   const [categoriesToUse, setCategoriesToUse] = useState<String[] | null>(null);
 
@@ -36,8 +37,14 @@ const CreateAuctionPage = () => {
 
   const renderUploadFiles = () => (
     <label htmlFor="contained-button-file">
-      <Input accept="image/*" id="contained-button-file" multiple type="file" />
-      <Button variant="contained" component="span" style={{width: '100%'}}>
+      <Input
+        accept="image/*"
+        onChange={(e: any) => setImages([images, e.target.value])}
+        id="contained-button-file"
+        multiple
+        type="file"
+      />
+      <Button variant="contained" component="span" style={{ width: "100%" }}>
         Ladda upp bilder
       </Button>
     </label>
