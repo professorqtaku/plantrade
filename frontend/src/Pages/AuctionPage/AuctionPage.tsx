@@ -6,6 +6,7 @@ import {
 import AuctionCard from "../../Components/AuctionCard/AuctionCard";
 import { useAuction } from "../../Contexts/AuctionContext";
 import { useEffect } from "react";
+import SearchField from "../../Components/Search/SearchField/SearchField";
 
 export interface Host {
   id: number;
@@ -37,7 +38,10 @@ const AuctionPage = () => {
 
   return (
     <StyledWrapper>
-      <StyledImg src="https://i.pinimg.com/564x/63/5e/b1/635eb177eef29242e96352f1206298da.jpg" />
+      <div>
+        <StyledImg src="https://i.pinimg.com/564x/63/5e/b1/635eb177eef29242e96352f1206298da.jpg" />
+        <SearchField />
+      </div>
       <StyledContentWrapper>
         {auctions &&
           auctions.map((auction: Auction) => (
