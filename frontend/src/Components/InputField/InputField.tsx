@@ -1,21 +1,12 @@
 import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
+import { StyledInput } from "./StyledInputField";
 
 interface Props {
   label: string;
 }
 
-const InputField = ({label}: Props) => {
-  return (
-    <Box
-      sx={{
-        width: 500,
-        maxWidth: "100%",
-      }}
-    >
-      <TextField fullWidth label={label} id={label} />
-    </Box>
-  );
+const InputField = ({ label }: Props) => {
+  return <StyledInput fullWidth label={label} id={label} />;
 };
 
 export default InputField;

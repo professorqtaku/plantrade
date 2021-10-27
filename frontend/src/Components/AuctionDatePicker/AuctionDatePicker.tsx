@@ -22,12 +22,14 @@ const AuctionDatePicker = ({ endDate }: Props) => {
   };
 
   return (
-    <StyledDatePicker
-      selected={startDate}
-      onChange={(date: Date) => handleChange(date)}
-      maxDate={oneMonth}
-      minDate={oneDay}
-    />
+    <div style={{zIndex: 100}}>
+      <StyledDatePicker
+        selected={startDate}
+        onChange={(date: Date) => handleChange(date)}
+        maxDate={oneMonth}
+        minDate={oneDay}
+      />
+    </div>
   );
 };
 

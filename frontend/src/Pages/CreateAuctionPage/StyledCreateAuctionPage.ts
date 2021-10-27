@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const StyledWrapper = styled.div``;
 
 export const StyledTitle = styled.p`
-  font-size: 2rem;
+  font-size: 1.5rem;
   text-transform: uppercase;
   letter-spacing: 2px;
   text-align: center;

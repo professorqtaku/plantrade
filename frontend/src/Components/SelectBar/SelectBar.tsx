@@ -2,11 +2,11 @@ import * as React from "react";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
 import ListItemText from "@mui/material/ListItemText";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
-import {StyledForm} from './StyledSelectBar'
+import { StyledForm } from "./StyledSelectBar";
+import FormControl from "@mui/material/FormControl";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -48,26 +48,26 @@ const SelectBar = ({ setCategoriesToUse }: Props) => {
   };
 
   return (
-      <StyledForm>
-        <InputLabel id="demo-multiple-checkbox-label">Kategorier</InputLabel>
-        <Select
-          labelId="demo-multiple-checkbox-label"
-          id="demo-multiple-checkbox"
-          multiple
-          value={categories}
-          onChange={handleChange}
-          input={<OutlinedInput label="Tag" />}
-          renderValue={(selected) => selected.join(", ")}
-          MenuProps={MenuProps}
-        >
-          {values.map((category) => (
-            <MenuItem key={category} value={category}>
-              <Checkbox checked={categories.indexOf(category) > -1} />
-              <ListItemText primary={category} />
-            </MenuItem>
-          ))}
-        </Select>
-      </StyledForm>
+    <StyledForm>
+      <InputLabel id="demo-multiple-checkbox-label">Kategori</InputLabel>
+      <Select
+        labelId="demo-multiple-checkbox-label"
+        id="demo-multiple-checkbox"
+        multiple
+        value={categories}
+        onChange={handleChange}
+        input={<OutlinedInput label="Kategori" />}
+        renderValue={(selected) => selected.join(", ")}
+        MenuProps={MenuProps}
+      >
+        {values.map((category) => (
+          <MenuItem key={category} value={category}>
+            <Checkbox checked={categories.indexOf(category) > -1} />
+            <ListItemText primary={category} />
+          </MenuItem>
+        ))}
+      </Select>
+    </StyledForm>
   );
 };
 

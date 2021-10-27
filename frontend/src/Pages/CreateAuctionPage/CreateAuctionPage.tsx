@@ -7,6 +7,7 @@ import {
 } from "./StyledCreateAuctionPage";
 import AuctionDatePicker from "../../Components/AuctionDatePicker/AuctionDatePicker";
 import SelectBar from "../../Components/SelectBar/SelectBar";
+import InputField from "../../Components/InputField/InputField";
 import { useState } from "react";
 
 const CreateAuctionPage = () => {
@@ -21,9 +22,9 @@ const CreateAuctionPage = () => {
     <StyledWrapper>
       <StyledTitle>Skapa auktion</StyledTitle>
       <StyledForm onSubmit={handleAddAuction}>
-        <StyledInput placeholder="Titel" />
-        <StyledInput placeholder="Beskrivning" />
-        <StyledInput placeholder="Start pris" />
+        <InputField label="Titel" />
+        <InputField label="Beskrivning" />
+        <InputField label="Start pris" />
         <AuctionDatePicker endDate={setEndDate} />
         <SelectBar setCategoriesToUse={setCategoriesToUse} />
         <StyledButton>Skapa auktion</StyledButton>
