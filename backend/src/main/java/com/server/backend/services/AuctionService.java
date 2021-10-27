@@ -1,9 +1,11 @@
 package com.server.backend.services;
 
 import com.server.backend.entities.Auction;
+import com.server.backend.entities.Image;
 import com.server.backend.entities.Status;
 import com.server.backend.entities.User;
 import com.server.backend.repositories.AuctionRepository;
+import com.server.backend.repositories.ImageRepository;
 import com.server.backend.specifications.AuctionSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -20,6 +22,9 @@ public class AuctionService {
 
     @Autowired
     private AuctionRepository auctionRepository;
+
+    @Autowired
+    private ImageRepository imageRepository;
 
     @Autowired
     private UploadImagesService uploadImagesService;
@@ -40,7 +45,7 @@ public class AuctionService {
         return auctionRepository.findByStatus(status);
     }
     
-    public Auction createAuction(Auction auction, User user, List<MultipartFile> files) {
+    public Auction createAuction(Auction auction, User user) {
         Date date = new Date();
         var inputDate = auction.getEndDate().getTime();
         if(Long.toString(inputDate).length() < 13) {
@@ -56,13 +61,19 @@ public class AuctionService {
         auction.setStatus(Status.OPEN);
         auction.setHost(user);
         Auction savedAuction = auctionRepository.save(auction);
-        System.out.println(savedAuction.getId() + " saved auction id is here");
-        if(savedAuction != null) {
-            var urls = uploadImagesService.saveFiles(files);
-            urls.forEach(url -> {
-                System.out.println(url + " is the url");
-            });
-        }
+        System.out.println("do we get here?");
+
+//        if(files != null) {
+//            System.out.println("do we get here?");
+//            var urls = uploadImagesService.saveFiles(files);
+//            urls.forEach(url -> {
+//                Image image = Image.builder()
+//                        .path(url)
+//                        .auction(savedAuction)
+//                        .build();
+//                var savedImage = imageRepository.save(image);
+//            });
+//        }
         return savedAuction;
     }
 
