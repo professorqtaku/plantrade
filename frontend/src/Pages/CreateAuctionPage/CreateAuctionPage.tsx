@@ -10,7 +10,7 @@ import SelectBar from "../../Components/SelectBar/SelectBar";
 import { useState } from "react";
 
 const CreateAuctionPage = () => {
-  const [endDate, setEndDate] = useState(0);
+  const [endDate, setEndDate] = useState<number | null>(null);
   const [categoriesToUse, setCategoriesToUse] = useState<String[] | null>(null);
 
   const handleAddAuction = (e: React.FormEvent<HTMLFormElement>) => {
@@ -25,10 +25,7 @@ const CreateAuctionPage = () => {
         <StyledInput placeholder="Beskrivning" />
         <StyledInput placeholder="Start pris" />
         <AuctionDatePicker endDate={setEndDate} />
-        <SelectBar
-          setCategoriesToUse={setCategoriesToUse}
-          categoriesToUse={categoriesToUse}
-        />
+        <SelectBar setCategoriesToUse={setCategoriesToUse} />
         <StyledButton>Skapa auktion</StyledButton>
       </StyledForm>
     </StyledWrapper>

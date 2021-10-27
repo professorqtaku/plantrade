@@ -5,7 +5,7 @@ import { StyledDatePicker } from "./StyledAuctionDatePicket";
 import "react-datepicker/dist/react-datepicker.css";
 
 interface Props {
-  endDate: React.Dispatch<React.SetStateAction<number>>;
+  endDate: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
 const AuctionDatePicker = ({ endDate }: Props) => {

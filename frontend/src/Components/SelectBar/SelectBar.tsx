@@ -6,6 +6,7 @@ import FormControl from "@mui/material/FormControl";
 import ListItemText from "@mui/material/ListItemText";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
+import {StyledForm} from './StyledSelectBar'
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -32,13 +33,10 @@ const values = [
 ];
 
 interface Props {
-  setCategoriesToUse: React.Dispatch<
-    React.SetStateAction<String[] | null>
-  >;
-  categoriesToUse: String[] | null;
+  setCategoriesToUse: React.Dispatch<React.SetStateAction<String[] | null>>;
 }
 
-const SelectBar = ({ setCategoriesToUse, categoriesToUse }: Props) => {
+const SelectBar = ({ setCategoriesToUse }: Props) => {
   const [categories, setCategories] = React.useState<string[]>([]);
 
   const handleChange = (event: SelectChangeEvent<typeof categories>) => {
@@ -46,12 +44,11 @@ const SelectBar = ({ setCategoriesToUse, categoriesToUse }: Props) => {
       target: { value },
     } = event;
     setCategories(typeof value === "string" ? value.split(",") : value);
-    setCategoriesToUse(categories);
+    setCategoriesToUse(typeof value === "string" ? value.split(",") : value);
   };
 
   return (
-    <div>
-      <FormControl sx={{ m: 1, width: 300 }}>
+      <StyledForm>
         <InputLabel id="demo-multiple-checkbox-label">Kategorier</InputLabel>
         <Select
           labelId="demo-multiple-checkbox-label"
@@ -70,8 +67,7 @@ const SelectBar = ({ setCategoriesToUse, categoriesToUse }: Props) => {
             </MenuItem>
           ))}
         </Select>
-      </FormControl>
-    </div>
+      </StyledForm>
   );
 };
 
