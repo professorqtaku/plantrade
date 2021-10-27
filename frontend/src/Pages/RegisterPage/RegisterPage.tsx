@@ -1,7 +1,11 @@
 import { useRef, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../Contexts/AuthContextProvider";
-import { StyledWrapper } from "./StyledRegisterPage";
+import {
+  StyledWrapper,
+  StyledForm,
+  StyledInput
+} from "./StyledRegisterPage";
 
 interface User {
   username: string,
@@ -33,14 +37,14 @@ const RegisterPage = () => {
   return (
     <StyledWrapper>
       <h3>Register Page</h3>
-      <form onSubmit={(e) => handleRegister(e)}>
+      <StyledForm onSubmit={(e) => handleRegister(e)}>
 
-        <input ref={usernameRef} type="text" placeholder="Username" />
-        <input ref={emailRef} type="email" placeholder="Email" />
-        <input ref={passwordRef} type="password" placeholder="Password" />
+        <StyledInput ref={usernameRef} required type="text" placeholder="Username" />
+        <StyledInput ref={emailRef} required type="email" placeholder="Email" />
+        <StyledInput ref={passwordRef} required type="password" placeholder="Password" />
 
         <button>Skapa Konto</button>
-      </form>
+      </StyledForm>
     </StyledWrapper>
   );
 }
