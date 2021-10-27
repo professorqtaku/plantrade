@@ -24,7 +24,7 @@ const CreateAuctionPage = () => {
       <StyledForm onSubmit={handleAddAuction}>
         <InputField label="Titel" />
         <InputField label="Beskrivning" />
-        <InputField label="Start pris" />
+        <InputField label="Start pris" type="number" />
         <AuctionDatePicker endDate={setEndDate} />
         <SelectBar setCategoriesToUse={setCategoriesToUse} />
         <StyledButton>Skapa auktion</StyledButton>
