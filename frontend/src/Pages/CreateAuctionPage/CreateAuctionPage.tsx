@@ -24,6 +24,14 @@ const CreateAuctionPage = () => {
 
   const handleAddAuction = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const auction = {
+      title: title,
+      description: desc,
+      startPrice: price,
+      endDate: endDate,
+      categories: categoriesToUse
+    };
   };
 
   const renderUploadFiles = () => (
