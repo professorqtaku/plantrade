@@ -5,7 +5,7 @@ interface Props {
   label: string;
   type?: string;
   updateState: React.Dispatch<React.SetStateAction<any>>;
-  value: string | number;
+  value: string | number | undefined;
 }
 
 const InputField = ({ label, type, updateState, value }: Props) => {
