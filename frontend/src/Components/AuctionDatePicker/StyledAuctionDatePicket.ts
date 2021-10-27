@@ -8,3 +8,7 @@ export const StyledDatePicker = styled(DatePicker)`
   border: 1px solid lightgray;
   border-radius: 4px;
 `;
+
+export const StyledWrapper = styled.div`
+  z-index: 100;
+`

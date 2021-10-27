@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
-import { StyledDatePicker } from "./StyledAuctionDatePicket";
+import { StyledDatePicker, StyledWrapper } from "./StyledAuctionDatePicket";
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -22,14 +22,14 @@ const AuctionDatePicker = ({ endDate }: Props) => {
   };
 
   return (
-    <div style={{zIndex: 100}}>
+    <StyledWrapper>
       <StyledDatePicker
         selected={startDate}
         onChange={(date: Date) => handleChange(date)}
         maxDate={oneMonth}
         minDate={oneDay}
       />
-    </div>
+    </StyledWrapper>
   );
 };
 

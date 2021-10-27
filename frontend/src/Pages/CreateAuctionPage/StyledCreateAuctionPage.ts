@@ -28,5 +28,6 @@ export const StyledButton = styled.button`
   text-transform: uppercase;
   font-size: 1rem;
   letter-spacing: 3px;
-  padding: 0.5rem;
+  padding: 1rem;
+  border-radius: 4px;
 `;
