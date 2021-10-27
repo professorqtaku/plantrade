@@ -9,6 +9,7 @@ import {
   StyledSpan,
 } from "./StyledAuctionCard";
 import { Auction } from "../../Pages/AuctionPage/AuctionPage";
+import { useAuction } from "../../Contexts/AuctionContext";
 import { useEffect, useState } from "react";
 
 interface Props {
@@ -29,7 +30,9 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
   const [bid, setBid] = useState(0);
   // Delete when the auction got bids..
   const [highestBid, setHighestBid] = useState(100);
-
+  
+  const { createBid } = useAuction();
+  
   useEffect(() => {
     handleFastBid();
   }, []);
@@ -87,21 +90,27 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
 
   const handleFastBid = () => {
     if (highestBid <= 10) {
-      setBid(1);
+      setBid(highestBid + 1);
     }
     if (highestBid <= 100 && highestBid > 10) {
-      setBid(10);
+      setBid(highestBid + 10);
     }
     if (highestBid <= 1000 && highestBid > 100) {
-      setBid(100);
+      setBid(highestBid + 100);
     }
     if (highestBid > 1000) {
-      setBid(1000);
+      setBid(highestBid + 1000);
     }
   };
 
-  const handleBid = () => {
-    // Post to add a bid..
+  const handleBid = async () => {
+    const newBid = {
+      userId: 3,
+      auctionId: auction.id,
+      price: bid,
+      createdDate: Date.now()
+    }
+    createBid(newBid);
   };
 
   return (
