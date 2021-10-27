@@ -55,7 +55,7 @@ const MyPage = () => {
           {wrongPassword && <p>Wrong username/password</p>}
           <StyledLoginBtn>Logga in</StyledLoginBtn>
           <StyledDivider />
-          <StyledText>Har du inte ett konto? <StyledSpan style={{color: '#006fd0'}}>Skapa ett</StyledSpan></StyledText>
+          <StyledText>Har du inte ett konto? <StyledSpan onClick={() => history.push('/register')}>Skapa ett</StyledSpan></StyledText>
         </StyledForm>
       </BasicModal>
 

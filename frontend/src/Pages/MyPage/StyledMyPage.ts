@@ -64,7 +64,7 @@ export const StyledPwIcon = styled(VpnKeyIcon)`
 
 
 export const StyledSpan = styled.span`
-
+  color: #006fd0;
 `;
 export const StyledText= styled.p`
   padding-top: 40px;
