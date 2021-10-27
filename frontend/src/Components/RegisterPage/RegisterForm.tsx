@@ -9,8 +9,9 @@ import {
   StyledPorfileIcon,
   StyledPwIcon,
   StyledEmailIcon,
-  StyledInputDiv
-} from "./StyledRegisterPage";
+  StyledInputDiv,
+  StyledTitle
+} from "./StyledRegisterForm";
 
 interface User {
   username: string,
@@ -18,7 +19,7 @@ interface User {
   password: string
 }
 
-const RegisterPage = () => {
+const RegisterForm = () => {
 
   const { registerUser } = useContext(AuthContext)
   const history = useHistory();
@@ -41,7 +42,7 @@ const RegisterPage = () => {
 
   return (
     <StyledWrapper>
-      <h3>Register Page</h3>
+      <StyledTitle>Skapa Konto</StyledTitle>
       <StyledForm onSubmit={(e) => handleRegister(e)}>
 
         <StyledInputDiv>
@@ -58,4 +59,4 @@ const RegisterPage = () => {
   );
 }
 
-export default RegisterPage;
+export default RegisterForm;

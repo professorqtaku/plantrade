@@ -7,6 +7,14 @@ export const StyledWrapper = styled.div`
   
 `;
 
+export const StyledLoginContainer = styled.div`
+
+`;
+
+export const StyledRegisterContainer = styled.div`
+
+`;
+
 export const Styledh3 = styled.p`
   text-align: center;
   font-size: 20px;

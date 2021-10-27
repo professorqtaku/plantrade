@@ -1,9 +1,10 @@
 import { FormEvent } from "react";
-import { useRef, useContext } from "react";
+import { useRef, useContext, useState } from "react";
 import { useHistory } from "react-router";
 import BasicModal from "../../Components/Modal/BaiscModal";
 import Divider from '@mui/material/Divider';
 import { AuthContext } from "../../Contexts/AuthContextProvider";
+import RegisterForm from "../../Components/RegisterPage/RegisterForm";
 import {
   StyledWrapper,
   Styledh3,
@@ -15,7 +16,9 @@ import {
   StyledPwIcon,
   StyledText,
   StyledSpan,
-  StyledDivider
+  StyledDivider,
+  StyledLoginContainer,
+  StyledRegisterContainer
 } from "./StyledMyPage";
 
 const MyPage = () => {
@@ -46,7 +49,9 @@ const MyPage = () => {
       {whoAmI && whoAmI.username ? <p>Välkommen, {whoAmI.username}</p> : ''}
       {whoAmI ? <button onClick={handleLogout}>Logga ut</button> : 'Not logged in'}
       <BasicModal>
-        <Styledh3>LOGGA IN</Styledh3>
+        <StyledLoginContainer>
+
+          <Styledh3>LOGGA IN</Styledh3>
         <StyledForm onSubmit={e => handleLogin(e)}>
         <StyledDiv>
           <StyledPorfileIcon/><StyledInput required ref={usernameRef} type="text" placeholder="Användarnamn" />
@@ -57,6 +62,13 @@ const MyPage = () => {
           <StyledDivider />
           <StyledText>Har du inte ett konto? <StyledSpan onClick={() => history.push('/register')}>Skapa ett</StyledSpan></StyledText>
         </StyledForm>
+
+        </StyledLoginContainer>
+
+        <StyledRegisterContainer>
+        <RegisterForm/>
+        </StyledRegisterContainer>
+
       </BasicModal>
 
     </StyledWrapper>

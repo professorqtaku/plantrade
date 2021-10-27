@@ -58,3 +58,9 @@ export const StyledEmailIcon = styled(AlternateEmailIcon)`
   color: grey;
   margin-top: 20px;
 `;
+
+export const StyledTitle = styled.p`
+  text-align: center;
+  font-size: 20px;
+  letter-spacing: 1.5px;
+`;

@@ -3,7 +3,7 @@ import AuctionDetailPage from "../Pages/AuctionDetailPage/AuctionDetailPage";
 import AuctionPage from "../Pages/AuctionPage/AuctionPage";
 import HomePage from "../Pages/HomePage/HomePage";
 import MyPage from "../Pages/MyPage/MyPage";
-import RegisterPage from "../Pages/RegisterPage/RegisterPage";
+import RegisterPage from "../Components/RegisterPage/RegisterForm";
 
 interface Props {
   children: JSX.Element
