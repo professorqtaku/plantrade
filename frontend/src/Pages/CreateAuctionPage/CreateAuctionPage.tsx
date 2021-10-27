@@ -11,6 +11,9 @@ import InputField from "../../Components/InputField/InputField";
 import { useState } from "react";
 
 const CreateAuctionPage = () => {
+  const [title, setTitle] = useState('');
+  const [desc, setDesc] = useState("");
+  const [price, setPrice] = useState(0);
   const [endDate, setEndDate] = useState<number | null>(null);
   const [categoriesToUse, setCategoriesToUse] = useState<String[] | null>(null);
 
@@ -22,9 +25,9 @@ const CreateAuctionPage = () => {
     <StyledWrapper>
       <StyledTitle>Skapa auktion</StyledTitle>
       <StyledForm onSubmit={handleAddAuction}>
-        <InputField label="Titel" />
-        <InputField label="Beskrivning" />
-        <InputField label="Start pris" type="number" />
+        <InputField label="Titel" updateState={setTitle} />
+        <InputField label="Beskrivning" updateState={setDesc} />
+        <InputField label="Start pris" type="number" updateState={setPrice} />
         <AuctionDatePicker endDate={setEndDate} />
         <SelectBar setCategoriesToUse={setCategoriesToUse} />
         <StyledButton>Skapa auktion</StyledButton>
