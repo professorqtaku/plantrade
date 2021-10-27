@@ -1,18 +1,21 @@
 import { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
 import Grid from '@mui/material/Grid';
-import SkeletonCard from '../../Components/AuctionCard/SkeletonCard';
+import SkeletonCard from '../../Components/AuctionCard/utils/SkeletonCard';
 import { useAuction } from '../../Contexts/AuctionContext';
 import Input from '@mui/material/Input';
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import ImageCarousel from '../../Components/AuctionCard/utils/ImageCarousel';
+import ExpandableDescriptionBox from '../../Components/AuctionCard/utils/ExpandableDescriptionBox';
 import {
   StyledWrapper,
-  StyledGridLeft,
-  StyledGridRight,
   StyledPrice,
   StyledBidInput,
-  StyledBidBtn
+  StyledBidBtn,
+  StyledBackBtn
 } from "./StyledAuctionDetailPage";
-import { BluetoothDisabled } from '@mui/icons-material';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { useHistory } from 'react-router-dom'
 
 interface Auction {
   id: Number,
@@ -31,12 +34,14 @@ interface Auction {
 }
 
 
+
 const AuctionDetailPage = () => {
   const { id }: any = useParams();
   const { getAuctionById } = useAuction();
   const [auction, setAuction] = useState<Auction>();
   const [bid, setBid] = useState<number>();
   const ariaLabel = { 'aria-label': 'description' };
+  const history = useHistory();
 
   useEffect(() => {
     handleGetAuctionById();
@@ -56,11 +61,21 @@ const AuctionDetailPage = () => {
     console.log('I want to bid')
   }
 
+  const handleChat = () => {
+    console.log('I want to chat with the seller')
+  }
 
   return (
     <StyledWrapper>
       {!auction ? <SkeletonCard /> :
-        (<Grid container spacing={2}>
+        (<>
+          <StyledBackBtn>
+            <p onClick={() => history.push('/auctions')}><ArrowBackIosIcon />Tillbaka</p>
+          </StyledBackBtn>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={12}>
+            <ImageCarousel images={auction.images} />
+          </Grid>
           <Grid item xs={6} md={8}>
             <div></div>
           </Grid>
@@ -71,13 +86,19 @@ const AuctionDetailPage = () => {
             <div>{auction.title}</div>
           </Grid>
           <Grid item xs={6} md={4}>
-            <div>Chatta med säljare</div>
+            <div onClick={handleChat} style={{cursor: 'pointer'}}>Chatta med säljare <ChatBubbleOutlineIcon /></div>
           </Grid>
           <Grid item xs={6} md={8}>
-            <div>{auction.endDate}</div>
+            <div>{new Date(auction.endDate).toLocaleString('sv-SV')}</div>
           </Grid>
           <Grid item xs={6} md={4}>
-            <div>xs=6 md=8</div>
+            <div></div>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <ExpandableDescriptionBox {...auction.description} />
+          </Grid>
+          <Grid item md={6}>
+            <div></div>
           </Grid>
           <Grid item xs={12} md={12}>
             <StyledPrice>{auction.bids.length ? auction.bids[auction.bids.length - 1] : auction.startPrice} Kr<br />
@@ -87,9 +108,9 @@ const AuctionDetailPage = () => {
             <StyledBidInput><Input placeholder="Ditt pris" inputProps={ariaLabel} onChange={(e: any) => setBid(e.target.value)} /> Kr</StyledBidInput>
           </Grid>
           <Grid item xs={6} md={6}>
-            <StyledBidBtn onClick={handleBid}>Buda</StyledBidBtn>
+            <StyledBidBtn onClick={handleBid} style={{cursor: 'pointer'}}>Buda</StyledBidBtn>
           </Grid>
-        </Grid>)}
+        </Grid></>)}
     </StyledWrapper>
   );
 }
