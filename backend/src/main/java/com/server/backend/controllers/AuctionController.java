@@ -43,11 +43,11 @@ public class AuctionController {
     }
 
     @PostMapping
-    public ResponseEntity<Auction> createAuction(@RequestBody Auction auction,
-                                                 @RequestParam List<MultipartFile> files){
+    public ResponseEntity<Auction> createAuction(@RequestBody Auction auction){
+//        @RequestParam(required=false) List<MultipartFile> files
         var user = userService.findCurrentUser();
         if(user != null) {
-            Auction savedAuction = auctionService.createAuction(auction, user, files);
+            Auction savedAuction = auctionService.createAuction(auction, user);
             if(savedAuction != null) {
                 return ResponseEntity.ok(savedAuction);
             } else {
