@@ -1,18 +1,34 @@
 import styled from "styled-components";
-import { FormControl, TextField } from "@mui/material";
+import { FormControl, IconButton, TextField } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 
+interface Props {
+  hasText?: boolean
+}
 
 export const StyledTextField = styled(TextField)`
   background-color: var(--yellow);
   border-radius: 50px;
   padding: 2% 5%;
   width: 100%;
-  font-family: var(--text);
 `;
 
 export const StyledFormControl = styled(FormControl)`
   background-color: var(--yellow);
   border-radius: 50px;
   width: 100%;
-  font-family: var(--text);
+`;
+
+export const StyledIconButton = styled(IconButton)<Props>`
+  background-color: var(--light-green);
+  &:focus {
+    background-color: var(--light-green);
+  }
+`;
+
+export const StyledSearchIcon = styled(SearchIcon)`
+  background-color: var(--light-green);
+  &:focus {
+    background-color: var(--light-green);
+  }
 `;

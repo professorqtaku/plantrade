@@ -1,23 +1,34 @@
-import React, { FC } from "react";
-import { InputAdornment } from "@mui/material";
-import { StyledTextField, StyledFormControl } from "./StyledSearchField";
-import SearchIcon from "@mui/icons-material/Search";
+import React, { BaseSyntheticEvent, FC } from "react";
+import {
+  StyledTextField,
+  StyledFormControl,
+  StyledIconButton,
+  StyledSearchIcon,
+} from "./StyledSearchField";
 
-const SearchField = () => {
+interface Props {
+  searchText?: string;
+  setSearchText: Function;
+}
+
+const SearchField = ({ searchText, setSearchText }: Props) => {
+
   return (
     <StyledFormControl>
       <StyledTextField
         id="search-input-field"
         variant="standard"
-        type="search"
+        type="text"
+        value={searchText}
+        onChange={(e: BaseSyntheticEvent) => setSearchText(e.target.value)}
         inputProps={{
           style: { fontFamily: "'Abhaya Libre', serif", fontSize: 24 },
         }}
         InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon />
-            </InputAdornment>
+          endAdornment: (
+            <StyledIconButton type="submit">
+              <StyledSearchIcon />
+            </StyledIconButton>
           ),
           disableUnderline: true,
         }}

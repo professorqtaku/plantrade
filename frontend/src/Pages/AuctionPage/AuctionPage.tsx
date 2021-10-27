@@ -9,6 +9,7 @@ import AuctionCard from "../../Components/AuctionCard/AuctionCard";
 import { useAuction } from "../../Contexts/AuctionContext";
 import { useEffect } from "react";
 import SearchField from "../../Components/Search/SearchField/SearchField";
+import SearchForm from "../../Components/Search/SearchForm/SearchForm";
 
 export interface Host {
   id: number;
@@ -43,7 +44,7 @@ const AuctionPage = () => {
       <StyledSearchWrapper>
         <StyledImg src="https://i.pinimg.com/564x/63/5e/b1/635eb177eef29242e96352f1206298da.jpg" />
         <StyledSearchFieldWrapper>
-          <SearchField />
+          <SearchForm />
         </StyledSearchFieldWrapper>
       </StyledSearchWrapper>
       <StyledContentWrapper>
