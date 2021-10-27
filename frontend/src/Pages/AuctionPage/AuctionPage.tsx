@@ -2,6 +2,8 @@ import {
   StyledWrapper,
   StyledImg,
   StyledContentWrapper,
+  StyledSearchWrapper,
+  StyledSearchFieldWrapper,
 } from "./StyledAuctionPage";
 import AuctionCard from "../../Components/AuctionCard/AuctionCard";
 import { useAuction } from "../../Contexts/AuctionContext";
@@ -38,10 +40,12 @@ const AuctionPage = () => {
 
   return (
     <StyledWrapper>
-      <div>
+      <StyledSearchWrapper>
         <StyledImg src="https://i.pinimg.com/564x/63/5e/b1/635eb177eef29242e96352f1206298da.jpg" />
-        <SearchField />
-      </div>
+        <StyledSearchFieldWrapper>
+          <SearchField />
+        </StyledSearchFieldWrapper>
+      </StyledSearchWrapper>
       <StyledContentWrapper>
         {auctions &&
           auctions.map((auction: Auction) => (

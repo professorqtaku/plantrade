@@ -1,16 +1,18 @@
 import React, { FC } from "react";
-import { FormControl, InputAdornment } from "@mui/material";
-import { StyledTextField } from "./StyledSearchField";
+import { InputAdornment } from "@mui/material";
+import { StyledTextField, StyledFormControl } from "./StyledSearchField";
 import SearchIcon from "@mui/icons-material/Search";
 
 const SearchField = () => {
   return (
-    <FormControl>
+    <StyledFormControl>
       <StyledTextField
         id="search-input-field"
         variant="standard"
         type="search"
-        inputProps={{style: {fontFamily: "'Abhaya Libre', serif", fontSize: 24}}}
+        inputProps={{
+          style: { fontFamily: "'Abhaya Libre', serif", fontSize: 24 },
+        }}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
@@ -20,7 +22,7 @@ const SearchField = () => {
           disableUnderline: true,
         }}
       />
-    </FormControl>
+    </StyledFormControl>
   );
 };
 
