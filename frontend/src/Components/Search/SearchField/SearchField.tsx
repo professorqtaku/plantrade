@@ -10,6 +10,7 @@ const SearchField = () => {
         id="search-input-field"
         variant="standard"
         type="search"
+        inputProps={{style: {fontFamily: "'Abhaya Libre', serif", fontSize: 24}}}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
