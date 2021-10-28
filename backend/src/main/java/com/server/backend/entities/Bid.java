@@ -29,7 +29,7 @@ public class Bid {
   @ManyToOne
   @JsonIgnoreProperties({"bids"})
   private Auction auction;
-
   private double price;
   private Date createdDate;
+
 }
