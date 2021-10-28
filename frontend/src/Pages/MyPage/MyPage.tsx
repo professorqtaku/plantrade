@@ -16,23 +16,21 @@ import { useState } from "react";
 import { useHistory } from "react-router";
 
 const MyPage = () => {
-  const [editEmail, setEditEmail] = useState(false);
-  const [editPassword, setEditPassword] = useState(false);
+  const [onEditEmail, setOnEditEmail] = useState(false);
+  const [onEditPassword, setOnEditPassword] = useState(false);
   const [email, setEmail] = useState("Email");
   const [password, setPassword] = useState("Lösenord");
   const history = useHistory();
 
-  const renderEditFields = () => (
+  const renderEditFields = (
     <StyledEditWrapper>
-      {!editEmail && (
+      {!onEditEmail ? (
         <StyledText>
-          <StyledEdit onClick={() => setEditEmail(true)} /> {email}
+          <StyledEdit onClick={() => setOnEditEmail(true)} /> {email}
         </StyledText>
-      )}
-
-      {editEmail && (
+      ) : (
         <StyledCheckWrapper>
-          <StyledCheck onClick={() => setEditEmail(false)} />
+          <StyledCheck onClick={() => setOnEditEmail(false)} />
           <StyledInput
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -40,15 +38,13 @@ const MyPage = () => {
         </StyledCheckWrapper>
       )}
 
-      {!editPassword && (
+      {!onEditPassword ? (
         <StyledText>
-          <StyledEdit onClick={() => setEditPassword(true)} /> {password}
+          <StyledEdit onClick={() => setOnEditPassword(true)} /> {password}
         </StyledText>
-      )}
-
-      {editPassword && (
+      ) : (
         <StyledCheckWrapper>
-          <StyledCheck onClick={() => setEditPassword(false)} />
+          <StyledCheck onClick={() => setOnEditPassword(false)} />
           <StyledInput
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -58,9 +54,12 @@ const MyPage = () => {
     </StyledEditWrapper>
   );
 
-  const renderNavigations = () => (
+  const renderNavigations = (
     <StyledNavigationWrapper>
-      <Button callback={() => history.push('/createAuction')} label="Skapa en auktion" />
+      <Button
+        callback={() => history.push("/createAuction")}
+        label="Skapa en auktion"
+      />
       <Button label="Mina vunna auktioner" />
       <Button label="Statistik" />
       <Button label="Mina auktioner" />
@@ -77,8 +76,8 @@ const MyPage = () => {
         <StyledBoldText>Username: </StyledBoldText>
         Oscar
       </StyledText>
-      {renderEditFields()}
-      {renderNavigations()}
+      {renderEditFields}
+      {renderNavigations}
     </StyledWrapper>
   );
 };
