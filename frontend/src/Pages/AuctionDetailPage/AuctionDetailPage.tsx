@@ -74,7 +74,7 @@ const AuctionDetailPage = () => {
           </StyledBackBtn>
           <Grid container spacing={2}>
             <Grid item xs={12} md={12}>
-            <ImageCarousel images={auction.images} />
+            {/* <ImageCarousel images={auction.images} /> */}
           </Grid>
           <Grid item xs={6} md={8}>
             <div></div>

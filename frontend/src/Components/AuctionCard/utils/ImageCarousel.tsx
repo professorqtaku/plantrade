@@ -39,7 +39,8 @@ function ImageCarousel(images:any) {
   return (
     <Carousel
       NextIcon={<NavigateNextIcon />}
-      PrevIcon={<NavigateBeforeIcon />}>
+      PrevIcon={<NavigateBeforeIcon />}
+      autoPlay={false}>
         {images.map((image:any, i:number) => <Item key={i} item={image} /> )}
       </Carousel>
   )
@@ -50,9 +51,7 @@ function Item(props:any)
   console.log('this is props', props)
     return (
       <StyledPaper>
-        <Paper>
             <StyledImage><img src={props.item.path}></img></StyledImage>
-        </Paper>
       </StyledPaper>
     )
 }
