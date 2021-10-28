@@ -13,12 +13,14 @@ import {
 } from "./StyledMyPage";
 import Button from "../../Components/Button/ButtonComp";
 import { useState } from "react";
+import { useHistory } from "react-router";
 
 const MyPage = () => {
   const [editEmail, setEditEmail] = useState(false);
   const [editPassword, setEditPassword] = useState(false);
   const [email, setEmail] = useState("Email");
   const [password, setPassword] = useState("Lösenord");
+  const history = useHistory();
 
   const renderEditFields = () => (
     <StyledEditWrapper>
@@ -58,7 +60,7 @@ const MyPage = () => {
 
   const renderNavigations = () => (
     <StyledNavigationWrapper>
-      <Button label="Skapa en auktion" />
+      <Button callback={() => history.push('/createAuction')} label="Skapa en auktion" />
       <Button label="Mina vunna auktioner" />
       <Button label="Statistik" />
       <Button label="Mina auktioner" />
