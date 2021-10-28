@@ -49,14 +49,17 @@ const AuctionPage = () => {
         </StyledSearchFieldWrapper>
       </StyledSearchWrapper>
       <StyledContentWrapper>
-        {auctions &&
-          auctions.map((auction: Auction) => (
+        {auctions && auctions.length > 0
+        ? auctions.map((auction: Auction) => (
             <AuctionCard
               key={auction.id}
               auction={auction}
               fetchAuctions={handleGetAuctions}
             />
-          ))}
+          ))
+          :
+          <p>Finns tyvärr inget uppe just nu :(</p>
+        }
       </StyledContentWrapper>
     </StyledWrapper>
   );
