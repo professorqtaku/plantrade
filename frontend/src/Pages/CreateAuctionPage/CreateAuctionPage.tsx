@@ -2,7 +2,6 @@ import {
   StyledWrapper,
   StyledForm,
   StyledTitle,
-  StyledButton,
 } from "./StyledCreateAuctionPage";
 import AuctionDatePicker from "../../Components/AuctionDatePicker/AuctionDatePicker";
 import SelectBar from "../../Components/SelectBar/SelectBar";
@@ -10,6 +9,7 @@ import InputField from "../../Components/InputField/InputField";
 import { useState } from "react";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
+import ButtonComp from "../../Components/Button/ButtonComp"
 
 const Input = styled("input")({
   display: "none",
@@ -77,7 +77,7 @@ const CreateAuctionPage = () => {
         <AuctionDatePicker endDate={setEndDate} />
         <SelectBar setCategoriesToUse={setCategoriesToUse} />
         {renderUploadFiles()}
-        <StyledButton>Skapa auktion</StyledButton>
+        <ButtonComp label="Skapa auktion"/>
       </StyledForm>
     </StyledWrapper>
   );

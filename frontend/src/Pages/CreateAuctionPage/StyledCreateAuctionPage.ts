@@ -21,13 +21,3 @@ export const StyledInput = styled.input`
   outline: none;
 `;
 
-export const StyledButton = styled.button`
-  background: #619463;
-  color: white;
-  border: none;
-  text-transform: uppercase;
-  font-size: 1rem;
-  letter-spacing: 3px;
-  padding: 1rem;
-  border-radius: 4px;
-`;
