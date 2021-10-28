@@ -20,16 +20,11 @@ const MenuProps = {
 };
 
 const values = [
-  "Kategori 1",
-  "Kategori 2",
-  "Kategori 3",
-  "Kategori 4",
-  "Kategori 5",
-  "Kategori 6",
-  "Kategori 7",
-  "Kategori 8",
-  "Kategori 9",
-  "Kategori 10",
+  "Blomma",
+  "Träd",
+  "Stickling",
+  "Frö",
+  "Buske"
 ];
 
 interface Props {
