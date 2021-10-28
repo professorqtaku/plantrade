@@ -11,7 +11,8 @@ import {
   StyledPwIcon,
   StyledEmailIcon,
   StyledInputDiv,
-  StyledTitle
+  StyledTitle,
+  StyledText
 } from "./StyledRegisterForm";
 
 interface User {
@@ -22,13 +23,13 @@ interface User {
 
 const RegisterForm = () => {
 
-  const { registerUser } = useContext(AuthContext)
+  const { registerUser, userExists } = useContext(AuthContext)
   const history = useHistory();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleRegister = async (e: React.FormEvent) => {
+  const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
  
     const userObject: User = {
@@ -36,8 +37,7 @@ const RegisterForm = () => {
       email: email,
       password: password
     }
-    await registerUser(userObject);
-    history.push('/');
+    registerUser(userObject);
   }
 
   return (
@@ -50,9 +50,8 @@ const RegisterForm = () => {
           <StyledPorfileIcon /><InputField value={username} label="username" updateState={e => setUsername(e)} required/>
         <StyledEmailIcon/><InputField value={email} label="email" updateState={e => setEmail(e)} required/>
         <StyledPwIcon/><InputField value={password} type="password" label="password" updateState={e => setPassword(e)} required/>     
-
         </StyledInputDiv>
-
+        {userExists && <StyledText>The user already exists.</StyledText>}
         <StyledBtn>Skapa Konto</StyledBtn>
       </StyledForm>
     </StyledWrapper>

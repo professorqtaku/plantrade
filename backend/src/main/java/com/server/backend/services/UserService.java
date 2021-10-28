@@ -36,8 +36,8 @@ public class UserService {
     }
 
     public User createUser(User user) {
-        var test = userRepository.findByEmail(user.getEmail());
-        if(test == null){
+        var newUser = userRepository.findByEmail(user.getEmail());
+        if(newUser == null){
             return myUserDetailsService.addUser(user);
         }
         return null;

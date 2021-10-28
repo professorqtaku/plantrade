@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect} from "react";
+import { useHistory } from "react-router-dom";
 
 interface Props {
   children?: JSX.Element
@@ -12,6 +13,7 @@ type User = {
 export const AuthContext = createContext<any>(null);
   
 export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
+  const history = useHistory();
   const [whoAmI, setWhoAmI] = useState(null);
   const [wrongPassword, setWrongPassword] = useState(false);
   const [userExists, setUserExists] = useState(false);
@@ -31,8 +33,14 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
     })
     if (res.status == 400) {
       setUserExists(true);
+      console.log("user exists")
+
+    } if (res.status == 200) {
+      setUserExists(false);
+      history.push('/')
+      console.log("user was registered")
     }
-    setUserExists(false);
+      
   }
 
   const login = async (user: User) => {
@@ -77,6 +85,7 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
     login,
     logout,
     wrongPassword,
+    userExists,
     whoIsOnline,
     whoAmI
   }

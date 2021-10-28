@@ -41,7 +41,7 @@ export const StyledBtn = styled.button`
   background-color: #619463;
   color: white;
   width: 100%;
-  margin-top: 20px;
+  margin-top: 15px;
 `;
 
 export const StyledPorfileIcon = styled(PersonIcon)`
@@ -66,4 +66,12 @@ export const StyledTitle = styled.p`
   text-align: center;
   font-size: 20px;
   letter-spacing: 1.5px;
+`;
+
+export const StyledText = styled.p`
+  color: red;
+  text-align: center;
+  margin: 0;
+  padding-top: 10px;
+  font-size: 16px;
 `;
