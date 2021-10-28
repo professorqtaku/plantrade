@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Avatar from "@mui/material/Avatar";
 import EditIcon from "@mui/icons-material/Edit";
+import DoneIcon from "@mui/icons-material/Done";
 
 export const StyledWrapper = styled.div`
   width: 90%;
@@ -12,6 +13,10 @@ export const StyledAvatar = styled(Avatar)`
 `;
 
 export const StyledEdit = styled(EditIcon)`
+  color: #619463;
+`;
+
+export const StyledCheck = styled(DoneIcon)`
   color: #619463;
 `;
 
@@ -43,3 +48,18 @@ export const StyledNavigationWrapper = styled.div`
   display: grid;
   grid-gap: 1rem;
 `;
+
+export const StyledCheckWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+`
+
+export const StyledInput = styled.input`
+  border: none;
+  border-bottom: 1px solid gray;
+  background: white;
+  color: black;
+  outline: none;
+  font-size: 1rem;
+  width: 50%;
+`
