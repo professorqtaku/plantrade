@@ -45,7 +45,7 @@ public class AuctionController {
 
 //    public ResponseEntity<Auction> createAuction(@RequestBody Auction auction, @RequestParam(required=false) List<MultipartFile> files){
     @PostMapping
-    public ResponseEntity<Auction> createAuction(@RequestPart("auction") Auction auction, @RequestPart("file") List<MultipartFile> files){
+    public ResponseEntity<Auction> createAuction(@RequestBody Auction auction, @RequestPart(value = "file", required = false) List<MultipartFile> files){
         var user = userService.findCurrentUser();
         if(user != null) {
             Auction savedAuction = auctionService.createAuction(auction, user, files);
