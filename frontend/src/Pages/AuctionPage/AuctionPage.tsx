@@ -4,7 +4,7 @@ import {
   StyledContentWrapper,
 } from "./StyledAuctionPage";
 import AuctionCard from "../../Components/AuctionCard/AuctionCard";
-import { useAuction } from "../../Contexts/AuctionContext";
+import { useAuction, Bid } from "../../Contexts/AuctionContext";
 import { useEffect } from "react";
 
 export interface Host {
@@ -22,6 +22,7 @@ export interface Auction {
   status?: String;
   endDate?: String;
   host?: Host;
+  bids: Array<Bid> | undefined;
 }
 
 const AuctionPage = () => {
