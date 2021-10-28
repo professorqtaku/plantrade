@@ -1,14 +1,13 @@
-
-import {
-  StyledWrapper
-} from "./StyledMyPage";
+import Avatar from "@mui/material/Avatar";
+import { StyledWrapper, StyledAvatar } from "./StyledMyPage";
+import EditIcon from "@mui/icons-material/Edit";
 
 const MyPage = () => {
   return (
     <StyledWrapper>
-      <h3>MyPage</h3>
+      <StyledAvatar>N</StyledAvatar>
     </StyledWrapper>
   );
-}
+};
 
 export default MyPage;
