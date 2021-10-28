@@ -63,6 +63,6 @@ Content-Type: application/json
 GET http://localhost:4000/rest/auctions/search?title=test
 
 ### get auctions by title and category
-GET http://localhost:4000/rest/auctions/search?title=test&category=Blomma
+GET http://localhost:4000/rest/auctions/search?title=s&category=Blomma%20ätbar
 
 ###
