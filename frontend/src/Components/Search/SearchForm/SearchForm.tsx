@@ -15,8 +15,7 @@ type Auction = {
 };
 
 const SearchForm = () => {
-  const [searchText, setSearchText] = useState('');
-  const { getAuctionsByTitles } = useSearch();
+  const { getAuctionsByTitles, searchText, setSearchText } = useSearch();
   const { setAuctions, getAllAuctions } = useAuction();
 
   const search = async (e: BaseSyntheticEvent) => {    

@@ -1,4 +1,4 @@
-import React, { createContext, FC, useContext } from 'react'
+import React, { createContext, FC, useContext, useState } from 'react'
 
 type Props = {
   children?: JSX.Element;
@@ -18,7 +18,8 @@ const SearchContext = createContext<any>(null);
 
 export const useSearch = () => useContext(SearchContext);
 
-const SearchProvider:FC<Props> = ({ children }: Props)=> {
+const SearchProvider: FC<Props> = ({ children }: Props) => {
+    const [searchText, setSearchText] = useState("");
 
   const getAuctionsByTitles = async (search: string) => {
     if (search.trim().length > 0) {
@@ -32,6 +33,8 @@ const SearchProvider:FC<Props> = ({ children }: Props)=> {
   };
 
   const value = {
+    searchText,
+    setSearchText,
     getAuctionsByTitles,
   };
 

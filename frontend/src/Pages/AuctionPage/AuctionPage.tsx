@@ -9,6 +9,7 @@ import AuctionCard from "../../Components/AuctionCard/AuctionCard";
 import { useAuction } from "../../Contexts/AuctionContext";
 import { useEffect } from "react";
 import SearchForm from "../../Components/Search/SearchForm/SearchForm";
+import { useSearch } from "../../Contexts/SearchContext";
 
 export interface Host {
   id: number;
@@ -29,13 +30,14 @@ export interface Auction {
 
 const AuctionPage = () => {
   const { getAllAuctions, auctions } = useAuction();
+  const { searchText } = useSearch();
 
   useEffect(() => {
     handleGetAuctions();
   }, []);
 
   const handleGetAuctions = async () => {
-    if (auctions.length < 0) {
+    if (auctions.length <= 0 && searchText.trim().length <= 0) {
       await getAllAuctions();
     }
   };
