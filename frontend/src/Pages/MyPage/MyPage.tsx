@@ -26,6 +26,7 @@ import {
   StyledNavigationWrapper,
 } from "./StyledMyPage";
 import Button from "../../Components/Button/ButtonComp";
+import LoginModal from "../../Components/LoginModal/LoginModal"
 
 const renderEditFields = () => (
   <StyledEditWrapper>
@@ -79,27 +80,10 @@ const MyPage = () => {
       {whoAmI && whoAmI.username ? <p>Välkommen, {whoAmI.username}</p> : ''}
       {whoAmI ? <button onClick={handleLogout}>Logga ut</button> : 'Not logged in'}
       <BasicModal>
-        {!showRegisterForm ? <StyledLoginContainer>
-
-          <Styledh3>LOGGA IN</Styledh3>
-          <StyledForm onSubmit={e => handleLogin(e)}>
-            <StyledDiv>
-              <StyledPorfileIcon /><InputField label="username" updateState={e => setUsername(e)} value={username} required/>
-              <StyledPwIcon /><InputField label="password" marginTop={10} type="password" updateState={e => setPassword(e)} value={password} required/>
-            </StyledDiv>
-            {wrongPassword && <p>Wrong username/password</p>}
-            <StyledLoginBtn>Logga in</StyledLoginBtn>
-            <StyledDivider />
-            <StyledText>Har du inte ett konto? <StyledSpan onClick={() => setShowRegisterForm(true)}>Skapa ett</StyledSpan></StyledText>
-          </StyledForm>
-
-        </StyledLoginContainer> :
+        {!showRegisterForm ? <LoginModal setShowRegisterForm={setShowRegisterForm}/> :
           <StyledRegisterContainer>
             <RegisterForm />
           </StyledRegisterContainer>}
-
-  
-
       </BasicModal>
 
       <StyledAvatarWrapper>

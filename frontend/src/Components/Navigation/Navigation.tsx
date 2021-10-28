@@ -12,11 +12,14 @@ import {
 import { useState } from "react";
 import { useHistory } from "react-router";
 import {useModal} from "../../Contexts/ModalContext"
-
+import { AuthContext } from "../../Contexts/AuthContextProvider";
+import { useContext } from "react";
+import { ResumeToken } from "mongodb";
 const Navigation = () => {
 
   const history = useHistory();
   const { toggleLoginModal } = useModal();
+  const { whoAmI } = useContext(AuthContext);
   const [selected1, setSelected1] = useState(false);
   const [selected2, setSelected2] = useState(false);
   const [selected3, setSelected3] = useState(false);
@@ -29,15 +32,20 @@ const Navigation = () => {
   ) => {
     if (select === setSelected5) {
       toggleLoginModal();
-    }
-    setSelected1(false);
-    setSelected2(false);
-    setSelected3(false);
-    setSelected4(false);
-    setSelected5(false);
-    select(true);
-
-    url && history.push(url);
+  
+    } 
+      setSelected1(false);
+      setSelected2(false);
+      setSelected3(false);
+      setSelected4(false);
+      setSelected5(false);
+      select(true);
+  
+      url && history.push(url);
+      
+    
+  
+        
   };
 
   const renderIcons = () => (
