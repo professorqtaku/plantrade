@@ -31,26 +31,12 @@ width: 230px;
 margin: 0 auto;
 `;
 
-export const StyledInput = styled.input`
-  outline: none;
-  border: none;
-  border-bottom: 1px solid grey;
-   display: flex;
-   flex-direction: column;
-   font-size: 17px;
-     margin-top: 20px;
-     padding: 10px;
-  &:focus{
-    border-bottom: 1px solid darkgreen;
-  }
-`;
-
 export const StyledLoginBtn = styled.button`
   border: none;
   outline: none;
   border-radius: 3px;
-  background-color: #FFE600;
-  padding: 5px;
+  background-color: #0bb500;
+  padding: 10px;
   margin-top: 15px;
   width: 200px; 
   align-items: center;
@@ -61,13 +47,13 @@ export const StyledLoginBtn = styled.button`
 export const StyledPorfileIcon = styled(PersonIcon)`
   width: 20px;
   color: grey;
-  margin-top: 27px;
+  margin-top: 15px;
 `;
 
 export const StyledPwIcon = styled(VpnKeyIcon)`
   width: 20px;
   color: grey;
-  margin-top: 27px;
+  margin-top: 15px;
 `;
 
 

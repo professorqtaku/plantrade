@@ -3,6 +3,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 
+
 export const StyledWrapper = styled.div`
   
 `;
@@ -36,7 +37,7 @@ export const StyledBtn = styled.button`
   outline: none;
   padding: 10px;
   font-size: 15px;
-  background-color: #FFE600;
+  background-color: #0bb500;
   width: 100%;
   margin-top: 20px;
 `;
@@ -44,7 +45,7 @@ export const StyledBtn = styled.button`
 export const StyledPorfileIcon = styled(PersonIcon)`
   width: 20px;
   color: grey;
-  margin-top: 20px;
+  margin-top: 5px;
 `;
 
 export const StyledPwIcon = styled(VpnKeyIcon)`
