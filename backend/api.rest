@@ -45,7 +45,7 @@ Content-Type: application/json
   "title": "Blomma lotus",
   "description": "Test",
   "startPrice": 500,
-  "endDate": 1635409384
+  "endDate": 1637135424
 }
 
 ### Create Bid on an auction
