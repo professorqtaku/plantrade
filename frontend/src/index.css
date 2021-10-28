@@ -1,3 +1,15 @@
+:root {
+  --yellow: #FFE500;
+  --font-text: 'Abhaya Libre', serif;
+  --font-title: 'Abel', sans-serif;
+  --light-green: #619463;
+  --dark-green: #122522;
+}
+
+p {
+  font-family: var(--font-text);
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
