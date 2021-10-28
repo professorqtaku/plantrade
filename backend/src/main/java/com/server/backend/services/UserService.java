@@ -38,8 +38,8 @@ public class UserService {
     }
 
     public User createUser(User user) {
-        var newEmail = userRepository.findByEmailIgnoreCase(user.getEmail());
-        var newUsername = userRepository.findByUsernameIgnoreCase(user.getUsername());
+        User newEmail = userRepository.findByEmailIgnoreCase(user.getEmail());
+        User newUsername = userRepository.findByUsernameIgnoreCase(user.getUsername());
         if(newEmail == null && newUsername == null){
             return myUserDetailsService.addUser(user);
         }
