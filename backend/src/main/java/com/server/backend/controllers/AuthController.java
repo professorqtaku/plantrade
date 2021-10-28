@@ -21,7 +21,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<User> login(@RequestBody User user, HttpServletRequest req){
-        var usern = userService.login(user,req);
+        User usern = userService.login(user,req);
         if(usern == null){
             return ResponseEntity.notFound().build();
         }
@@ -30,7 +30,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody User user){
-        var newUser = userService.createUser(user);
+        User newUser = userService.createUser(user);
         if(newUser == null){
             return ResponseEntity.badRequest().build();
         }
