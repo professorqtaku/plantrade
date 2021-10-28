@@ -6,6 +6,7 @@ import com.server.backend.entities.Status;
 import com.server.backend.repositories.AuctionRepository;
 import com.server.backend.specifications.AuctionSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,9 @@ public class AuctionService {
 
     @Autowired
     private AuctionRepository auctionRepository;
+
+    @Autowired
+    private SearchService searchService;
 
     public List<Auction> getAllOpenAuctions(Status status) {
         List<Auction> openAuctions = auctionRepository.findByStatus(status);
@@ -64,34 +68,37 @@ public class AuctionService {
         return auctionRepository.findByHost(user);
     }
 
-    public List<Auction> getAuctionByTitleAndStatus(String title, Status status) {
+    public List<Auction> getAuctionByTitleAndStatusAndCategory(String title, Status status, String categoryName) {
         try{
             title = URLDecoder.decode(title, StandardCharsets.UTF_8.name());
+            List<String> words = Arrays.asList(title.split(" "));
+            List<String> categoryNames = new ArrayList<>();
+
+            if (categoryName != null) {
+                categoryName = URLDecoder.decode(categoryName, StandardCharsets.UTF_8.name());
+                categoryNames = Arrays.asList(categoryName.split(" "));
+            }
+
+            return getAuctionByTitleAndStatusAndCategory(words, status, categoryNames);
         } catch (UnsupportedEncodingException e) {
             return null;
         }
-        List<String> words = Arrays.asList(title.split(" "));
-        return getAuctionsWhereTitleContainsAnyWord(words, status);
     }
 
-    public List<Auction> getAuctionsWhereTitleContainsAnyWord(List<String> words, Status status) {
+    public List<Auction> getAuctionByTitleAndStatusAndCategory(List<String> words, Status status, List<String> categoryNames) {
         if(words.isEmpty()) {
             return Collections.emptyList();
         }
 
-        Specification<Auction> wordSpecification = null;
-        for(String word : words) {
-            Specification<Auction> specification = AuctionSpecification.titleContains(word);
-            if (wordSpecification == null) {
-                wordSpecification = specification;
-            } else {
-                wordSpecification = wordSpecification.or(specification);
-            }
-        }
-
-        Specification<Auction> statusSpecification = AuctionSpecification.hasStatus(Objects.requireNonNullElse(status, Status.OPEN));
+        Specification<Auction> wordSpecification = searchService.getTitleSpecification(words);
+        Specification<Auction> statusSpecification = searchService.getStatusSpecification(status);
+        Specification<Auction> categorySpecification = searchService.getCategorySpecification(categoryNames);
 
         Specification<Auction> totalSpecification = Specification.where(wordSpecification).and(statusSpecification);
+
+        if (categorySpecification != null) {
+            totalSpecification = totalSpecification.and(categorySpecification);
+        }
 
         return auctionRepository.findAll(totalSpecification);
     }
