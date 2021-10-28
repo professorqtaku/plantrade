@@ -27,7 +27,7 @@ const SearchField = ({ searchText, setSearchText }: Props) => {
         }}
         InputProps={{
           endAdornment: (
-            <StyledIconButton type="submit" inputed={searchText.length > 0}>
+            <StyledIconButton type="submit" input={searchText}>
               <SearchIcon />
             </StyledIconButton>
           ),

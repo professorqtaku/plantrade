@@ -3,7 +3,7 @@ import { FormControl, IconButton, TextField } from "@mui/material";
 
 interface Props {
   // check if input has content
-  inputed: boolean;
+  input: string;
 }
 
 export const StyledTextField = styled(TextField)`
@@ -20,7 +20,7 @@ export const StyledFormControl = styled(FormControl)`
 `;
 
 export const StyledIconButton = styled(IconButton)<Props>`
-  background-color: ${(props) => props.inputed && "var(--light-green)"};
+  background-color: ${(props) => props.input && props.input.length > 0 && "var(--light-green)"};
   transition: 500ms;
   &:focus {
     background-color: var(--light-green);
