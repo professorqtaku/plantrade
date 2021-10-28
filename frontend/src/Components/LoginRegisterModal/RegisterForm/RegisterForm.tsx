@@ -20,41 +20,63 @@ interface User {
   password: string
 }
 
-const RegisterForm = () => {
+interface Props {
+  toggleRegister: Function
+}
 
-  const { registerUser, userExists } = useAuth();
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const RegisterForm = ({ toggleRegister }: Props) => {
+  const { register, userExists } = useAuth();
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleRegister = (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
- 
+
     const userObject: User = {
       username: username,
       email: email,
-      password: password
+      password: password,
+    };
+    let isRegSucceed = await register(userObject);
+    if (isRegSucceed) {
+      toggleRegister();
     }
-    registerUser(userObject);
-  }
+  };
 
   return (
     <StyledWrapper>
       <StyledTitle>Skapa Konto</StyledTitle>
-      <StyledForm onSubmit={e => handleRegister(e)}>
+      <StyledForm onSubmit={(e) => handleRegister(e)}>
         <StyledInputDiv>
           <StyledPorfileIcon />
-          <InputField value={username} label="username" updateState={e => setUsername(e)} required />
+          <InputField
+            value={username}
+            label="username"
+            updateState={(e) => setUsername(e)}
+            required
+          />
           <StyledEmailIcon />
-          <InputField value={email} label="email" updateState={e => setEmail(e)} required />
+          <InputField
+            value={email}
+            label="email"
+            updateState={(e) => setEmail(e)}
+            required
+          />
           <StyledPwIcon />
-          <InputField value={password} type="password" label="password" updateState={e => setPassword(e)} required />
+          <InputField
+            value={password}
+            type="password"
+            label="password"
+            updateState={(e) => setPassword(e)}
+            required
+          />
         </StyledInputDiv>
         {userExists && <StyledText>The user already exists.</StyledText>}
         <StyledBtn>Skapa Konto</StyledBtn>
       </StyledForm>
     </StyledWrapper>
   );
-}
+};
 
 export default RegisterForm;

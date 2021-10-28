@@ -8,28 +8,11 @@ import LoginForm from "./LoginForm/LoginForm";
 import { useModal } from "../../Contexts/ModalContext";
 
 const LoginRegisterModal = () => {
-
-  const history = useHistory();
-  const { login, wrongPassword, logout, whoAmI } = useAuth()
   const { showLoginModal, toggleLoginModal } = useModal();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const [showRegisterForm, setShowRegisterForm] = useState(false);
   const toggleRegister = () => setShowRegisterForm(!showRegisterForm);
 
-
-    const handleLogin = (e: FormEvent) => {
-    e.preventDefault();
-
-    const userObj = {
-      username: username,
-      password: password
-    }
-    login(userObj)
-  }
-
   const handleClose = (e: BaseSyntheticEvent) => {
-    console.log("Closed");
     toggleLoginModal();
     setShowRegisterForm(false);
   }
@@ -38,7 +21,7 @@ const LoginRegisterModal = () => {
   return (
     <BasicModal isOpen={showLoginModal} handleClose={handleClose}>
       {showRegisterForm ? (
-        <RegisterForm />
+        <RegisterForm toggleRegister={toggleRegister} />
       ) : (
         <LoginForm toggleRegister={toggleRegister} />
       )}

@@ -8,12 +8,12 @@ function App() {
   return (
     <div className="App">
       <AllContextProviders>
-        <AllRoutes>
-          <>
+        <>
+          <AllRoutes>
             <Navigation />
-            <LoginRegisterModal />
-          </>
-        </AllRoutes>
+          </AllRoutes>
+          <LoginRegisterModal />
+        </>
       </AllContextProviders>
     </div>
   );

@@ -25,23 +25,24 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
   },[!whoAmI]);
 
 
-  const registerUser = async (user: User) => {
+  const register = async (user: User) => {
     let res = await fetch("/api/register", {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-    
-      body: JSON.stringify(user)
-    })
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+
+      body: JSON.stringify(user),
+    });
     if (res.status == 400) {
       setUserExists(true);
-      console.log("user exists")
-
-    } if (res.status == 200) {
-      setUserExists(false);
-      console.log("user was registered")
+      console.log("user exists");
+      return false
     }
-      
-  }
+    if (res.status == 200) {
+      setUserExists(false);
+      console.log("user was registered");
+      return true
+    }
+  };
 
   const login = async (user: User) => {
     let res = await fetch("/api/login", {
@@ -81,7 +82,7 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
   }
   
   const values = {
-    registerUser,
+    register,
     login,
     logout,
     wrongPassword,

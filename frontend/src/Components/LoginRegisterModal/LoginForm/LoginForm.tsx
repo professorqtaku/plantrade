@@ -30,6 +30,7 @@ const LoginForm = ({ toggleRegister }: Props) => {
       username: username,
       password: password,
     };
+    
     login(userObj);
   };
 
@@ -48,7 +49,7 @@ const LoginForm = ({ toggleRegister }: Props) => {
           <StyledPwIcon />
           <InputField
             label="password"
-            marginTop={10}
+            margintop={10}
             type="password"
             updateState={(e) => setPassword(e)}
             value={password}
@@ -60,7 +61,9 @@ const LoginForm = ({ toggleRegister }: Props) => {
         <StyledDivider />
         <StyledText>
           Har du inte ett konto?{" "}
-          <StyledSpan onClick={() => toggleRegister()}>Skapa ett här</StyledSpan>
+          <StyledSpan onClick={() => toggleRegister()}>
+            Skapa ett här
+          </StyledSpan>
         </StyledText>
       </StyledForm>
     </StyledLoginContainer>

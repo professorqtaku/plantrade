@@ -29,7 +29,7 @@ const Navigation = () => {
     select: React.Dispatch<React.SetStateAction<boolean>>,
     url?: string
   ) => {
-    if (select === setSelected5) {
+    if (select === setSelected5 && whoAmI == null) {
       toggleLoginModal();
     } 
     else {

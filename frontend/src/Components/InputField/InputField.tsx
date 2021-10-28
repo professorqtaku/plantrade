@@ -6,21 +6,28 @@ interface Props {
   type?: string;
   updateState: React.Dispatch<React.SetStateAction<any>>;
   required?: boolean;
-  marginTop?: number;
+  margintop?: number;
   value: string | number | undefined;
 }
 
-const InputField = ({ label, type, updateState, value, required, marginTop }: Props) => {
+const InputField = ({
+  label,
+  type,
+  updateState,
+  value,
+  required,
+  margintop,
+}: Props) => {
   return (
     <StyledInput
       onChange={(e) => updateState(e.target.value)}
       fullWidth
       required={required}
-      value={value ? value : ''}
+      value={value ? value : ""}
       type={type ? type : "text"}
       label={label}
       id={label}
-      marginTop={marginTop ? marginTop : 0}
+      margintop={margintop ? margintop : 0}
     />
   );
 };
