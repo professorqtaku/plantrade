@@ -17,13 +17,11 @@ const MyPage = () => {
         <StyledAvatar>N</StyledAvatar>
         <Button label="logga ut" />
       </StyledAvatarWrapper>
-      <StyledEditWrapper>
-        <StyledText>
-          <StyledBoldText>Username: </StyledBoldText>
-          Oscar
-        </StyledText>
-        <EditIcon />
-      </StyledEditWrapper>
+      <StyledText>
+        <StyledBoldText>Username: </StyledBoldText>
+        Oscar
+      </StyledText>
+      <StyledEditWrapper></StyledEditWrapper>
     </StyledWrapper>
   );
 };
