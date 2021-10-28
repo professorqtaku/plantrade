@@ -38,8 +38,7 @@ const MyPage = () => {
       username: username,
       password: password
     }
-    console.log(userObj, 'userObj')
-    // login(userObj)
+    login(userObj)
   }
 
   const handleLogout = () => {

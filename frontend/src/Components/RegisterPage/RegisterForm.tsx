@@ -38,7 +38,7 @@ const RegisterForm = () => {
     }
 
     await registerUser(userObject);
-    // history.push('/');
+    history.push('/');
   }
 
   return (
