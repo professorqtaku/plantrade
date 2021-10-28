@@ -10,6 +10,7 @@ import {
 } from "./StyledAuctionCard";
 import { Auction } from "../../Pages/AuctionPage/AuctionPage";
 import { useEffect, useState } from "react";
+import { handleCount } from "./utils/utils";
 
 interface Props {
   auction: Auction;
@@ -53,35 +54,14 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
 
   const handleCounter = () => {
     if (counter !== null) {
-      // Hours
-      if (counter > ONE_HOUR_IN_MILLIS) {
-        setDaysLeft(Math.floor((differenceInMillis / (1000 * 60 * 60)) % 24));
-        setRemainingTime("Timmar kvar:");
-        setTimeout(async () => {
-          await handleTime();
-          setCounter(counter - 1);
-        }, ONE_HOUR_IN_MILLIS);
-      }
-
-      // Minutes
-      if (counter >= ONE_MINUTE_IN_MILLIS && counter < ONE_HOUR_IN_MILLIS) {
-        setDaysLeft(Math.floor((differenceInMillis / (1000 * 60)) % 60));
-        setRemainingTime("Minuter kvar:");
-        setTimeout(async () => {
-          await handleTime();
-          setCounter(counter - 1);
-        }, ONE_MINUTE_IN_MILLIS);
-      }
-
-      // Seconds
-      if (counter >= ONE_SECOND_IN_MILLIS && counter < ONE_MINUTE_IN_MILLIS) {
-        setDaysLeft(Math.floor((differenceInMillis / 1000) % 60));
-        setRemainingTime("Sekunder kvar:");
-        setTimeout(async () => {
-          await handleTime();
-          setCounter(counter - 1);
-        }, ONE_SECOND_IN_MILLIS);
-      }
+      handleCount(
+        counter,
+        differenceInMillis,
+        setDaysLeft,
+        setRemainingTime,
+        setCounter,
+        handleTime
+      );
     }
   };
 
