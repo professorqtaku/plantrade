@@ -7,7 +7,7 @@ import {
 } from "./StyledSearchField";
 
 interface Props {
-  searchText?: string;
+  searchText: string;
   setSearchText: Function;
 }
 
@@ -26,7 +26,7 @@ const SearchField = ({ searchText, setSearchText }: Props) => {
         }}
         InputProps={{
           endAdornment: (
-            <StyledIconButton type="submit">
+            <StyledIconButton type="submit" texted={searchText.length > 0}>
               <StyledSearchIcon />
             </StyledIconButton>
           ),
