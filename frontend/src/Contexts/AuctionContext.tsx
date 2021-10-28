@@ -11,7 +11,7 @@ type Auction = {
   description: String;
   startPrice: Number;
   endDate: Date;
-  status: Object;
+  status: String;
 }
 
 export const AuctionContext = createContext<any>(null);
@@ -33,12 +33,26 @@ const AuctionProvider: FC<Props> = ({ children }: Props) => {
     let auction = await res.json();
     return auction;
   }
+
+  const createAuction = async (auction: Auction) => {
+    console.log(auction);
+    let res: Response  = await fetch('/rest/auctions', {
+      method: 'POST',
+      body: JSON.stringify(auction),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    const auctionResponse = await res.json();
+    return auctionResponse;
+  }
   
   const values = {
     auctions,
     setAuctions,
     getAllAuctions,
-    getAuctionById
+    getAuctionById,
+    createAuction
   }
 
   return (
