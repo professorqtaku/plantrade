@@ -104,7 +104,7 @@ const MyPage = () => {
 
       <StyledAvatarWrapper>
         <StyledAvatar>N</StyledAvatar>
-        <Button label="logga ut" />
+        <Button label="logga ut"/>
       </StyledAvatarWrapper>
       <StyledText>
         <StyledBoldText>Username: </StyledBoldText>

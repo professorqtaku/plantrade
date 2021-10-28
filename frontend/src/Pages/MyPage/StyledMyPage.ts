@@ -51,7 +51,7 @@ export const StyledPorfileIcon = styled(PersonIcon)`
 export const StyledPwIcon = styled(VpnKeyIcon)`
   width: 20px;
   color: grey;
-  margin-top: 15px;
+  margin-top: 25px;
 `;
 
 
@@ -94,10 +94,11 @@ export const StyledEditWrapper = styled.div`
   grid-gap: 1rem;
 `;
 
-export const StyledText = styled.span`
+export const StyledText = styled.p`
   font-size: 1rem;
   letter-spacing: 2px;
   padding-top: 40px;
+  text-align: center;
 `;
 
 export const StyledBoldText = styled.span`
