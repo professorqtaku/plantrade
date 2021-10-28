@@ -2,21 +2,11 @@ import { FormEvent } from "react";
 import { useRef, useContext, useState } from "react";
 import { useHistory } from "react-router";
 import BasicModal from "../../Components/Modal/BaiscModal";
-import { AuthContext } from "../../Contexts/AuthContextProvider";
-import RegisterForm from "../../Components/RegisterPage/RegisterForm";
+import { AuthContext } from "../../Contexts/AuthContext";
+import RegisterForm from "../../Components/LoginRegisterModal/RegisterForm/RegisterForm";
 import InputField from "../../Components/InputField/InputField";
 import {
   StyledWrapper,
-  Styledh3,
-  StyledForm,
-  StyledDiv,
-  StyledLoginBtn,
-  StyledPorfileIcon,
-  StyledPwIcon,
-  StyledSpan,
-  StyledDivider,
-  StyledLoginContainer,
-  StyledRegisterContainer,
   StyledAvatar,
   StyledEdit,
   StyledAvatarWrapper,
@@ -26,7 +16,7 @@ import {
   StyledNavigationWrapper,
 } from "./StyledMyPage";
 import Button from "../../Components/Button/ButtonComp";
-import LoginModal from "../../Components/LoginModal/LoginModal"
+import LoginModal from "../../Components/LoginRegisterModal/LoginRegisterModal"
 
 const renderEditFields = () => (
   <StyledEditWrapper>
@@ -51,23 +41,10 @@ const renderNavigations = () => (
 const MyPage = () => {
 
   const history = useHistory();
-  const [showRegisterForm, setShowRegisterForm] = useState<boolean>(false);
   const { login, wrongPassword, logout, whoAmI } = useContext(AuthContext)
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const passwordRef = useRef<any>();
 
 // Ändra useref till useState till inputfiel (props, update + label + value)
-  
-  const handleLogin = (e: FormEvent) => {
-    e.preventDefault();
-
-    const userObj = {
-      username: username,
-      password: password
-    }
-    login(userObj)
-  }
 
   const handleLogout = () => {
     logout();
@@ -79,12 +56,6 @@ const MyPage = () => {
       <h3>MyPage</h3>
       {whoAmI && whoAmI.username ? <p>Välkommen, {whoAmI.username}</p> : ''}
       {whoAmI ? <button onClick={handleLogout}>Logga ut</button> : 'Not logged in'}
-      <BasicModal>
-        {!showRegisterForm ? <LoginModal setShowRegisterForm={setShowRegisterForm}/> :
-          <StyledRegisterContainer>
-            <RegisterForm />
-          </StyledRegisterContainer>}
-      </BasicModal>
 
       <StyledAvatarWrapper>
         <StyledAvatar>N</StyledAvatar>

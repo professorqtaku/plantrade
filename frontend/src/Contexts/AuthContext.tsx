@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect} from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { useModal } from "./ModalContext";
 
@@ -12,6 +12,7 @@ type User = {
   password: string
 }
 export const AuthContext = createContext<any>(null);
+export const useAuth = () => useContext(AuthContext);
   
 export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
   const [whoAmI, setWhoAmI] = useState(null);

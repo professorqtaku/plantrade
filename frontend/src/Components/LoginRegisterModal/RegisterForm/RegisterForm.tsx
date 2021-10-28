@@ -1,11 +1,10 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { AuthContext } from "../../Contexts/AuthContextProvider";
-import InputField from "../../Components/InputField/InputField";
+import { useAuth } from "../../../Contexts/AuthContext";
+import InputField from "../../InputField/InputField";
 import {
   StyledWrapper,
   StyledForm,
-  StyledInput,
   StyledBtn,
   StyledPorfileIcon,
   StyledPwIcon,
@@ -23,8 +22,7 @@ interface User {
 
 const RegisterForm = () => {
 
-  const { registerUser, userExists } = useContext(AuthContext)
-  const history = useHistory();
+  const { registerUser, userExists } = useAuth();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -44,12 +42,13 @@ const RegisterForm = () => {
     <StyledWrapper>
       <StyledTitle>Skapa Konto</StyledTitle>
       <StyledForm onSubmit={e => handleRegister(e)}>
-
         <StyledInputDiv>
-
-          <StyledPorfileIcon /><InputField value={username} label="username" updateState={e => setUsername(e)} required/>
-        <StyledEmailIcon/><InputField value={email} label="email" updateState={e => setEmail(e)} required/>
-        <StyledPwIcon/><InputField value={password} type="password" label="password" updateState={e => setPassword(e)} required/>     
+          <StyledPorfileIcon />
+          <InputField value={username} label="username" updateState={e => setUsername(e)} required />
+          <StyledEmailIcon />
+          <InputField value={email} label="email" updateState={e => setEmail(e)} required />
+          <StyledPwIcon />
+          <InputField value={password} type="password" label="password" updateState={e => setPassword(e)} required />
         </StyledInputDiv>
         {userExists && <StyledText>The user already exists.</StyledText>}
         <StyledBtn>Skapa Konto</StyledBtn>

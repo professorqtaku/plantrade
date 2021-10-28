@@ -1,5 +1,5 @@
 import AuctionProvider from "./AuctionContext";
-import { AuthProvider } from "./AuthContextProvider";
+import { AuthProvider } from "./AuthContext";
 import ModalProvider from "./ModalContext";
 import SearchProvider from "./SearchContext";
 

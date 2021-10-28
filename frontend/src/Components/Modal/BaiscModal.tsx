@@ -1,11 +1,10 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { useModal } from "../../Contexts/ModalContext"
 
 type Props = {
+  isOpen: boolean;
+  handleClose: Function;
   children?: JSX.Element | JSX.Element[];
 };
 
@@ -23,22 +22,16 @@ const style = {
 };
 
 
-export default function BasicModal({children}: Props){
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => toggleLoginModal();
-  const handleClose = () => setOpen(false);
-  const { toggleLoginModal, showLogin } = useModal();
+export default function BasicModal({children, isOpen, handleClose}: Props){
   return (
     <div>
       <Modal
-        open={showLogin}
-        onClose={handleOpen}
+        open={isOpen}
+        onClose={(e:React.BaseSyntheticEvent) => handleClose(e)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-          {children}
-        </Box>
+        <Box sx={style}>{children}</Box>
       </Modal>
     </div>
   );
