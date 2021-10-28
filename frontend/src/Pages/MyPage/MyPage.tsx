@@ -58,8 +58,8 @@ const MyPage = () => {
           <Styledh3>LOGGA IN</Styledh3>
           <StyledForm onSubmit={e => handleLogin(e)}>
             <StyledDiv>
-              <StyledPorfileIcon /><InputField label="username" updateState={e => setUsername(e)} value={username}/>
-              <StyledPwIcon /><InputField label="password" type="password" updateState={e => setPassword(e)} value={password}/>
+              <StyledPorfileIcon /><InputField label="username" updateState={e => setUsername(e)} value={username} required/>
+              <StyledPwIcon /><InputField label="password" type="password" updateState={e => setPassword(e)} value={password} required/>
             </StyledDiv>
             {wrongPassword && <p>Wrong username/password</p>}
             <StyledLoginBtn>Logga in</StyledLoginBtn>
