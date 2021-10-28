@@ -7,6 +7,7 @@ import {
 } from "./StyledAuctionPage";
 import AuctionCard from "../../Components/AuctionCard/AuctionCard";
 import { useAuction } from "../../Contexts/AuctionContext";
+import { Bid } from "../../Contexts/BidContext";
 import { useEffect } from "react";
 import SearchForm from "../../Components/Search/SearchForm/SearchForm";
 import { useSearch } from "../../Contexts/SearchContext";
@@ -26,6 +27,7 @@ export interface Auction {
   status?: String;
   endDate?: String;
   host?: Host;
+  bids: Array<Bid> | undefined;
 }
 
 const AuctionPage = () => {

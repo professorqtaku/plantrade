@@ -55,9 +55,11 @@ public class BidService {
   public Bid createBid(Map values) {
     User user =  userRepository.findById((long) (int) values.get("userId")).get();
     Auction auction = auctionRepository.findById((long) (int) values.get("auctionId")).get();
-
     // validate user, bid price and time before creating a new bid
-    if(validateUser(user) && validateBid(auction, (int) values.get("price")) && validateTime(auction, (long) values.get("createdDate"))){
+
+    //validateUser(user) &&
+    if(validateBid(auction, (int) values.get("price")) && validateTime(auction, (long) values.get("createdDate"))){
+    System.out.println("here");
         try{
           Bid bid = Bid.builder()
                   .user(user)

@@ -4,15 +4,22 @@ type Props = {
   children?: JSX.Element;
 };
 
-type Auction = {
+export interface Host {
   id: Number;
-  host: { id: Number, username: String };
+  username: String;
+}
+
+export interface Auction {
+  id: Number;
+  host: Host;
   title: String;
   description: String;
   startPrice: Number;
   endDate: Date;
   status: Object;
 }
+
+
 
 export const AuctionContext = createContext<any>(null);
 
