@@ -9,6 +9,7 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import java.util.List;
+import java.util.Locale;
 
 public class AuctionSpecification {
     public static Specification<Auction> titleContains(String searchWord) {
@@ -28,8 +29,8 @@ public class AuctionSpecification {
     public static Specification<Auction> containsCategoryWithName(String name) {
         return (root, query, builder) -> {
             Join<Object, Object> categoryJoin = root.join("categories", JoinType.INNER);
-            Expression<String> categoryExpression = categoryJoin.get("name");
-            return builder.equal(categoryExpression, name);
+            Expression<String> categoryExpression = builder.lower(categoryJoin.get("name"));
+            return builder.equal(categoryExpression, name.toLowerCase());
         };
     }
 }

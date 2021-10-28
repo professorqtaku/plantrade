@@ -33,7 +33,6 @@ public class SearchService {
         Specification<Auction> categorySpecification = null;
         for (String categoryName: categoryNames) {
             Specification<Auction> specification = AuctionSpecification.containsCategoryWithName(categoryName);
-            System.out.println(specification);
             if (categorySpecification == null) {
                 categorySpecification = specification;
             } else {
