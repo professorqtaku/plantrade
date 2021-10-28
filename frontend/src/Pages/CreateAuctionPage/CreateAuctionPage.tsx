@@ -19,7 +19,7 @@ const Input = styled("input")({
 const CreateAuctionPage = () => {
   const { createAuction } = useAuction();
 
-  const [preview, setPreview] = useState('')
+  // const [preview, setPreview] = useState('')
   // create a holder to store files
   const formData = new FormData()
 
@@ -45,7 +45,7 @@ const CreateAuctionPage = () => {
       endDate: endDate,
     /*categories: categoriesToUse,  */
     };
-    createAuction(auction, formData);
+    createAuction(auction);
 
     setTitle(undefined);
     setDesc(undefined);
