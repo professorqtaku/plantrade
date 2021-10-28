@@ -1,10 +1,5 @@
-import { FormEvent } from "react";
-import { useRef, useContext, useState } from "react";
-import { useHistory } from "react-router";
-import BasicModal from "../../Components/Modal/BaiscModal";
-import { AuthContext } from "../../Contexts/AuthContext";
-import RegisterForm from "../../Components/LoginRegisterModal/RegisterForm/RegisterForm";
-import InputField from "../../Components/InputField/InputField";
+import { useHistory } from "react-router"
+import { useAuth } from "../../Contexts/AuthContext";
 import {
   StyledWrapper,
   StyledAvatar,
@@ -40,7 +35,7 @@ const renderNavigations = () => (
 const MyPage = () => {
 
   const history = useHistory();
-  const { logout, whoAmI } = useContext(AuthContext)
+  const { logout, whoAmI } = useAuth()
 
 // Ändra useref till useState till inputfiel (props, update + label + value)
 

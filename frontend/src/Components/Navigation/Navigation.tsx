@@ -12,13 +12,12 @@ import {
 import { useState } from "react";
 import { useHistory } from "react-router";
 import {useModal} from "../../Contexts/ModalContext"
-import { AuthContext } from "../../Contexts/AuthContext";
-import { useContext } from "react";
+import { useAuth } from "../../Contexts/AuthContext";
 const Navigation = () => {
 
   const history = useHistory();
   const { toggleLoginModal } = useModal();
-  const { whoAmI } = useContext(AuthContext);
+  const { whoAmI } = useAuth();
   const [selected1, setSelected1] = useState(false);
   const [selected2, setSelected2] = useState(false);
   const [selected3, setSelected3] = useState(false);
