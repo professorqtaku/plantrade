@@ -18,7 +18,10 @@ const Input = styled("input")({
 
 const CreateAuctionPage = () => {
   const { createAuction } = useAuction();
- 
+
+  const [preview, setPreview] = useState('')
+  // create a holder to store files
+  const formData = new FormData()
 
   const [title, setTitle] = useState<string | undefined>();
   const [desc, setDesc] = useState<string | undefined>();
@@ -42,7 +45,7 @@ const CreateAuctionPage = () => {
       endDate: endDate,
     /*categories: categoriesToUse,  */
     };
-    createAuction(auction);
+    createAuction(auction, formData);
 
     setTitle(undefined);
     setDesc(undefined);
@@ -50,20 +53,13 @@ const CreateAuctionPage = () => {
     setImages(undefined);
     setEndDate(inOneDay);
     setCategoriesToUse(undefined);
-
-
-
   };
 
   const renderUploadFiles = () => (
     <label htmlFor="contained-button-file">
       <Input
         accept="image/*"
-        onChange={(e: any) =>
-          images?.length
-            ? setImages([images, e.target.value])
-            : setImages(e.target.value)
-        }
+        onChange={(e: any) => onFileLoad(e)}
         id="contained-button-file"
         multiple
         type="file"
@@ -73,6 +69,30 @@ const CreateAuctionPage = () => {
       </Button>
     </label>
   );
+
+  async function onFileLoad(e: any) {
+    let files = e.target.files
+    console.log(files);
+
+    // add files to formData
+    for (let file of files) {
+      formData.append('files', file, file.name)
+    }
+
+    /* // send files to server
+    let res = await fetch('/api/upload', {
+      method: 'POST',
+      body: formData
+    })
+
+    let filePaths = await res.json()
+    console.log(filePaths);
+
+    setPreview(filePaths[0])
+
+    // clear input of files
+    e.target.value = '' */
+  }
 
   const handleLogin = async (e: any) => {
     e.preventDefault();
