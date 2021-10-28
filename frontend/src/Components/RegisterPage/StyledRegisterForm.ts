@@ -37,6 +37,7 @@ export const StyledBtn = styled.button`
   outline: none;
   padding: 10px;
   font-size: 15px;
+  border-radius: 3px;
   background-color: #0bb500;
   width: 100%;
   margin-top: 20px;
@@ -45,19 +46,19 @@ export const StyledBtn = styled.button`
 export const StyledPorfileIcon = styled(PersonIcon)`
   width: 20px;
   color: grey;
-  margin-top: 5px;
+  margin-top: 15px;
 `;
 
 export const StyledPwIcon = styled(VpnKeyIcon)`
   width: 20px;
   color: grey;
-  margin-top: 20px;
+  margin-top: 15px;
 `;
 
 export const StyledEmailIcon = styled(AlternateEmailIcon)`
   width: 20px;
   color: grey;
-  margin-top: 20px;
+  margin-top: 15px;
 `;
 
 export const StyledTitle = styled.p`
