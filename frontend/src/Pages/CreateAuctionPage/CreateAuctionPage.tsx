@@ -10,17 +10,24 @@ import { useState } from "react";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import ButtonComp from "../../Components/Button/ButtonComp"
+import { useAuction } from "../../Contexts/AuctionContext";
 
 const Input = styled("input")({
   display: "none",
 });
 
 const CreateAuctionPage = () => {
+  const { createAuction } = useAuction();
+ 
+
   const [title, setTitle] = useState<string | undefined>();
   const [desc, setDesc] = useState<string | undefined>();
   const [price, setPrice] = useState<number | undefined>();
   const [images, setImages] = useState<String[] | undefined>();
-  const [endDate, setEndDate] = useState<number | undefined>();
+  /*  not that i add 24 hr + 5 extra seconds.
+  Had to do that because we have extra check in backend that checks that endDate is minimum one day and max one month, if i just add 1000*60*60*24 i get back an error as a response. */
+  const inOneDay = Date.now() + 1000*65*60*24;
+  const [endDate, setEndDate] = useState<number | undefined>(inOneDay);
   const [categoriesToUse, setCategoriesToUse] = useState<
     String[] | undefined
   >();
@@ -33,14 +40,19 @@ const CreateAuctionPage = () => {
       description: desc,
       startPrice: price,
       endDate: endDate,
-      categories: categoriesToUse,
+    /*categories: categoriesToUse,  */
     };
+    createAuction(auction);
+
     setTitle(undefined);
     setDesc(undefined);
     setPrice(undefined);
     setImages(undefined);
-    setEndDate(undefined);
+    setEndDate(inOneDay);
     setCategoriesToUse(undefined);
+
+
+
   };
 
   const renderUploadFiles = () => (
@@ -62,8 +74,30 @@ const CreateAuctionPage = () => {
     </label>
   );
 
+  const handleLogin = async (e: any) => {
+    e.preventDefault();
+    const user = {
+      "id": 3,
+      "username": "postila",
+      "email": "postila@haha.se",
+      "password": 123
+    }
+
+    let res: Response  = await fetch('/api/login', {
+      method: 'POST',
+      body: JSON.stringify(user),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    const userLoginResponse = await res.json();
+    console.log(userLoginResponse);
+  }
+
+
   return (
     <StyledWrapper>
+      <button onClick={(e) => handleLogin(e)}>Login</button>
       <StyledTitle>Skapa auktion</StyledTitle>
       <StyledForm onSubmit={handleAddAuction}>
         <InputField label="Titel" value={title} updateState={setTitle} />
@@ -78,6 +112,7 @@ const CreateAuctionPage = () => {
         <SelectBar setCategoriesToUse={setCategoriesToUse} />
         {renderUploadFiles()}
         <ButtonComp label="Skapa auktion"/>
+
       </StyledForm>
     </StyledWrapper>
   );
