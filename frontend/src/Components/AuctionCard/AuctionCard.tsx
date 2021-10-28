@@ -10,6 +10,7 @@ import {
 } from "./StyledAuctionCard";
 import { Auction } from "../../Pages/AuctionPage/AuctionPage";
 import { useAuction } from "../../Contexts/AuctionContext";
+import { useBid } from "../../Contexts/BidContext";
 import { useEffect, useState } from "react";
 
 interface Props {
@@ -30,7 +31,7 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
   const [bid, setBid] = useState<undefined | number>();
   const [quickBid, setQuickBid] = useState<number>();
   
-  const { createBid } = useAuction();
+  const { createBid } = useBid();
   
   useEffect(() => {
     if (auction?.bids) {

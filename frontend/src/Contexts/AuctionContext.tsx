@@ -19,12 +19,7 @@ export interface Auction {
   status: Object;
 }
 
-export interface Bid {
-  userId: Number;
-  auctionId: Number;
-  price: number | undefined;
-  createdDate: Date;
-}
+
 
 export const AuctionContext = createContext<any>(null);
 
@@ -45,33 +40,12 @@ const AuctionProvider: FC<Props> = ({ children }: Props) => {
     let auction = await res.json();
     return auction;
   }
-
-  const createBid = async (newBid: Bid) => {
-    let res: Response = await fetch('/api/bid', {
-      method: 'POST',
-      body: JSON.stringify(newBid),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-
-    if (res.status == 200) {
-      let bid = await res.json();
-      getAllAuctions()
-      console.log(bid);
-    } else {
-      console.log(res);
-      console.log("Bad Request");
-    }
-    
-  }
   
   const values = {
     auctions,
     setAuctions,
     getAllAuctions,
-    getAuctionById,
-    createBid
+    getAuctionById
   }
 
   return (
