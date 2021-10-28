@@ -16,12 +16,14 @@ const Input = styled("input")({
 });
 
 const CreateAuctionPage = () => {
-  const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
-  const [price, setPrice] = useState();
-  const [images, setImages] = useState < String[] | undefined>();
-  const [endDate, setEndDate] = useState<number | null>(null);
-  const [categoriesToUse, setCategoriesToUse] = useState<String[] | null>(null);
+  const [title, setTitle] = useState<string | undefined>();
+  const [desc, setDesc] = useState<string | undefined>();
+  const [price, setPrice] = useState<number | undefined>();
+  const [images, setImages] = useState<String[] | undefined>();
+  const [endDate, setEndDate] = useState<number | undefined>();
+  const [categoriesToUse, setCategoriesToUse] = useState<
+    String[] | undefined
+  >();
 
   const handleAddAuction = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,15 +33,25 @@ const CreateAuctionPage = () => {
       description: desc,
       startPrice: price,
       endDate: endDate,
-      categories: categoriesToUse
+      categories: categoriesToUse,
     };
+    setTitle(undefined);
+    setDesc(undefined);
+    setPrice(undefined);
+    setImages(undefined);
+    setEndDate(undefined);
+    setCategoriesToUse(undefined);
   };
 
   const renderUploadFiles = () => (
     <label htmlFor="contained-button-file">
       <Input
         accept="image/*"
-        onChange={(e: any) => setImages([images, e.target.value])}
+        onChange={(e: any) =>
+          images?.length
+            ? setImages([images, e.target.value])
+            : setImages(e.target.value)
+        }
         id="contained-button-file"
         multiple
         type="file"

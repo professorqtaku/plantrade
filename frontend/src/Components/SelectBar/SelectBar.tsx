@@ -33,7 +33,9 @@ const values = [
 ];
 
 interface Props {
-  setCategoriesToUse: React.Dispatch<React.SetStateAction<String[] | null>>;
+  setCategoriesToUse: React.Dispatch<
+    React.SetStateAction<String[] | undefined>
+  >;
 }
 
 const SelectBar = ({ setCategoriesToUse }: Props) => {

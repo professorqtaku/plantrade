@@ -11,6 +11,7 @@ interface Props {
 const InputField = ({ label, type, updateState, value }: Props) => {
   return (
     <StyledInput
+      required
       onChange={(e) => updateState(e.target.value)}
       fullWidth
       value={value}
