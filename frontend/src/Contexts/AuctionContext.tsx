@@ -4,9 +4,14 @@ type Props = {
   children?: JSX.Element;
 };
 
-type Auction = {
+export interface Host {
   id: Number;
-  host: { id: Number, username: String };
+  username: String;
+}
+
+export interface Auction {
+  id: Number;
+  host: Host;
   title: String;
   description: String;
   startPrice: Number;
@@ -14,10 +19,10 @@ type Auction = {
   status: Object;
 }
 
-type Bid = {
+export interface Bid {
   userId: Number;
   auctionId: Number;
-  price: Number;
+  price: number | undefined;
   createdDate: Date;
 }
 
@@ -42,8 +47,23 @@ const AuctionProvider: FC<Props> = ({ children }: Props) => {
   }
 
   const createBid = async (newBid: Bid) => {
-    console.log(newBid)
-    // let res: Response = await fetch('/api/bid');
+    let res: Response = await fetch('/api/bid', {
+      method: 'POST',
+      body: JSON.stringify(newBid),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+
+    if (res.status == 200) {
+      let bid = await res.json();
+      getAllAuctions()
+      console.log(bid);
+    } else {
+      console.log(res);
+      console.log("Bad Request");
+    }
+    
   }
   
   const values = {
