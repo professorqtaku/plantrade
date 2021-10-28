@@ -14,6 +14,7 @@ export const AuthContext = createContext<any>(null);
 export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
   const [whoAmI, setWhoAmI] = useState(null);
   const [wrongPassword, setWrongPassword] = useState(false);
+  const [userExists, setUserExists] = useState(false);
 
 
   useEffect(() => {
@@ -29,6 +30,10 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
     
       body: JSON.stringify(user)
     })
+    if (res.status == 400) {
+      setUserExists(true);
+    }
+    setUserExists(false);
   }
 
   const login = async (user: User) => {
