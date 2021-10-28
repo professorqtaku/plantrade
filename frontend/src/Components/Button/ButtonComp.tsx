@@ -5,7 +5,7 @@ interface Props {
 }
 
 const ButtonComp = ({ label }: Props) => {
-  return <StyledButton variant="contained">{label}</StyledButton>;
+  return <StyledButton type="submit" variant="contained">{label}</StyledButton>;
 };
 
 export default ButtonComp;
