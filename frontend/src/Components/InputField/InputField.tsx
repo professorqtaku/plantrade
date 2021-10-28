@@ -14,7 +14,7 @@ const InputField = ({ label, type, updateState, value }: Props) => {
       required
       onChange={(e) => updateState(e.target.value)}
       fullWidth
-      value={value}
+      value={value ? value : ''}
       type={type ? type : "text"}
       label={label}
       id={label}
