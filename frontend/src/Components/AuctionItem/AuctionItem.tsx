@@ -2,14 +2,11 @@ import Grid from '@mui/material/Grid';
 import CircleIcon from '@mui/icons-material/Circle';
 import { useHistory } from 'react-router-dom';
 import { StyledWrapper } from './StyledAuctionItem';
+import { Auction } from "../../Interfaces/Interfaces";
 
-function AuctionItem({ auction }: any) {
+function AuctionItem({ auction }: Auction) {
   const history = useHistory();
   console.log('what is auction in item ', auction);
-  // auction = {
-  //   title: 'Auction title',
-  //   status: 'OPEN',
-  // }
   const status = auction.status == 'SOLD' ? 'Såld' : auction.status == 'OPEN' ? 'Pågående' : 'Inte såld';
   const color = auction.status == 'SOLD' ? '#086E3D' : auction.status == 'OPEN' ? '#FBDB0D' : '#B3280D';
 
@@ -17,7 +14,6 @@ function AuctionItem({ auction }: any) {
     // history.push(`/auction/${auction.id}`);
   }
 
-  // console.log('title', data.auction.title)
   return (
     <StyledWrapper>
       <Grid container spacing={2} onClick={handleDetailView}>

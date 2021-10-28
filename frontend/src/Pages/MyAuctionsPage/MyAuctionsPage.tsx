@@ -12,11 +12,11 @@ import CardActions from '@mui/material/CardActions';
 import { useAuction } from '../../Contexts/AuctionContext';
 import AuctionItem from '../../Components/AuctionItem/AuctionItem';
 
+
 function MyAuctionsPage() {
   const [expandedCurr, setExpandedCurr] = useState(false);
   const [expandedSold, setExpandedSold] = useState(false);
   const [expandedNoSold, setExpandedNoSold] = useState(false);
-  const [auctions, setAuctions] = useState([]);
   const { getUsersAuctions, usersAuctions } = useAuction();
 
   useEffect(() => {
@@ -28,8 +28,7 @@ function MyAuctionsPage() {
   }, [usersAuctions])
 
   const handleUsersAuctions = async () => {
-    const res = await getUsersAuctions();
-    console.log('what is res', res)
+    await getUsersAuctions();
   }
 
   const handleExpandCurr = () => {
