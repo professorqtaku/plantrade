@@ -16,7 +16,7 @@ import {useModal} from "../../Contexts/ModalContext"
 const Navigation = () => {
 
   const history = useHistory();
-  const { toggleLogin } = useModal();
+  const { toggleLoginModal } = useModal();
   const [selected1, setSelected1] = useState(false);
   const [selected2, setSelected2] = useState(false);
   const [selected3, setSelected3] = useState(false);
@@ -28,7 +28,7 @@ const Navigation = () => {
     url?: string
   ) => {
     if (select === setSelected5) {
-      toggleLogin();
+      toggleLoginModal();
     }
     setSelected1(false);
     setSelected2(false);

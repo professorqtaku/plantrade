@@ -25,9 +25,9 @@ const style = {
 
 export default function BasicModal({children}: Props){
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => toggleLogin();
+  const handleOpen = () => toggleLoginModal();
   const handleClose = () => setOpen(false);
-  const { toggleLogin, showLogin } = useModal();
+  const { toggleLoginModal, showLogin } = useModal();
   return (
     <div>
       <Modal

@@ -13,7 +13,7 @@ export const useModal = () => useContext(ModalContext);
 const ModalProvider: FC<Props> = ({ children }: Props) => {
   const [showLogin, setShowLogin] = useState<Boolean>(false);
   const { whoAmI } = useContext(AuthContext);
-  const toggleLogin = () => {
+  const toggleLoginModal = () => {
     if (!whoAmI) setShowLogin(!showLogin)
     else {
       setShowLogin(false)
@@ -28,7 +28,7 @@ const ModalProvider: FC<Props> = ({ children }: Props) => {
   const values = {
     showLogin,
     setShowLogin,
-    toggleLogin
+    toggleLoginModal
   };
 
   return (
