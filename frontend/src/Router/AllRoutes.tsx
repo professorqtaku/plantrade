@@ -5,13 +5,13 @@ import HomePage from "../Pages/HomePage/HomePage";
 import MyAuctionsPage from '../Pages/MyAuctionsPage/MyAuctionsPage';
 import MyPage from "../Pages/MyPage/MyPage";
 import RegisterPage from "../Pages/RegisterPage/RegisterPage";
+import CreateAuctionPage from "../Pages/CreateAuctionPage/CreateAuctionPage";
 
 interface Props {
-  children: JSX.Element
+  children: JSX.Element;
 }
 
-const AllRoutes: React.FC<Props> = ({children}) => {
-
+const AllRoutes: React.FC<Props> = ({ children }) => {
   return (
     <Router>
       {children}
@@ -21,10 +21,15 @@ const AllRoutes: React.FC<Props> = ({children}) => {
         <Route path="/myPage" exact={true} component={MyPage} />
         <Route path="/myPage/my-auctions" exact={true} component={MyAuctionsPage} />
         <Route path="/register" exact={true} component={RegisterPage} />
-        <Route path="/auction/:id" exact={true} component={AuctionDetailPage}/>
+        <Route path="/auction/:id" exact={true} component={AuctionDetailPage} />
+        <Route
+          path="/createAuction"
+          exact={true}
+          component={CreateAuctionPage}
+        />
       </Switch>
     </Router>
   );
-}
+};
 
 export default AllRoutes;

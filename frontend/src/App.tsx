@@ -6,11 +6,11 @@ function App() {
 
   return (
     <div className="App">
-      <AllContextProviders>
-        <AllRoutes>
-          <Navigation/>
-        </AllRoutes>
-      </AllContextProviders>
+        <AllContextProviders>
+          <AllRoutes>
+            <Navigation />
+          </AllRoutes>
+        </AllContextProviders>
     </div>
   );
 }
