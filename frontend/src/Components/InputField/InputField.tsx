@@ -5,9 +5,9 @@ interface Props {
   label: string;
   type?: string;
   updateState: React.Dispatch<React.SetStateAction<any>>;
-  value: string | number;
   required?: boolean;
   marginTop?: number;
+  value: string | number | undefined;
 }
 
 const InputField = ({ label, type, updateState, value, required, marginTop }: Props) => {
@@ -16,7 +16,7 @@ const InputField = ({ label, type, updateState, value, required, marginTop }: Pr
       onChange={(e) => updateState(e.target.value)}
       fullWidth
       required={required}
-      value={value}
+      value={value ? value : ''}
       type={type ? type : "text"}
       label={label}
       id={label}

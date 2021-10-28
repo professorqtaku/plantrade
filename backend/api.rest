@@ -32,7 +32,7 @@ DELETE http://localhost:4000/api/logout
 GET http://localhost:4000/rest/auctions
 
 ### Get auctions by id
-GET http://localhost:4000/rest/auctions/7
+GET http://localhost:4000/rest/auctions/53
 
 ### Get current users auctions
 GET http://localhost:4000/rest/auctions/user
@@ -45,7 +45,7 @@ Content-Type: application/json
   "title": "Blomma lotus",
   "description": "Test",
   "startPrice": 500,
-  "endDate": 1635409384
+  "endDate": 1637135424
 }
 
 ### Create Bid on an auction
@@ -61,5 +61,8 @@ Content-Type: application/json
 
 ### get auctions by title
 GET http://localhost:4000/rest/auctions/search?title=test
+
+### get auctions by title and category
+GET http://localhost:4000/rest/auctions/search?title=s&category=Blomma%20ätbar
 
 ###

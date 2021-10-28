@@ -3,9 +3,6 @@ import PersonIcon from '@mui/icons-material/Person';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import Divider from '@mui/material/Divider';
 
-export const StyledWrapper = styled.div`
-  
-`;
 
 export const StyledLoginContainer = styled.div`
 
@@ -61,13 +58,56 @@ export const StyledPwIcon = styled(VpnKeyIcon)`
 export const StyledSpan = styled.span`
   color: #006fd0;
 `;
-export const StyledText= styled.p`
-  padding-top: 40px;
-`;
+
 
 export const StyledDivider = styled(Divider)`
   margin-top: 35px;
   min-width: 100%;
   position: absolute;
   left: 0;
+`;
+import Avatar from "@mui/material/Avatar";
+import EditIcon from "@mui/icons-material/Edit";
+
+export const StyledWrapper = styled.div`
+  width: 90%;
+  margin: 1rem auto;
+`;
+
+export const StyledAvatar = styled(Avatar)`
+  background: #619463;
+`;
+
+export const StyledEdit = styled(EditIcon)`
+  color: #619463;
+`;
+
+export const StyledAvatarWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 2rem;
+`;
+
+export const StyledEditWrapper = styled.div`
+  margin-top: 1rem;
+  display: grid;
+  grid-gap: 1rem;
+`;
+
+export const StyledText = styled.span`
+  font-size: 1rem;
+  letter-spacing: 2px;
+  padding-top: 40px;
+`;
+
+export const StyledBoldText = styled.span`
+  font-size: 1rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+`;
+
+export const StyledNavigationWrapper = styled.div`
+  margin-top: 4rem;
+  display: grid;
+  grid-gap: 1rem;
 `;
