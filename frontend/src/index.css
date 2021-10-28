@@ -1,7 +1,9 @@
 :root {
   --yellow: #FFE500;
-  --text: 'Abhaya Libre', serif;
+  --font-text: 'Abhaya Libre', serif;
+  --font-title: 'Abel', sans-serif;
   --light-green: #619463;
+  --dark-green: #122522;
 }
 
 body {

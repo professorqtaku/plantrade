@@ -1,10 +1,11 @@
-import React, { BaseSyntheticEvent, FC } from "react";
+import { BaseSyntheticEvent } from "react";
 import {
   StyledTextField,
   StyledFormControl,
   StyledIconButton,
-  StyledSearchIcon,
 } from "./StyledSearchField";
+import SearchIcon from "@mui/icons-material/Search";
+
 
 interface Props {
   searchText: string;
@@ -22,12 +23,12 @@ const SearchField = ({ searchText, setSearchText }: Props) => {
         value={searchText}
         onChange={(e: BaseSyntheticEvent) => setSearchText(e.target.value)}
         inputProps={{
-          style: { fontFamily: "'Abhaya Libre', serif", fontSize: 24 },
+          style: { fontFamily: "var(--font-text)", fontSize: 24 },
         }}
         InputProps={{
           endAdornment: (
-            <StyledIconButton type="submit" texted={searchText.length > 0}>
-              <StyledSearchIcon />
+            <StyledIconButton type="submit" inputed={searchText.length > 0}>
+              <SearchIcon />
             </StyledIconButton>
           ),
           disableUnderline: true,
