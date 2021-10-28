@@ -27,15 +27,22 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
   const [differenceInMillis, setDifferenceInMillis] = useState(0);
   const [counter, setCounter] = useState<number | null>(null);
   const [remainingTime, setRemainingTime] = useState("Dagar kvar:");
-  const [bid, setBid] = useState(0);
-  // Delete when the auction got bids..
-  const [highestBid, setHighestBid] = useState(100);
+  const [bid, setBid] = useState<undefined | number>();
+  const [quickBid, setQuickBid] = useState<number>();
   
   const { createBid } = useAuction();
   
   useEffect(() => {
-    handleFastBid();
-  }, []);
+    if (auction?.bids) {
+      setBid(auction.bids.pop()?.price);
+    } else {
+      setBid(auction?.startPrice)
+    }
+  }, [auction.bids]);
+
+  useEffect(() => {
+    handleQuickBid()
+  }, [!!bid, bid])
 
   useEffect(() => {
     handleTime();
@@ -88,29 +95,30 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
     }
   };
 
-  const handleFastBid = () => {
-    if (highestBid <= 10) {
-      setBid(highestBid + 1);
-    }
-    if (highestBid <= 100 && highestBid > 10) {
-      setBid(highestBid + 10);
-    }
-    if (highestBid <= 1000 && highestBid > 100) {
-      setBid(highestBid + 100);
-    }
-    if (highestBid > 1000) {
-      setBid(highestBid + 1000);
+  const handleQuickBid = () => {
+    if (!!bid) {
+      if (bid <= 10) {
+        setQuickBid(bid  + 1);
+      }
+      if (bid  <= 100 && bid  > 10) {
+        setQuickBid(bid + 10);
+      }
+      if (bid >= 1000 && bid > 100) {
+        setQuickBid(bid + 100);
+      }
     }
   };
 
   const handleBid = async () => {
     const newBid = {
+      // change userId to user that is logged in
       userId: 3,
       auctionId: auction.id,
-      price: bid,
+      price: quickBid,
       createdDate: Date.now()
     }
-    createBid(newBid);
+    
+    await createBid(newBid);
   };
 
   return (
@@ -126,14 +134,14 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
             <StyledSpan>Pris:</StyledSpan> {auction.startPrice} SEK
           </StyledDesc>
           <StyledDesc>
-            <StyledSpan>Högsta bud:</StyledSpan> {highestBid} SEK
+            <StyledSpan>Högsta bud:</StyledSpan> {bid} SEK
           </StyledDesc>
           <StyledDesc>
             <StyledSpan>{remainingTime}</StyledSpan> {daysLeft}
           </StyledDesc>
         </div>
         <StyledButton onClick={() => handleBid()}>
-          Snabb bud {bid} SEK
+          Snabb bud {quickBid} SEK
         </StyledButton>
       </StyledCardContent>
     </StyledCard>
