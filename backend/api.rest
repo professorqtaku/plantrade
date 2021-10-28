@@ -42,10 +42,10 @@ POST http://localhost:4000/rest/auctions
 Content-Type: application/json
 
 {
-  "title": "lotus",
+  "title": "Blomma lotus",
   "description": "Test",
-  "startPrice": 1000,
-  "endDate": 1637934097000
+  "startPrice": 500,
+  "endDate": 1635409384
 }
 
 ### Create Bid on an auction
