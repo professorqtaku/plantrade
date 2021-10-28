@@ -50,13 +50,14 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(user)
     })
-       if(res.status == 404) {
+    if(res.status == 404) {
       setWrongPassword(true)
-       }
-    let resUser = await res.json();
-    setWhoAmI(resUser);
-    whoIsOnline();
-    setWrongPassword(false);
+    } else {
+      let resUser = await res.json();
+      setWhoAmI(resUser);
+      whoIsOnline();
+      setWrongPassword(false);
+    }
 
   }
  
@@ -86,6 +87,7 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
     login,
     logout,
     wrongPassword,
+    setWrongPassword,
     userExists,
     whoIsOnline,
     whoAmI

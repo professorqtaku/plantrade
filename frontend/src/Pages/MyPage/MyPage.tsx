@@ -16,7 +16,6 @@ import {
   StyledNavigationWrapper,
 } from "./StyledMyPage";
 import Button from "../../Components/Button/ButtonComp";
-import LoginModal from "../../Components/LoginRegisterModal/LoginRegisterModal"
 
 const renderEditFields = () => (
   <StyledEditWrapper>
@@ -41,8 +40,7 @@ const renderNavigations = () => (
 const MyPage = () => {
 
   const history = useHistory();
-  const { login, wrongPassword, logout, whoAmI } = useContext(AuthContext)
-  const passwordRef = useRef<any>();
+  const { logout, whoAmI } = useContext(AuthContext)
 
 // Ändra useref till useState till inputfiel (props, update + label + value)
 
