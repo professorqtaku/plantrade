@@ -1,14 +1,34 @@
-import Avatar from "@mui/material/Avatar";
 import {
   StyledWrapper,
   StyledAvatar,
+  StyledEdit,
   StyledAvatarWrapper,
   StyledEditWrapper,
   StyledBoldText,
   StyledText,
+  StyledNavigationWrapper,
 } from "./StyledMyPage";
 import Button from "../../Components/Button/ButtonComp";
-import EditIcon from "@mui/icons-material/Edit";
+
+const renderEditFields = () => (
+  <StyledEditWrapper>
+    <StyledText>
+      <StyledEdit /> Email
+    </StyledText>
+    <StyledText>
+      <StyledEdit /> Password
+    </StyledText>
+  </StyledEditWrapper>
+);
+
+const renderNavigations = () => (
+  <StyledNavigationWrapper>
+    <Button label="Skapa en auktion" />
+    <Button label="Mina vunna auktioner" />
+    <Button label="Statistik" />
+    <Button label="Mina auktioner" />
+  </StyledNavigationWrapper>
+);
 
 const MyPage = () => {
   return (
@@ -21,7 +41,8 @@ const MyPage = () => {
         <StyledBoldText>Username: </StyledBoldText>
         Oscar
       </StyledText>
-      <StyledEditWrapper></StyledEditWrapper>
+      {renderEditFields()}
+      {renderNavigations()}
     </StyledWrapper>
   );
 };
