@@ -35,7 +35,8 @@ export const StyledLoginBtn = styled.button`
   border: none;
   outline: none;
   border-radius: 3px;
-  background-color: #0bb500;
+  background-color: #619463;
+  color: white;
   padding: 10px;
   margin-top: 15px;
   width: 200px; 

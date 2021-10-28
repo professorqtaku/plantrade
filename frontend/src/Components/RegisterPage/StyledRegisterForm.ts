@@ -38,7 +38,8 @@ export const StyledBtn = styled.button`
   padding: 10px;
   font-size: 15px;
   border-radius: 3px;
-  background-color: #0bb500;
+  background-color: #619463;
+  color: white;
   width: 100%;
   margin-top: 20px;
 `;

@@ -7,9 +7,10 @@ interface Props {
   updateState: React.Dispatch<React.SetStateAction<any>>;
   value: string | number;
   required?: boolean;
+  marginTop?: number;
 }
 
-const InputField = ({ label, type, updateState, value, required }: Props) => {
+const InputField = ({ label, type, updateState, value, required, marginTop }: Props) => {
   return (
     <StyledInput
       onChange={(e) => updateState(e.target.value)}
@@ -19,6 +20,7 @@ const InputField = ({ label, type, updateState, value, required }: Props) => {
       type={type ? type : "text"}
       label={label}
       id={label}
+      marginTop={marginTop ? marginTop : 0}
     />
   );
 };

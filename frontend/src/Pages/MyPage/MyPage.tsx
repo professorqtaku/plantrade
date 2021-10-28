@@ -58,7 +58,7 @@ const MyPage = () => {
           <StyledForm onSubmit={e => handleLogin(e)}>
             <StyledDiv>
               <StyledPorfileIcon /><InputField label="username" updateState={e => setUsername(e)} value={username} required/>
-              <StyledPwIcon /><InputField label="password" type="password" updateState={e => setPassword(e)} value={password} required/>
+              <StyledPwIcon /><InputField label="password" marginTop={10} type="password" updateState={e => setPassword(e)} value={password} required/>
             </StyledDiv>
             {wrongPassword && <p>Wrong username/password</p>}
             <StyledLoginBtn>Logga in</StyledLoginBtn>
