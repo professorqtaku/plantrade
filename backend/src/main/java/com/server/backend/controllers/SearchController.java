@@ -1,6 +1,7 @@
 package com.server.backend.controllers;
 
 import com.server.backend.entities.Auction;
+import com.server.backend.entities.Category;
 import com.server.backend.entities.Status;
 import com.server.backend.services.AuctionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,11 @@ public class SearchController {
     @GetMapping("/search")
     public ResponseEntity<List<Auction>> getAuctionsByTitle(
             @RequestParam String title,
-            @RequestParam(required = false) Status status
+            @RequestParam(required = false) Status status,
+            @RequestParam(required = false) String category
     ) {
         try {
-            List<Auction> auctions = auctionService.getAuctionByTitleAndStatus(title, status);
+            List<Auction> auctions = auctionService.getAuctionByTitleAndStatusAndCategory(title, status, category);
             if (auctions.size() > 0) {
                 return ResponseEntity.ok(auctions);
             } else {
