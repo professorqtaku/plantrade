@@ -31,13 +31,8 @@ const AuctionPage = () => {
   const { getAllAuctions, auctions } = useAuction();
 
   useEffect(() => {
-    console.log("handle get auction");
     handleGetAuctions();
   }, []);
-  useEffect(() => {
-    console.log(auctions.length);
-    console.log(auctions);
-  }, [auctions]);
 
   const handleGetAuctions = async () => {
     if (auctions.length < 0) {
