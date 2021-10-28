@@ -1,6 +1,7 @@
 package com.server.backend.controllers;
 
 import com.server.backend.entities.User;
+import com.server.backend.repositories.UserRepository;
 import com.server.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 public class AuthController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
 
 
     @PostMapping("/login")
