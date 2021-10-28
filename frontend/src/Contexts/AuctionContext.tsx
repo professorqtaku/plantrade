@@ -24,6 +24,7 @@ const AuctionProvider: FC<Props> = ({ children }: Props) => {
   const getAllAuctions = async () => {
     let res: Response = await fetch('/rest/auctions');
     let newAuctions: Array<Auction> = await res.json();
+    console.log("getting and setting all auctions");
     setAuctions(newAuctions);
     return newAuctions;
   }

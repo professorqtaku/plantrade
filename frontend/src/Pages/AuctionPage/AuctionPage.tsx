@@ -8,7 +8,6 @@ import {
 import AuctionCard from "../../Components/AuctionCard/AuctionCard";
 import { useAuction } from "../../Contexts/AuctionContext";
 import { useEffect } from "react";
-import SearchField from "../../Components/Search/SearchField/SearchField";
 import SearchForm from "../../Components/Search/SearchForm/SearchForm";
 
 export interface Host {
@@ -32,11 +31,18 @@ const AuctionPage = () => {
   const { getAllAuctions, auctions } = useAuction();
 
   useEffect(() => {
+    console.log("handle get auction");
     handleGetAuctions();
   }, []);
+  useEffect(() => {
+    console.log(auctions.length);
+    console.log(auctions);
+  }, [auctions]);
 
   const handleGetAuctions = async () => {
-    await getAllAuctions();
+    if (auctions.length < 0) {
+      await getAllAuctions();
+    }
   };
 
   return (
