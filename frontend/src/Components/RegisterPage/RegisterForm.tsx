@@ -36,7 +36,6 @@ const RegisterForm = () => {
       email: email,
       password: password
     }
-
     await registerUser(userObject);
     history.push('/');
   }
@@ -44,13 +43,13 @@ const RegisterForm = () => {
   return (
     <StyledWrapper>
       <StyledTitle>Skapa Konto</StyledTitle>
-      <StyledForm onSubmit={(e) => handleRegister(e)}>
+      <StyledForm onSubmit={e => handleRegister(e)}>
 
         <StyledInputDiv>
 
           <StyledPorfileIcon /><InputField value={username} label="username" updateState={e => setUsername(e)} required/>
-        <StyledPwIcon/><InputField value={email} label="email" updateState={e => setEmail(e)} required/>
-        <StyledEmailIcon/><InputField value={password} label="password" updateState={e => setPassword(e)} required/>
+        <StyledEmailIcon/><InputField value={email} label="email" updateState={e => setEmail(e)} required/>
+        <StyledPwIcon/><InputField value={password} type="password" label="password" updateState={e => setPassword(e)} required/>     
 
         </StyledInputDiv>
 

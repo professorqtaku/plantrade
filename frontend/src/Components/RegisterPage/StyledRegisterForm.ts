@@ -8,7 +8,7 @@ export const StyledWrapper = styled.div`
   
 `;
 
-export const StyledForm = styled.div`
+export const StyledForm = styled.form`
   width: 70%;
   margin: 0 auto;
 `;
