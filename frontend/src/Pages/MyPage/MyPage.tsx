@@ -67,18 +67,17 @@ const MyPage = () => {
   );
 
   return (
-    <StyledWrapper>
+    <>
       <StyledAvatarWrapper>
+        <StyledText color="white" size="2rem" margin="1rem">Hej Oscar</StyledText>
         <StyledAvatar>N</StyledAvatar>
-        <Button label="logga ut" />
       </StyledAvatarWrapper>
-      <StyledText>
-        <StyledBoldText>Username: </StyledBoldText>
-        Oscar
-      </StyledText>
-      {renderEditFields}
-      {renderNavigations}
-    </StyledWrapper>
+      <StyledWrapper>
+        {renderEditFields}
+        {renderNavigations}
+        <Button label="logga ut" />
+      </StyledWrapper>
+    </>
   );
 };
 
