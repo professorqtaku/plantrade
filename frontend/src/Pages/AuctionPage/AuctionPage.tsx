@@ -10,23 +10,7 @@ import { useAuction } from "../../Contexts/AuctionContext";
 import { useEffect } from "react";
 import SearchForm from "../../Components/Search/SearchForm/SearchForm";
 import { useSearch } from "../../Contexts/SearchContext";
-
-export interface Host {
-  id: number;
-  username: String;
-  email: String;
-  password: String;
-}
-
-export interface Auction {
-  id: number;
-  title: String;
-  description: String;
-  startPrice?: number;
-  status?: String;
-  endDate?: String;
-  host?: Host;
-}
+import { Auction } from '../../Interfaces/Interfaces';
 
 const AuctionPage = () => {
   const { getAllAuctions, auctions } = useAuction();

@@ -4,7 +4,9 @@ import { StyledInput } from "./StyledInputField";
 interface Props {
   label?: string;
   type?: string;
-  updateState: React.Dispatch<React.SetStateAction<any>> | Function;
+  updateState: React.Dispatch<React.SetStateAction<any>>;
+  required?: boolean;
+  margintop?: number;
   value: string | number | undefined;
   InputLabelProps?: Object;
   InputProps?: Object;
@@ -17,18 +19,21 @@ const InputField = ({
   value,
   InputLabelProps,
   InputProps,
+  required,
+  margintop,
 }: Props) => {
   return (
     <StyledInput
-      required
       onChange={(e) => updateState(e.target.value)}
       fullWidth
+      required={required}
       value={value ? value : ""}
       type={type ? type : "text"}
       label={label}
       id={label}
       InputLabelProps={InputLabelProps}
       InputProps={InputProps}
+      margintop={margintop ? margintop : 0}
     />
   );
 };

@@ -7,6 +7,10 @@
   --light-green: #619463;
   --dark-green: #122522;
   --dark-grey: #36455A;
+  --background-color: #FBFDFF;
+  --status-green: #619463;
+  --status-yellow: #FFE500;
+  --status-red: #E44929;
 }
 
 p {
@@ -20,6 +24,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-color);
 }
 
 code {
