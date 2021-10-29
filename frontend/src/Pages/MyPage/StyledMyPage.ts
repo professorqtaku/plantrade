@@ -10,12 +10,14 @@ interface TextProps {
 }
 
 interface BoxProps {
-  justify: string
+  justify: string;
+  background: string;
 }
 
 export const StyledWrapper = styled.div`
   width: 90%;
   margin: 1rem auto;
+  display: grid;
 `;
 
 export const StyledAvatar = styled(Avatar)`
@@ -41,7 +43,6 @@ export const StyledAvatarWrapper = styled.div`
 `;
 
 export const StyledEditWrapper = styled.div`
-  margin-top: 1rem;
   display: grid;
   grid-gap: 1rem;
 `;
@@ -65,7 +66,7 @@ export const StyledBoldText = styled.span`
 `;
 
 export const StyledNavigationWrapper = styled.div`
-  margin-top: 1rem;
+  margin: 1rem 0;
   display: grid;
   grid-gap: 0.5rem;
   grid-template-columns: 1fr 1fr;
@@ -75,7 +76,8 @@ export const StyledNavigationWrapper = styled.div`
 export const StyledNavigationBox = styled.div<BoxProps>`
   width: 11rem;
   height: 11rem;
-  background: gray;
+  background-image: ${(props) =>
+    props.background && `url(${props.background})`};
   justify-self: ${(props) => props.justify && props.justify};
 `;
 
