@@ -1,25 +1,37 @@
-export interface Host {
-  id: number,
+export interface User {
+  id: Number,
   username: String,
-  email: String,
-  password: String,
 }
 
 export interface Auction {
-  id: number,
+  id: Number,
   title: String,
   description: String,
-  startPrice?: number,
+  startPrice?: Number,
   status?: String,
   endDate?: String,
-  host?: Host,
-  bids?: Bid,
+  host?: User,
+  bids?: [Bid],
+  categories?: [Category],
+  images?: [Image],
+  winner?: User
 }
 
 export interface Bid {
-  id: number,
+  id: Number,
   createdDate: Date,
-  price: number,
-  auctionId: number,
-  userId: number
+  price: Number,
+  auctionId: Number,
+  userId: Number
+}
+
+export interface Category {
+  id: Number,
+  name: String
+}
+
+export interface Image {
+  id: Number,
+  path: String,
+  auctionId: Number
 }

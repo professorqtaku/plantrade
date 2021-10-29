@@ -5,14 +5,14 @@ import { StyledWrapper, StyledStatus, StyledTitle, StyledText } from './StyledAu
 import { Auction } from "../../Interfaces/Interfaces";
 import Card from '@mui/material/Card';
 
-function AuctionItem({ auction }: Auction) {
+function AuctionItem({ auction }: Auction | any) {
   const history = useHistory();
   console.log('what is auction in item ', auction);
   const status = auction.status == 'SOLD' ? 'Såld' : auction.status == 'OPEN' ? 'Pågående' : 'Inte såld';
   const color = auction.status == 'SOLD' ? 'var(--status-green)' : auction.status == 'OPEN' ? 'var(--status-yellow)' : 'var(--status-red)';
 
   const handleDetailView = () => {
-    // history.push(`/auctions/${auction.id}`);
+    history.push(`/auctions/${auction.id}`);
   }
 
   return (
