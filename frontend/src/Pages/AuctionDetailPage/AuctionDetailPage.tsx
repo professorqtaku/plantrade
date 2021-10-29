@@ -70,8 +70,8 @@ const AuctionDetailPage = () => {
       createdDate: Date.now()
     }
 
-    console.log(newBid);
     await createBid(newBid);
+    //rerender the new currently highest bid
     handleGetAuctionById();
     setBid('')
   }
@@ -122,9 +122,9 @@ const AuctionDetailPage = () => {
             </StyledPrice>
           </Grid>
           <Grid item xs={6} md={6}>
-              <StyledBidInput>
-                <InputField label="Lägg ett bud" type="number" value={bid} updateState={setBid} />
-              </StyledBidInput>
+            <StyledBidInput>
+              <InputField label="Lägg ett bud" type="number" value={bid} updateState={setBid} />
+            </StyledBidInput>
           </Grid>
           <Grid item xs={6} md={6}>
             <StyledBidBtn onClick={handleBid} style={{cursor: 'pointer'}}>Buda</StyledBidBtn>

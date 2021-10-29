@@ -95,8 +95,6 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
       price: quickBid,
       createdDate: Date.now()
     }
-
-    console.log(newBid);
     
     await createBid(newBid);
   };
@@ -114,7 +112,7 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
             <StyledSpan>Pris:</StyledSpan> {auction.startPrice} SEK
           </StyledDesc>
           <StyledDesc>
-            <StyledSpan>Högsta bud:</StyledSpan> {auction.bids?.length ? bid + "SEK ": "Inga bud lagda"}
+            <StyledSpan>Högsta bud:</StyledSpan> {bid} SEK
           </StyledDesc>
           <StyledDesc>
             <StyledSpan>{remainingTime}</StyledSpan> {daysLeft}
