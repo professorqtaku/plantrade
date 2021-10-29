@@ -42,10 +42,10 @@ POST http://localhost:4000/rest/auctions
 Content-Type: application/json
 
 {
-  "title": "China Rose Stickling",
-  "description": "Orotad stickling av plattblads sorten China Rose",
+  "title": "Chocolate Coverd Cherry",
+  "description": "Orotad stickling av plattblads sorten Chocolate Coverd Cherry",
   "startPrice": 1,
-  "endDate": 1636109579
+  "endDate": 	1636106700
 }
 
 ### Create Bid on an auction
