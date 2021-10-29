@@ -28,6 +28,11 @@ export interface Auction {
   host?: Host;
 }
 
+export interface Category {
+  id: number;
+  name: String;
+}
+
 const AuctionPage = () => {
   const { getAllAuctions, auctions } = useAuction();
   const { searchText } = useSearch();
