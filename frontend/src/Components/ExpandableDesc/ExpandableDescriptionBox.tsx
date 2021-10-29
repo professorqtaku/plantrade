@@ -1,47 +1,43 @@
 import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 
-function ExpandableDescriptionBox(description: String) {
-  // REMOVE WHEN DESCRIPTION EXIST
-  description =
-    "magna aliqua. Vulputate enim nulla aliquet porttitor lacus luctus accumsan tortor posuere.magna aliqua. Vulputate enim nulla aliquet porttitor lacus luctus accumsan tortor posuere.magna aliqua. Vulputate enim nulla aliquet porttitor lacus luctus accumsan tortor posuere.magna aliqua. Vulputate enim nulla aliquet porttitor lacus luctus accumsan tortor posuere. magna aliqua. Vulputate enim nulla aliquet porttitor lacus luctus accumsan tortor posuere. In eu mi bibendum neque. Nisi vitae suscipit tellus mauris a. Ac tortor vitae purus faucibus ornare. ";
-  const descLength = description.length;
-  const [btnName, setBtnName] = useState<String>("Visa mer");
-  const [isExpand, setIsExpand] = useState(false);
-  const [desc, setDesc] = useState<String>();
+interface Props {
+  auctionDescription: String;
+}
+
+function ExpandableDescriptionBox({ auctionDescription }: Props) {
+  const [description, setDescription] = useState<String>();
+  const [buttonTitle, setButtonTitle] = useState<String>("Visa mer");
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const descriptionLength = auctionDescription.length;
   const count = 300;
 
-  console.log("desc length", description.length);
-
   useEffect(() => {
-    if (description && descLength > count) {
-      setDesc(description.substring(0, count) + "...");
+    if (auctionDescription && descriptionLength > count) {
+      setDescription(auctionDescription.substring(0, count) + "...");
     } else {
-      setDesc(description);
+      setDescription(auctionDescription);
     }
   }, []);
 
-  // useEffect(() => {
-  //   console.log('desc is changed')
-  // }, [desc])
-
-  const handleTextBox = () => {
-    if (!isExpand) {
-      setBtnName("Visa mer");
-      setDesc(description.substring(0, count) + "...");
+  const handleButtonText = () => {
+    if (!isExpanded) {
+      setButtonTitle("Visa mer");
+      setDescription(auctionDescription.substring(0, count) + "...");
     } else {
-      setBtnName("Visa mindre");
-      setDesc(description);
+      setButtonTitle("Visa mindre");
+      setDescription(auctionDescription);
     }
-    setIsExpand(!isExpand);
+    setIsExpanded(!isExpanded);
   };
 
   return (
     <div>
-      {desc}
-      {descLength > count && (
-        <Button variant="text" onClick={handleTextBox}>
-          {btnName}
+      {description}
+      {descriptionLength > count && (
+        <Button variant="text" onClick={handleButtonText}>
+          {buttonTitle}
         </Button>
       )}
     </div>
