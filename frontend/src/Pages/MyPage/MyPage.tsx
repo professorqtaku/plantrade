@@ -2,7 +2,6 @@ import {
   StyledWrapper,
   StyledAvatar,
   StyledEdit,
-  StyledAvatarWrapper,
   StyledEditWrapper,
   StyledText,
   StyledNavigationWrapper,
@@ -12,6 +11,7 @@ import {
   StyledNavigationBox,
   StyledButton,
 } from "./StyledMyPage";
+import Header from "../../Components/Header/Header";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { useNav } from "../../Contexts/NavigationContext";
@@ -91,12 +91,12 @@ const MyPage = () => {
 
   return (
     <>
-      <StyledAvatarWrapper>
+      <Header grid={true} gridColumns="1fr 1fr">
         <StyledText color="white" size="2rem" margin="1rem">
           Hej Oscar
         </StyledText>
         <StyledAvatar>N</StyledAvatar>
-      </StyledAvatarWrapper>
+      </Header>
       <StyledWrapper>
         {renderEditFields}
         {renderNavigations}
