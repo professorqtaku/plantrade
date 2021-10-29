@@ -79,7 +79,7 @@ const MyPage = () => {
         <StyledText color="white">Statistik</StyledText>
       </StyledNavigationBox>
 
-      <StyledNavigationBox justify="start" background={IMAGE4}>
+      <StyledNavigationBox onClick={() => history.push('/my-page/my-auctions')} justify="start" background={IMAGE4}>
         <StyledText color="white">Mina auktioner</StyledText>
       </StyledNavigationBox>
     </StyledNavigationWrapper>

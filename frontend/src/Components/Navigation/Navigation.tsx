@@ -76,7 +76,7 @@ const Navigation = () => {
       <StyledInnerWrapper selected={selected5}>
         <StyledAccountIcon
           selected={selected5}
-          onClick={() => handleSelect(setSelected5, "/myPage")}
+          onClick={() => handleSelect(setSelected5, "/my-page")}
         />
       </StyledInnerWrapper>
     </StyledIconWrapper>
