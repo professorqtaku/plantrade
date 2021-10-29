@@ -1,5 +1,5 @@
 import { createContext, FC, useContext, useState, useEffect } from "react";
-import { AuthContext } from "./AuthContext";
+import { useAuth } from "./AuthContext";
 
 type Props = {
   children?: JSX.Element;
@@ -12,7 +12,7 @@ export const useModal = () => useContext(ModalContext);
 
 const ModalProvider: FC<Props> = ({ children }: Props) => {
   const [showLoginModal, setShowLoginModal] = useState<Boolean>(false);
-  const { whoAmI } = useContext(AuthContext);
+  const { whoAmI } = useAuth();
   const toggleLoginModal = () => { setShowLoginModal(!showLoginModal); }
   
   // closing the login-modal if a user logs in
