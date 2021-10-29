@@ -2,6 +2,7 @@ import { BaseSyntheticEvent, useState } from 'react'
 import { useAuction } from '../../../Contexts/AuctionContext';
 import { useSearch } from '../../../Contexts/SearchContext';
 import SearchField from '../SearchField/SearchField';
+import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 
 // shall be removed and type shall be imported from extern file
 type Auction = {
@@ -18,7 +19,9 @@ const SearchForm = () => {
   const { getAuctionsByTitles, searchText, setSearchText } = useSearch();
   const { setAuctions, getAllAuctions } = useAuction();
 
-  const search = async (e: BaseSyntheticEvent) => {    
+  const search = async (e: BaseSyntheticEvent) => {
+    console.log("Submit form");
+    
     e.preventDefault();
     if (searchText.trim().length > 0) {
       let auctions: Array<Auction> = await getAuctionsByTitles(searchText);
@@ -30,9 +33,11 @@ const SearchForm = () => {
   }
 
   return (
-    <form onSubmit={search}>
-      <SearchField searchText={searchText} setSearchText={setSearchText} />
-    </form>
-  )
+    <>
+      <form onSubmit={search}>
+        <SearchField searchText={searchText} setSearchText={setSearchText} />
+      </form>
+    </>
+  );
 }
 export default SearchForm;
