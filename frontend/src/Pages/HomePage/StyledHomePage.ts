@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Card from "@mui/material/Card";
 
 export const StyledWrapper = styled.div`
   max-height: 80vh;
@@ -26,8 +27,17 @@ export const StyledSearchFieldWrapper = styled.div`
   left: 12%;
 `;
 
+export const StyledTest = styled(Card)`
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  background: white;
+  padding: 10px 15px 10px 15px;
+`
+
+
 export const StyledIconImg = styled.img`
-  width: 50px;
+  width: 25px;
 `;
 
 export const StyledCategoryWrapper = styled.div`

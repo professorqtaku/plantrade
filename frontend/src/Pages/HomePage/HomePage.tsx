@@ -1,34 +1,21 @@
 import { useSearch } from "../../Contexts/SearchContext";
 import SearchForm from "../../Components/Search/SearchForm/SearchForm"
-import Leaf from "./kategory_Images/BlackLeaf.png";
-import Flower from "./kategory_Images/BlackFlower.png";
-import Tree from "./kategory_Images/BlackTree.png";
+import { imageIcons } from "./ImageIcons"
 import {
   StyledWrapper,
   StyledSearchWrapper,
   StyledImg,
   StyledSearchFieldWrapper,
   StyledIconImg,
-  StyledCategoryWrapper
+  StyledCategoryWrapper,
+  StyledTest
  } from "./StyledHomePage";
 
 const HomePage = () => {
 
   const { searchText } = useSearch();
 
-  const imageIcons = [{
-    imgFile: Leaf,
-    text: "Buske"
-  },
-  {
-    imgFile: Flower,
-    text: "Blomma"
-    },
-  {
-    imgFile: Tree,
-    text: "Träd"
-    }
-  ]
+
 
   return (
     <StyledWrapper>
@@ -44,10 +31,10 @@ const HomePage = () => {
         {/* <img src={flower} alt="" /> */}
           <StyledCategoryWrapper>
         {imageIcons.map(icon => {
-          return (<div style={{margin: '0 auto', border: '1px solid grey', padding: '3px 10px 3px 10px', marginLeft: "10px"}}>
+          return (<StyledTest>
             <StyledIconImg key={icon.text} src={icon.imgFile}/>
             <p style={{margin: 0, padding: 0, textAlign: 'center'}}>{icon.text}</p>
-          </div>)
+          </StyledTest>)
         })}
           </StyledCategoryWrapper>
       </div>
