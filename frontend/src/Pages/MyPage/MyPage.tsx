@@ -80,7 +80,7 @@ const MyPage = () => {
 
         <StyledAvatarWrapper>
           <StyledAvatar>N</StyledAvatar>
-          <Button label="logga ut" />
+          <Button label="logga ut" callback={() => handleLogout()} />
         </StyledAvatarWrapper>
         <StyledText>
           <StyledBoldText>Username: </StyledBoldText>
