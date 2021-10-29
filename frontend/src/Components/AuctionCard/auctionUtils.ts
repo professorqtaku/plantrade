@@ -3,7 +3,12 @@ const ONE_MINUTE_IN_MILLIS = 60000;
 const ONE_SECOND_IN_MILLIS = 1000;
 export const HOUR_IN_DAY = 24;
 
-export const status = [
+export type Status = {
+  status: string,
+  title: string
+}
+
+export const status: Status[] = [
   {
     status: "OPEN",
     title: "Pågående",

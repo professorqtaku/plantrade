@@ -4,7 +4,7 @@ import { useSearch } from '../../../Contexts/SearchContext';
 import SearchField from '../SearchField/SearchField';
 import FilterCollapse from '../FilterCollapse/FilterCollapse';
 import { StyledForm } from './StyledSearchForm';
-import { HOUR_IN_DAY, status } from '../../AuctionCard/auctionUtils';
+import { HOUR_IN_DAY, Status, status } from '../../AuctionCard/auctionUtils';
 
 // shall be removed and type shall be imported from extern file
 type Auction = {
@@ -24,7 +24,7 @@ const SearchForm = () => {
 
   const [ selectedCategories, setSelectedCategories ] = useState<string[]>([]);
   const [ hours, setHours ] = useState<number>(HOUR_IN_DAY);
-  const [ selectedStatus, setSelectedStatus ] = useState<Object>(status[0]);
+  const [ selectedStatus, setSelectedStatus ] = useState<Status>(status[0]);
   const [ showFilter, setShowFilter ] = useState<boolean>(false);
   
   const toggleFilter = () => setShowFilter(!showFilter)
@@ -35,6 +35,12 @@ const SearchForm = () => {
 
   const search = async (e: BaseSyntheticEvent) => {
     console.log("Submit form");
+    console.log(searchText);
+    console.log(selectedCategories);
+    console.log(hours);
+    console.log(selectedStatus.status);
+    
+    
     
     e.preventDefault();
     if (searchText.trim().length > 0) {

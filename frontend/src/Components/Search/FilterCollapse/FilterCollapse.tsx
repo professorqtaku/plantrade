@@ -54,7 +54,7 @@ function FilterCollapse({
         </Box>
         <Box>
           <StyledTitle>SE ENDAST</StyledTitle>
-          <SelectRadio options={status} updateState={setSelectedStatus} optionKey={"title"}/>
+          <SelectRadio options={status} updateState={setSelectedStatus} optionKey={"title"} defaultValue={status[0]}/>
         </Box>
       </StyledDiv>
     </StyledCollapse>
