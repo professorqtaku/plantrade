@@ -2,19 +2,21 @@ import { useSearch } from "../../Contexts/SearchContext";
 import SearchForm from "../../Components/Search/SearchForm/SearchForm"
 import { imageIcons } from "./ImageIcons"
 import Carousel from 'react-elastic-carousel';
-import Pagination from '@mui/material/Pagination';
 import {
   StyledWrapper,
   StyledSearchWrapper,
   StyledImg,
   StyledSearchFieldWrapper,
   StyledIconImg,
-  StyledCategoryWrapper,
-  StyledTest
+  StyledTest,
+  StyledText,
+  StyledTitle,
+  StyledCarouselWrapper,
+  StyledPageWrapper
  } from "./StyledHomePage";
 
 interface IconImage{
-  imgFile: any;
+  imgFile: string;
   text: string;
 }
 
@@ -24,13 +26,15 @@ const HomePage = () => {
   const { searchText } = useSearch();
 
   const renderCategories = () => (
-    <Carousel isRTL={true} itemsToShow={3}  outerSpacing={0} pagination={false}>
+    <StyledCarouselWrapper>
+    <Carousel isRTL={true} itemsToShow={3} outerSpacing={0} pagination={false}>
         {imageIcons.map((icon: IconImage) => {
           return <StyledTest><StyledIconImg key={icon.text} src={icon.imgFile}/>
-            <p>{icon.text}</p>
+            <StyledText>{icon.text}</StyledText>
             </StyledTest>
         })}
-          </Carousel>
+      </Carousel>
+      </StyledCarouselWrapper>
   )
 
 
@@ -44,16 +48,10 @@ const HomePage = () => {
         </StyledSearchFieldWrapper>
         </StyledSearchWrapper>
 
-      
-      <div>
-
-      
+      <StyledPageWrapper>
+        <StyledTitle>Kategorier</StyledTitle>
           {renderCategories()}
-  
-
-          
- 
-      </div>
+      </StyledPageWrapper>
 
     </StyledWrapper>
   );

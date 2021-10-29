@@ -7,6 +7,13 @@ export const StyledWrapper = styled.div`
   grid-template-rows: 25vh 1fr;
 `;
 
+export const StyledPageWrapper = styled.div`
+      @media (min-width: 769px) {
+    width: 75%;
+    margin: 0 auto;
+  }
+`;
+
 export const StyledSearchWrapper = styled.div`
   height: 100%;
   width: 100%;
@@ -27,22 +34,35 @@ export const StyledSearchFieldWrapper = styled.div`
   left: 12%;
 `;
 
+export const StyledCarouselWrapper = styled.div`
+  width: 100;
+    @media (min-width: 769px) {
+    width: 60%;
+    margin: 0 auto;
+  }
+`;
+
 export const StyledTest = styled(Card)`
   display: grid;
   align-items: center;
   justify-items: center;
-  background: white;
+  background: #FFF;
   padding: 10px 15px 10px 15px;
-`
+  min-width: 60px;
+   margin: 10px;
+`;
 
+export const StyledText = styled.p`
+  margin: 7px 0 0 0;
+  font-size: 13px;
+`;
+
+export const StyledTitle = styled.p`
+  font-size: 20px;
+  letter-spacing: 2px;
+  margin: 0 0 0 1rem;
+`;
 
 export const StyledIconImg = styled.img`
   width: 25px;
-`;
-
-export const StyledCategoryWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  padding: 10px;
-  align-items: center;
 `;
