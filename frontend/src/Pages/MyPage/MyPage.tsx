@@ -12,7 +12,6 @@ import {
   StyledNavigationBox,
   StyledButton,
 } from "./StyledMyPage";
-import Button from "../../Components/Button/ButtonComp";
 import { useState } from "react";
 import { useHistory } from "react-router";
 
@@ -66,7 +65,7 @@ const MyPage = () => {
 
   const renderNavigations = (
     <StyledNavigationWrapper>
-      <StyledNavigationBox justify="end" background={IMAGE1}>
+      <StyledNavigationBox onClick={() => history.push('/createAuction')} justify="end" background={IMAGE1}>
         <StyledText color="white">Skapa auktion</StyledText>
       </StyledNavigationBox>
 
