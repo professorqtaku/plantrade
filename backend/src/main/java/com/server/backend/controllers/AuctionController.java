@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -45,7 +46,10 @@ public class AuctionController {
 
 //    public ResponseEntity<Auction> createAuction(@RequestBody Auction auction, @RequestParam(required=false) List<MultipartFile> files){
     @PostMapping
-    public ResponseEntity<Auction> createAuction(@RequestBody Auction auction, @RequestParam(value = "files", required = false) List<MultipartFile> files){
+    public ResponseEntity<Auction> createAuction(@RequestBody Map content, @RequestParam(value = "files", required = false) List<MultipartFile> files){
+        System.out.println("before");
+        Auction auction = (Auction) content.get("auction");
+        System.out.println(auction.getTitle());
         var user = userService.findCurrentUser();
         if(user != null) {
             Auction savedAuction = auctionService.createAuction(auction, user, files);

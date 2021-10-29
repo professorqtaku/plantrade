@@ -22,14 +22,6 @@ const MenuProps = {
   },
 };
 
-const values = [
-  "Blomma",
-  "Träd",
-  "Stickling",
-  "Frö",
-  "Buske"
-];
-
 interface Props {
   setCategoriesToUse: React.Dispatch<
     React.SetStateAction<Category[] | undefined>
@@ -54,7 +46,8 @@ const SelectBar = ({ setCategoriesToUse }: Props) => {
   const handleChange = (event: SelectChangeEvent<any>) => {
     console.log(event, 'event')
     const { target: { value } } = event;
-    console.log(JSON.parse(value), 'value')
+
+    console.log(value, 'value')
     
     setCategories([
       ...categories,
@@ -78,8 +71,8 @@ const SelectBar = ({ setCategoriesToUse }: Props) => {
         // renderValue={(selected) => selected.join(", ")}
         MenuProps={MenuProps}
       >
-        {allCategories.map((category: Category) => (
-          <MenuItem key={category.id} value={JSON.stringify(category)}>
+        {allCategories && allCategories.map((category: Category) => (
+          <MenuItem key={category.id} value={category.name + ''}>
             <Checkbox checked={categories.indexOf(category) > -1} />
             <ListItemText primary={category.name} />
           </MenuItem>

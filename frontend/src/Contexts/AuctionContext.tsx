@@ -35,16 +35,23 @@ const AuctionProvider: FC<Props> = ({ children }: Props) => {
   }
 
   const createAuction = async (auction: Auction) => {
-    console.log(auction);
+    const content = {
+      auction,
+      categories: {
+        id: 58,
+        name: 'hey'
+      }
+    }
+
     let res: Response  = await fetch('/rest/auctions', {
       method: 'POST',
-      body: JSON.stringify(auction),
+      body: JSON.stringify(content),
       headers: {
         'Content-Type': 'application/json'
       }
     })
     const auctionResponse = await res.json();
-    return auctionResponse;
+    return null;
   }
   
   const values = {
