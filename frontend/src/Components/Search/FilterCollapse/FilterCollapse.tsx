@@ -2,20 +2,30 @@ import React, { useState } from 'react'
 import { Box } from "@mui/material";
 import { StyledCollapse, StyledDiv, StyledTitle } from "./StyledFilterCollapse";
 import SelectCheckbox from '../../SelectCheckbox/SelectCheckbox';
-import { useSearch } from '../../../Contexts/SearchContext';
 import InputField from '../../InputField/InputField';
+import SelectRadio from '../../SelectRadio/SelectRadio';
+import { status } from '../../AuctionCard/auctionUtils';
 
 
-interface Props{
-  isOpen: boolean,
-  toggle: Function
+interface Props {
+  isOpen: boolean;
+  toggle: Function;
+  hours: number;
+  setHours: Function;
+  setSelectedStatus: Function;
+  setSelectedCategories: Function;
 }
 
 const categories = ["Blomma", "Träd", "Stickling", "Frö", "Buske"];
 
-function FilterCollapse({ isOpen, toggle }: Props) {
-  
-  const { setSelectedCategories, hours, setHours } = useSearch();
+function FilterCollapse({
+  isOpen,
+  toggle,
+  hours,
+  setHours,
+  setSelectedStatus,
+  setSelectedCategories,
+}: Props) {
 
   return (
     <StyledCollapse in={isOpen} timeout="auto" unmountOnExit>
@@ -37,15 +47,14 @@ function FilterCollapse({ isOpen, toggle }: Props) {
               shrink: true,
             }}
             InputProps={{
-              endAdornment: (
-                <p>TIMMAR</p>
-              ),
-              inputProps: {min: 1}
+              endAdornment: <p>TIMMAR</p>,
+              inputProps: { min: 1 },
             }}
           />
         </Box>
         <Box>
           <StyledTitle>SE ENDAST</StyledTitle>
+          <SelectRadio options={status} updateState={setSelectedStatus} optionKey={"title"}/>
         </Box>
       </StyledDiv>
     </StyledCollapse>

@@ -3,6 +3,17 @@ const ONE_MINUTE_IN_MILLIS = 60000;
 const ONE_SECOND_IN_MILLIS = 1000;
 export const HOUR_IN_DAY = 24;
 
+export const status = [
+  {
+    status: "OPEN",
+    title: "Pågående",
+  },
+  {
+    status: "SOLD",
+    title: "Avslutade"
+  }
+]
+
 export const handleCount = (
   counter: number,
   differenceInMillis: number,

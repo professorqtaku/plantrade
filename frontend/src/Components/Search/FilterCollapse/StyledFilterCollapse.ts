@@ -15,5 +15,6 @@ export const StyledDiv = styled.div`
 
 export const StyledTitle = styled.p`
   padding: 5% 0 0 5%;
+  margin: 0;
   font-family: var(--font-text);
 `;

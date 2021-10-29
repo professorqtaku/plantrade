@@ -4,7 +4,7 @@ import { StyledInput } from "./StyledInputField";
 interface Props {
   label?: string;
   type?: string;
-  updateState: React.Dispatch<React.SetStateAction<any>>;
+  updateState: React.Dispatch<React.SetStateAction<any>> | Function;
   value: string | number | undefined;
   InputLabelProps?: Object;
   InputProps?: Object;
