@@ -6,11 +6,12 @@ import {
 import AuctionDatePicker from "../../Components/AuctionDatePicker/AuctionDatePicker";
 import SelectBar from "../../Components/SelectBar/SelectBar";
 import InputField from "../../Components/InputField/InputField";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import ButtonComp from "../../Components/Button/ButtonComp"
 import { useAuction } from "../../Contexts/AuctionContext";
+import { useCategory } from "../../Contexts/CategoryContext";
 
 const Input = styled("input")({
   display: "none",
@@ -18,6 +19,14 @@ const Input = styled("input")({
 
 const CreateAuctionPage = () => {
   const { createAuction } = useAuction();
+
+  const { getAllCategories, categories} = useCategory();
+
+  useEffect(() => {
+    getAllCategories();
+  }, [])
+
+  console.log(categories)
 
   // const [preview, setPreview] = useState('')
   // create a holder to store files
