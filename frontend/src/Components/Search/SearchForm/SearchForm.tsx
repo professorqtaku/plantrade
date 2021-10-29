@@ -1,4 +1,4 @@
-import { BaseSyntheticEvent, useEffect, useState } from 'react'
+import { BaseSyntheticEvent, useState } from 'react'
 import { useAuction } from '../../../Contexts/AuctionContext';
 import { useSearch } from '../../../Contexts/SearchContext';
 import SearchField from '../SearchField/SearchField';
@@ -20,12 +20,7 @@ const SearchForm = () => {
   const toggleFilter = () => setShowFilter(!showFilter)
 
   const search = async (e: BaseSyntheticEvent) => {
-    console.log("Submit form");
-    console.log(searchText);
-    console.log(selectedCategories);
-    console.log(hours);
-    console.log(selectedStatus.status);
-    
+    e.preventDefault();
     let option: SearchObject = {
       title: searchText,
       categories: selectedCategories,
@@ -33,9 +28,12 @@ const SearchForm = () => {
       status: selectedStatus,
     };
     
-    e.preventDefault();
     if (searchText.trim().length > 0) {
       let auctions: Array<Auction> = await getAuctionsByOptions(option);
+
+      console.log("auctions");
+      console.log(auctions);
+      
       setAuctions(auctions);
     }
     else {
@@ -58,7 +56,9 @@ const SearchForm = () => {
           toggle={toggleFilter}
           hours={hours}
           setHours={setHours}
+          selectedStatus={selectedStatus}
           setSelectedStatus={setSelectedStatus}
+          selectedCategories={selectedCategories}
           setSelectedCategories={setSelectedCategories}
         />
       </div>

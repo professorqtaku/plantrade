@@ -6,6 +6,7 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox";
 interface Props {
   options: string[];
   label?: string;
+  selected: string[];
   setSelected: Function;
   limitTags?: number;
 }
@@ -13,7 +14,13 @@ interface Props {
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-const SelectCheckbox = ({ options, label, setSelected, limitTags }: Props) => {
+const SelectCheckbox = ({
+  options,
+  label,
+  setSelected,
+  limitTags,
+  selected,
+}: Props) => {
   const handleChange = (event: BaseSyntheticEvent, value: string[]) => {
     setSelected(value);
   };
@@ -25,6 +32,7 @@ const SelectCheckbox = ({ options, label, setSelected, limitTags }: Props) => {
       options={options}
       onChange={(event, value) => handleChange(event, value)}
       disableCloseOnSelect
+      defaultValue={selected}
       getOptionLabel={(option) => option}
       renderOption={(props, option, { selected }) => (
         <li {...props}>

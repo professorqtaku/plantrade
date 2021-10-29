@@ -22,7 +22,7 @@ const SearchField = ({ searchText, setSearchText, showFilter, setShowFilter }: P
       <StyledTextField
         id="search-input-field"
         variant="standard"
-        type="search"
+        type="text"
         value={searchText}
         onChange={(e: BaseSyntheticEvent) => setSearchText(e.target.value)}
         onFocus={() => setShowFilter(true)}

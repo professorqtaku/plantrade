@@ -5,17 +5,19 @@ export const StyledCollapse = styled(Collapse)`
   background: var(--yellow);
   width: 100%;
   border-radius: 5px;
+  max-height: 500px;
 `;
 export const StyledDiv = styled.div`
   background: var(--light-yellow);
   width: 90%;
   margin: 3% auto;
   border-radius: 5px;
-  padding: 3%
+  padding: 3%;
+  max-height: 400px;
 `;
 
 export const StyledTitle = styled.p`
-  padding: 5vh 2vw 3vw;
+  padding: 40px 10px 10px;
   margin: 0;
   font-family: var(--font-text);
 `;

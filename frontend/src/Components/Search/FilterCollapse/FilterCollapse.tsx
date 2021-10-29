@@ -10,7 +10,7 @@ import SelectCheckbox from '../../SelectCheckbox/SelectCheckbox';
 import InputField from '../../InputField/InputField';
 import SelectRadio from '../../SelectRadio/SelectRadio';
 import CloseIcon from "@mui/icons-material/Close";
-import { status } from '../../../Utils/types';
+import { Status, status } from '../../../Utils/types';
 
 
 interface Props {
@@ -18,10 +18,13 @@ interface Props {
   toggle: Function;
   hours: number;
   setHours: Function;
+  selectedStatus: Status;
+  selectedCategories: string[];
   setSelectedStatus: Function;
   setSelectedCategories: Function;
 }
 
+// shall be replaced with categories from db
 const categories = ["Blomma", "Träd", "Stickling", "Frö", "Buske"];
 
 function FilterCollapse({
@@ -29,7 +32,9 @@ function FilterCollapse({
   toggle,
   hours,
   setHours,
+  selectedStatus,
   setSelectedStatus,
+  selectedCategories,
   setSelectedCategories,
 }: Props) {
 
@@ -43,6 +48,7 @@ function FilterCollapse({
           <StyledTitle>KATEGORIER</StyledTitle>
           <SelectCheckbox
             options={categories}
+            selected={selectedCategories}
             setSelected={setSelectedCategories}
             limitTags={1} // 1 for now (console.log)
           />
@@ -68,7 +74,7 @@ function FilterCollapse({
             options={status}
             updateState={setSelectedStatus}
             optionKey={"title"}
-            defaultValue={status[0]}
+            defaultValue={selectedStatus}
           />
         </Box>
       </StyledDiv>
