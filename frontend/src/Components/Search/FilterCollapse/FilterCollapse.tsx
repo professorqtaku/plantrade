@@ -1,10 +1,16 @@
 import React, { useState } from 'react'
 import { Box } from "@mui/material";
-import { StyledCollapse, StyledDiv, StyledTitle } from "./StyledFilterCollapse";
+import {
+  StyledCollapse,
+  StyledDiv,
+  StyledTitle,
+  StyledIconButton,
+} from "./StyledFilterCollapse";
 import SelectCheckbox from '../../SelectCheckbox/SelectCheckbox';
 import InputField from '../../InputField/InputField';
 import SelectRadio from '../../SelectRadio/SelectRadio';
 import { status } from '../../AuctionCard/auctionUtils';
+import CloseIcon from "@mui/icons-material/Close";
 
 
 interface Props {
@@ -29,10 +35,10 @@ function FilterCollapse({
 
   return (
     <StyledCollapse in={isOpen} timeout="auto" unmountOnExit>
-      <button type="button" onClick={() => toggle()}>
-        close
-      </button>
       <StyledDiv>
+        <StyledIconButton type="button" onClick={() => toggle()}>
+          <CloseIcon />
+        </StyledIconButton>
         <Box>
           <StyledTitle>KATEGORIER</StyledTitle>
           <SelectCheckbox

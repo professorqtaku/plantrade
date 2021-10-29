@@ -29,10 +29,6 @@ const SearchForm = () => {
   
   const toggleFilter = () => setShowFilter(!showFilter)
 
-  useEffect(() => {
-    console.log(selectedStatus);
-  },[selectedStatus])
-
   const search = async (e: BaseSyntheticEvent) => {
     console.log("Submit form");
     console.log(searchText);
