@@ -31,5 +31,8 @@ export const StyledIconImg = styled.img`
 `;
 
 export const StyledCategoryWrapper = styled.div`
-
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  padding: 10px;
+  align-items: center;
 `;
