@@ -22,6 +22,7 @@ const MyPage = () => {
   const [email, setEmail] = useState("Email");
   const [password, setPassword] = useState("Lösenord");
   const history = useHistory();
+  const { logout, whoAmI } = useAuth()
 
   const renderEditFields = (
     <StyledEditWrapper>
@@ -67,11 +68,6 @@ const MyPage = () => {
     </StyledNavigationWrapper>
   );
 
-  const MyPage = () => {
-
-    const history = useHistory();
-    const { logout, whoAmI } = useAuth()
-
     // Ändra useref till useState till inputfiel (props, update + label + value)
 
     const handleLogout = () => {
@@ -95,6 +91,4 @@ const MyPage = () => {
       </StyledWrapper>
     );
   };
-
-}
 export default MyPage;

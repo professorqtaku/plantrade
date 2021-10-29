@@ -47,7 +47,6 @@ export const StyledNavigationWrapper = styled.div`
 export const StyledText = styled.p`
   font-size: 1rem;
   letter-spacing: 2px;
-  padding-top: 40px;
   text-align: center;
 `;
 export const StyledCheckWrapper = styled.div`
