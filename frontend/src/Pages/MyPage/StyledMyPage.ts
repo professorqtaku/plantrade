@@ -47,6 +47,11 @@ export const StyledEditWrapper = styled.div`
   grid-gap: 1rem;
 `;
 
+export const StyledBoldText = styled.span`
+  font-size: 1rem;
+  font-weight: bold;
+  `;
+
 export const StyledText = styled.span<TextProps>`
   color: ${(props) => (props.color ? props.color : "black")};
   font-size: ${(props) => (props.size ? props.size : "1rem")};

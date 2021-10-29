@@ -11,11 +11,13 @@ import {
 } from "./StyledNavigation";
 import { useState } from "react";
 import { useHistory } from "react-router";
-
+import {useModal} from "../../Contexts/ModalContext"
+import { useAuth } from "../../Contexts/AuthContext";
 const Navigation = () => {
 
   const history = useHistory();
-
+  const { toggleLoginModal } = useModal();
+  const { whoAmI } = useAuth();
   const [selected1, setSelected1] = useState(false);
   const [selected2, setSelected2] = useState(false);
   const [selected3, setSelected3] = useState(false);
@@ -26,14 +28,19 @@ const Navigation = () => {
     select: React.Dispatch<React.SetStateAction<boolean>>,
     url?: string
   ) => {
-    setSelected1(false);
-    setSelected2(false);
-    setSelected3(false);
-    setSelected4(false);
-    setSelected5(false);
-    select(true);
-
-    url && history.push(url);
+    if (select === setSelected5 && whoAmI == null) {
+      toggleLoginModal();
+    } 
+    else {
+      setSelected1(false);
+      setSelected2(false);
+      setSelected3(false);
+      setSelected4(false);
+      setSelected5(false);
+      select(true);
+      
+      url && history.push(url);
+    }
   };
 
   const renderIcons = () => (

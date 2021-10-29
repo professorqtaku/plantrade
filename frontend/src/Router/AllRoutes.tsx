@@ -4,7 +4,6 @@ import AuctionPage from "../Pages/AuctionPage/AuctionPage";
 import HomePage from "../Pages/HomePage/HomePage";
 import MyAuctionsPage from '../Pages/MyAuctionsPage/MyAuctionsPage';
 import MyPage from "../Pages/MyPage/MyPage";
-import RegisterPage from "../Pages/RegisterPage/RegisterPage";
 import CreateAuctionPage from "../Pages/CreateAuctionPage/CreateAuctionPage";
 
 interface Props {
