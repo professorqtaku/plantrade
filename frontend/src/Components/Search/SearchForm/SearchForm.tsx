@@ -1,4 +1,5 @@
 import { BaseSyntheticEvent, useState } from 'react'
+import { useHistory } from 'react-router-dom';
 import { useAuction } from '../../../Contexts/AuctionContext';
 import { useSearch } from '../../../Contexts/SearchContext';
 import SearchField from '../SearchField/SearchField';
@@ -14,14 +15,20 @@ type Auction = {
   status: Object;
 };
 
-const SearchForm = () => {
+type Props = {
+  searchWord?: string;
+}
+
+const SearchForm = ({searchWord}: Props) => {
   const { getAuctionsByTitles, searchText, setSearchText } = useSearch();
   const { setAuctions, getAllAuctions } = useAuction();
+  const history = useHistory();
 
   const search = async (e: BaseSyntheticEvent) => {    
     e.preventDefault();
+    await history.push('/auctions')
     if (searchText.trim().length > 0) {
-      let auctions: Array<Auction> = await getAuctionsByTitles(searchText);
+      let auctions: Array<Auction> = await getAuctionsByTitles(searchText ? searchText : searchWord);
       setAuctions(auctions);
     }
     else {
