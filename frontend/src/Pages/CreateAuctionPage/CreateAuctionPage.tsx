@@ -12,6 +12,9 @@ import Button from "@mui/material/Button";
 import ButtonComp from "../../Components/Button/ButtonComp"
 import { useAuction } from "../../Contexts/AuctionContext";
 import { useCategory } from "../../Contexts/CategoryContext";
+import { Category } from "../AuctionPage/AuctionPage";
+
+
 
 const Input = styled("input")({
   display: "none",
@@ -19,15 +22,6 @@ const Input = styled("input")({
 
 const CreateAuctionPage = () => {
   const { createAuction } = useAuction();
-
-  const { getAllCategories, categories} = useCategory();
-
-  useEffect(() => {
-    getAllCategories();
-  }, [])
-
-  console.log(categories)
-
   // const [preview, setPreview] = useState('')
   // create a holder to store files
   const formData = new FormData()
@@ -41,7 +35,7 @@ const CreateAuctionPage = () => {
   const inOneDay = Date.now() + 1000*65*60*24;
   const [endDate, setEndDate] = useState<number | undefined>(inOneDay);
   const [categoriesToUse, setCategoriesToUse] = useState<
-    String[] | undefined
+    Category[] | undefined
   >();
 
   const handleAddAuction = (e: React.FormEvent<HTMLFormElement>) => {
