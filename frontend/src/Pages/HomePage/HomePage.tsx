@@ -1,6 +1,14 @@
+import { useEffect } from "react";
+import { useNav } from "../../Contexts/NavigationContext";
 
 
 const HomePage = () => {
+
+  const { setHome, handleSelect } = useNav();
+
+  useEffect(() => {
+    handleSelect(setHome);
+  },[])
 
   return (
     <div>

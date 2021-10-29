@@ -1,6 +1,7 @@
 import AuctionProvider from "./AuctionContext";
 import ModalProvider from "./ModalContext";
 import SearchProvider from "./SearchContext";
+import NavigationProvider from "./NavigationContext";
 
 interface Props {
   children: JSX.Element;
@@ -11,10 +12,10 @@ const AllContextProviders: React.FC<Props> = ({ children }) => {
     <>
       <AuctionProvider>
         <ModalProvider>
-            <SearchProvider>
-              {children}
-            </SearchProvider>
-          </ModalProvider>
+          <NavigationProvider>
+            <SearchProvider>{children}</SearchProvider>
+          </NavigationProvider>
+        </ModalProvider>
       </AuctionProvider>
     </>
   );
