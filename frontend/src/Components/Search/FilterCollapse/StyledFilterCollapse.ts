@@ -12,3 +12,8 @@ export const StyledDiv = styled.div`
   margin: 2% auto;
   border-radius: 5px;
 `;
+
+export const StyledTitle = styled.p`
+  padding: 5% 0 0 5%;
+  font-family: var(--font-text);
+`;

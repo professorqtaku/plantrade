@@ -27,7 +27,7 @@ const SearchField = ({ searchText, setSearchText, showFilter, setShowFilter }: P
         onChange={(e: BaseSyntheticEvent) => setSearchText(e.target.value)}
         onFocus={() => setShowFilter(true)}
         inputProps={{
-          style: { fontFamily: "var(--font-text)", fontSize: 24 },
+          style: { fontFamily: "var(--font-text)", fontSize: '1em' },
         }}
         InputProps={{
           endAdornment: (

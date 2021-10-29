@@ -23,10 +23,10 @@ export const StyledImg = styled.img`
 `;
 
 export const StyledSearchFieldWrapper = styled.div`
-  width: 70%;
+  width: 80%;
   margin: 0 auto;
   position: absolute;
   top: 60%;
-  left: 12%;
+  left: 10%;
   z-index: 1;
 `;

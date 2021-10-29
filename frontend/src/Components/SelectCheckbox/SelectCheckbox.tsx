@@ -5,7 +5,7 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox";
 
 interface Props {
   options: string[];
-  label: string;
+  label?: string;
   setSelected: Function;
 }
 

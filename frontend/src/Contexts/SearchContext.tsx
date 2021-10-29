@@ -1,4 +1,5 @@
 import React, { createContext, FC, useContext, useState } from 'react'
+import { HOUR_IN_DAY } from '../Components/AuctionCard/auctionUtils';
 
 type Props = {
   children?: JSX.Element;
@@ -20,7 +21,8 @@ export const useSearch = () => useContext(SearchContext);
 
 const SearchProvider: FC<Props> = ({ children }: Props) => {
   const [searchText, setSearchText] = useState<string>("");
-    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [hours, setHours] = useState<number>(HOUR_IN_DAY);
 
   const getAuctionsByTitles = async (search: string) => {
     if (search.trim().length > 0) {
@@ -37,6 +39,8 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
     searchText,
     setSearchText,
     selectedCategories,
+    hours,
+    setHours,
     setSelectedCategories,
     getAuctionsByTitles,
   };
