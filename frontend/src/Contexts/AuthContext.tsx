@@ -20,7 +20,6 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
   const [userExists, setUserExists] = useState(false);
 
   useEffect(() => {
-    if(whoAmI)
     whoIsOnline();
   },[!whoAmI]);
 
@@ -61,12 +60,13 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
     }
 
   }
+
  
   const whoIsOnline = async () => {
     fetch('/api/whoami')
       .then(res => res.json()
         .then(data => {
-
+          
           if (!data) {
             setWhoAmI(null);
             return null;
