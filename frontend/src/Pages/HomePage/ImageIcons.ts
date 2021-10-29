@@ -5,7 +5,16 @@ import Tree from "./kategory_Images/BlackTree.png";
 import Bush from "./kategory_Images/BlackBush.png";
 import Seed from "./kategory_Images/BlackSeed.png";
 
-export const imageIcons = [{
+export const imageIcons = [
+   {
+    imgFile: Seed,
+    text: "FRÖ"
+  },
+    {
+    imgFile: Bush,
+    text: "BUSKE"
+  },
+    {
     imgFile: Leaf,
     text: "STICKLING"
   },
@@ -16,14 +25,6 @@ export const imageIcons = [{
   {
     imgFile: Tree,
     text: "TRÄD"
-  },
-   {
-    imgFile: Seed,
-    text: "FRÖ"
-  },
-    {
-    imgFile: Bush,
-    text: "BUSKE"
-    },
+  }
     
   ]

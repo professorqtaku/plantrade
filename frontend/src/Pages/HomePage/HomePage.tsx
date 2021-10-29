@@ -27,7 +27,7 @@ const HomePage = () => {
 
   const renderCategories = () => (
     <StyledCarouselWrapper>
-    <Carousel isRTL={true} itemsToShow={3} outerSpacing={0} pagination={false}>
+    <Carousel isRTL={true} itemsToShow={3} outerSpacing={0} pagination={false} initialFirstItem={3}>
         {imageIcons.map((icon: IconImage) => {
           return <StyledTest><StyledIconImg key={icon.text} src={icon.imgFile}/>
             <StyledText>{icon.text}</StyledText>
