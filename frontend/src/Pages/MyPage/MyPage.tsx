@@ -10,6 +10,7 @@ import {
   StyledInput,
   StyledCheckWrapper,
   StyledNavigationBox,
+  StyledButton,
 } from "./StyledMyPage";
 import Button from "../../Components/Button/ButtonComp";
 import { useState } from "react";
@@ -65,22 +66,21 @@ const MyPage = () => {
 
   const renderNavigations = (
     <StyledNavigationWrapper>
-      <StyledNavigationBox
-        justify="end"
-        background={IMAGE1}
-      ></StyledNavigationBox>
-      <StyledNavigationBox
-        justify="start"
-        background={IMAGE2}
-      ></StyledNavigationBox>
-      <StyledNavigationBox
-        justify="end"
-        background={IMAGE3}
-      ></StyledNavigationBox>
-      <StyledNavigationBox
-        justify="start"
-        background={IMAGE4}
-      ></StyledNavigationBox>
+      <StyledNavigationBox justify="end" background={IMAGE1}>
+        <StyledText color="white">Skapa auktion</StyledText>
+      </StyledNavigationBox>
+
+      <StyledNavigationBox justify="start" background={IMAGE2}>
+        <StyledText color="white">Vunna auktioner</StyledText>
+      </StyledNavigationBox>
+
+      <StyledNavigationBox justify="end" background={IMAGE3}>
+        <StyledText color="white">Statistik</StyledText>
+      </StyledNavigationBox>
+
+      <StyledNavigationBox justify="start" background={IMAGE4}>
+        <StyledText color="white">Mina auktioner</StyledText>
+      </StyledNavigationBox>
     </StyledNavigationWrapper>
   );
 
@@ -95,7 +95,7 @@ const MyPage = () => {
       <StyledWrapper>
         {renderEditFields}
         {renderNavigations}
-        <Button label="logga ut" />
+        <StyledButton>Logga ut</StyledButton>
       </StyledWrapper>
     </>
   );

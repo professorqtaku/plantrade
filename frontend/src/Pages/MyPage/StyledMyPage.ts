@@ -21,7 +21,7 @@ export const StyledWrapper = styled.div`
 `;
 
 export const StyledAvatar = styled(Avatar)`
-  background: #619463;
+  background: var(--light-green);
   justify-self: end;
   margin: 1rem;
 `;
@@ -53,15 +53,10 @@ export const StyledText = styled.span<TextProps>`
   margin: ${(props) => (props.margin ? props.margin : "")};
   font-style: italic;
   letter-spacing: 2px;
+  font-family: var(--font-title);
 `;
 
 export const StyledSpanText = styled.span<TextProps>`
-  letter-spacing: 2px;
-`;
-
-export const StyledBoldText = styled.span`
-  font-size: 1rem;
-  font-weight: bold;
   letter-spacing: 2px;
 `;
 
@@ -79,6 +74,9 @@ export const StyledNavigationBox = styled.div<BoxProps>`
   background-image: ${(props) =>
     props.background && `url(${props.background})`};
   justify-self: ${(props) => props.justify && props.justify};
+  display: grid;
+  align-items: center;
+  justify-items: center;
 `;
 
 export const StyledCheckWrapper = styled.div`
@@ -94,4 +92,16 @@ export const StyledInput = styled.input`
   outline: none;
   font-size: 1rem;
   width: 50%;
+`;
+
+export const StyledButton = styled.button`
+  background: white;
+  border: 1px solid var(--light-green);
+  color: black;
+  padding: 0.5rem;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: var(--font-text);
+  border-radius: 0.4rem;
 `;
