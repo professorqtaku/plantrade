@@ -4,22 +4,12 @@ import { useSearch } from '../../../Contexts/SearchContext';
 import SearchField from '../SearchField/SearchField';
 import FilterCollapse from '../FilterCollapse/FilterCollapse';
 import { StyledForm } from './StyledSearchForm';
-import { HOUR_IN_DAY, Status, status } from '../../AuctionCard/auctionUtils';
-
-// shall be removed and type shall be imported from extern file
-type Auction = {
-  id: Number;
-  host: { id: Number; username: String };
-  title: String;
-  description: String;
-  startPrice: Number;
-  endDate: Date;
-  status: Object;
-};
+import { HOUR_IN_DAY } from '../../AuctionCard/auctionUtils';
+import { Status, status, Auction, SearchObject } from '../../../Utils/types'
 
 const SearchForm = () => {
   
-  const { getAuctionsByTitles, searchText, setSearchText } = useSearch();
+  const { getAuctionsByOptions, searchText, setSearchText } = useSearch();
   const { setAuctions, getAllAuctions } = useAuction();
 
   const [ selectedCategories, setSelectedCategories ] = useState<string[]>([]);
@@ -36,11 +26,16 @@ const SearchForm = () => {
     console.log(hours);
     console.log(selectedStatus.status);
     
-    
+    let option: SearchObject = {
+      title: searchText,
+      categories: selectedCategories,
+      hours: hours,
+      status: selectedStatus,
+    };
     
     e.preventDefault();
     if (searchText.trim().length > 0) {
-      let auctions: Array<Auction> = await getAuctionsByTitles(searchText);
+      let auctions: Array<Auction> = await getAuctionsByOptions(option);
       setAuctions(auctions);
     }
     else {

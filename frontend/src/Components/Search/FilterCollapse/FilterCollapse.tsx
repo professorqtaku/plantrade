@@ -9,8 +9,8 @@ import {
 import SelectCheckbox from '../../SelectCheckbox/SelectCheckbox';
 import InputField from '../../InputField/InputField';
 import SelectRadio from '../../SelectRadio/SelectRadio';
-import { status } from '../../AuctionCard/auctionUtils';
 import CloseIcon from "@mui/icons-material/Close";
+import { status } from '../../../Utils/types';
 
 
 interface Props {
@@ -44,7 +44,7 @@ function FilterCollapse({
           <SelectCheckbox
             options={categories}
             setSelected={setSelectedCategories}
-            limitTags={1}
+            limitTags={1} // 1 for now (console.log)
           />
         </Box>
         <Box>
