@@ -3,7 +3,7 @@ import Carousel from 'react-material-ui-carousel';
 import { Paper, Button } from '@material-ui/core';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
-import { StyledImage, StyledPaper } from '../../../Pages/AuctionDetailPage/StyledAuctionDetailPage';
+import { StyledImage, StyledPaper } from '../../Pages/AuctionDetailPage/StyledAuctionDetailPage';
 
 
 function ImageCarousel(images:any) {
