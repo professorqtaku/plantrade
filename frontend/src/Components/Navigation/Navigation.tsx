@@ -9,59 +9,71 @@ import {
   StyledMsgIcon,
   StyledAccountIcon,
 } from "./StyledNavigation";
-import {useModal} from "../../Contexts/ModalContext"
-import { useAuth } from "../../Contexts/AuthContext";
 import { useState } from "react";
 import { useHistory } from "react-router";
-import {useNav} from '../../Contexts/NavigationContext'
-
+import {useModal} from "../../Contexts/ModalContext"
+import { useAuth } from "../../Contexts/AuthContext";
 const Navigation = () => {
 
   const history = useHistory();
-  const { home, auction, notis, message, profile } = useNav();
   const { toggleLoginModal } = useModal();
   const { whoAmI } = useAuth();
+  const [selected1, setSelected1] = useState(false);
+  const [selected2, setSelected2] = useState(false);
+  const [selected3, setSelected3] = useState(false);
+  const [selected4, setSelected4] = useState(false);
+  const [selected5, setSelected5] = useState(false);
 
   const handleSelect = (
+    select: React.Dispatch<React.SetStateAction<boolean>>,
     url?: string
   ) => {
-    if (whoAmI == null) {
+    if (select === setSelected5 && whoAmI == null) {
       toggleLoginModal();
     } 
     else {
+      setSelected1(false);
+      setSelected2(false);
+      setSelected3(false);
+      setSelected4(false);
+      setSelected5(false);
+      select(true);
+      
       url && history.push(url);
     }
   };
 
   const renderIcons = () => (
     <StyledIconWrapper>
-      <StyledInnerWrapper selected={home}>
+      <StyledInnerWrapper selected={selected1}>
         <StyledHomeIcon
-          selected={home}
-          onClick={() => handleSelect("/")}
+          selected={selected1}
+          onClick={() => handleSelect(setSelected1, "/")}
         />
       </StyledInnerWrapper>
 
-      <StyledInnerWrapper selected={auction}>
+      <StyledInnerWrapper selected={selected2}>
         <StyledHammerIcon
-          selected={auction}
-          onClick={() => handleSelect("/auctions")}
+          selected={selected2}
+          onClick={() => handleSelect(setSelected2, "/auctions")}
         />
       </StyledInnerWrapper>
 
-      <StyledInnerWrapper selected={notis}>
+      <StyledInnerWrapper selected={selected3}>
         <StyledNotisIcon
-          selected={notis}
+          selected={selected3}
+          onClick={() => handleSelect(setSelected3)}
         />
       </StyledInnerWrapper>
 
-      <StyledInnerWrapper selected={message}>
+      <StyledInnerWrapper selected={selected4}>
         <StyledMsgIcon
-          selected={message}
+          selected={selected4}
+          onClick={() => handleSelect(setSelected4)}
         />
       </StyledInnerWrapper>
 
-      <StyledInnerWrapper selected={profile}>
+      <StyledInnerWrapper selected={selected5}>
         <StyledAccountIcon
           selected={selected5}
           onClick={() => handleSelect(setSelected5, "/my-page")}

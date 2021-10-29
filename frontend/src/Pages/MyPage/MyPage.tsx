@@ -3,6 +3,7 @@ import {
   StyledWrapper,
   StyledAvatar,
   StyledEdit,
+  StyledAvatarWrapper,
   StyledEditWrapper,
   StyledText,
   StyledNavigationWrapper,
@@ -12,10 +13,8 @@ import {
   StyledNavigationBox,
   StyledButton,
 } from "./StyledMyPage";
-import Header from "../../Components/Header/Header";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useHistory } from "react-router";
-import { useNav } from "../../Contexts/NavigationContext";
 
 const IMAGE1 =
   "https://i.pinimg.com/736x/0f/0f/99/0f0f99b410e810c32aa5fdb78b2710e0.jpg";
@@ -31,13 +30,8 @@ const MyPage = () => {
   const [onEditPassword, setOnEditPassword] = useState(false);
   const [email, setEmail] = useState("Email");
   const [password, setPassword] = useState("Lösenord");
-  const { setProfile, handleSelect } = useNav();
   const history = useHistory();
   const { logout, whoAmI } = useAuth()
-
-  useEffect(() => {
-    handleSelect(setProfile);
-  },[])
 
   const renderEditFields = (
     <StyledEditWrapper>
@@ -101,12 +95,12 @@ const MyPage = () => {
 
   return (
     <>
-      <Header grid={true} gridColumns="1fr 1fr">
+      <StyledAvatarWrapper>
         <StyledText color="white" size="2rem" margin="1rem">
           Hej Oscar
         </StyledText>
         <StyledAvatar>N</StyledAvatar>
-      </Header>
+      </StyledAvatarWrapper>
       <StyledWrapper>
         {renderEditFields}
         {renderNavigations}
