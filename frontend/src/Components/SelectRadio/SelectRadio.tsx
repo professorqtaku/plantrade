@@ -44,9 +44,8 @@ const SelectRadio = ({
         }
       >
         {options.map((option, index) => (
-          <Grid item>
+          <Grid item key={`radio${index}`}>
             <FormControlLabel
-              key={`${option}${index}`}
               value={
                 typeof optionKey == "string" && typeof options == "object"
                   ? (option as any)[optionKey]

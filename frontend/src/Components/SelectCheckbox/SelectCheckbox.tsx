@@ -7,13 +7,13 @@ interface Props {
   options: string[];
   label?: string;
   setSelected: Function;
+  limitTags?: number;
 }
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-const SelectCheckbox = ({ options, label, setSelected }: Props) => {
-
+const SelectCheckbox = ({ options, label, setSelected, limitTags }: Props) => {
   const handleChange = (event: BaseSyntheticEvent, value: string[]) => {
     setSelected(value);
   };
@@ -21,6 +21,7 @@ const SelectCheckbox = ({ options, label, setSelected }: Props) => {
   return (
     <Autocomplete
       multiple
+      limitTags={limitTags}
       options={options}
       onChange={(event, value) => handleChange(event, value)}
       disableCloseOnSelect

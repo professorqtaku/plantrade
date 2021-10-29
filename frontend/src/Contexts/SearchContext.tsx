@@ -1,5 +1,4 @@
 import React, { createContext, FC, useContext, useState } from 'react'
-import { HOUR_IN_DAY } from '../Components/AuctionCard/auctionUtils';
 
 type Props = {
   children?: JSX.Element;

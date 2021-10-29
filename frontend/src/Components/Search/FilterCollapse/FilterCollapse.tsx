@@ -29,12 +29,16 @@ function FilterCollapse({
 
   return (
     <StyledCollapse in={isOpen} timeout="auto" unmountOnExit>
+      <button type="button" onClick={() => toggle()}>
+        close
+      </button>
       <StyledDiv>
         <Box>
           <StyledTitle>KATEGORIER</StyledTitle>
           <SelectCheckbox
             options={categories}
             setSelected={setSelectedCategories}
+            limitTags={1}
           />
         </Box>
         <Box>
@@ -54,7 +58,12 @@ function FilterCollapse({
         </Box>
         <Box>
           <StyledTitle>SE ENDAST</StyledTitle>
-          <SelectRadio options={status} updateState={setSelectedStatus} optionKey={"title"} defaultValue={status[0]}/>
+          <SelectRadio
+            options={status}
+            updateState={setSelectedStatus}
+            optionKey={"title"}
+            defaultValue={status[0]}
+          />
         </Box>
       </StyledDiv>
     </StyledCollapse>

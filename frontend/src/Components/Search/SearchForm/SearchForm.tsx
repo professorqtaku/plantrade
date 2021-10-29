@@ -50,6 +50,7 @@ const SearchForm = () => {
     else {
       await getAllAuctions();
     }
+    setShowFilter(false);
   }
 
   return (
@@ -58,8 +59,8 @@ const SearchForm = () => {
         <SearchField
           searchText={searchText}
           setSearchText={setSearchText}
-          setShowFilter={setShowFilter}
           showFilter={showFilter}
+          setShowFilter={setShowFilter}
         />
         <FilterCollapse
           isOpen={showFilter}
