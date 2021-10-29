@@ -34,13 +34,6 @@ export const StyledCheck = styled(DoneIcon)`
   color: #619463;
 `;
 
-export const StyledAvatarWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  margin-bottom: 2rem;
-  background-image: url("https://i.pinimg.com/564x/f8/2a/c0/f82ac0c390529f0a96d975c6b6f7c997.jpg");
-  height: 8rem;
-`;
 
 export const StyledEditWrapper = styled.div`
   display: grid;
