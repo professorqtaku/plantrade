@@ -1,3 +1,4 @@
+import { useAuth } from "../../Contexts/AuthContext";
 import {
   StyledWrapper,
   StyledAvatar,
@@ -30,6 +31,7 @@ const MyPage = () => {
   const [email, setEmail] = useState("Email");
   const [password, setPassword] = useState("Lösenord");
   const history = useHistory();
+  const { logout, whoAmI } = useAuth()
 
   const renderEditFields = (
     <StyledEditWrapper>
@@ -83,6 +85,14 @@ const MyPage = () => {
     </StyledNavigationWrapper>
   );
 
+    // Ändra useref till useState till inputfiel (props, update + label + value)
+
+    const handleLogout = (e: any) => {
+      e.preventDefault();
+      logout();
+      history.push('/')
+    }
+
   return (
     <>
       <StyledAvatarWrapper>
@@ -94,7 +104,7 @@ const MyPage = () => {
       <StyledWrapper>
         {renderEditFields}
         {renderNavigations}
-        <StyledButton>Logga ut</StyledButton>
+        <StyledButton onClick={handleLogout}>Logga ut</StyledButton>
       </StyledWrapper>
     </>
   );

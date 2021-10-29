@@ -3,7 +3,6 @@ import AuctionDetailPage from "../Pages/AuctionDetailPage/AuctionDetailPage";
 import AuctionPage from "../Pages/AuctionPage/AuctionPage";
 import HomePage from "../Pages/HomePage/HomePage";
 import MyPage from "../Pages/MyPage/MyPage";
-import RegisterPage from "../Pages/RegisterPage/RegisterPage";
 import CreateAuctionPage from "../Pages/CreateAuctionPage/CreateAuctionPage";
 
 interface Props {
@@ -18,7 +17,6 @@ const AllRoutes: React.FC<Props> = ({ children }) => {
         <Route path="/" exact={true} component={HomePage} />
         <Route path="/auctions" exact={true} component={AuctionPage} />
         <Route path="/myPage" exact={true} component={MyPage} />
-        <Route path="/register" exact={true} component={RegisterPage} />
         <Route path="/auction/:id" exact={true} component={AuctionDetailPage} />
         <Route
           path="/createAuction"
