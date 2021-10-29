@@ -40,7 +40,7 @@ const AuctionDetailPage = () => {
   const history = useHistory();
   
   const [auction, setAuction] = useState<Auction | undefined>();
-  const [bid, setBid] = useState<string| number>(0);
+  const [bid, setBid] = useState<string>('');
   const [currentBid, setCurrentBid] = useState<number>(0);
 
   const { getAuctionById } = useAuction();
