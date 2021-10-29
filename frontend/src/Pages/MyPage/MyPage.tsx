@@ -1,3 +1,4 @@
+import { useAuth } from "../../Contexts/AuthContext";
 import {
   StyledWrapper,
   StyledAvatar,
@@ -32,6 +33,7 @@ const MyPage = () => {
   const [password, setPassword] = useState("Lösenord");
   const { setProfile, handleSelect } = useNav();
   const history = useHistory();
+  const { logout, whoAmI } = useAuth()
 
   useEffect(() => {
     handleSelect(setProfile);
@@ -89,6 +91,14 @@ const MyPage = () => {
     </StyledNavigationWrapper>
   );
 
+    // Ändra useref till useState till inputfiel (props, update + label + value)
+
+    const handleLogout = (e: any) => {
+      e.preventDefault();
+      logout();
+      history.push('/')
+    }
+
   return (
     <>
       <Header grid={true} gridColumns="1fr 1fr">
@@ -100,7 +110,7 @@ const MyPage = () => {
       <StyledWrapper>
         {renderEditFields}
         {renderNavigations}
-        <StyledButton>Logga ut</StyledButton>
+        <StyledButton onClick={handleLogout}>Logga ut</StyledButton>
       </StyledWrapper>
     </>
   );

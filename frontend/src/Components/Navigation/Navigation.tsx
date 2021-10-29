@@ -9,6 +9,8 @@ import {
   StyledMsgIcon,
   StyledAccountIcon,
 } from "./StyledNavigation";
+import {useModal} from "../../Contexts/ModalContext"
+import { useAuth } from "../../Contexts/AuthContext";
 import { useState } from "react";
 import { useHistory } from "react-router";
 import {useNav} from '../../Contexts/NavigationContext'
@@ -17,24 +19,18 @@ const Navigation = () => {
 
   const history = useHistory();
   const { home, auction, notis, message, profile } = useNav();
-
-  // const [selected1, setSelected1] = useState(false);
-  // const [selected2, setSelected2] = useState(false);
-  // const [selected3, setSelected3] = useState(false);
-  // const [selected4, setSelected4] = useState(false);
-  // const [selected5, setSelected5] = useState(false);
+  const { toggleLoginModal } = useModal();
+  const { whoAmI } = useAuth();
 
   const handleSelect = (
     url?: string
   ) => {
-    // setSelected1(false);
-    // setSelected2(false);
-    // setSelected3(false);
-    // setSelected4(false);
-    // setSelected5(false);
-    // select(true);
-
-    url && history.push(url);
+    if (whoAmI == null) {
+      toggleLoginModal();
+    } 
+    else {
+      url && history.push(url);
+    }
   };
 
   const renderIcons = () => (

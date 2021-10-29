@@ -12,7 +12,7 @@ const HomePage = () => {
 
   return (
     <div>
-        <h3>HomePage</h3>
+      <h3>HomePage</h3>
     </div>
   );
 }
