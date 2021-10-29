@@ -1,5 +1,8 @@
 import {
-  StyledWrapper
+  StyledWrapper,
+  StyledCardCurr,
+  StyledCardSold,
+  StyledCardNoSold
 } from './StyledMyAuctionsPage';
 import { useState, useEffect } from 'react';
 import CardContent from '@mui/material/CardContent';
@@ -11,6 +14,8 @@ import { styled } from '@mui/material/styles';
 import CardActions from '@mui/material/CardActions';
 import { useAuction } from '../../Contexts/AuctionContext';
 import AuctionItem from '../../Components/AuctionItem/AuctionItem';
+import Card from '@mui/material/Card';
+import { Auction } from "../../Interfaces/Interfaces";
 
 
 function MyAuctionsPage() {
@@ -57,61 +62,71 @@ function MyAuctionsPage() {
 
 
   return (
-    <div>
-      
-      <CardActions disableSpacing>
-      <Typography paragraph>Aktuella auktioner</Typography>
-      <ExpandMore
-          expand={expandedCurr}
-          onClick={handleExpandCurr}
-        >
-          <ExpandMoreIcon />
-        </ExpandMore>
-        </CardActions>
-      <Collapse in={expandedCurr} timeout="auto" unmountOnExit>
-        {usersAuctions && usersAuctions.map((auction: any) => {
-          if (auction.status === 'OPEN') {
-            return <AuctionItem key={auction.id} auction={auction} />
-          }
-        })}
-      </Collapse>
+    <StyledWrapper>
+      <Card>
+    <StyledCardCurr isExpanded={expandedCurr}>
+        <CardActions disableSpacing>
+        <Typography paragraph>Aktuella auktioner</Typography>
+        <ExpandMore
+            // expand={expandedCurr}
+            onClick={handleExpandCurr}
+          >
+            <ExpandMoreIcon />
+          </ExpandMore>
+          </CardActions>
+          <Collapse in={expandedCurr} timeout="auto" unmountOnExit>
+            {usersAuctions && usersAuctions.map((auction: Auction) => {
+              if (auction.status === 'OPEN') {
+                return <AuctionItem key={auction.id} auction={auction} />
+              }
+            })}
+          </Collapse>
+      </StyledCardCurr>
+        </Card>
 
-      <CardActions disableSpacing>
-      <Typography paragraph>Sålda auktioner</Typography>
-      <ExpandMore
-          expand={expandedSold}
-          onClick={handleExpandSold}
-        >
-          <ExpandMoreIcon />
-        </ExpandMore>
-        </CardActions>
-      <Collapse in={expandedSold} timeout="auto" unmountOnExit>
-        {usersAuctions && usersAuctions.map((auction: any) => {
-          if (auction.status === 'SOLD') {
-            return <AuctionItem key={auction.id} auction={auction} />
-          }
-        })}
-      </Collapse>
+      <StyledCardSold isExpanded={expandedSold}>
+      <Card>
+        <CardActions disableSpacing>
+        <Typography paragraph>Sålda auktioner</Typography>
+        <ExpandMore
+            // expand={expandedSold}
+            onClick={handleExpandSold}
+          >
+            <ExpandMoreIcon />
+          </ExpandMore>
+          </CardActions>
+        <Collapse in={expandedSold} timeout="auto" unmountOnExit>
+          {usersAuctions && usersAuctions.map((auction: any) => {
+            if (auction.status === 'SOLD') {
+              return <AuctionItem key={auction.id} auction={auction} />
+            }
+          })}
+        </Collapse>
+        </Card>
+        </StyledCardSold>
 
-      <CardActions disableSpacing>
-      <Typography paragraph>Inte sålda auktioner</Typography>
-      <ExpandMore
-          expand={expandedNoSold}
-          onClick={handleExpandNoSold}
-        >
-          <ExpandMoreIcon />
-        </ExpandMore>
-        </CardActions>
-      <Collapse in={expandedNoSold} timeout="auto" unmountOnExit>
-        {usersAuctions && usersAuctions.map((auction: any) => {
-          if (auction.status === 'NOT_SOLD') {
-            return <AuctionItem key={auction.id} auction={auction} />
-          }
-        })}
-      </Collapse>
+      <StyledCardNoSold isExpanded={expandedNoSold}>
+      <Card>
+        <CardActions disableSpacing>
+        <Typography paragraph>Inte sålda auktioner</Typography>
+        <ExpandMore
+            // expand={expandedNoSold}
+            onClick={handleExpandNoSold}
+          >
+            <ExpandMoreIcon />
+          </ExpandMore>
+          </CardActions>
+        <Collapse in={expandedNoSold} timeout="auto" unmountOnExit>
+          {usersAuctions && usersAuctions.map((auction: any) => {
+            if (auction.status === 'NOT_SOLD') {
+              return <AuctionItem key={auction.id} auction={auction} />
+            }
+          })}
+        </Collapse>
+        </Card>
+        </StyledCardNoSold>
 
-
-    </div>
+    </StyledWrapper>
   )
 }
 

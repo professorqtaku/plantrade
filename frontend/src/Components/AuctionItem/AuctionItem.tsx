@@ -1,35 +1,38 @@
 import Grid from '@mui/material/Grid';
 import CircleIcon from '@mui/icons-material/Circle';
 import { useHistory } from 'react-router-dom';
-import { StyledWrapper } from './StyledAuctionItem';
+import { StyledWrapper, StyledStatus, StyledTitle, StyledText } from './StyledAuctionItem';
 import { Auction } from "../../Interfaces/Interfaces";
+import Card from '@mui/material/Card';
 
 function AuctionItem({ auction }: Auction) {
   const history = useHistory();
   console.log('what is auction in item ', auction);
   const status = auction.status == 'SOLD' ? 'Såld' : auction.status == 'OPEN' ? 'Pågående' : 'Inte såld';
-  const color = auction.status == 'SOLD' ? '#086E3D' : auction.status == 'OPEN' ? '#FBDB0D' : '#B3280D';
+  const color = auction.status == 'SOLD' ? 'var(--status-green)' : auction.status == 'OPEN' ? 'var(--status-yellow)' : 'var(--status-red)';
 
   const handleDetailView = () => {
-    // history.push(`/auction/${auction.id}`);
+    // history.push(`/auctions/${auction.id}`);
   }
 
   return (
     <StyledWrapper>
-      <Grid container spacing={2} onClick={handleDetailView}>
-        <Grid item xs={8} md={10}>
-          <div>{auction.title}</div>
-        </Grid>
-        <Grid item xs={4} md={2}>
-          <p><CircleIcon sx={{ color: color }} fontSize="small" />{status}</p>
+      <Card>
+          <Grid container onClick={handleDetailView} style={{margin: '0.5rem'}}>
+            <Grid item xs={8} md={10}>
+              <StyledTitle>{auction.title}</StyledTitle>
+            </Grid>
+            <Grid item xs={4} md={2}>
+              <StyledStatus><CircleIcon sx={{ color: color }} fontSize="inherit" /> {status}</StyledStatus>
+              </Grid>
+            <Grid item xs={12}>
+              <StyledText>{auction.bids.length > 0 ? auction.bids[auction.bids.length -1].user.username : 'Inga bud'}</StyledText>
+            </Grid>
+            <Grid item xs={12}>
+              <StyledText>{'SEK ' + (auction.bids.length > 0 ? auction.bids[auction.bids.length -1].price : auction.startPrice)}</StyledText>
+            </Grid>
           </Grid>
-        <Grid item xs={12}>
-          <div>{auction.bids.length > 0 ? auction.bids[auction.bids.length -1].user.username : 'Inga bud'}</div>
-        </Grid>
-        <Grid item xs={12}>
-          <div>{(auction.bids.length > 0 ? auction.bids[auction.bids.length -1].price : auction.startPrice) + ' Kr'}</div>
-        </Grid>
-      </Grid>
+        </Card>
     </StyledWrapper>
   )
 }
