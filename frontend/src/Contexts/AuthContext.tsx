@@ -20,8 +20,8 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
   const [userExists, setUserExists] = useState(false);
 
   useEffect(() => {
+    if(whoAmI)
     whoIsOnline();
-    console.log(whoAmI, 'who?')
   },[!whoAmI]);
 
 
@@ -47,7 +47,8 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
   const login = async (user: User) => {
     let res = await fetch("/api/login", {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json' },
       body: JSON.stringify(user)
     })
     if(res.status == 404) {
@@ -61,10 +62,11 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
 
   }
  
-  const whoIsOnline = () => {
+  const whoIsOnline = async () => {
     fetch('/api/whoami')
       .then(res => res.json()
         .then(data => {
+
           if (!data) {
             setWhoAmI(null);
             return null;
@@ -77,7 +79,8 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
   const logout = async () => {
     await fetch('/api/logout', {
       method: 'DELETE',
-      headers: { 'content-type': 'application/json' },
+      headers: {
+        'content-type': 'application/json' },
     })
     setWhoAmI(null);
   }
