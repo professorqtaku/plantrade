@@ -9,15 +9,15 @@ export const StyledWrapper = styled.div`
 `;
 
 export const StyledAvatar = styled(Avatar)`
-  background: #619463;
+  background: var(--light-green);
 `;
 
 export const StyledEdit = styled(EditIcon)`
-  color: #619463;
+  color: var(--light-green);
 `;
 
 export const StyledCheck = styled(DoneIcon)`
-  color: #619463;
+  color: var(--light-green);
 `;
 
 export const StyledAvatarWrapper = styled.div`
@@ -52,7 +52,7 @@ export const StyledNavigationWrapper = styled.div`
 export const StyledCheckWrapper = styled.div`
   display: grid;
   grid-template-columns: 2rem 1fr;
-`
+`;
 
 export const StyledInput = styled.input`
   border: none;
@@ -62,4 +62,4 @@ export const StyledInput = styled.input`
   outline: none;
   font-size: 1rem;
   width: 50%;
-`
+`;

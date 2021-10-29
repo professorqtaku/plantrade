@@ -1,7 +1,8 @@
 :root {
-  --yellow: #FFE500;
   --font-text: 'Abhaya Libre', serif;
   --font-title: 'Abel', sans-serif;
+  --yellow: #FFE500;
+  --light-yellow: #FFF6AA;
   --light-green: #619463;
   --dark-green: #122522;
 }

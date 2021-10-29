@@ -2,7 +2,8 @@ import { BaseSyntheticEvent, useState } from 'react'
 import { useAuction } from '../../../Contexts/AuctionContext';
 import { useSearch } from '../../../Contexts/SearchContext';
 import SearchField from '../SearchField/SearchField';
-import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
+import FilterCollapse from '../FilterCollapse/FilterCollapse';
+import { StyledForm } from './StyledSearchForm';
 
 // shall be removed and type shall be imported from extern file
 type Auction = {
@@ -18,6 +19,8 @@ type Auction = {
 const SearchForm = () => {
   const { getAuctionsByTitles, searchText, setSearchText } = useSearch();
   const { setAuctions, getAllAuctions } = useAuction();
+  const [ showFilter, setShowFilter ] = useState<boolean>(false);
+  const toggleFilter = () => setShowFilter(!showFilter)
 
   const search = async (e: BaseSyntheticEvent) => {
     console.log("Submit form");
@@ -33,11 +36,17 @@ const SearchForm = () => {
   }
 
   return (
-    <>
-      <form onSubmit={search}>
-        <SearchField searchText={searchText} setSearchText={setSearchText} />
-      </form>
-    </>
+    <StyledForm onSubmit={search}>
+      <div>
+        <SearchField
+          searchText={searchText}
+          setSearchText={setSearchText}
+          setShowFilter={setShowFilter}
+          showFilter={showFilter}
+          />
+        <FilterCollapse isOpen={showFilter} toggle={toggleFilter} />
+      </div>
+    </StyledForm>
   );
 }
 export default SearchForm;
