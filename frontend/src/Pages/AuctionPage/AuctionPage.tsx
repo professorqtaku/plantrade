@@ -10,6 +10,7 @@ import { useAuction } from "../../Contexts/AuctionContext";
 import { useEffect } from "react";
 import SearchForm from "../../Components/Search/SearchForm/SearchForm";
 import { useSearch } from "../../Contexts/SearchContext";
+import { useNav } from "../../Contexts/NavigationContext";
 
 export interface Host {
   id: number;
@@ -31,9 +32,11 @@ export interface Auction {
 const AuctionPage = () => {
   const { getAllAuctions, auctions } = useAuction();
   const { searchText } = useSearch();
+  const { setAuction, handleSelect } = useNav();
 
   useEffect(() => {
     handleGetAuctions();
+    handleSelect(setAuction);
   }, []);
 
   const handleGetAuctions = async () => {
