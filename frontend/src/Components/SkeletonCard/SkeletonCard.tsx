@@ -1,6 +1,6 @@
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
-import {StyledPaper} from '../../../Pages/AuctionDetailPage/StyledAuctionDetailPage';
+import {StyledPaper} from '../../Pages/AuctionDetailPage/StyledAuctionDetailPage';
 
 function SkeletonCard() {
   return (
