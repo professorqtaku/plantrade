@@ -24,5 +24,12 @@ export const StyledSearchFieldWrapper = styled.div`
   position: absolute;
   top: 60%;
   left: 12%;
+`;
+
+export const StyledIconImg = styled.img`
+  width: 50px;
+`;
+
+export const StyledCategoryWrapper = styled.div`
 
 `;
