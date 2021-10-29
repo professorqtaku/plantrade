@@ -10,7 +10,7 @@ import {
 } from "./StyledAuctionCard";
 import { Auction } from "../../Pages/AuctionPage/AuctionPage";
 import { useEffect, useState } from "react";
-import { handleCount } from './auctionutils'
+import { handleCount } from './auctionUtils'
 
 interface Props {
   auction: Auction;
