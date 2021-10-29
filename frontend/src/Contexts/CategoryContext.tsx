@@ -14,17 +14,17 @@ const CategoryContext = createContext<any>(null);
 export const useCategory = () => useContext(CategoryContext);
 
 const CategoryProvider: FC<Props> = ({ children }: Props) => {
-  const [categories, setCategories] = useState<Array<Category>>([]);
+  const [allCategories, setAllCategories] = useState<Array<Category>>([]);
 
   const getAllCategories = async () => {
     let res: Response = await fetch('/rest/categories');
-    let allCategories: Array<Category> = await res.json();
-    setCategories(allCategories);
-    return allCategories;
+    let newCategories: Array<Category> = await res.json();
+    setAllCategories(newCategories);
+    return newCategories;
   }
   
   const values = {
-    categories,
+    allCategories,
     getAllCategories
   }
 
