@@ -67,36 +67,34 @@ const MyPage = () => {
     </StyledNavigationWrapper>
   );
 
-const MyPage = () => {
+  const MyPage = () => {
 
-  const history = useHistory();
-  const { logout, whoAmI } = useAuth()
+    const history = useHistory();
+    const { logout, whoAmI } = useAuth()
 
-// Ändra useref till useState till inputfiel (props, update + label + value)
+    // Ändra useref till useState till inputfiel (props, update + label + value)
 
-  const handleLogout = () => {
-    logout();
-    history.push('/')
-  }
+    const handleLogout = () => {
+      logout();
+      history.push('/')
+    }
 
-  return (
-    <StyledWrapper>
-      <h3>MyPage</h3>
-      {whoAmI && whoAmI.username ? <p>Välkommen, {whoAmI.username}</p> : ''}
-      {whoAmI ? <button onClick={handleLogout}>Logga ut</button> : 'Not logged in'}
+    return (
+      <StyledWrapper>
 
-      <StyledAvatarWrapper>
-        <StyledAvatar>N</StyledAvatar>
-        <Button label="logga ut"/>
-      </StyledAvatarWrapper>
-      <StyledText>
-        <StyledBoldText>Username: </StyledBoldText>
-        Oscar
-      </StyledText>
-      {renderEditFields}
-      {renderNavigations}
-    </StyledWrapper>
-  );
-};
+        <StyledAvatarWrapper>
+          <StyledAvatar>N</StyledAvatar>
+          <Button label="logga ut" />
+        </StyledAvatarWrapper>
+        <StyledText>
+          <StyledBoldText>Username: </StyledBoldText>
+          Oscar
+        </StyledText>
+        {renderEditFields}
+        {renderNavigations}
+      </StyledWrapper>
+    );
+  };
 
+}
 export default MyPage;
