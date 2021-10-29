@@ -5,14 +5,25 @@ import SkeletonCard from '../../Components/SkeletonCard/SkeletonCard';
 import { useAuction } from '../../Contexts/AuctionContext';
 import { useBid, Bid } from '../../Contexts/BidContext';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
+import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
 import ImageCarousel from '../../Components/ImageCarousel/ImageCarousel';
 import ExpandableDescriptionBox from '../../Components/ExpandableDesc/ExpandableDescriptionBox';
 import {
   StyledWrapper,
   StyledPrice,
-  StyledBidInput,
+  StyledPriceTitle,
   StyledBidBtn,
-  StyledBackBtn
+  StyledBackBtn,
+  StyledTitle,
+  StyledUnderTitle,
+  StyleChatIcon,
+  StyleImg,
+  StyledIcon,
+  StyledDate,
+  StyledParagraph,
+  StyledAccessTimeOutlinedIcon,
+  StyledCalendarTodayOutlinedIcon
 } from "./StyledAuctionDetailPage";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useHistory } from 'react-router-dom'
@@ -84,51 +95,60 @@ const AuctionDetailPage = () => {
     <StyledWrapper>
       {!auction ? <SkeletonCard /> :
         (<>
-          <StyledBackBtn>
-            <p onClick={() => history.push('/auctions')}><ArrowBackIosIcon />Tillbaka</p>
+          <StyledBackBtn onClick={() => history.push('/auctions')}>
+            <ArrowBackIosIcon />
+            Tillbaka
           </StyledBackBtn>
           <Grid container spacing={2}>
             <Grid item xs={12} md={12}>
+              <StyleImg src="https://cdn.shopify.com/s/files/1/0410/5696/0672/products/chocolatecovered-1_600x503.jpg?v=1592089346" />
             {/* <ImageCarousel images={auction.images} /> */}
-          </Grid>
-          <Grid item xs={6} md={8}>
-            <div></div>
-          </Grid>
-          <Grid item xs={6} md={4}>
-            <div>{auction.host.username}</div>
-          </Grid>
-          <Grid item xs={6} md={8}>
-            <div>{auction.title}</div>
-          </Grid>
-          <Grid item xs={6} md={4}>
-            <div onClick={handleChat} style={{cursor: 'pointer'}}>Chatta med säljare <ChatBubbleOutlineIcon /></div>
-          </Grid>
-          <Grid item xs={6} md={8}>
-            <div>{new Date(auction.endDate).toLocaleString('sv-SV')}</div>
-          </Grid>
-          <Grid item xs={6} md={4}>
-            <div></div>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <ExpandableDescriptionBox {...auction.description} />
-          </Grid>
-          <Grid item md={6}>
-            <div></div>
-          </Grid>
-          <Grid item xs={12} md={12}>
-            <StyledPrice>
-              <p>{currentBid} SEK</p>
-              {auction.bids.length ? "Högsta bud" : "Startpris"}
-            </StyledPrice>
-          </Grid>
-          <Grid item xs={6} md={6}>
-            <StyledBidInput>
+            </Grid>
+            {/* <Grid item xs={6} md={8}>
+              <div>first</div>
+            </Grid>
+            <Grid item xs={6} md={4}>
+              <p>{auction.host.username}</p>
+            </Grid> */}
+            <Grid item xs={8} md={8}>
+              <StyledTitle>{auction.title}</StyledTitle>
+              {/* <StyledUnderTitle>Säljs av {auction.host.username}</StyledUnderTitle> */}
+            </Grid>
+            <Grid item xs={4} md={4}>
+              <StyleChatIcon>
+                  <StyledIcon>
+                    <ChatBubbleOutlineIcon onClick={handleChat} />
+                  </StyledIcon>
+                </StyleChatIcon>
+            </Grid>
+            <Grid item xs={8} md={8}>
+              <StyledUnderTitle>Sluttid</StyledUnderTitle>
+              <StyledDate>
+                <StyledCalendarTodayOutlinedIcon><CalendarTodayOutlinedIcon /></StyledCalendarTodayOutlinedIcon>
+                {new Date(auction?.endDate).toLocaleDateString('sv-SV')}</StyledDate>
+              <StyledDate>
+                <StyledAccessTimeOutlinedIcon><AccessTimeOutlinedIcon/></StyledAccessTimeOutlinedIcon>
+                {new Date(auction?.endDate).toLocaleTimeString('sv-SV')}
+              </StyledDate>
+            </Grid>
+            <Grid item xs={4} md={4}>
+              <StyledPrice>SEK {currentBid}</StyledPrice>
+              <StyledPriceTitle>{auction.bids.length ? "Högsta budet" : "Startpris"}</StyledPriceTitle>
+            </Grid>
+            <Grid item xs={12} md={6}>
+                <StyledUnderTitle>Beskrivning</StyledUnderTitle>
+                <StyledParagraph>{auction.description}</StyledParagraph>
+                {/* <ExpandableDescriptionBox description={auction.description} /> */}
+            </Grid>
+            <Grid item xs={12} md={12} >
+              #tags
+            </Grid>
+            <Grid item xs={6} md={6}>
               <InputField label="Lägg ett bud" type="number" value={bid} updateState={setBid} />
-            </StyledBidInput>
-          </Grid>
-          <Grid item xs={6} md={6}>
-            <StyledBidBtn onClick={handleBid} style={{cursor: 'pointer'}}>Buda</StyledBidBtn>
-          </Grid>
+            </Grid>
+            <Grid item xs={6} md={6}>
+              <StyledBidBtn onClick={handleBid}>Buda</StyledBidBtn>
+            </Grid>
         </Grid></>)}
     </StyledWrapper>
   );
