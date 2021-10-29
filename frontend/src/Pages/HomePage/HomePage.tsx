@@ -1,6 +1,8 @@
 import { useSearch } from "../../Contexts/SearchContext";
 import SearchForm from "../../Components/Search/SearchForm/SearchForm"
 import { imageIcons } from "./ImageIcons"
+import Carousel from 'react-elastic-carousel';
+import Pagination from '@mui/material/Pagination';
 import {
   StyledWrapper,
   StyledSearchWrapper,
@@ -11,9 +13,25 @@ import {
   StyledTest
  } from "./StyledHomePage";
 
+interface IconImage{
+  imgFile: any;
+  text: string;
+}
+
+
 const HomePage = () => {
 
   const { searchText } = useSearch();
+
+  const renderCategories = () => (
+    <Carousel isRTL={true} itemsToShow={3}  outerSpacing={0} pagination={false}>
+        {imageIcons.map((icon: IconImage) => {
+          return <StyledTest><StyledIconImg key={icon.text} src={icon.imgFile}/>
+            <p>{icon.text}</p>
+            </StyledTest>
+        })}
+          </Carousel>
+  )
 
 
 
@@ -28,15 +46,13 @@ const HomePage = () => {
 
       
       <div>
-        {/* <img src={flower} alt="" /> */}
-          <StyledCategoryWrapper>
-        {imageIcons.map(icon => {
-          return (<StyledTest>
-            <StyledIconImg key={icon.text} src={icon.imgFile}/>
-            <p style={{margin: 0, padding: 0, textAlign: 'center'}}>{icon.text}</p>
-          </StyledTest>)
-        })}
-          </StyledCategoryWrapper>
+
+      
+          {renderCategories()}
+  
+
+          
+ 
       </div>
 
     </StyledWrapper>
