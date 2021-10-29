@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
 import Grid from '@mui/material/Grid';
-import SkeletonCard from '../../Components/AuctionCard/utils/SkeletonCard';
+import SkeletonCard from '../../Components/SkeletonCard/SkeletonCard';
 import { useAuction } from '../../Contexts/AuctionContext';
 import { useBid, Bid } from '../../Contexts/BidContext';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
-import ImageCarousel from '../../Components/AuctionCard/utils/ImageCarousel';
-import ExpandableDescriptionBox from '../../Components/AuctionCard/utils/ExpandableDescriptionBox';
+import ImageCarousel from '../../Components/ImageCarousel/ImageCarousel';
+import ExpandableDescriptionBox from '../../Components/ExpandableDesc/ExpandableDescriptionBox';
 import {
   StyledWrapper,
   StyledPrice,

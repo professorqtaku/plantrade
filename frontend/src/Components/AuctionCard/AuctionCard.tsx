@@ -12,6 +12,7 @@ import { Auction } from "../../Pages/AuctionPage/AuctionPage";
 import { useAuction } from "../../Contexts/AuctionContext";
 import { useBid } from "../../Contexts/BidContext";
 import { useEffect, useState } from "react";
+import { handleCount } from './auctionUtils'
 
 interface Props {
   auction: Auction;
@@ -20,9 +21,6 @@ interface Props {
 
 const AuctionCard = ({ auction, fetchAuctions }: Props) => {
   const ONE_DAY_IN_MILLIS = 86400000;
-  const ONE_HOUR_IN_MILLIS = 3600000;
-  const ONE_MINUTE_IN_MILLIS = 60000;
-  const ONE_SECOND_IN_MILLIS = 1000;
 
   const [daysLeft, setDaysLeft] = useState<number | null>(null);
   const [differenceInMillis, setDifferenceInMillis] = useState(0);
@@ -64,35 +62,14 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
 
   const handleCounter = () => {
     if (counter !== null) {
-      // Hours
-      if (counter > ONE_HOUR_IN_MILLIS) {
-        setDaysLeft(Math.floor((differenceInMillis / (1000 * 60 * 60)) % 24));
-        setRemainingTime("Timmar kvar:");
-        setTimeout(async () => {
-          await handleTime();
-          setCounter(counter - 1);
-        }, ONE_HOUR_IN_MILLIS);
-      }
-
-      // Minutes
-      if (counter >= ONE_MINUTE_IN_MILLIS && counter < ONE_HOUR_IN_MILLIS) {
-        setDaysLeft(Math.floor((differenceInMillis / (1000 * 60)) % 60));
-        setRemainingTime("Minuter kvar:");
-        setTimeout(async () => {
-          await handleTime();
-          setCounter(counter - 1);
-        }, ONE_MINUTE_IN_MILLIS);
-      }
-
-      // Seconds
-      if (counter >= ONE_SECOND_IN_MILLIS && counter < ONE_MINUTE_IN_MILLIS) {
-        setDaysLeft(Math.floor((differenceInMillis / 1000) % 60));
-        setRemainingTime("Sekunder kvar:");
-        setTimeout(async () => {
-          await handleTime();
-          setCounter(counter - 1);
-        }, ONE_SECOND_IN_MILLIS);
-      }
+      handleCount(
+        counter,
+        differenceInMillis,
+        setDaysLeft,
+        setRemainingTime,
+        setCounter,
+        handleTime
+      );
     }
   };
 
