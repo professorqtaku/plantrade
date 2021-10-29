@@ -54,12 +54,13 @@ const SelectBar = ({ setCategoriesToUse }: Props) => {
   const handleChange = (event: SelectChangeEvent<any>) => {
     console.log(event, 'event')
     const { target: { value } } = event;
-    console.log(value, 'value')
-    // setCategories([
-    //   ...categories,
-    //   value])
+    console.log(JSON.parse(value), 'value')
+    
+    setCategories([
+      ...categories,
+      value])
 
-    // console.log(categories, 'categories')
+    console.log(categories, 'categories')
     // setCategories(typeof value === "string" ? value.split(",") : value);
     // setCategoriesToUse(typeof value === "string" ? value.split(",") : value);
   };
@@ -78,7 +79,7 @@ const SelectBar = ({ setCategoriesToUse }: Props) => {
         MenuProps={MenuProps}
       >
         {allCategories.map((category: Category) => (
-          <MenuItem key={category.id} value={category}>
+          <MenuItem key={category.id} value={JSON.stringify(category)}>
             <Checkbox checked={categories.indexOf(category) > -1} />
             <ListItemText primary={category.name} />
           </MenuItem>
