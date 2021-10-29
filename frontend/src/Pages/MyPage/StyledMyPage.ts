@@ -9,6 +9,10 @@ interface TextProps {
   margin?: string;
 }
 
+interface BoxProps {
+  justify: string
+}
+
 export const StyledWrapper = styled.div`
   width: 90%;
   margin: 1rem auto;
@@ -61,9 +65,18 @@ export const StyledBoldText = styled.span`
 `;
 
 export const StyledNavigationWrapper = styled.div`
-  margin-top: 4rem;
+  margin-top: 1rem;
   display: grid;
-  grid-gap: 1rem;
+  grid-gap: 0.5rem;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+`;
+
+export const StyledNavigationBox = styled.div<BoxProps>`
+  width: 11rem;
+  height: 11rem;
+  background: gray;
+  justify-self: ${(props) => props.justify && props.justify};
 `;
 
 export const StyledCheckWrapper = styled.div`

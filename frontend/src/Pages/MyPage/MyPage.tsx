@@ -10,6 +10,7 @@ import {
   StyledCheck,
   StyledInput,
   StyledCheckWrapper,
+  StyledNavigationBox,
 } from "./StyledMyPage";
 import Button from "../../Components/Button/ButtonComp";
 import { useState } from "react";
@@ -56,13 +57,10 @@ const MyPage = () => {
 
   const renderNavigations = (
     <StyledNavigationWrapper>
-      <Button
-        callback={() => history.push("/createAuction")}
-        label="Skapa en auktion"
-      />
-      <Button label="Mina vunna auktioner" />
-      <Button label="Statistik" />
-      <Button label="Mina auktioner" />
+      <StyledNavigationBox justify="end"></StyledNavigationBox>
+      <StyledNavigationBox justify="start"></StyledNavigationBox>
+      <StyledNavigationBox justify="end"></StyledNavigationBox>
+      <StyledNavigationBox justify="start"></StyledNavigationBox>
     </StyledNavigationWrapper>
   );
 
