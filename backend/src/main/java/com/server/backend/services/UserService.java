@@ -16,6 +16,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import java.util.List;
+
 import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
 
 @Service
@@ -32,12 +34,18 @@ public class UserService {
 
     public User findCurrentUser(){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return userRepository.findByUsername(username);
+        return userRepository.findByUsernameIgnoreCase(username);
     }
 
-    public User createUser(User user){
-        return myUserDetailsService.addUser(user);
+    public User createUser(User user) {
+        User newEmail = userRepository.findByEmailIgnoreCase(user.getEmail());
+        User newUsername = userRepository.findByUsernameIgnoreCase(user.getUsername());
+        if(newEmail == null && newUsername == null){
+            return myUserDetailsService.addUser(user);
+        }
+            return null;
     }
+
 
     public void logout(HttpServletRequest req){
         SecurityContext sc = SecurityContextHolder.createEmptyContext();
