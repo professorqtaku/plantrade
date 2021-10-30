@@ -23,6 +23,7 @@ import {
   StyledNewsImg,
   StyledNewsWrapper
  } from "./StyledHomePage";
+import { useAuction } from "../../Contexts/AuctionContext";
 
 interface IconImage{
   imgFile: string;
@@ -34,6 +35,7 @@ const HomePage = () => {
 
   const { searchText } = useSearch();
   const { whoAmI } = useAuth();
+  const { auctions } = useAuction();
 
   const renderCategories = () => (
     <StyledCarouselWrapper>
@@ -82,7 +84,7 @@ const HomePage = () => {
 
         <StyledTitle>Nyheter</StyledTitle>
         {renderNews()}
-
+    {console.log(auctions , 'auc?')}
       </StyledPageWrapper>
     </StyledWrapper>
   );

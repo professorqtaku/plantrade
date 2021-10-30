@@ -1,4 +1,4 @@
-import { createContext, FC, useContext, useState } from "react";
+import { createContext, FC, useContext, useState, useEffect } from "react";
 
 type Props = {
   children?: JSX.Element;
@@ -21,6 +21,10 @@ export const useAuction = () => useContext(AuctionContext);
 const AuctionProvider: FC<Props> = ({ children }: Props) => {
   const [auctions, setAuctions] = useState<Array<Auction>>([]);
   const [usersAuctions, setUsersAuctions] = useState<Array<Auction>>();
+
+  useEffect(() => {
+    getAllAuctions();
+  },[]);
 
   const getAllAuctions = async () => {
     let res: Response = await fetch('/rest/auctions');
