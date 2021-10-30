@@ -37,15 +37,31 @@ const HomePage = () => {
 
   const renderCategories = () => (
     <StyledCarouselWrapper>
-    <Carousel isRTL={true} itemsToShow={3} outerSpacing={0} pagination={false} initialFirstItem={3}>
+      <Carousel isRTL={true} itemsToShow={3} outerSpacing={0} pagination={false} initialFirstItem={3}>
         {imageIcons.map((icon: IconImage) => {
-          return <StyledTest key={icon.text} ><StyledIconImg src={icon.imgFile}/>
+          return <StyledTest key={icon.text} ><StyledIconImg src={icon.imgFile} />
             <StyledText>{icon.text}</StyledText>
-            </StyledTest>
+          </StyledTest>
         })}
       </Carousel>
-      </StyledCarouselWrapper>
-  )
+    </StyledCarouselWrapper>
+  );
+
+  const renderNews = () => (
+    <StyledNewsWrapper>
+      <StyledImageListItem>
+        <StyledNewsImg
+          src="https://i2.wp.com/www.livingloving.net/wp-content/uploads/2017/01/living-loving-indoor-plants-3.jpg?resize=1769%2C1000&ssl=1"
+          alt="News picture"
+          loading="lazy" />
+        <StyledImageListItemBar
+          title="För Hemmet"
+          subtitle="Flera typer av växter"
+        />
+      </StyledImageListItem>
+          
+    </StyledNewsWrapper>
+  );
 
 
 
@@ -63,24 +79,11 @@ const HomePage = () => {
       <StyledPageWrapper>
         <StyledTitle>Kategorier</StyledTitle>
         {renderCategories()}
-          <StyledTitle>Nyheter</StyledTitle>
 
-        <StyledNewsWrapper>
-          <StyledImageListItem>
-          <StyledNewsImg
-            src="https://i2.wp.com/www.livingloving.net/wp-content/uploads/2017/01/living-loving-indoor-plants-3.jpg?resize=1769%2C1000&ssl=1"
-            alt="news picture"
-            loading="lazy"
-          />
-            <StyledImageListItemBar
-              title="För Hemmet"
-              subtitle="Flera typer av växter"
-            />
-          </StyledImageListItem>
-          
-        </StyledNewsWrapper>
+        <StyledTitle>Nyheter</StyledTitle>
+        {renderNews()}
+
       </StyledPageWrapper>
-
     </StyledWrapper>
   );
 }
