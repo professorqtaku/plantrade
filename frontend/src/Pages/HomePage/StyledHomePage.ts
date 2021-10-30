@@ -4,6 +4,10 @@ import Avatar from "@mui/material/Avatar";
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 
+interface WidthProps {
+  width?: string | number | undefined;
+}
+
 export const StyledAvatar = styled(Avatar)`
   background: #619463;
   position: absolute;
@@ -113,18 +117,35 @@ export const StyledImageListItem = styled(ImageListItem)`
   justify-items: center;
 `;
 
-export const StyledImageListItemBar = styled(ImageListItemBar)`
-  width: 90%;
+export const StyledImageListItemBar = styled(ImageListItemBar)<WidthProps>`
+  width: ${(props) =>
+    props.width ? `${props.width}` : `90%`};
   margin: 0 auto;
+  border-radius: 0 0 3px 3px;
 `;
 
 export const StyledNewsImg = styled.img`
   width: 90%;
+  border-radius: 3px;
+`;
+
+export const StyledAuctionImg = styled.img`
+  width: 40%;
+  height: 150px;
+  border-radius: 0 0 3px 3px;
 `;
 
 export const StyledNewsWrapper = styled.div`
   display: grid;
   align-items: center;
   justify-items: center;
+  margin-bottom: 20px;
+`; 
+
+export const StyledSoonEndingWrapper = styled.div`
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  margin-bottom: 80px;
 `;
 

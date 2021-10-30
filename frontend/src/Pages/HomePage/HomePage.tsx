@@ -21,7 +21,9 @@ import {
   StyledImageListItem,
   StyledImageListItemBar,
   StyledNewsImg,
-  StyledNewsWrapper
+  StyledNewsWrapper,
+  StyledAuctionImg,
+  StyledSoonEndingWrapper
  } from "./StyledHomePage";
 import { useAuction } from "../../Contexts/AuctionContext";
 
@@ -65,6 +67,22 @@ const HomePage = () => {
     </StyledNewsWrapper>
   );
 
+    const renderSoonEndingAuction = () => (
+    <StyledSoonEndingWrapper>
+      <StyledImageListItem>
+          <StyledAuctionImg
+          src="https://i2.wp.com/www.livingloving.net/wp-content/uploads/2017/01/living-loving-indoor-plants-3.jpg?resize=1769%2C1000&ssl=1"
+          alt="News picture"
+          loading="lazy" />
+          <StyledImageListItemBar
+          width="40%"
+          subtitle="Name"
+        />
+      </StyledImageListItem>
+          
+    </StyledSoonEndingWrapper>
+  );
+
 
 
   return (
@@ -84,6 +102,9 @@ const HomePage = () => {
 
         <StyledTitle>Nyheter</StyledTitle>
         {renderNews()}
+
+        <StyledTitle>Snart avslutade auctioner</StyledTitle>
+        {renderSoonEndingAuction()}
     {console.log(auctions , 'auc?')}
       </StyledPageWrapper>
     </StyledWrapper>
