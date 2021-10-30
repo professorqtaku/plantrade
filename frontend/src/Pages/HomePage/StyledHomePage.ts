@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import Card from "@mui/material/Card";
 import Avatar from "@mui/material/Avatar";
+import ImageListItem from '@mui/material/ImageListItem';
+import ImageListItemBar from '@mui/material/ImageListItemBar';
 
 export const StyledAvatar = styled(Avatar)`
   background: #619463;
@@ -43,6 +45,19 @@ export const StyledImg = styled.img`
   object-fit: cover;
 `;
 
+export const StyledImgFrame = styled.img`
+  width: 92%;
+  height: 75%;
+  object-fit: cover;
+  display: grid;
+  align-items: center;
+  margin: 0 auto;
+  border-radius: 3px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  margin-top: 20px;
+
+`;
+
 export const StyledSearchFieldWrapper = styled.div`
  width: 70%;
   margin: 0 auto;
@@ -53,6 +68,7 @@ export const StyledSearchFieldWrapper = styled.div`
 
 export const StyledCarouselWrapper = styled.div`
   width: 100;
+  margin: 1rem 0 1rem 0;
     @media (min-width: 769px) {
     width: 60%;
     margin: 0 auto;
@@ -83,3 +99,32 @@ export const StyledTitle = styled.p`
 export const StyledIconImg = styled.img`
   width: 25px;
 `;
+
+export const StyledImgText = styled.p`
+  position: absolute;
+  margin-left: 25px;
+  bottom: 150px;
+`;
+
+export const StyledImageListItem = styled(ImageListItem)`
+  margin-top: 10px;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+`;
+
+export const StyledImageListItemBar = styled(ImageListItemBar)`
+  width: 90%;
+  margin: 0 auto;
+`;
+
+export const StyledNewsImg = styled.img`
+  width: 90%;
+`;
+
+export const StyledNewsWrapper = styled.div`
+  display: grid;
+  align-items: center;
+  justify-items: center;
+`;
+

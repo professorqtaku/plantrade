@@ -4,6 +4,7 @@ import { useAuth } from "../../Contexts/AuthContext";
 import SearchForm from "../../Components/Search/SearchForm/SearchForm"
 import { imageIcons } from "./ImageIcons"
 import Carousel from 'react-elastic-carousel';
+import ImageListItem from '@mui/material/ImageListItem';
 import {
   StyledWrapper,
   StyledSearchWrapper,
@@ -16,7 +17,11 @@ import {
   StyledCarouselWrapper,
   StyledPageWrapper,
   StyledAvatar,
-  StyledUsername
+  StyledUsername,
+  StyledImageListItem,
+  StyledImageListItemBar,
+  StyledNewsImg,
+  StyledNewsWrapper
  } from "./StyledHomePage";
 
 interface IconImage{
@@ -57,7 +62,23 @@ const HomePage = () => {
 
       <StyledPageWrapper>
         <StyledTitle>Kategorier</StyledTitle>
-          {renderCategories()}
+        {renderCategories()}
+          <StyledTitle>Nyheter</StyledTitle>
+
+        <StyledNewsWrapper>
+          <StyledImageListItem>
+          <StyledNewsImg
+            src="https://i2.wp.com/www.livingloving.net/wp-content/uploads/2017/01/living-loving-indoor-plants-3.jpg?resize=1769%2C1000&ssl=1"
+            alt="news picture"
+            loading="lazy"
+          />
+            <StyledImageListItemBar
+              title="För Hemmet"
+              subtitle="Flera typer av växter"
+            />
+          </StyledImageListItem>
+          
+        </StyledNewsWrapper>
       </StyledPageWrapper>
 
     </StyledWrapper>
