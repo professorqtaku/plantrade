@@ -1,5 +1,22 @@
 import styled from "styled-components";
 import Card from "@mui/material/Card";
+import Avatar from "@mui/material/Avatar";
+
+export const StyledAvatar = styled(Avatar)`
+  background: #619463;
+  position: absolute;
+  top: 0;
+ right: 0;
+ margin-top: 25px;
+ margin-right: 25px;
+`;
+export const StyledUsername = styled.p`
+  position: absolute;
+  top: 5px;
+  margin-left: 20px;
+  color: white;
+  font-size: 25px;
+`;
 
 export const StyledWrapper = styled.div`
   max-height: 80vh;
@@ -59,7 +76,7 @@ export const StyledText = styled.p`
 
 export const StyledTitle = styled.p`
   font-size: 20px;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   margin: 0 0 0 1rem;
 `;
 

@@ -12,7 +12,9 @@ import {
   StyledText,
   StyledTitle,
   StyledCarouselWrapper,
-  StyledPageWrapper
+  StyledPageWrapper,
+  StyledAvatar,
+  StyledUsername
  } from "./StyledHomePage";
 
 interface IconImage{
@@ -43,6 +45,8 @@ const HomePage = () => {
     <StyledWrapper>
       <StyledSearchWrapper>
         <StyledImg src="https://i.pinimg.com/564x/63/5e/b1/635eb177eef29242e96352f1206298da.jpg" alt="" />
+        <StyledAvatar>{"N"}</StyledAvatar>
+        <StyledUsername>Hej Oscar</StyledUsername>
         <StyledSearchFieldWrapper>
           <SearchForm searchWord={searchText}/>
         </StyledSearchFieldWrapper>
