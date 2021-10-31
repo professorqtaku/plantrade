@@ -22,7 +22,7 @@ const InputField = ({
     <StyledInput
       onChange={(e) => updateState(e.target.value)}
       fullWidth
-      required={required}
+      required={required ? true : false}
       value={value ? value : ""}
       type={type ? type : "text"}
       label={label}
