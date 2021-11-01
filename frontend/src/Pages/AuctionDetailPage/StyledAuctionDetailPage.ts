@@ -34,6 +34,7 @@ export const StyledBidBtn = styled.div`
   font-family: var(--font-title);
   font-size: 1.5rem;
   font-weight: 700;
+  box-shadow: 0.5px 0.5px 5px 0.1px #bdbdbd;
 `;
 
 export const StyledImage = styled.div`
@@ -78,10 +79,11 @@ export const StyledChat = styled.div`
   display: flex;
   justify-content: center;
   z-index: 1;
-  background-color: white;
+  background-color: var(--background-color);
   border-radius: 50%;
   padding: 20px;
   margin: -50px 0 0 0;
+  box-shadow: 0.5px 0.5px 5px 0.1px #bdbdbd;
 `;
 
 export const StyledChatIcon = styled(CommentIcon)`
@@ -104,12 +106,6 @@ export const StyledAccessTimeOutlinedIcon = styled(AccessTimeOutlinedIcon)`
 export const StyledCalendarTodayOutlinedIcon = styled(CalendarTodayOutlinedIcon)`
   margin-right: 5px;
   font-size: 1rem;
-`;
-
-export const StyledParagraph = styled.p`
-  line-height: 1.2rem;
-  font-size: 1rem;
-  margin: 16px 0 0;
 `;
 
 // REMOVE & use carusel instead
