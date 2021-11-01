@@ -100,15 +100,10 @@ const AuctionDetailPage = () => {
           </StyledBackBtn>
           <Grid container spacing={2}>
             <Grid item xs={12} md={12}>
+              {/* Remove when ImageCarousel is in place */}
               <StyleImg src="https://cdn.shopify.com/s/files/1/0410/5696/0672/products/chocolatecovered-1_600x503.jpg?v=1592089346" />
             {/* <ImageCarousel images={auction.images} /> */}
             </Grid>
-            {/* <Grid item xs={6} md={8}>
-              <div>first</div>
-            </Grid>
-            <Grid item xs={6} md={4}>
-              <p>{auction.host.username}</p>
-            </Grid> */}
             <Grid item xs={8} md={8}>
               <StyledTitle>{auction.title}</StyledTitle>
               {/* <StyledUnderTitle>Säljs av {auction.host.username}</StyledUnderTitle> */}
