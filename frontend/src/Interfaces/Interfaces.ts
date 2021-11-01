@@ -1,37 +1,37 @@
 export interface User {
-  id: Number,
-  username: String,
+  id: number,
+  username: string,
 }
 
 export interface Auction {
-  id: Number,
-  title: String,
-  description: String,
-  startPrice?: Number,
-  status?: String,
-  endDate?: String,
+  id: number,
+  title: string,
+  description: string,
+  startPrice?: number,
+  status?: string,
+  endDate?: string,
   host?: User,
-  bids?: [Bid],
+  bids?: Array<Bid> | undefined ,
   categories?: [Category],
   images?: [Image],
   winner?: User
 }
 
 export interface Bid {
-  id: Number,
+  id: number,
   createdDate: Date,
-  price: Number,
-  auctionId: Number,
-  userId: Number
+  price: number,
+  auctionId: number,
+  userId: number
 }
 
 export interface Category {
-  id: Number,
-  name: String
+  id: number,
+  name: string
 }
 
 export interface Image {
-  id: Number,
-  path: String,
-  auctionId: Number
+  id: number,
+  path: string,
+  auctionId: number
 }

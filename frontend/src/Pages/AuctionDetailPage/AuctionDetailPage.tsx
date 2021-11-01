@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import Grid from '@mui/material/Grid';
 import SkeletonCard from '../../Components/SkeletonCard/SkeletonCard';
 import { useAuction } from '../../Contexts/AuctionContext';
-import Input from '@mui/material/Input';
+import { useBid, Bid } from '../../Contexts/BidContext';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import ImageCarousel from '../../Components/ImageCarousel/ImageCarousel';
 import ExpandableDescriptionBox from '../../Components/ExpandableDesc/ExpandableDescriptionBox';
@@ -16,12 +16,13 @@ import {
 } from "./StyledAuctionDetailPage";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useHistory } from 'react-router-dom'
+import InputField from '../../Components/InputField/InputField';
 
 interface Auction {
   id: Number,
   title: String,
   description: String,
-  startPrice: Number,
+  startPrice: number | undefined,
   status: String,
   endDate: Date,
   host: {
@@ -29,19 +30,21 @@ interface Auction {
     username: String
   },
   categories: [],
-  bids: [],
+  bids: Array<Bid>,
   images: []
 }
 
-
-
 const AuctionDetailPage = () => {
-  const { id }: any = useParams();
-  const { getAuctionById } = useAuction();
-  const [auction, setAuction] = useState<Auction>();
-  const [bid, setBid] = useState<number>();
   const ariaLabel = { 'aria-label': 'description' };
+  const { id }: any = useParams();
   const history = useHistory();
+  
+  const [auction, setAuction] = useState<Auction | undefined>();
+  const [bid, setBid] = useState<string>('');
+  const [currentBid, setCurrentBid] = useState<number>(0);
+
+  const { getAuctionById } = useAuction();
+  const { createBid } = useBid();
 
   useEffect(() => {
     handleGetAuctionById();
@@ -50,15 +53,27 @@ const AuctionDetailPage = () => {
   const handleGetAuctionById = async () => {
     const res = await getAuctionById(id);
     setAuction(res);
-    console.log(res, 'what do we get here')
+    if (res.bids.length) {
+      setCurrentBid(res.bids.pop(res.bids.length - 1).price)
+    } else {
+      setCurrentBid(res.startPrice)
+    }
   }
 
   const handleBid = async () => {
-    if (!bid || isNaN(bid)) {
-      console.log('Bid is empty or not a number, send error message');
-      return;
+
+    const newBid = {
+      // update to userId who is logged in
+      userId: 5,
+      auctionId: auction?.id,
+      price: parseInt(bid),
+      createdDate: Date.now()
     }
-    console.log('I want to bid')
+
+    await createBid(newBid);
+    //rerender the new currently highest bid
+    handleGetAuctionById();
+    setBid('')
   }
 
   const handleChat = () => {
@@ -95,17 +110,21 @@ const AuctionDetailPage = () => {
             <div></div>
           </Grid>
           <Grid item xs={12} md={6}>
-            <ExpandableDescriptionBox {...auction.description} />
+            {/* <ExpandableDescriptionBox {...auction.description} /> */}
           </Grid>
           <Grid item md={6}>
             <div></div>
           </Grid>
           <Grid item xs={12} md={12}>
-            <StyledPrice>{auction.bids.length ? auction.bids[auction.bids.length - 1] : auction.startPrice} Kr<br />
-              {auction.bids.length? "Högsta bud" : "Startpris"}</StyledPrice>
+            <StyledPrice>
+              <p>{currentBid} SEK</p>
+              {auction.bids.length ? "Högsta bud" : "Startpris"}
+            </StyledPrice>
           </Grid>
           <Grid item xs={6} md={6}>
-            <StyledBidInput><Input placeholder="Ditt pris" inputProps={ariaLabel} onChange={(e: any) => setBid(e.target.value)} /> Kr</StyledBidInput>
+            <StyledBidInput>
+              <InputField label="Lägg ett bud" type="number" value={bid} updateState={setBid} />
+            </StyledBidInput>
           </Grid>
           <Grid item xs={6} md={6}>
             <StyledBidBtn onClick={handleBid} style={{cursor: 'pointer'}}>Buda</StyledBidBtn>

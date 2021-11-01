@@ -51,6 +51,9 @@ export const StyledButton = styled.button`
   font-size: 0.7rem;
   letter-spacing: 3px;
   padding: 0.5rem;
+  &:hover{
+    cursor: pointer;
+  }
 `;
 
 export const StyledSpan = styled.span`
