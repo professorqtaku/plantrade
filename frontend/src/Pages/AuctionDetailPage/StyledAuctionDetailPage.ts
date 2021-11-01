@@ -74,7 +74,7 @@ export const StyledBackBtn = styled(StyledUnderTitle)`
   cursor: pointer;
 `;
 
-export const StyleChatIcon = styled.div`
+export const StyledChat = styled.div`
   display: flex;
   justify-content: center;
   z-index: 1;
@@ -84,7 +84,7 @@ export const StyleChatIcon = styled.div`
   margin: -50px 0 0 0;
 `;
 
-export const StyledIcon = styled(CommentIcon)`
+export const StyledChatIcon = styled(CommentIcon)`
   font-size: 2.5rem;
   color: var(--light-green);
 `;

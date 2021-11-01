@@ -17,9 +17,9 @@ import {
   StyledBackBtn,
   StyledTitle,
   StyledUnderTitle,
-  StyleChatIcon,
+  StyledChat,
+  StyledChatIcon,
   StyleImg,
-  StyledIcon,
   StyledDate,
   StyledAccessTimeOutlinedIcon,
   StyledCalendarTodayOutlinedIcon
@@ -109,11 +109,11 @@ const AuctionDetailPage = () => {
               {/* <StyledUnderTitle>Säljs av {auction.host.username}</StyledUnderTitle> */}
             </Grid>
             <Grid item xs={4} md={4}>
-              <StyleChatIcon>
-                  <StyledIcon>
-                    <CommentIcon onClick={handleChat} />
-                  </StyledIcon>
-                </StyleChatIcon>
+              <StyledChat onClick={handleChat}>
+                  <StyledChatIcon>
+                    <CommentIcon />
+                  </StyledChatIcon>
+                </StyledChat>
             </Grid>
             <Grid item xs={8} md={8}>
               <StyledUnderTitle>Sluttid</StyledUnderTitle>
