@@ -9,9 +9,9 @@ export interface Auction {
   description: string,
   startPrice?: number,
   status?: string,
-  endDate?: string,
+  endDate?: Date | undefined,
   host?: User,
-  bids?: Array<Bid> | undefined ,
+  bids?: Array<Bid> | undefined,
   categories?: [Category],
   images?: [Image],
   winner?: User
