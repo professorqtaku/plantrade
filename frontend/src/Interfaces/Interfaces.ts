@@ -4,23 +4,23 @@ export interface User {
 }
 
 export interface Auction {
-  id: Number,
+  id: number,
   title: String,
   description: String,
-  startPrice?: Number,
+  startPrice?: number,
   status?: String,
-  endDate?: String,
+  endDate?: Date,
   host?: User,
-  bids?: [Bid],
+  bids?: Array<Bid> | undefined ,
   categories?: [Category],
   images?: [Image],
   winner?: User
 }
 
 export interface Bid {
-  id: Number,
+  id?: Number,
   createdDate: Date,
-  price: Number,
+  price: number,
   auctionId: Number,
   userId: Number
 }
