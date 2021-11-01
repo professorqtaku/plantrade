@@ -3,17 +3,20 @@ import { StyledButton } from "./StyledButton";
 interface Props {
   label: String;
   callback?: () => any;
-  fontsize?: string;
+  costumFontSize?: string;
+  disabled?: boolean;
 }
 
-const ButtonComp = ({ label, callback, fontsize }: Props) => {
-
-  let fontSize: string = fontsize ? fontsize: "1rem";
+const ButtonComp = ({ label, callback, costumFontSize, disabled }: Props) => {
+  let fontSize: string = costumFontSize ? costumFontSize : "1rem";
+  
   return (
     <StyledButton
       onClick={callback}
       variant="contained"
-      fontsize={fontSize}>
+      fontSize={fontSize}
+      disabled={disabled}
+    >
       {label}
     </StyledButton>
   );

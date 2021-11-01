@@ -44,15 +44,6 @@ export const StyledAvatar = styled(Avatar)`
   float: right;
 `;
 
-export const StyledButton = styled(Button)`
-  background: var(--light-green);
-  color: white;
-  border: none;
-  text-transform: uppercase;
-  font-size: 0.7rem;
-  letter-spacing: 3px;
-  padding: 0.5rem;
-`;
 
 export const StyledSpan = styled.span`
   font-weight: bolder;

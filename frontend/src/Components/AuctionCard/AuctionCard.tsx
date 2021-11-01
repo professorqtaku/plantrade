@@ -88,6 +88,8 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
   };
 
   const handleBid = async () => {
+    console.log("handle bid");
+    
     const newBid = {
       // change userId to user that is logged in
       userId: 3,
@@ -118,10 +120,10 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
             <StyledSpan>{remainingTime}</StyledSpan> {daysLeft}
           </StyledDesc>
         </div>
-        {/* <StyledButton onClick={() => handleBid()}>
-          Snabb bud {quickBid} SEK
-        </StyledButton> */}
-        <ButtonComp label={`Snabb bud ${quickBid} SEK`} callback={() => handleBid()} fontsize="0.7rem"/>
+        <ButtonComp
+          label={`Snabb bud ${quickBid} SEK`}
+          callback={handleBid}
+          costumFontSize="0.7rem" />
       </StyledCardContent>
     </StyledCard>
   );
