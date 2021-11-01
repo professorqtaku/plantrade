@@ -17,6 +17,7 @@ import {
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useHistory } from 'react-router-dom'
 import InputField from '../../Components/InputField/InputField';
+import { useAuth } from '../../Contexts/AuthContext';
 
 interface Auction {
   id: Number,
@@ -45,6 +46,7 @@ const AuctionDetailPage = () => {
 
   const { getAuctionById } = useAuction();
   const { createBid } = useBid();
+  const { whoAmI } = useAuth();
 
   useEffect(() => {
     handleGetAuctionById();
@@ -61,10 +63,10 @@ const AuctionDetailPage = () => {
   }
 
   const handleBid = async () => {
-
+    if (whoAmI == null || whoAmI.id == auction?.host.id) return;
+    
     const newBid = {
-      // update to userId who is logged in
-      userId: 5,
+      userId: whoAmI.id,
       auctionId: auction?.id,
       price: parseInt(bid),
       createdDate: Date.now()
