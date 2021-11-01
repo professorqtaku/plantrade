@@ -39,12 +39,12 @@ export const StyledDesc = styled.p`
 `;
 
 export const StyledAvatar = styled(Avatar)`
-  background: #619463;
+  background: var(--light-green);
   float: right;
 `;
 
 export const StyledButton = styled.button`
-  background: #619463;
+  background: var(--light-green);
   color: white;
   border: none;
   text-transform: uppercase;
@@ -55,4 +55,4 @@ export const StyledButton = styled.button`
 
 export const StyledSpan = styled.span`
   font-weight: bolder;
-`
+`;
