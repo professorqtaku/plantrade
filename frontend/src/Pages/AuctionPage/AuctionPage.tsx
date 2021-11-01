@@ -11,13 +11,16 @@ import { useEffect } from "react";
 import SearchForm from "../../Components/Search/SearchForm/SearchForm";
 import { useSearch } from "../../Contexts/SearchContext";
 import { Auction } from '../../Interfaces/Interfaces';
+import { useNav } from "../../Contexts/NavigationContext";
 
 const AuctionPage = () => {
   const { getAllAuctions, auctions } = useAuction();
   const { searchText } = useSearch();
+  const { setAuction, handleSelect } = useNav();
 
   useEffect(() => {
     handleGetAuctions();
+    handleSelect(setAuction);
   }, []);
 
   const handleGetAuctions = async () => {
