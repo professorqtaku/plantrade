@@ -13,6 +13,7 @@ import {
 } from "./StyledLoginForm";
 import InputField from "../../InputField/InputField";
 import { useAuth } from "../../../Contexts/AuthContext";
+import { useSnackBar } from "../../../Contexts/SnackBarContext";
 
 interface Props {
   toggleRegister: Function;
@@ -22,8 +23,9 @@ const LoginForm = ({ toggleRegister }: Props) => {
   const { login, wrongPassword } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { setShowOpenSnackBar, setText } = useSnackBar();
 
-  const handleLogin = (e: BaseSyntheticEvent) => {
+  const handleLogin = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
 
     const userObj = {
@@ -31,7 +33,12 @@ const LoginForm = ({ toggleRegister }: Props) => {
       password: password,
     };
 
-    login(userObj);
+    const isLoggedIn = await login(userObj)
+
+    if (isLoggedIn) {
+      setText("Inloggning lyckades!");
+      setShowOpenSnackBar(true);
+    }
   };
 
   return (

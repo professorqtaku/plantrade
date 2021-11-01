@@ -8,7 +8,7 @@ import { useSnackBar } from "./Contexts/SnackBarContext";
 
 function App() {
 
-  const { showSnackBar, setShowOpenSnackBar } = useSnackBar();
+  const { showSnackBar, setShowOpenSnackBar, text } = useSnackBar();
 
   return (
     <div className="App">
@@ -18,7 +18,7 @@ function App() {
           <FloatingAddBtn />
         </>
       </AllRoutes>
-      <SnackBar open={showSnackBar} setOpen={setShowOpenSnackBar} />
+      <SnackBar open={showSnackBar} setOpen={setShowOpenSnackBar} text={text} />
       <LoginRegisterModal />
     </div>
   );

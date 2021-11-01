@@ -52,11 +52,13 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
     })
     if(res.status == 404) {
       setWrongPassword(true)
+      return false
     } else {
       let resUser = await res.json();
       setWhoAmI(resUser);
       whoIsOnline();
       setWrongPassword(false);
+      return true
     }
 
   }
