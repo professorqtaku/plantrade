@@ -62,22 +62,20 @@ public class BidService {
     Auction auction = auctionRepository.findById((long) (int) values.get("auctionId")).get();
     // validate user, bid price and time before creating a new bid
 
-    //validateUser(user) &&
-    if(validateBid(auction, (int) values.get("price")) && validateTime(auction, (long) values.get("createdDate"))){
-    System.out.println("here");
-        try{
-          Bid bid = Bid.builder()
-                  .user(user)
-                  .auction(auction)
-                  .price((int) values.get("price"))
-                  .createdDate(new Date((long) values.get("createdDate")))
-                  .build();
+    if(validateUser(user) && validateBid(auction, (int) values.get("price")) && validateTime(auction, (long) values.get("createdDate"))){
+      try{
+        Bid bid = Bid.builder()
+                .user(user)
+                .auction(auction)
+                .price((int) values.get("price"))
+                .createdDate(new Date((long) values.get("createdDate")))
+                .build();
 
-          auction.addBid(bid);
-          return bidRepository.save(bid);
-        } catch(Exception e) {
-          e.printStackTrace();
-        }
+        auction.addBid(bid);
+        return bidRepository.save(bid);
+      } catch(Exception e) {
+        e.printStackTrace();
+      }
     }
     return null;
   }
