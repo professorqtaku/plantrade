@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import CommentIcon from '@mui/icons-material/Comment';
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
 
@@ -8,11 +8,9 @@ export const StyledWrapper = styled.div`
   margin: 1.5rem 1rem 5rem;
 `;
 
-
 export const StyledPrice = styled.h3`
   text-align: center;
   color: var(--dark-green);
-  /* margin-top: -25px; */
   margin: 0;
   font-size: 1.7rem;
   font-weight: 600;
@@ -86,7 +84,7 @@ export const StyleChatIcon = styled.div`
   margin: -50px 0 0 0;
 `;
 
-export const StyledIcon = styled(ChatBubbleOutlineIcon)`
+export const StyledIcon = styled(CommentIcon)`
   font-size: 2.5rem;
   color: var(--light-green);
 `;
@@ -94,8 +92,7 @@ export const StyledIcon = styled(ChatBubbleOutlineIcon)`
 export const StyledDate = styled.span`
   display: flex;
   align-items: center;
-  /* font-size: 1rem; */
-  /* padding: 0; */
+  font-size: 1rem;
   font-family: var(--font-title);
 `;
 
