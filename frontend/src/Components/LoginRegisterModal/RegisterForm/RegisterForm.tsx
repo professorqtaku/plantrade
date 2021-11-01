@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { useAuth } from "../../../Contexts/AuthContext";
 import InputField from "../../InputField/InputField";
+import { useSnackBar } from "../../../Contexts/SnackBarContext";
 import {
   StyledWrapper,
   StyledForm,
@@ -11,17 +11,17 @@ import {
   StyledEmailIcon,
   StyledInputDiv,
   StyledTitle,
-  StyledText
+  StyledText,
 } from "./StyledRegisterForm";
 
 interface User {
-  username: string,
-  email: string,
-  password: string
+  username: string;
+  email: string;
+  password: string;
 }
 
 interface Props {
-  toggleRegister: Function
+  toggleRegister: Function;
 }
 
 const RegisterForm = ({ toggleRegister }: Props) => {
@@ -29,6 +29,7 @@ const RegisterForm = ({ toggleRegister }: Props) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setShowOpenSnackBar, setText } = useSnackBar();
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,6 +42,8 @@ const RegisterForm = ({ toggleRegister }: Props) => {
     let isRegSucceed = await register(userObject);
     if (isRegSucceed) {
       toggleRegister();
+      setText("Regristrering lyckades!")
+      setShowOpenSnackBar(true);
     }
   };
 
