@@ -86,7 +86,12 @@ export const StyledTest = styled(Card)`
   background: #FFF;
   padding: 10px 15px 10px 15px;
   min-width: 60px;
-   margin: 10px;
+  margin: 10px;
+`;
+
+export const StyledTest2 = styled(Card)`
+  background: #FFF;
+  margin: 0 5px 0 5px;
 `;
 
 export const StyledText = styled.p`
@@ -122,6 +127,7 @@ export const StyledImageListItemBar = styled(ImageListItemBar)<WidthProps>`
     props.width ? `${props.width}` : `90%`};
   margin: 0 auto;
   border-radius: 0 0 3px 3px;
+  display: grid;
 `;
 
 export const StyledNewsImg = styled.img`
@@ -130,8 +136,8 @@ export const StyledNewsImg = styled.img`
 `;
 
 export const StyledAuctionImg = styled.img`
-  width: 40%;
-  height: 150px;
+  width:100%;
+  height: 75%;
   border-radius: 0 0 3px 3px;
 `;
 

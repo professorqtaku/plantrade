@@ -10,6 +10,7 @@ import {
   StyledSearchFieldWrapper,
   StyledIconImg,
   StyledTest,
+  StyledTest2,
   StyledText,
   StyledTitle,
   StyledCarouselWrapper,
@@ -78,20 +79,26 @@ const HomePage = () => {
     const renderSoonEndingAuction = () => (
       <StyledSoonEndingWrapper>
         
-        {auctions.map((auction: Auction) => {
+        <Carousel isRTL={true} itemsToShow={3} outerSpacing={0} pagination={false} initialFirstItem={3}>
+        {auctions && auctions.map((auction: Auction) => {
           return (
-          <StyledImageListItem>
+            <StyledTest2>
+            <StyledImageListItem>
+              
               <StyledAuctionImg
-                src="https://i2.wp.com/www.livingloving.net/wp-content/uploads/2017/01/living-loving-indoor-plants-3.jpg?resize=1769%2C1000&ssl=1"
+                src="https://i.pinimg.com/564x/9e/8b/dc/9e8bdc74df3cb2f87fae194a18ba569a.jpg"
                 alt="Auction"
                 loading="lazy" />
-              <StyledImageListItemBar
-                width="40%"
+                <StyledImageListItemBar
+                style={{justifyContent: 'end'}} // props i style?
+                width="100%"
                 subtitle={auction.title}
               />
-        </StyledImageListItem>
+              </StyledImageListItem>
+              </StyledTest2>
           )
         })}
+        </Carousel>
           
     </StyledSoonEndingWrapper>
   );
