@@ -1,9 +1,6 @@
 package com.server.backend.services;
 
-import com.server.backend.entities.Auction;
-import com.server.backend.entities.Image;
-import com.server.backend.entities.Status;
-import com.server.backend.entities.User;
+import com.server.backend.entities.*;
 import com.server.backend.repositories.AuctionRepository;
 import com.server.backend.repositories.ImageRepository;
 import com.server.backend.specifications.AuctionSpecification;
@@ -20,6 +17,7 @@ import java.util.*;
 
 @Service
 public class AuctionService {
+
 
     @Autowired
     private AuctionRepository auctionRepository;
@@ -47,7 +45,7 @@ public class AuctionService {
         return auctionRepository.findByStatus(status);
     }
     
-    public Auction createAuction(Auction auction, User user, List<MultipartFile> files) {
+    public Auction createAuction(Auction auction, List<Category> categories, List<MultipartFile> files, User user) {
         Date date = new Date();
         var inputDate = auction.getEndDate().getTime();
         if(Long.toString(inputDate).length() < 13) {
@@ -62,6 +60,7 @@ public class AuctionService {
         }
         auction.setStatus(Status.OPEN);
         auction.setHost(user);
+        auction.setCategories(categories);
         Auction savedAuction = auctionRepository.save(auction);
 
         if(files != null) {
