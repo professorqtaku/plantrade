@@ -27,11 +27,11 @@ export const StyledAvatar = styled(Avatar)`
 `;
 
 export const StyledEdit = styled(EditIcon)`
-  color: #619463;
+  color: var(--light-green);
 `;
 
 export const StyledCheck = styled(DoneIcon)`
-  color: #619463;
+  color: var(--light-green);
 `;
 
 

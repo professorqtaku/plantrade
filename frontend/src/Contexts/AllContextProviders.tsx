@@ -16,8 +16,10 @@ const AllContextProviders: React.FC<Props> = ({ children }) => {
         <AuctionProvider>
           <ModalProvider>
             <NavigationProvider>
-              <BidProvider>
-                <SearchProvider>{children}</SearchProvider>
+              <BidProvider> 
+                <SearchProvider>
+                  {children}
+                </SearchProvider>
               </BidProvider>
             </NavigationProvider>
           </ModalProvider>

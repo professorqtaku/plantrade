@@ -33,11 +33,11 @@ const MyPage = () => {
   const [password, setPassword] = useState("Lösenord");
   const { setProfile, handleSelect } = useNav();
   const history = useHistory();
-  const { logout, whoAmI } = useAuth()
+  const { logout, whoAmI } = useAuth();
 
   useEffect(() => {
     handleSelect(setProfile);
-  },[])
+  }, []);
 
   const renderEditFields = (
     <StyledEditWrapper>
@@ -73,7 +73,11 @@ const MyPage = () => {
 
   const renderNavigations = (
     <StyledNavigationWrapper>
-      <StyledNavigationBox onClick={() => history.push('/createAuction')} justify="end" background={IMAGE1}>
+      <StyledNavigationBox
+        onClick={() => history.push("/createAuction")}
+        justify="end"
+        background={IMAGE1}
+      >
         <StyledText color="white">Skapa auktion</StyledText>
       </StyledNavigationBox>
 
@@ -85,28 +89,30 @@ const MyPage = () => {
         <StyledText color="white">Statistik</StyledText>
       </StyledNavigationBox>
 
-      <StyledNavigationBox onClick={() => history.push('/my-page/my-auctions')} justify="start" background={IMAGE4}>
+      <StyledNavigationBox
+        onClick={() => history.push("/my-page/my-auctions")}
+        justify="start"
+        background={IMAGE4}
+      >
         <StyledText color="white">Mina auktioner</StyledText>
       </StyledNavigationBox>
     </StyledNavigationWrapper>
   );
 
-    // Ändra useref till useState till inputfiel (props, update + label + value)
-
-    const handleLogout = (e: any) => {
-      e.preventDefault();
-      logout();
-      history.push('/')
-    }
+  const handleLogout = (e: any) => {
+    e.preventDefault();
+    logout();
+    history.push("/");
+  };
 
   return (
     <>
-      <Header grid={true} gridColumns="1fr 1fr">
+      {whoAmI && <Header grid={true} gridColumns="1fr 1fr">
         <StyledText color="white" size="2rem" margin="1rem">
-          Hej Oscar
+          Hej {whoAmI.username}
         </StyledText>
-        <StyledAvatar>N</StyledAvatar>
-      </Header>
+        <StyledAvatar>{whoAmI.username.charAt(0).toUpperCase()}</StyledAvatar>
+      </Header>}
       <StyledWrapper>
         {renderEditFields}
         {renderNavigations}
