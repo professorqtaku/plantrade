@@ -36,10 +36,7 @@ const Navigation = () => {
   const renderIcons = () => (
     <StyledIconWrapper>
       <StyledInnerWrapper selected={home}>
-        <StyledHomeIcon
-          selected={home}
-          onClick={() => handleSelect("/")}
-        />
+        <StyledHomeIcon selected={home} onClick={() => handleSelect("/")} />
       </StyledInnerWrapper>
 
       <StyledInnerWrapper selected={auction}>
@@ -50,21 +47,17 @@ const Navigation = () => {
       </StyledInnerWrapper>
 
       <StyledInnerWrapper selected={notis}>
-        <StyledNotisIcon
-          selected={notis}
-        />
+        <StyledNotisIcon selected={notis} />
       </StyledInnerWrapper>
 
       <StyledInnerWrapper selected={message}>
-        <StyledMsgIcon
-          selected={message}
-        />
+        <StyledMsgIcon selected={message} />
       </StyledInnerWrapper>
 
       <StyledInnerWrapper selected={profile}>
         <StyledAccountIcon
-          selected={selected5}
-          onClick={() => handleSelect(setSelected5, "/my-page")}
+          selected={profile}
+          onClick={() => handleSelect("/my-page")}
         />
       </StyledInnerWrapper>
     </StyledIconWrapper>
