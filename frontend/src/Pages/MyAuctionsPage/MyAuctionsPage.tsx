@@ -6,21 +6,16 @@ import {
   StyledBackBtn
 } from './StyledMyAuctionsPage';
 import { useState, useEffect } from 'react';
-import Collapse from '@mui/material/Collapse';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import IconButton from '@mui/material/IconButton';
-import { styled } from '@mui/material/styles';
-import CardActions from '@mui/material/CardActions';
 import { useAuction } from '../../Contexts/AuctionContext';
-import AuctionItem from '../../Components/AuctionItem/AuctionItem';
 import Card from '@mui/material/Card';
-import { Auction } from "../../Interfaces/Interfaces";
 import Grid from '@mui/material/Grid';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Header from "../../Components/Header/Header";
 import { StyledText } from "../MyPage/StyledMyPage";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useHistory } from 'react-router-dom';
+import MyAuctionsCard from '../../Components/MyAuctions/MyAuctionsCard';
+import { Auction } from '../../Interfaces/Interfaces';
 
 
 function MyAuctionsPage() {
@@ -29,13 +24,44 @@ function MyAuctionsPage() {
   const [expandedNoSold, setExpandedNoSold] = useState(false);
   const { getUsersAuctions, usersAuctions } = useAuction();
   const history = useHistory();
+  const [openList, setOpenList] = useState<Auction[]>();
+  const [soldList, setSoldList] = useState<Auction[]>();
+  const [unSoldList, setUnSoldList] = useState<Auction[]>();
 
   useEffect(() => {
     handleUsersAuctions();
   }, [])
 
+  useEffect(() => {
+    handleLists();
+  }, [usersAuctions])
+
   const handleUsersAuctions = async () => {
     await getUsersAuctions();
+  }
+
+  const handleLists = () => {
+    usersAuctions && usersAuctions.map((auction: Auction) => {
+      if (auction.status === 'OPEN') {
+        if (!openList) {
+          setOpenList([auction]);
+        } else {
+          setOpenList([...openList, auction]);
+        }
+      } else if (auction.status === 'SOLD') {
+        if (!soldList) {
+          setSoldList([auction]);
+        } else {
+          setSoldList([...soldList, auction]);
+        }
+      } else if (auction.status === 'NOT_SOLD') {
+        if (!unSoldList) {
+          setUnSoldList([auction]);
+        } else {
+          setUnSoldList([...unSoldList, auction]);
+        }
+      }
+    });
   }
 
   const handleExpandCurr = () => {
@@ -49,19 +75,6 @@ function MyAuctionsPage() {
   const handleExpandNoSold = () => {
     setExpandedNoSold(!expandedNoSold);
   };
-
-  const ExpandMore = styled((props) => {
-  const { expand, ...other }: any = props;
-  return <IconButton {...other} />;
-      })(({ theme, expand}: any) => ({
-      transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-      marginLeft: 'auto',
-      transition: theme.transitions.create('transform', {
-        duration: theme.transitions.duration.shortest,
-      }),
-  }));
-
-
 
   return (
     <>
@@ -77,24 +90,13 @@ function MyAuctionsPage() {
         </StyledBackBtn>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Card style={{border: 'none'}}>
+            <Card>
               <StyledCardCurr isExpanded={expandedCurr}>
-                <CardActions disableSpacing>
-                  <p>Aktuella auktioner</p>
-                  <ExpandMore
-                    expand={expandedCurr}
-                    onClick={handleExpandCurr}
-                    >
-                      <KeyboardArrowDownIcon />
-                  </ExpandMore>
-                </CardActions>
-                <Collapse in={expandedCurr} timeout="auto" unmountOnExit>
-                  {usersAuctions && usersAuctions.map((auction: Auction) => {
-                    if (auction.status === 'OPEN') {
-                    return <AuctionItem key={auction.id} auction={auction} />
-                  }
-                  })}
-                </Collapse>
+                <MyAuctionsCard title="Pågående auktioner"
+                  expandState={expandedCurr}
+                  expandFunction={handleExpandCurr}
+                  userAuctionsListByStatus={openList}
+                />
               </StyledCardCurr>
             </Card>
           </Grid>
@@ -102,22 +104,11 @@ function MyAuctionsPage() {
           <Grid item xs={12}>
             <Card>
               <StyledCardSold isExpanded={expandedSold}>
-                <CardActions disableSpacing>
-                <p>Sålda auktioner</p>
-                  <ExpandMore
-                    expand={expandedSold}
-                    onClick={handleExpandSold}
-                  >
-                    <ExpandMoreIcon />
-                  </ExpandMore>
-                </CardActions>
-                <Collapse in={expandedSold} timeout="auto" unmountOnExit>
-                  {usersAuctions && usersAuctions.map((auction: any) => {
-                    if (auction.status === 'SOLD') {
-                    return <AuctionItem key={auction.id} auction={auction} />
-                  }
-                })}
-                </Collapse>
+                <MyAuctionsCard title="Sålda auktioner"
+                  expandState={expandedSold}
+                  expandFunction={handleExpandSold}
+                  userAuctionsListByStatus={soldList}
+                />
               </StyledCardSold>
             </Card>
           </Grid>
@@ -125,22 +116,11 @@ function MyAuctionsPage() {
           <Grid item xs={12}>
             <Card>
               <StyledCardNoSold isExpanded={expandedNoSold}>
-                <CardActions disableSpacing>
-                  <p>Inte sålda auktioner</p>
-                  <ExpandMore
-                    expand={expandedNoSold}
-                    onClick={handleExpandNoSold}
-                  >
-                    <ExpandMoreIcon />
-                  </ExpandMore>
-                </CardActions>
-                <Collapse in={expandedNoSold} timeout="auto" unmountOnExit>
-                  {usersAuctions && usersAuctions.map((auction: any) => {
-                    if (auction.status === 'NOT_SOLD') {
-                    return <AuctionItem key={auction.id} auction={auction} />
-                  }   
-                })}
-                </Collapse>
+                <MyAuctionsCard title="Inte sålda auktioner"
+                  expandState={expandedNoSold}
+                  expandFunction={handleExpandNoSold}
+                  userAuctionsListByStatus={unSoldList}
+                />
               </StyledCardNoSold>
             </Card>
           </Grid>
