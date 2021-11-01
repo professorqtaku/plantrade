@@ -7,9 +7,9 @@ export interface Auction {
   id: number | null | undefined,
   title: String,
   description: String,
-  startPrice?: number,
+  startPrice?: number | undefined,
   status?: String,
-  endDate?: String,
+  endDate: string | number | Date,
   host?: User,
   bids?: Array<Bid> | undefined,
   categories?: [Category],
@@ -20,7 +20,7 @@ export interface Auction {
 export interface Bid {
   id: Number,
   createdDate: Date,
-  price: number,
+  price: number | undefined,
   auctionId: Number,
   userId: Number
 }
