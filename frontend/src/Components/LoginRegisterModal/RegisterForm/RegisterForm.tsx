@@ -29,7 +29,6 @@ const RegisterForm = ({ toggleRegister }: Props) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setShowOpenSnackBar, setText } = useSnackBar();
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,8 +41,6 @@ const RegisterForm = ({ toggleRegister }: Props) => {
     let isRegSucceed = await register(userObject);
     if (isRegSucceed) {
       toggleRegister();
-      setText("Regristrering lyckades!")
-      setShowOpenSnackBar(true);
     }
   };
 

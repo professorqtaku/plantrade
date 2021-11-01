@@ -13,9 +13,9 @@ interface Props {
 const AllContextProviders: React.FC<Props> = ({ children }) => {
   return (
     <>
-      <AuthProvider>
-        <AuctionProvider>
-          <SnackBarProvider>
+      <SnackBarProvider>
+        <AuthProvider>
+          <AuctionProvider>
             <ModalProvider>
               <NavigationProvider>
                 <BidProvider>
@@ -23,9 +23,9 @@ const AllContextProviders: React.FC<Props> = ({ children }) => {
                 </BidProvider>
               </NavigationProvider>
             </ModalProvider>
-          </SnackBarProvider>
-        </AuctionProvider>
-      </AuthProvider>
+          </AuctionProvider>
+        </AuthProvider>
+      </SnackBarProvider>
     </>
   );
 };

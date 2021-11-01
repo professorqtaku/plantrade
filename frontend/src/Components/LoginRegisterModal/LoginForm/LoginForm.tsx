@@ -23,7 +23,6 @@ const LoginForm = ({ toggleRegister }: Props) => {
   const { login, wrongPassword } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { setShowOpenSnackBar, setText } = useSnackBar();
 
   const handleLogin = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
@@ -33,12 +32,7 @@ const LoginForm = ({ toggleRegister }: Props) => {
       password: password,
     };
 
-    const isLoggedIn = await login(userObj)
-
-    if (isLoggedIn) {
-      setText("Inloggning lyckades!");
-      setShowOpenSnackBar(true);
-    }
+    await login(userObj);
   };
 
   return (
