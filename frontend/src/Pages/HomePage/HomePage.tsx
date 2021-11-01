@@ -1,10 +1,8 @@
-import { useEffect } from "react";
 import { useSearch } from "../../Contexts/SearchContext";
 import { useAuth } from "../../Contexts/AuthContext";
 import SearchForm from "../../Components/Search/SearchForm/SearchForm"
 import { imageIcons } from "./ImageIcons"
 import Carousel from 'react-elastic-carousel';
-import ImageListItem from '@mui/material/ImageListItem';
 import {
   StyledWrapper,
   StyledSearchWrapper,
@@ -30,6 +28,16 @@ import { useAuction } from "../../Contexts/AuctionContext";
 interface IconImage{
   imgFile: string;
   text: string;
+}
+
+type Auction = {
+  id: Number;
+  host: { id: Number, username: String };
+  title: String;
+  description: String;
+  startPrice: Number;
+  endDate: Date;
+  status: Object;
 }
 
 
@@ -68,17 +76,22 @@ const HomePage = () => {
   );
 
     const renderSoonEndingAuction = () => (
-    <StyledSoonEndingWrapper>
-      <StyledImageListItem>
-          <StyledAuctionImg
-          src="https://i2.wp.com/www.livingloving.net/wp-content/uploads/2017/01/living-loving-indoor-plants-3.jpg?resize=1769%2C1000&ssl=1"
-          alt="News picture"
-          loading="lazy" />
-          <StyledImageListItemBar
-          width="40%"
-          subtitle="Name"
-        />
-      </StyledImageListItem>
+      <StyledSoonEndingWrapper>
+        
+        {auctions.map((auction: Auction) => {
+          return (
+          <StyledImageListItem>
+              <StyledAuctionImg
+                src="https://i2.wp.com/www.livingloving.net/wp-content/uploads/2017/01/living-loving-indoor-plants-3.jpg?resize=1769%2C1000&ssl=1"
+                alt="Auction"
+                loading="lazy" />
+              <StyledImageListItemBar
+                width="40%"
+                subtitle={auction.title}
+              />
+        </StyledImageListItem>
+          )
+        })}
           
     </StyledSoonEndingWrapper>
   );
@@ -105,7 +118,6 @@ const HomePage = () => {
 
         <StyledTitle>Snart avslutade auctioner</StyledTitle>
         {renderSoonEndingAuction()}
-    {console.log(auctions , 'auc?')}
       </StyledPageWrapper>
     </StyledWrapper>
   );
