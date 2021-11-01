@@ -4,9 +4,9 @@ import Grid from '@mui/material/Grid';
 import SkeletonCard from '../../Components/SkeletonCard/SkeletonCard';
 import { useAuction } from '../../Contexts/AuctionContext';
 import { useBid, Bid } from '../../Contexts/BidContext';
-import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
+import CommentIcon from '@mui/icons-material/Comment';
 import ImageCarousel from '../../Components/ImageCarousel/ImageCarousel';
 import ExpandableDescriptionBox from '../../Components/ExpandableDesc/ExpandableDescriptionBox';
 import {
@@ -21,7 +21,6 @@ import {
   StyleImg,
   StyledIcon,
   StyledDate,
-  StyledParagraph,
   StyledAccessTimeOutlinedIcon,
   StyledCalendarTodayOutlinedIcon
 } from "./StyledAuctionDetailPage";
@@ -117,7 +116,7 @@ const AuctionDetailPage = () => {
             <Grid item xs={4} md={4}>
               <StyleChatIcon>
                   <StyledIcon>
-                    <ChatBubbleOutlineIcon onClick={handleChat} />
+                    <CommentIcon onClick={handleChat} />
                   </StyledIcon>
                 </StyleChatIcon>
             </Grid>
@@ -137,8 +136,7 @@ const AuctionDetailPage = () => {
             </Grid>
             <Grid item xs={12} md={6}>
                 <StyledUnderTitle>Beskrivning</StyledUnderTitle>
-                <StyledParagraph>{auction.description}</StyledParagraph>
-                {/* <ExpandableDescriptionBox description={auction.description} /> */}
+                <ExpandableDescriptionBox auctionDescription={auction.description} />
             </Grid>
             <Grid item xs={12} md={12} >
               #tags
