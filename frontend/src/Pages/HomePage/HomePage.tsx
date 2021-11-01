@@ -82,18 +82,18 @@ const HomePage = () => {
         <Carousel isRTL={true} itemsToShow={3} outerSpacing={0} pagination={false} initialFirstItem={3}>
         {auctions && auctions.map((auction: Auction) => {
           return (
-            <StyledTest2>
-            <StyledImageListItem>
+            <StyledTest2 key={auction.id}>
+            <StyledImageListItem gridIgnore={true}>
               
               <StyledAuctionImg
                 src="https://i.pinimg.com/564x/9e/8b/dc/9e8bdc74df3cb2f87fae194a18ba569a.jpg"
                 alt="Auction"
                 loading="lazy" />
                 <StyledImageListItemBar
-                style={{justifyContent: 'end'}} // props i style?
-                width="100%"
-                subtitle={auction.title}
-              />
+                  style={{textAlign: "left"}}
+                  width="100%"
+                  subtitle={auction.title}
+                />
               </StyledImageListItem>
               </StyledTest2>
           )
