@@ -1,6 +1,12 @@
 package com.server.backend.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.CollectionType;
 import com.server.backend.entities.Auction;
+import com.server.backend.entities.Category;
 import com.server.backend.entities.Status;
 import com.server.backend.services.AuctionService;
 import com.server.backend.services.UserService;
@@ -9,6 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.print.Book;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -18,10 +27,10 @@ import java.util.Optional;
 public class AuctionController {
 
     @Autowired
-    private AuctionService auctionService;
+    private UserService userService;
 
     @Autowired
-    private UserService userService;
+    private AuctionService auctionService;
 
     @GetMapping
     public ResponseEntity<List<Auction>> getAllOpenAuctions() {
@@ -43,24 +52,36 @@ public class AuctionController {
         }
     }
 
-
 //    public ResponseEntity<Auction> createAuction(@RequestBody Auction auction, @RequestParam(required=false) List<MultipartFile> files){
     @PostMapping
-    public ResponseEntity<Auction> createAuction(@RequestBody Map content, @RequestParam(value = "files", required = false) List<MultipartFile> files){
-        System.out.println("before");
-        Auction auction = (Auction) content.get("auction");
-        System.out.println(auction.getTitle());
+    // @RequestBody Map<String, String> content
+    public ResponseEntity<Auction> createAuction(
+            @RequestParam(value = "auction") String _auction,
+            @RequestParam(value = "categories") String _categories,
+            @RequestParam(value = "files", required = false) List<MultipartFile> files
+    ){
         var user = userService.findCurrentUser();
-        if(user != null) {
-            Auction savedAuction = auctionService.createAuction(auction, user, files);
-            if(savedAuction != null) {
-                return ResponseEntity.ok(savedAuction);
+        var mapper = new ObjectMapper();
+        try {
+            var auction = mapper.readValue(_auction, Auction.class);
+            List<Category> categories = mapper.readValue(_categories, mapper.getTypeFactory().constructCollectionType(List.class, Category.class));
+            if(user != null) {
+                Auction savedAuction = auctionService.createAuction(auction, categories, files, user);
+                if(savedAuction != null) {
+                    System.out.println("do we get here?");
+                    return ResponseEntity.ok(savedAuction);
+                } else {
+                    return ResponseEntity.badRequest().build();
+                }
             } else {
                 return ResponseEntity.badRequest().build();
             }
-        } else {
-            return ResponseEntity.badRequest().build();
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
         }
+        //if we get all the way here something went really wrong
+        return ResponseEntity.badRequest().build();
     }
     
     @GetMapping("/user")
