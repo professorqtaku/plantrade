@@ -4,14 +4,14 @@ export interface User {
 }
 
 export interface Auction {
-  id: Number,
+  id: number | null | undefined,
   title: String,
   description: String,
-  startPrice?: Number,
+  startPrice?: number,
   status?: String,
   endDate?: String,
   host?: User,
-  bids?: [Bid],
+  bids?: Array<Bid> | undefined,
   categories?: [Category],
   images?: [Image],
   winner?: User
@@ -20,7 +20,7 @@ export interface Auction {
 export interface Bid {
   id: Number,
   createdDate: Date,
-  price: Number,
+  price: number,
   auctionId: Number,
   userId: Number
 }
