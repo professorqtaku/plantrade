@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../Contexts/AuthContext";
 import { useBid } from "../../Contexts/BidContext";
 import { Auction } from "../../Interfaces/Interfaces";
-import { handleCount } from './auctionUtils'
+import { handleCount } from './auctionUtils';
 import {
   StyledCard,
   StyledImg,
