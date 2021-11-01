@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useNav } from "../../Contexts/NavigationContext";
-import FloatingAddBtn from "../../Components/FloatingAddBtn/FloatingAddBtn";
 
 
 const HomePage = () => {
@@ -14,7 +13,6 @@ const HomePage = () => {
   return (
     <div>
       <h3>HomePage</h3>
-      <FloatingAddBtn/>
     </div>
   );
 }

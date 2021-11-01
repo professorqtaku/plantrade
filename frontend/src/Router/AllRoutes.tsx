@@ -7,7 +7,11 @@ import MyPage from "../Pages/MyPage/MyPage";
 import CreateAuctionPage from "../Pages/CreateAuctionPage/CreateAuctionPage";
 
 interface Props {
-  children: JSX.Element;
+  children:
+    | JSX.Element
+    | JSX.Element[]
+    | (false | Element)[]
+    | any;
 }
 
 const AllRoutes: React.FC<Props> = ({ children }) => {
