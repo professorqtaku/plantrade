@@ -30,6 +30,7 @@ public class AuctionSpecification {
         return (root, query, builder) -> {
             Join<Object, Object> categoryJoin = root.join("categories", JoinType.INNER);
             Expression<String> categoryExpression = builder.lower(categoryJoin.get("name"));
+            query.distinct(true);
             return builder.equal(categoryExpression, name.toLowerCase());
         };
     }
