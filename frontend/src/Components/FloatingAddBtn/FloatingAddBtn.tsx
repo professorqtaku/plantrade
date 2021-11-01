@@ -4,11 +4,10 @@ import { useHistory } from "react-router";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-
 const FloatingAddBtn = () => {
   const history = useHistory();
   const location = useLocation();
-  const [isShown, setIsShown] = useState(true)
+  const [isShown, setIsShown] = useState(true);
 
   useEffect(() => {
     if (location.pathname === "/createAuction") {
@@ -19,14 +18,16 @@ const FloatingAddBtn = () => {
   }, [location]);
 
   return (
-   <>
-    {isShown && <StyledAddIcon
-      color="primary"
-      aria-label="add"
-      onClick={() => history.push("/createAuction")}
-    >
-      <AddIcon />
-      </StyledAddIcon>}
+    <>
+      {isShown && (
+        <StyledAddIcon
+          color="primary"
+          aria-label="add"
+          onClick={() => history.push("/createAuction")}
+        >
+          <AddIcon />
+        </StyledAddIcon>
+      )}
     </>
   );
 };
