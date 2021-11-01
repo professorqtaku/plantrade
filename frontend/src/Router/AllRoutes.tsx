@@ -3,6 +3,7 @@ import AuctionDetailPage from "../Pages/AuctionDetailPage/AuctionDetailPage";
 import AuctionPage from "../Pages/AuctionPage/AuctionPage";
 import HomePage from "../Pages/HomePage/HomePage";
 import MyAuctionsPage from '../Pages/MyAuctionsPage/MyAuctionsPage';
+import MyWonAuctionsPage from '../Pages/MyWonAuctionsPage/MyWonAuctionsPage';
 import MyPage from "../Pages/MyPage/MyPage";
 import CreateAuctionPage from "../Pages/CreateAuctionPage/CreateAuctionPage";
 
@@ -19,6 +20,7 @@ const AllRoutes: React.FC<Props> = ({ children }) => {
         <Route path="/auctions" exact={true} component={AuctionPage} />
         <Route path="/my-page" exact={true} component={MyPage} />
         <Route path="/my-page/my-auctions" exact={true} component={MyAuctionsPage} />
+        <Route path="/my-page/my-won-auctions" exact={true} component={MyWonAuctionsPage} />
         {/* <Route path="/register" exact={true} component={RegisterPage} /> */}
         <Route path="/auction/:id" exact={true} component={AuctionDetailPage} />
         <Route

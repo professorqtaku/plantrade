@@ -6,6 +6,7 @@ import com.server.backend.services.AuctionService;
 import com.server.backend.services.UserService;
 import jdk.jshell.Snippet;
 import net.bytebuddy.asm.Advice;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -79,6 +80,21 @@ public class AuctionController {
             return ResponseEntity.noContent().build();
         }
 
+    }
+
+    @GetMapping("/won")
+    public ResponseEntity<List<Auction>> getWonAuctionsByCurrentUser() {
+        var user = userService.findCurrentUser();
+        if(user != null){
+            List<Auction> auctions = auctionService.getWonAuctionsByCurrentUser(user);
+            if(auctions.size() > 0) {
+                return ResponseEntity.ok(auctions);
+            } else {
+                return ResponseEntity.noContent().build();
+            }
+        } else {
+            return ResponseEntity.noContent().build();
+        }
     }
 
 }

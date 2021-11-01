@@ -22,5 +22,7 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>, JpaSpec
 
     List<Auction> findByStatus(Status status);
 
+    List<Auction> findByWinner(User user);
+
 //    List<Auction> findAllByStatusToUpperCase(String status);
 }

@@ -21,6 +21,7 @@ export const useAuction = () => useContext(AuctionContext);
 const AuctionProvider: FC<Props> = ({ children }: Props) => {
   const [auctions, setAuctions] = useState<Array<Auction>>([]);
   const [usersAuctions, setUsersAuctions] = useState<Array<Auction>>();
+  const [usersWonAuctions, setUsersWonAuctions] = useState<Array<Auction>>();
 
   const getAllAuctions = async () => {
     let res: Response = await fetch('/rest/auctions');
@@ -36,27 +37,17 @@ const AuctionProvider: FC<Props> = ({ children }: Props) => {
   }
 
   const getUsersAuctions = async () => {
-    const body = {
-        "id": 3,
-        "username": "postila",
-        "email": "postila@haha.se",
-        "password": 123
-      }
-
-    await fetch('/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    });
-
-
-
-
     let res: Response = await fetch('/rest/auctions/user');
     let auctions = await res.json();
     // return auctions;
     console.log('auctions from context', auctions);
     setUsersAuctions(auctions);
+  }
+
+  const getWonAuctionsByUser = async () => {
+    let res: Response = await fetch('/rest/auctions/won');
+    let auctions = await res.json();
+    setUsersWonAuctions(auctions);
   }
   
   const values = {
@@ -65,7 +56,9 @@ const AuctionProvider: FC<Props> = ({ children }: Props) => {
     getAllAuctions,
     getAuctionById,
     usersAuctions,
-    getUsersAuctions
+    getUsersAuctions,
+    getWonAuctionsByUser,
+    usersWonAuctions
   }
 
   return (
