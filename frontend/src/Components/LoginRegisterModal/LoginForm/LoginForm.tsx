@@ -1,4 +1,4 @@
-import { BaseSyntheticEvent, FC, useState } from 'react'
+import { BaseSyntheticEvent, FC, useState } from "react";
 import {
   StyledLoginContainer,
   Styledh3,
@@ -11,11 +11,11 @@ import {
   StyledDivider,
   StyledSpan,
 } from "./StyledLoginForm";
-import InputField from '../../InputField/InputField';
-import { useAuth } from '../../../Contexts/AuthContext';
+import InputField from "../../InputField/InputField";
+import { useAuth } from "../../../Contexts/AuthContext";
 
 interface Props {
-  toggleRegister: Function
+  toggleRegister: Function;
 }
 
 const LoginForm = ({ toggleRegister }: Props) => {
@@ -30,7 +30,7 @@ const LoginForm = ({ toggleRegister }: Props) => {
       username: username,
       password: password,
     };
-    
+
     login(userObj);
   };
 
@@ -70,4 +70,4 @@ const LoginForm = ({ toggleRegister }: Props) => {
   );
 };
 
-export default LoginForm
+export default LoginForm;
