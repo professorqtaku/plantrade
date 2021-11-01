@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
+import {StyledParagraph, StyledButton} from "./StyledExpandableDescriptionBox"
 
 interface Props {
   auctionDescription: String;
@@ -33,14 +34,14 @@ function ExpandableDescriptionBox({ auctionDescription }: Props) {
   };
 
   return (
-    <div>
-      {description}
+    <>
+      <StyledParagraph>{description}</StyledParagraph>
       {descriptionLength > count && (
         <Button variant="text" onClick={handleButtonText}>
-          {buttonTitle}
+          <StyledButton>{buttonTitle}</StyledButton>
         </Button>
       )}
-    </div>
+    </>
   );
 }
 
