@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Card from "@mui/material/Card";
 import Avatar from "@mui/material/Avatar";
 import CardContent from "@mui/material/CardContent";
+import { Button } from "@mui/material";
 
 export const StyledCard = styled(Card)`
   max-width: 90%;
@@ -43,7 +44,7 @@ export const StyledAvatar = styled(Avatar)`
   float: right;
 `;
 
-export const StyledButton = styled.button`
+export const StyledButton = styled(Button)`
   background: var(--light-green);
   color: white;
   border: none;
@@ -51,9 +52,6 @@ export const StyledButton = styled.button`
   font-size: 0.7rem;
   letter-spacing: 3px;
   padding: 0.5rem;
-  &:hover{
-    cursor: pointer;
-  }
 `;
 
 export const StyledSpan = styled.span`

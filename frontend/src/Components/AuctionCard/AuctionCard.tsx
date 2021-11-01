@@ -12,6 +12,7 @@ import { useBid } from "../../Contexts/BidContext";
 import { Auction } from "../../Interfaces/Interfaces";
 import { useEffect, useState } from "react";
 import { handleCount } from './auctionUtils'
+import ButtonComp from "../Button/ButtonComp";
 
 interface Props {
   auction: Auction;
@@ -117,9 +118,10 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
             <StyledSpan>{remainingTime}</StyledSpan> {daysLeft}
           </StyledDesc>
         </div>
-        <StyledButton onClick={() => handleBid()}>
+        {/* <StyledButton onClick={() => handleBid()}>
           Snabb bud {quickBid} SEK
-        </StyledButton>
+        </StyledButton> */}
+        <ButtonComp label={`Snabb bud ${quickBid} SEK`} callback={() => handleBid()} fontsize="0.7rem"/>
       </StyledCardContent>
     </StyledCard>
   );
