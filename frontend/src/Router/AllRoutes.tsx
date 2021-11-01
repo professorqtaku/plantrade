@@ -10,8 +10,7 @@ interface Props {
   children:
     | JSX.Element
     | JSX.Element[]
-    | (false | Element)[]
-    | any;
+    | (false | Element)[];
 }
 
 const AllRoutes: React.FC<Props> = ({ children }) => {
