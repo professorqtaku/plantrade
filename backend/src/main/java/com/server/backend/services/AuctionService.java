@@ -102,4 +102,5 @@ public class AuctionService {
 
         return auctionRepository.findAll(totalSpecification);
     }
+
 }
