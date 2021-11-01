@@ -1,3 +1,8 @@
+import { useEffect, useState } from "react";
+import { useAuth } from "../../Contexts/AuthContext";
+import { useBid } from "../../Contexts/BidContext";
+import { Auction } from "../../Interfaces/Interfaces";
+import { handleCount } from './auctionUtils'
 import {
   StyledCard,
   StyledImg,
@@ -8,10 +13,6 @@ import {
   StyledCardContent,
   StyledSpan,
 } from "./StyledAuctionCard";
-import { useBid } from "../../Contexts/BidContext";
-import { Auction } from "../../Interfaces/Interfaces";
-import { useEffect, useState } from "react";
-import { handleCount } from './auctionUtils'
 
 interface Props {
   auction: Auction;
@@ -28,6 +29,7 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
   const [bid, setBid] = useState<undefined | number>();
   const [quickBid, setQuickBid] = useState<number>();
   
+  const { whoAmI } = useAuth();
   const { createBid } = useBid();
   
   useEffect(() => {
@@ -87,9 +89,10 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
   };
 
   const handleBid = async () => {
+    if (whoAmI == null || whoAmI == auction.host?.id) return;
+    
     const newBid = {
-      // change userId to user that is logged in
-      userId: 3,
+      userId: whoAmI.id,
       auctionId: auction.id,
       price: quickBid,
       createdDate: Date.now()
