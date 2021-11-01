@@ -6,7 +6,6 @@ import {
   StyledBackBtn
 } from './StyledMyAuctionsPage';
 import { useState, useEffect } from 'react';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useAuction } from '../../Contexts/AuctionContext';
 import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';

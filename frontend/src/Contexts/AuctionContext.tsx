@@ -45,16 +45,19 @@ const AuctionProvider: FC<Props> = ({ children }: Props) => {
 
   const getUsersAuctions = async () => {
     let res: Response = await fetch('/rest/auctions/user');
-    let auctions = await res.json();
+    if (res.status === 200) {
+      let auctions = await res.json();
+      setUsersAuctions(auctions);
+    }
     // return auctions;
-    console.log('auctions from context', auctions);
-    setUsersAuctions(auctions);
   }
 
   const getWonAuctionsByUser = async () => {
     let res: Response = await fetch('/rest/auctions/won');
-    let auctions = await res.json();
-    setUsersWonAuctions(auctions);
+    if (res.status === 200) {
+      let auctions = await res.json();
+      setUsersWonAuctions(auctions);
+    }
   }
   
   const values = {
