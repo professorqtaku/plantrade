@@ -31,7 +31,12 @@ public class BidService {
 
   public Boolean validateBid(Auction auction, int bidPrice) {
     int index = auction.getBids().size();
-    double latestPrice = auction.getBids().get(index - 1).getPrice();
+    double latestPrice = 0;
+    try{
+      latestPrice = auction.getBids().get(index - 1).getPrice();
+    } catch (Exception e){
+      e.printStackTrace();
+    }
 
     if (auction.getStartPrice() < bidPrice && latestPrice < bidPrice){
       // price placed by user must be higher than both startPrice and latestPrice
@@ -55,9 +60,11 @@ public class BidService {
   public Bid createBid(Map values) {
     User user =  userRepository.findById((long) (int) values.get("userId")).get();
     Auction auction = auctionRepository.findById((long) (int) values.get("auctionId")).get();
-
     // validate user, bid price and time before creating a new bid
-    if(validateUser(user) && validateBid(auction, (int) values.get("price")) && validateTime(auction, (long) values.get("createdDate"))){
+
+    //validateUser(user) &&
+    if(validateBid(auction, (int) values.get("price")) && validateTime(auction, (long) values.get("createdDate"))){
+    System.out.println("here");
         try{
           Bid bid = Bid.builder()
                   .user(user)

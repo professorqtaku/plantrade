@@ -39,20 +39,23 @@ export const StyledDesc = styled.p`
 `;
 
 export const StyledAvatar = styled(Avatar)`
-  background: #619463;
+  background: var(--light-green);
   float: right;
 `;
 
 export const StyledButton = styled.button`
-  background: #619463;
+  background: var(--light-green);
   color: white;
   border: none;
   text-transform: uppercase;
   font-size: 0.7rem;
   letter-spacing: 3px;
   padding: 0.5rem;
+  &:hover{
+    cursor: pointer;
+  }
 `;
 
 export const StyledSpan = styled.span`
   font-weight: bolder;
-`
+`;

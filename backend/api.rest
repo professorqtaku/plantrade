@@ -42,10 +42,10 @@ POST http://localhost:4000/rest/auctions
 Content-Type: application/json
 
 {
-  "title": "Blomma lotus",
-  "description": "Test",
-  "startPrice": 500,
-  "endDate": 1637135424
+  "title": "Chocolate Coverd Cherry",
+  "description": "Orotad stickling av plattblads sorten Chocolate Coverd Cherry",
+  "startPrice": 1,
+  "endDate": 	1636106700
 }
 
 ### Create Bid on an auction
@@ -60,9 +60,9 @@ Content-Type: application/json
 }
 
 ### get auctions by title
-GET http://localhost:4000/rest/auctions/search?title=test
+GET http://localhost:4000/rest/auctions/search?title=blomma
 
 ### get auctions by title and category
-GET http://localhost:4000/rest/auctions/search?title=s&category=Blomma%20ätbar
+GET http://localhost:4000/rest/auctions/search?title=blomma&category=Blomma%20Träd
 
 ###

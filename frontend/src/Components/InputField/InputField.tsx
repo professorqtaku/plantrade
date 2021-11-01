@@ -2,12 +2,14 @@ import Box from "@mui/material/Box";
 import { StyledInput } from "./StyledInputField";
 
 interface Props {
-  label: string;
+  label?: string;
   type?: string;
   updateState: React.Dispatch<React.SetStateAction<any>>;
   required?: boolean;
   margintop?: number;
   value: string | number | undefined;
+  InputLabelProps?: Object;
+  InputProps?: Object;
 }
 
 const InputField = ({
@@ -15,6 +17,8 @@ const InputField = ({
   type,
   updateState,
   value,
+  InputLabelProps,
+  InputProps,
   required,
   margintop,
 }: Props) => {
@@ -27,6 +31,8 @@ const InputField = ({
       type={type ? type : "text"}
       label={label}
       id={label}
+      InputLabelProps={InputLabelProps}
+      InputProps={InputProps}
       margintop={margintop ? margintop : 0}
     />
   );

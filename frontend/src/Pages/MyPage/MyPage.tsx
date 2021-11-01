@@ -3,7 +3,6 @@ import {
   StyledWrapper,
   StyledAvatar,
   StyledEdit,
-  StyledAvatarWrapper,
   StyledEditWrapper,
   StyledText,
   StyledNavigationWrapper,
@@ -13,8 +12,10 @@ import {
   StyledNavigationBox,
   StyledButton,
 } from "./StyledMyPage";
-import { useState } from "react";
+import Header from "../../Components/Header/Header";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
+import { useNav } from "../../Contexts/NavigationContext";
 
 const IMAGE1 =
   "https://i.pinimg.com/736x/0f/0f/99/0f0f99b410e810c32aa5fdb78b2710e0.jpg";
@@ -30,8 +31,13 @@ const MyPage = () => {
   const [onEditPassword, setOnEditPassword] = useState(false);
   const [email, setEmail] = useState("Email");
   const [password, setPassword] = useState("Lösenord");
+  const { setProfile, handleSelect } = useNav();
   const history = useHistory();
-  const { logout, whoAmI } = useAuth()
+  const { logout, whoAmI } = useAuth();
+
+  useEffect(() => {
+    handleSelect(setProfile);
+  }, []);
 
   const renderEditFields = (
     <StyledEditWrapper>
@@ -67,7 +73,11 @@ const MyPage = () => {
 
   const renderNavigations = (
     <StyledNavigationWrapper>
-      <StyledNavigationBox onClick={() => history.push('/createAuction')} justify="end" background={IMAGE1}>
+      <StyledNavigationBox
+        onClick={() => history.push("/createAuction")}
+        justify="end"
+        background={IMAGE1}
+      >
         <StyledText color="white">Skapa auktion</StyledText>
       </StyledNavigationBox>
 
@@ -79,28 +89,30 @@ const MyPage = () => {
         <StyledText color="white">Statistik</StyledText>
       </StyledNavigationBox>
 
-      <StyledNavigationBox onClick={() => history.push('/my-page/my-auctions')} justify="start" background={IMAGE4}>
+      <StyledNavigationBox
+        onClick={() => history.push("/my-page/my-auctions")}
+        justify="start"
+        background={IMAGE4}
+      >
         <StyledText color="white">Mina auktioner</StyledText>
       </StyledNavigationBox>
     </StyledNavigationWrapper>
   );
 
-    // Ändra useref till useState till inputfiel (props, update + label + value)
-
-    const handleLogout = (e: any) => {
-      e.preventDefault();
-      logout();
-      history.push('/')
-    }
+  const handleLogout = (e: any) => {
+    e.preventDefault();
+    logout();
+    history.push("/");
+  };
 
   return (
     <>
-      <StyledAvatarWrapper>
+      {whoAmI && <Header grid={true} gridColumns="1fr 1fr">
         <StyledText color="white" size="2rem" margin="1rem">
-          Hej Oscar
+          Hej {whoAmI.username}
         </StyledText>
-        <StyledAvatar>N</StyledAvatar>
-      </StyledAvatarWrapper>
+        <StyledAvatar>{whoAmI.username.charAt(0).toUpperCase()}</StyledAvatar>
+      </Header>}
       <StyledWrapper>
         {renderEditFields}
         {renderNavigations}

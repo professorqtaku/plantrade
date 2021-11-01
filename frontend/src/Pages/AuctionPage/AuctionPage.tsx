@@ -7,17 +7,39 @@ import {
 } from "./StyledAuctionPage";
 import AuctionCard from "../../Components/AuctionCard/AuctionCard";
 import { useAuction } from "../../Contexts/AuctionContext";
+import { Bid } from "../../Contexts/BidContext";
 import { useEffect } from "react";
 import SearchForm from "../../Components/Search/SearchForm/SearchForm";
 import { useSearch } from "../../Contexts/SearchContext";
+
+// export interface Host {
+//   id: number;
+//   username: String;
+//   email: String;
+//   password: String;
+// }
+
+// export interface Auction {
+//   id: number;
+//   title: String;
+//   description: String;
+//   startPrice?: number;
+//   status?: String;
+//   endDate?: String;
+//   host?: Host;
+//   bids: Array<Bid> | undefined;
+// }
 import { Auction } from '../../Interfaces/Interfaces';
+import { useNav } from "../../Contexts/NavigationContext";
 
 const AuctionPage = () => {
   const { getAllAuctions, auctions } = useAuction();
   const { searchText } = useSearch();
+  const { setAuction, handleSelect } = useNav();
 
   useEffect(() => {
     handleGetAuctions();
+    handleSelect(setAuction);
   }, []);
 
   const handleGetAuctions = async () => {
