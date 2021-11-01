@@ -8,9 +8,10 @@ import {
   StyledCardContent,
   StyledSpan,
 } from "./StyledAuctionCard";
-import { Auction } from "../../Pages/AuctionPage/AuctionPage";
+// import { Auction } from "../../Pages/AuctionPage/AuctionPage";
 import { useAuction } from "../../Contexts/AuctionContext";
 import { useBid } from "../../Contexts/BidContext";
+import { Auction } from "../../Interfaces/Interfaces";
 import { useEffect, useState } from "react";
 import { handleCount } from './auctionUtils'
 
