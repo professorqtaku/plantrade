@@ -1,7 +1,8 @@
-import AllContextProviders from './Contexts/AllContextProviders';
-import AllRoutes from './Router/AllRoutes';
-import Navigation from './Components/Navigation/Navigation';
-import LoginRegisterModal from './Components/LoginRegisterModal/LoginRegisterModal';
+import AllContextProviders from "./Contexts/AllContextProviders";
+import AllRoutes from "./Router/AllRoutes";
+import Navigation from "./Components/Navigation/Navigation";
+import LoginRegisterModal from "./Components/LoginRegisterModal/LoginRegisterModal";
+import FloatingAddBtn from "./Components/FloatingAddBtn/FloatingAddBtn";
 
 function App() {
 
@@ -10,7 +11,10 @@ function App() {
       <AllContextProviders>
         <>
           <AllRoutes>
-            <Navigation />
+            <>
+              <Navigation />
+              <FloatingAddBtn />
+            </>
           </AllRoutes>
           <LoginRegisterModal />
         </>
