@@ -1,6 +1,7 @@
 package com.server.backend.controllers;
 
 import com.server.backend.entities.User;
+import com.server.backend.repositories.UserRepository;
 import com.server.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +15,13 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserRepository userRepository;
+
 
     @PostMapping("/login")
     public ResponseEntity<User> login(@RequestBody User user, HttpServletRequest req){
-        var usern = userService.login(user,req);
+        User usern = userService.login(user,req);
         if(usern == null){
             return ResponseEntity.notFound().build();
         }
@@ -25,9 +29,14 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public User register(@RequestBody User user){
-        return userService.createUser(user);
+    public ResponseEntity<User> register(@RequestBody User user){
+        User newUser = userService.createUser(user);
+        if(newUser == null){
+            return ResponseEntity.badRequest().build();
+        }
+            return ResponseEntity.ok(newUser);
     }
+
 
     @GetMapping("/whoami")
     public User whoAmI(){

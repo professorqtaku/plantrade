@@ -2,22 +2,38 @@ import Box from "@mui/material/Box";
 import { StyledInput } from "./StyledInputField";
 
 interface Props {
-  label: string;
+  label?: string;
   type?: string;
   updateState: React.Dispatch<React.SetStateAction<any>>;
+  required?: boolean;
+  margintop?: number;
   value: string | number | undefined;
+  InputLabelProps?: Object;
+  InputProps?: Object;
 }
 
-const InputField = ({ label, type, updateState, value }: Props) => {
+const InputField = ({
+  label,
+  type,
+  updateState,
+  value,
+  InputLabelProps,
+  InputProps,
+  required,
+  margintop,
+}: Props) => {
   return (
     <StyledInput
-      required
       onChange={(e) => updateState(e.target.value)}
       fullWidth
-      value={value ? value : ''}
+      required={required}
+      value={value ? value : ""}
       type={type ? type : "text"}
       label={label}
       id={label}
+      InputLabelProps={InputLabelProps}
+      InputProps={InputProps}
+      margintop={margintop ? margintop : 0}
     />
   );
 };

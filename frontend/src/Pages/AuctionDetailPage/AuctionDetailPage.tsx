@@ -110,7 +110,7 @@ const AuctionDetailPage = () => {
             <div></div>
           </Grid>
           <Grid item xs={12} md={6}>
-            <ExpandableDescriptionBox {...auction.description} />
+            {/* <ExpandableDescriptionBox {...auction.description} /> */}
           </Grid>
           <Grid item md={6}>
             <div></div>

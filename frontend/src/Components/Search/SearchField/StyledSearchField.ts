@@ -10,7 +10,7 @@ export const StyledTextField = styled(TextField)`
   background-color: var(--yellow);
   border-radius: 50px;
   padding: 2% 5%;
-  width: 100%;
+  width: 90%;
 `;
 
 export const StyledFormControl = styled(FormControl)`

@@ -1,9 +1,16 @@
 :root {
-  --yellow: #FFE500;
   --font-text: 'Abhaya Libre', serif;
   --font-title: 'Abel', sans-serif;
+  --font-normal-text: 'ABeeZee', sans-serif;
+  --yellow: #FFE500;
+  --light-yellow: #FFF6AA;
   --light-green: #619463;
   --dark-green: #122522;
+  --dark-grey: #36455A;
+  --background-color: #FBFDFF;
+  --status-green: #619463;
+  --status-yellow: #FFE500;
+  --status-red: #E44929;
 }
 
 p {
@@ -17,6 +24,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-color);
 }
 
 code {
