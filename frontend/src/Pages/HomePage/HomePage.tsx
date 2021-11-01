@@ -85,7 +85,7 @@ const HomePage = () => {
         {auctions && auctions.map((auction: Auction) => {
           return (
             <StyledTest2 key={auction.id}>
-            <StyledImageListItem gridIgnore={true}>
+            <StyledImageListItem gridignore="true">
               
               <StyledAuctionImg
                 src="https://i.pinimg.com/564x/9e/8b/dc/9e8bdc74df3cb2f87fae194a18ba569a.jpg"

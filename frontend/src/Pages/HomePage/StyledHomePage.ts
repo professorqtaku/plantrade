@@ -9,7 +9,7 @@ interface WidthProps {
 }
 
 interface GridProps {
-  gridIgnore?: boolean | undefined
+  gridignore?: string;
 }
 
 export const StyledAvatar = styled(Avatar)`
@@ -121,7 +121,7 @@ export const StyledImgText = styled.p`
 
 export const StyledImageListItem = styled(ImageListItem)<GridProps>`
   margin-top: 10px;
-  display: ${(props) => !props.gridIgnore ? 'grid' : 'block'};
+  display: ${(props) => !props.gridignore ? 'grid' : 'block'};
   align-items: center;
   justify-items: center;
 `;
