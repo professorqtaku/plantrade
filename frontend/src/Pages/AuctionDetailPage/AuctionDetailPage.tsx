@@ -12,8 +12,10 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import CommentIcon from '@mui/icons-material/Comment';
 import InputField from '../../Components/InputField/InputField';
 import ImageCarousel from '../../Components/ImageCarousel/ImageCarousel';
+import Carousel from "react-elastic-carousel";
 import ExpandableDescriptionBox from '../../Components/ExpandableDesc/ExpandableDescriptionBox';
 import ButtonComp from "../../Components/Button/ButtonComp"
+import {images} from './images'
 import {
   StyledWrapper,
   StyledPrice,
@@ -87,16 +89,18 @@ const AuctionDetailPage = () => {
 
   return (
     <StyledWrapper>
-      {!auction ? <SkeletonCard /> :
-        (<>
-          <StyledBackBtn onClick={() => history.push('/auctions')}>
+      {!auction ? (
+        <SkeletonCard />
+      ) : (
+        <>
+          <StyledBackBtn onClick={() => history.push("/auctions")}>
             <ArrowBackIosIcon />
             Tillbaka
           </StyledBackBtn>
           <Grid container spacing={2}>
             <Grid item xs={12} md={12}>
               {/* Remove when ImageCarousel is in place */}
-              <StyleImg src="https://cdn.shopify.com/s/files/1/0410/5696/0672/products/chocolatecovered-1_600x503.jpg?v=1592089346" />
+                <Carousel itemsToShow={1}>{images.map(img => <img src={img.path}/>)}</Carousel>
               {/* <ImageCarousel images={auction.images} /> */}
             </Grid>
             <Grid item xs={8} md={8}>
@@ -104,19 +108,23 @@ const AuctionDetailPage = () => {
             </Grid>
             <Grid item xs={4} md={4}>
               <StyledChat onClick={handleChat}>
-                  <StyledChatIcon>
-                    <CommentIcon />
-                  </StyledChatIcon>
-                </StyledChat>
+                <StyledChatIcon>
+                  <CommentIcon />
+                </StyledChatIcon>
+              </StyledChat>
             </Grid>
             <Grid item xs={8} md={8}>
               <StyledUnderTitle>Sluttid</StyledUnderTitle>
               <StyledDate>
-                <StyledCalendarTodayOutlinedIcon><CalendarTodayOutlinedIcon /></StyledCalendarTodayOutlinedIcon>
+                <StyledCalendarTodayOutlinedIcon>
+                  <CalendarTodayOutlinedIcon />
+                </StyledCalendarTodayOutlinedIcon>
                 {endDate}
               </StyledDate>
               <StyledDate>
-                <StyledAccessTimeOutlinedIcon><AccessTimeOutlinedIcon/></StyledAccessTimeOutlinedIcon>
+                <StyledAccessTimeOutlinedIcon>
+                  <AccessTimeOutlinedIcon />
+                </StyledAccessTimeOutlinedIcon>
                 {endTime}
               </StyledDate>
             </Grid>
@@ -124,18 +132,27 @@ const AuctionDetailPage = () => {
               <StyledPrice>SEK {currentBid}</StyledPrice>
               <StyledPriceTitle>{bidText}</StyledPriceTitle>
             </Grid>
-          <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={6}>
               <StyledUnderTitle>Beskrivning</StyledUnderTitle>
-              <ExpandableDescriptionBox auctionDescription={auction.description} />
+              <ExpandableDescriptionBox
+                auctionDescription={auction.description}
+              />
             </Grid>
-            <Grid item xs={12} md={12} >
+            <Grid item xs={12} md={12}>
               #tags
             </Grid>
-            <StyledForm >
-              <InputField label="Lägg ett bud" type="number" value={bid} updateState={setBid} />
+            <StyledForm>
+              <InputField
+                label="Lägg ett bud"
+                type="number"
+                value={bid}
+                updateState={setBid}
+              />
               <ButtonComp label="Buda" callback={handleBid} />
             </StyledForm>
-        </Grid></>)}
+          </Grid>
+        </>
+      )}
     </StyledWrapper>
   );
 }
