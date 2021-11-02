@@ -83,7 +83,7 @@ export const StyledCarouselWrapper = styled.div`
   }
 `;
 
-export const StyledTest = styled(Card)`
+export const StyledIconImageItem = styled(Card)`
   display: grid;
   align-items: center;
   justify-items: center;
@@ -93,7 +93,7 @@ export const StyledTest = styled(Card)`
   margin: 10px;
 `;
 
-export const StyledTest2 = styled(Card)`
+export const StyledAuctionitem = styled(Card)`
   background: #FFF;
   margin: 25px 5px 0 5px;
 `;

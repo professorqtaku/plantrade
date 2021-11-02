@@ -11,8 +11,8 @@ import {
   StyledImg,
   StyledSearchFieldWrapper,
   StyledIconImg,
-  StyledTest,
-  StyledTest2,
+  StyledIconImageItem,
+  StyledAuctionitem,
   StyledText,
   StyledTitle,
   StyledCarouselWrapper,
@@ -31,10 +31,12 @@ import { useAuction } from "../../Contexts/AuctionContext";
 
 import { useEffect } from "react";
 import { useNav } from "../../Contexts/NavigationContext";
+import { useHistory } from "react-router-dom";
 
 
 const HomePage = () => {
 
+  const history = useHistory();
   const { searchText } = useSearch();
   const { whoAmI } = useAuth();
   const { auctions } = useAuction();
@@ -43,9 +45,9 @@ const HomePage = () => {
     <StyledCarouselWrapper>
       <Carousel isRTL={true} itemsToShow={3} outerSpacing={0} pagination={false} initialFirstItem={3}>
         {imageIcons.map((icon: IconImage) => {
-          return <StyledTest key={icon.text} ><StyledIconImg src={icon.imgFile} />
+          return <StyledIconImageItem key={icon.text} ><StyledIconImg src={icon.imgFile} />
             <StyledText>{icon.text}</StyledText>
-          </StyledTest>
+          </StyledIconImageItem>
         })}
       </Carousel>
     </StyledCarouselWrapper>
@@ -73,7 +75,7 @@ const HomePage = () => {
         <Carousel isRTL={true} itemsToShow={3} outerSpacing={0} pagination={false} initialFirstItem={3}>
         {auctions && auctions.map((auction: Auction) => {
           return (
-            <StyledTest2 key={auction.id}>
+            <StyledAuctionitem key={auction.id} onClick={() => history.push('/auctions/' + auction.id)}>
             <StyledImageListItem gridignore="true">
               
               <StyledAuctionImg
@@ -86,7 +88,7 @@ const HomePage = () => {
                   subtitle={auction.title}
                 />
               </StyledImageListItem>
-              </StyledTest2>
+              </StyledAuctionitem>
           )
         })}
         </Carousel>
