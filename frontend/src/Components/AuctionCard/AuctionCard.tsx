@@ -106,7 +106,6 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
   };
 
   const toDetailPage = () => {
-    console.log(auction.id);
     history.push(`/auctions/${auction.id}`);
   };
 
