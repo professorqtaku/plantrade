@@ -3,8 +3,6 @@ import CommentIcon from "@mui/icons-material/Comment";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import Carousel from "react-elastic-carousel";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 export const StyledWrapper = styled.div`
   margin: 1.5rem 1rem 5rem;
@@ -26,17 +24,6 @@ export const StyledPriceTitle = styled(StyledPrice)`
   text-transform: uppercase;
 `;
 
-// export const StyledBidBtn = styled.button`
-//   /* text-align: center; */
-//   /* background-color: var(--light-green); */
-//   /* color: var(--dark-green); */
-//   /* padding: 0.8rem; */
-//   /* border-radius: 30px; */
-//   /* cursor: pointer; */
-//   /* font-family: var(--font-title); */
-//   /* font-size: 1.5rem; */
-//   /* font-weight: 700; */
-// `;
 
 export const StyledImage = styled.div`
   display: block;
@@ -124,16 +111,4 @@ display: grid;
 
 export const StyledImg = styled.img`
   width: 100%;
-`;
-
-export const StyledLeft = styled(ArrowBackIosIcon)`
-  position: absolute;
-  top: 22%;
-  left: 2%;
-`;
-
-export const StyledRight = styled(ArrowForwardIosIcon)`
-  position: absolute;
-  top: 22%;
-  left: 94%;
 `;
