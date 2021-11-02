@@ -10,7 +10,10 @@ const FloatingAddBtn = () => {
   const [isShown, setIsShown] = useState(true);
 
   useEffect(() => {
-    if (location.pathname === "/createAuction") {
+    if (
+      location.pathname === "/createAuction" ||
+      location.pathname === "/my-page"
+    ) {
       setIsShown(false);
     } else {
       setIsShown(true);
