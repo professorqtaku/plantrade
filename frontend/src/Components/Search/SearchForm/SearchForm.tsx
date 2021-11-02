@@ -30,9 +30,6 @@ const SearchForm = () => {
     
     if (searchText.trim().length > 0) {
       let auctions: Array<Auction> = await getAuctionsByOptions(option);
-
-      console.log("auctions");
-      console.log(auctions);
       
       setAuctions(auctions);
     }
