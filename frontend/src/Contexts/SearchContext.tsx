@@ -1,18 +1,9 @@
 import React, { createContext, FC, useContext, useState } from 'react'
 import { SearchObject } from '../Utils/types';
+import { Auction } from '../Interfaces/Interfaces';
 
 type Props = {
   children?: JSX.Element;
-};
-
-type Auction = {
-  id: Number;
-  host: { id: Number; username: String };
-  title: String;
-  description: String;
-  startPrice: Number;
-  endDate: Date;
-  status: Object;
 };
 
 const SearchContext = createContext<any>(null);

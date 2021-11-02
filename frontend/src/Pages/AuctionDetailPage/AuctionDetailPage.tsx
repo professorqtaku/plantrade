@@ -17,22 +17,7 @@ import {
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useHistory } from 'react-router-dom'
 import InputField from '../../Components/InputField/InputField';
-
-interface Auction {
-  id: Number,
-  title: String,
-  description: String,
-  startPrice: number | undefined,
-  status: String,
-  endDate: Date,
-  host: {
-    id: String,
-    username: String
-  },
-  categories: [],
-  bids: Array<Bid>,
-  images: []
-}
+import { Auction } from '../../Interfaces/Interfaces'
 
 const AuctionDetailPage = () => {
   const ariaLabel = { 'aria-label': 'description' };
@@ -82,54 +67,72 @@ const AuctionDetailPage = () => {
 
   return (
     <StyledWrapper>
-      {!auction ? <SkeletonCard /> :
-        (<>
+      {!auction ? (
+        <SkeletonCard />
+      ) : (
+        <>
           <StyledBackBtn>
-            <p onClick={() => history.push('/auctions')}><ArrowBackIosIcon />Tillbaka</p>
+            <p onClick={() => history.push("/auctions")}>
+              <ArrowBackIosIcon />
+              Tillbaka
+            </p>
           </StyledBackBtn>
           <Grid container spacing={2}>
             <Grid item xs={12} md={12}>
-            {/* <ImageCarousel images={auction.images} /> */}
+              {/* <ImageCarousel images={auction.images} /> */}
+            </Grid>
+            <Grid item xs={6} md={8}>
+              <div></div>
+            </Grid>
+            <Grid item xs={6} md={4}>
+              <div>{auction.host && auction.host.username}</div>
+            </Grid>
+            <Grid item xs={6} md={8}>
+              <div>{auction.title}</div>
+            </Grid>
+            <Grid item xs={6} md={4}>
+              <div onClick={handleChat} style={{ cursor: "pointer" }}>
+                Chatta med säljare <ChatBubbleOutlineIcon />
+              </div>
+            </Grid>
+            <Grid item xs={6} md={8}>
+              <div>{auction.endDate && new Date(auction.endDate).toLocaleString("sv-SV")}</div>
+            </Grid>
+            <Grid item xs={6} md={4}>
+              <div></div>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              {/* <ExpandableDescriptionBox {...auction.description} /> */}
+            </Grid>
+            <Grid item md={6}>
+              <div></div>
+            </Grid>
+            <Grid item xs={12} md={12}>
+              <StyledPrice>
+                <p>{currentBid} SEK</p>
+                {auction.bids && auction.bids.length
+                  ? "Högsta bud"
+                  : "Startpris"}
+              </StyledPrice>
+            </Grid>
+            <Grid item xs={6} md={6}>
+              <StyledBidInput>
+                <InputField
+                  label="Lägg ett bud"
+                  type="number"
+                  value={bid}
+                  updateState={setBid}
+                />
+              </StyledBidInput>
+            </Grid>
+            <Grid item xs={6} md={6}>
+              <StyledBidBtn onClick={handleBid} style={{ cursor: "pointer" }}>
+                Buda
+              </StyledBidBtn>
+            </Grid>
           </Grid>
-          <Grid item xs={6} md={8}>
-            <div></div>
-          </Grid>
-          <Grid item xs={6} md={4}>
-            <div>{auction.host.username}</div>
-          </Grid>
-          <Grid item xs={6} md={8}>
-            <div>{auction.title}</div>
-          </Grid>
-          <Grid item xs={6} md={4}>
-            <div onClick={handleChat} style={{cursor: 'pointer'}}>Chatta med säljare <ChatBubbleOutlineIcon /></div>
-          </Grid>
-          <Grid item xs={6} md={8}>
-            <div>{new Date(auction.endDate).toLocaleString('sv-SV')}</div>
-          </Grid>
-          <Grid item xs={6} md={4}>
-            <div></div>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            {/* <ExpandableDescriptionBox {...auction.description} /> */}
-          </Grid>
-          <Grid item md={6}>
-            <div></div>
-          </Grid>
-          <Grid item xs={12} md={12}>
-            <StyledPrice>
-              <p>{currentBid} SEK</p>
-              {auction.bids.length ? "Högsta bud" : "Startpris"}
-            </StyledPrice>
-          </Grid>
-          <Grid item xs={6} md={6}>
-            <StyledBidInput>
-              <InputField label="Lägg ett bud" type="number" value={bid} updateState={setBid} />
-            </StyledBidInput>
-          </Grid>
-          <Grid item xs={6} md={6}>
-            <StyledBidBtn onClick={handleBid} style={{cursor: 'pointer'}}>Buda</StyledBidBtn>
-          </Grid>
-        </Grid></>)}
+        </>
+      )}
     </StyledWrapper>
   );
 }

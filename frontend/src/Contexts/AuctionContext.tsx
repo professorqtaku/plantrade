@@ -1,25 +1,9 @@
 import { createContext, FC, useContext, useState, useEffect } from "react";
+import { Auction } from '../Interfaces/Interfaces'
 
 type Props = {
   children?: JSX.Element;
 };
-
-export interface Host {
-  id: Number;
-  username: String;
-}
-
-export interface Auction {
-  id: Number;
-  host: Host;
-  title: String;
-  description: String;
-  startPrice: Number;
-  endDate: Date;
-  status: Object;
-}
-
-
 
 export const AuctionContext = createContext<any>(null);
 
