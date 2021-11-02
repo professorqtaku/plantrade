@@ -1,48 +1,47 @@
 import { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
+import { useHistory } from 'react-router-dom'
+import { useAuction } from '../../Contexts/AuctionContext';
+import { useBid } from '../../Contexts/BidContext';
+import { useAuth } from '../../Contexts/AuthContext';
+import { Auction } from "../../Interfaces/Interfaces";
 import Grid from '@mui/material/Grid';
 import SkeletonCard from '../../Components/SkeletonCard/SkeletonCard';
-import { useAuction } from '../../Contexts/AuctionContext';
-import { useBid, Bid } from '../../Contexts/BidContext';
-import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
+import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import CommentIcon from '@mui/icons-material/Comment';
+import InputField from '../../Components/InputField/InputField';
 import ImageCarousel from '../../Components/ImageCarousel/ImageCarousel';
 import ExpandableDescriptionBox from '../../Components/ExpandableDesc/ExpandableDescriptionBox';
+import ButtonComp from "../../Components/Button/ButtonComp"
 import {
   StyledWrapper,
   StyledPrice,
-  StyledBidInput,
-  StyledBidBtn,
-  StyledBackBtn
+  StyledPriceTitle,
+  StyledBackBtn,
+  StyledTitle,
+  StyledUnderTitle,
+  StyledChat,
+  StyledChatIcon,
+  StyleImg,
+  StyledDate,
+  StyledAccessTimeOutlinedIcon,
+  StyledCalendarTodayOutlinedIcon,
+  StyledForm
 } from "./StyledAuctionDetailPage";
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { useHistory } from 'react-router-dom'
-import InputField from '../../Components/InputField/InputField';
-import { useAuth } from '../../Contexts/AuthContext';
-
-interface Auction {
-  id: Number,
-  title: String,
-  description: String,
-  startPrice: number | undefined,
-  status: String,
-  endDate: Date,
-  host: {
-    id: String,
-    username: String
-  },
-  categories: [],
-  bids: Array<Bid>,
-  images: []
-}
 
 const AuctionDetailPage = () => {
-  const ariaLabel = { 'aria-label': 'description' };
   const { id }: any = useParams();
   const history = useHistory();
   
   const [auction, setAuction] = useState<Auction | undefined>();
   const [bid, setBid] = useState<string>('');
   const [currentBid, setCurrentBid] = useState<number>(0);
+  const [endDate, setEndDate] = useState<string>();
+  const [endTime, setEndTime] = useState<string>();
+  const [bidText, setBidText] = useState<string>('');
+  const [isHost, setIsHost] = useState(false);
 
   const { getAuctionById } = useAuction();
   const { createBid } = useBid();
@@ -54,17 +53,28 @@ const AuctionDetailPage = () => {
 
   const handleGetAuctionById = async () => {
     const res = await getAuctionById(id);
-    setAuction(res);
+    setAuction(res)
+    setEndDate(new Date(res.endDate).toLocaleDateString('sv-SV'))
+    setEndTime(new Date(res.endDate).toLocaleTimeString('sv-SV'))
+    
+    if (res.host.id == whoAmI.id) {
+      setIsHost(true);
+    }
+    
     if (res.bids.length) {
       setCurrentBid(res.bids.pop(res.bids.length - 1).price)
+      setBidText('Högsta budet')
     } else {
       setCurrentBid(res.startPrice)
+      setBidText('Startpris')
     }
+
   }
 
-  const handleBid = async () => {
-    if (whoAmI == null || whoAmI.id == auction?.host.id) return;
-    
+  const handleBid = async (e: any) => {
+    e.preventDefault()
+    if (whoAmI == null) return;
+
     const newBid = {
       userId: whoAmI.id,
       auctionId: auction?.id,
@@ -86,51 +96,52 @@ const AuctionDetailPage = () => {
     <StyledWrapper>
       {!auction ? <SkeletonCard /> :
         (<>
-          <StyledBackBtn>
-            <p onClick={() => history.push('/auctions')}><ArrowBackIosIcon />Tillbaka</p>
+          <StyledBackBtn onClick={() => history.push('/auctions')}>
+            <ArrowBackIosIcon />
+            Tillbaka
           </StyledBackBtn>
           <Grid container spacing={2}>
             <Grid item xs={12} md={12}>
-            {/* <ImageCarousel images={auction.images} /> */}
-          </Grid>
-          <Grid item xs={6} md={8}>
-            <div></div>
-          </Grid>
-          <Grid item xs={6} md={4}>
-            <div>{auction.host.username}</div>
-          </Grid>
-          <Grid item xs={6} md={8}>
-            <div>{auction.title}</div>
-          </Grid>
-          <Grid item xs={6} md={4}>
-            <div onClick={handleChat} style={{cursor: 'pointer'}}>Chatta med säljare <ChatBubbleOutlineIcon /></div>
-          </Grid>
-          <Grid item xs={6} md={8}>
-            <div>{new Date(auction.endDate).toLocaleString('sv-SV')}</div>
-          </Grid>
-          <Grid item xs={6} md={4}>
-            <div></div>
-          </Grid>
+              {/* Remove when ImageCarousel is in place */}
+              <StyleImg src="https://cdn.shopify.com/s/files/1/0410/5696/0672/products/chocolatecovered-1_600x503.jpg?v=1592089346" />
+              {/* <ImageCarousel images={auction.images} /> */}
+            </Grid>
+            <Grid item xs={8} md={8}>
+              <StyledTitle>{auction.title}</StyledTitle>
+            </Grid>
+            <Grid item xs={4} md={4}>
+              <StyledChat onClick={handleChat}>
+                  <StyledChatIcon>
+                    <CommentIcon />
+                  </StyledChatIcon>
+                </StyledChat>
+            </Grid>
+            <Grid item xs={8} md={8}>
+              <StyledUnderTitle>Sluttid</StyledUnderTitle>
+              <StyledDate>
+                <StyledCalendarTodayOutlinedIcon><CalendarTodayOutlinedIcon /></StyledCalendarTodayOutlinedIcon>
+                {endDate}
+              </StyledDate>
+              <StyledDate>
+                <StyledAccessTimeOutlinedIcon><AccessTimeOutlinedIcon/></StyledAccessTimeOutlinedIcon>
+                {endTime}
+              </StyledDate>
+            </Grid>
+            <Grid item xs={4} md={4}>
+              <StyledPrice>SEK {currentBid}</StyledPrice>
+              <StyledPriceTitle>{bidText}</StyledPriceTitle>
+            </Grid>
           <Grid item xs={12} md={6}>
-            {/* <ExpandableDescriptionBox {...auction.description} /> */}
-          </Grid>
-          <Grid item md={6}>
-            <div></div>
-          </Grid>
-          <Grid item xs={12} md={12}>
-            <StyledPrice>
-              <p>{currentBid} SEK</p>
-              {auction.bids.length ? "Högsta bud" : "Startpris"}
-            </StyledPrice>
-          </Grid>
-          <Grid item xs={6} md={6}>
-            <StyledBidInput>
+              <StyledUnderTitle>Beskrivning</StyledUnderTitle>
+              <ExpandableDescriptionBox auctionDescription={auction.description} />
+            </Grid>
+            <Grid item xs={12} md={12} >
+              #tags
+            </Grid>
+            <StyledForm >
               <InputField label="Lägg ett bud" type="number" value={bid} updateState={setBid} />
-            </StyledBidInput>
-          </Grid>
-          <Grid item xs={6} md={6}>
-            <StyledBidBtn onClick={handleBid} style={{cursor: 'pointer'}}>Buda</StyledBidBtn>
-          </Grid>
+              <ButtonComp label="Buda" callback={handleBid} disabled={isHost} />
+            </StyledForm>
         </Grid></>)}
     </StyledWrapper>
   );

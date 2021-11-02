@@ -23,7 +23,7 @@ export const StyledCardNoSold = styled.div<Props>`
 `;
 
 export const StyledBackBtn = styled.div`
- font-size: 0.9rem;
+  font-size: 0.9rem;
   font-weight: 600;
   font-family: var(--font-title);
   line-height: 2px;
