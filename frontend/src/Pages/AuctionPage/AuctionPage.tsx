@@ -13,6 +13,11 @@ import { useSearch } from "../../Contexts/SearchContext";
 import { Auction } from '../../Interfaces/Interfaces';
 import { useNav } from "../../Contexts/NavigationContext";
 
+export interface Category {
+  id: number;
+  name: String;
+}
+
 const AuctionPage = () => {
   const { getAllAuctions, auctions } = useAuction();
   const { searchText } = useSearch();

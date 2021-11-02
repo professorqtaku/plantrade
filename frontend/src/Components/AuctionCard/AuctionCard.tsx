@@ -1,3 +1,10 @@
+import { useEffect, useState } from "react";
+import { useHistory } from "react-router";
+import { useAuth } from "../../Contexts/AuthContext";
+import { useBid } from "../../Contexts/BidContext";
+import { Auction } from "../../Interfaces/Interfaces";
+import { handleCount, ONE_DAY_IN_MILLIS } from "./auctionUtils";
+import ButtonComp from "../Button/ButtonComp";
 import {
   StyledCard,
   StyledImg,
@@ -8,15 +15,6 @@ import {
   StyledSpan,
   StyledDiv,
 } from "./StyledAuctionCard";
-// import { Auction } from "../../Pages/AuctionPage/AuctionPage";
-import { useAuction } from "../../Contexts/AuctionContext";
-import { useBid } from "../../Contexts/BidContext";
-import { Auction } from "../../Interfaces/Interfaces";
-import { useEffect, useState } from "react";
-import { handleCount, ONE_DAY_IN_MILLIS } from "./auctionUtils";
-import ButtonComp from "../Button/ButtonComp";
-import { useAuth } from "../../Contexts/AuthContext";
-import { useHistory } from "react-router";
 
 interface Props {
   auction: Auction;
@@ -30,9 +28,9 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
   const [remainingTime, setRemainingTime] = useState("Dagar kvar:");
   const [bid, setBid] = useState<undefined | number>();
   const [quickBid, setQuickBid] = useState<number>();
-
+  
+  
   const history = useHistory();
-
   const { createBid } = useBid();
   const { whoAmI } = useAuth();
   const isHost =
@@ -95,9 +93,10 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
   };
 
   const handleBid = async () => {
+    if (whoAmI == null) return;
+    
     const newBid = {
-      // change userId to user that is logged in
-      userId: 3,
+      userId: whoAmI.id,
       auctionId: auction.id,
       price: quickBid,
       createdDate: Date.now(),
@@ -107,7 +106,6 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
   };
 
   const toDetailPage = () => {
-    console.log(auction.id);
     history.push(`/auctions/${auction.id}`);
   };
 

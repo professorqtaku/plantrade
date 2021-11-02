@@ -1,15 +1,14 @@
 package com.server.backend.services;
 
-import com.server.backend.entities.Auction;
-import com.server.backend.entities.User;
-import com.server.backend.entities.Status;
+import com.server.backend.entities.*;
 import com.server.backend.repositories.AuctionRepository;
+import com.server.backend.repositories.ImageRepository;
 import com.server.backend.specifications.AuctionSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -19,10 +18,15 @@ import java.util.*;
 @Service
 public class AuctionService {
 
+
     @Autowired
     private AuctionRepository auctionRepository;
 
     @Autowired
+    private ImageRepository imageRepository;
+
+    @Autowired
+    private UploadImagesService uploadImagesService;
     private SearchService searchService;
 
     public List<Auction> getAllOpenAuctions(Status status) {
@@ -41,23 +45,35 @@ public class AuctionService {
         return auctionRepository.findByStatus(status);
     }
     
-    public Auction createAuction(Auction auction, User user) {
+    public Auction createAuction(Auction auction, List<Category> categories, List<MultipartFile> files, User user) {
         Date date = new Date();
         var inputDate = auction.getEndDate().getTime();
         if(Long.toString(inputDate).length() < 13) {
             inputDate *= 1000;
             auction.setEndDate(new Date(inputDate));
         }
-        Long oneDayinMillis = date.getTime() + 86400000;
-        Long oneMonthInMillis = date.getTime() + 2592000000L;
+        long oneDayInMillis = date.getTime() + 86400000L;
+        long oneMonthInMillis = date.getTime() + 2592000000L;
 
-        if (inputDate < oneDayinMillis || inputDate > oneMonthInMillis) {
+        if (inputDate < oneDayInMillis || inputDate > oneMonthInMillis) {
             return null;
         }
         auction.setStatus(Status.OPEN);
         auction.setHost(user);
-        return auctionRepository.save(auction);
+        auction.setCategories(categories);
+        Auction savedAuction = auctionRepository.save(auction);
 
+        if(files != null) {
+            var urls = uploadImagesService.saveFiles(files);
+            urls.forEach(url -> {
+                Image image = Image.builder()
+                        .path(url)
+                        .auction(savedAuction)
+                        .build();
+                imageRepository.save(image);
+            });
+        }
+        return savedAuction;
     }
 
     public Optional<Auction> getAuctionById(long id) {
