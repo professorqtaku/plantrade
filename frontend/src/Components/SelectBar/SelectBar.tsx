@@ -6,7 +6,9 @@ import ListItemText from "@mui/material/ListItemText";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
 import { StyledForm } from "./StyledSelectBar";
-import FormControl from "@mui/material/FormControl";
+
+import { useCategory } from "../../Contexts/CategoryContext";
+import { Category } from "../../Pages/AuctionPage/AuctionPage";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -19,29 +21,30 @@ const MenuProps = {
   },
 };
 
-const values = [
-  "Blomma",
-  "Träd",
-  "Stickling",
-  "Frö",
-  "Buske"
-];
-
 interface Props {
   setCategoriesToUse: React.Dispatch<
-    React.SetStateAction<String[] | undefined>
+    React.SetStateAction<Category[]>
   >;
 }
 
 const SelectBar = ({ setCategoriesToUse }: Props) => {
-  const [categories, setCategories] = React.useState<string[]>([]);
+  const { getAllCategories, allCategories} = useCategory();
 
-  const handleChange = (event: SelectChangeEvent<typeof categories>) => {
-    const {
-      target: { value },
-    } = event;
-    setCategories(typeof value === "string" ? value.split(",") : value);
-    setCategoriesToUse(typeof value === "string" ? value.split(",") : value);
+  const [categories, setCategories] = React.useState<Category[]>([]);
+
+  React.useEffect(() => {
+    handleGetCategories();
+  }, [])
+
+  const handleGetCategories = async () => {
+    if (allCategories.length == 0) {
+      await getAllCategories();
+    }
+  };
+  const handleChange = (event: any) => {
+    const category = event.target.value
+    setCategories(category);
+    setCategoriesToUse(category);
   };
 
   return (
@@ -54,17 +57,20 @@ const SelectBar = ({ setCategoriesToUse }: Props) => {
         value={categories}
         onChange={handleChange}
         input={<OutlinedInput label="Kategori" />}
-        renderValue={(selected) => selected.join(", ")}
+        // can make nicer later.
+        renderValue={(selected) => selected.map(cat => cat.name + ' ')}
         MenuProps={MenuProps}
       >
-        {values.map((category) => (
-          <MenuItem key={category} value={category}>
+        {allCategories && allCategories.map((category: Category) => (
+          // @ts-ignore
+          <MenuItem key={category.id} value={category}>
             <Checkbox checked={categories.indexOf(category) > -1} />
-            <ListItemText primary={category} />
+            <ListItemText primary={category.name} /> 
           </MenuItem>
         ))}
       </Select>
     </StyledForm>
+     
   );
 };
 
