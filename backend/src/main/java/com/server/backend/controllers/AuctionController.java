@@ -68,7 +68,6 @@ public class AuctionController {
             if(user != null) {
                 Auction savedAuction = auctionService.createAuction(auction, categories, files, user);
                 if(savedAuction != null) {
-                    System.out.println("do we get here?");
                     return ResponseEntity.ok(savedAuction);
                 } else {
                     return ResponseEntity.badRequest().build();
