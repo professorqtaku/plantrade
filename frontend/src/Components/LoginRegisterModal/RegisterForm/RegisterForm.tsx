@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAuth } from "../../../Contexts/AuthContext";
 import InputField from "../../InputField/InputField";
 import { useSnackBar } from "../../../Contexts/SnackBarContext";
+import {User} from '../../../Interfaces/Interfaces'
 import {
   StyledWrapper,
   StyledForm,
@@ -13,12 +14,6 @@ import {
   StyledTitle,
   StyledText,
 } from "./StyledRegisterForm";
-
-interface User {
-  username: string;
-  email: string;
-  password: string;
-}
 
 interface Props {
   toggleRegister: Function;

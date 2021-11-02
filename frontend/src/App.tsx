@@ -18,7 +18,7 @@ function App() {
           <FloatingAddBtn />
         </>
       </AllRoutes>
-      <SnackBar open={showSnackBar} setOpen={setShowOpenSnackBar} text={text} />
+      <SnackBar isOpen={showSnackBar} setIsOpen={setShowOpenSnackBar} text={text} />
       <LoginRegisterModal />
     </div>
   );

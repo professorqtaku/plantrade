@@ -1,17 +1,11 @@
 import { createContext, useState, useEffect, useContext } from "react";
-import { useHistory } from "react-router-dom";
-import { useModal } from "./ModalContext";
 import { useSnackBar } from "./SnackBarContext";
+import {User} from '../Interfaces/Interfaces'
 
 interface Props {
   children?: JSX.Element;
 }
 
-type User = {
-  username: string;
-  email?: string;
-  password: string;
-};
 const AuthContext = createContext<any>(null);
 export const useAuth = () => useContext(AuthContext);
 

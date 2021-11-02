@@ -21,10 +21,6 @@ function ExpandableDescriptionBox(description: String) {
     }
   }, []);
 
-  // useEffect(() => {
-  //   console.log('desc is changed')
-  // }, [desc])
-
   const handleTextBox = () => {
     if (!isExpand) {
       setBtnName("Visa mer");
