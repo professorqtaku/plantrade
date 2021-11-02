@@ -119,4 +119,7 @@ public class AuctionService {
         return auctionRepository.findAll(totalSpecification);
     }
 
+    public List<Auction> getWonAuctionsByCurrentUser(User user) {
+        return auctionRepository.findByWinner(user);
+    }
 }

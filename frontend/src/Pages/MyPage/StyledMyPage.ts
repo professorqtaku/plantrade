@@ -64,6 +64,7 @@ export const StyledNavigationWrapper = styled.div`
   grid-gap: 0.5rem;
   grid-template-columns: 1fr 1fr;
   justify-items: center;
+  cursor: pointer;
 `;
 
 export const StyledNavigationBox = styled.div<BoxProps>`
@@ -103,3 +104,6 @@ export const StyledButton = styled.button`
   font-family: var(--font-text);
   border-radius: 0.4rem;
 `;
+
+// Is not used, but is required to not crash
+export const StyledAvatarWrapper = styled.div``;

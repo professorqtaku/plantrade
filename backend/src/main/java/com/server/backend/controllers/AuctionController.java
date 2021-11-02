@@ -97,4 +97,19 @@ public class AuctionController {
 
     }
 
+    @GetMapping("/won")
+    public ResponseEntity<List<Auction>> getWonAuctionsByCurrentUser() {
+        var user = userService.findCurrentUser();
+        if(user != null){
+            List<Auction> auctions = auctionService.getWonAuctionsByCurrentUser(user);
+            if(auctions.size() > 0) {
+                return ResponseEntity.ok(auctions);
+            } else {
+                return ResponseEntity.noContent().build();
+            }
+        } else {
+            return ResponseEntity.noContent().build();
+        }
+    }
+
 }

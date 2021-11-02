@@ -6,17 +6,17 @@ export interface User {
 }
 
 export interface Auction {
-  id: number;
-  title: string;
-  description: string;
-  startPrice?: number;
-  status?: string;
-  endDate?: string;
-  host?: User;
-  bids?: Array<Bid> | undefined;
-  categories?: [Category];
-  images?: [Image];
-  winner?: User;
+  id: number,
+  title: string,
+  description: string,
+  startPrice?: number,
+  status?: string,
+  endDate?: Date | undefined,
+  host?: User,
+  bids?: Array<Bid> | undefined,
+  categories?: [Category],
+  images?: [Image],
+  winner?: User
 }
 
 export interface Bid {

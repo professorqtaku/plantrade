@@ -65,4 +65,7 @@ GET http://localhost:4000/rest/auctions/search?title=blomma
 ### get auctions by title and category
 GET http://localhost:4000/rest/auctions/search?title=blomma&category=Blomma%20Träd
 
+### get won auctions by current user
+GET http://localhost:4000/rest/auctions/won
+
 ###
