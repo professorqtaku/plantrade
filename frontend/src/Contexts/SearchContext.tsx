@@ -1,6 +1,6 @@
 import React, { createContext, FC, useContext, useState } from 'react'
-import { SearchObject } from '../Utils/types';
-import { Auction } from '../Interfaces/Interfaces';
+import { SearchObject, Status } from '../Utils/types';
+import { Auction, Category } from '../Interfaces/Interfaces';
 
 type Props = {
   children?: JSX.Element;
@@ -18,15 +18,8 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
       return [];
     }
 
-    let categoryQuery: string = '';
-    if (option.categories && option.categories.length > 0) {
-      categoryQuery = '&category=' + encodeURI(option.categories.join(" "));
-    }
-    
-    let statusQuery: string = '';
-    if (option.status) {
-      statusQuery = '&status=' + encodeURI(option.status.status)
-    }
+    let categoryQuery: string = getCategoryQuery(option.categories);  
+    let statusQuery: string = getStatusQuery(option.status);
 
     let res: Response = await fetch(`/rest/auctions/search?title=${option.title}${categoryQuery}${statusQuery}`);
     if (res.ok && res.status == 200) {
@@ -35,6 +28,27 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
     }
     return [];
   };
+
+  const getCategoryQuery = (categories: Category[] | any) => {
+    let query: string = "";
+    if (categories) {
+      for (let cat of categories) {
+        if (query.length <= 0) {
+          query = `&category=${cat.name}`;
+        } else {
+          query += encodeURI(` ${cat.name}`);
+        }
+      }
+    }
+    return query;
+  }
+  const getStatusQuery = (status: Status | any) => {
+    let query: string = "";
+    if (status) {
+      query = "&status=" + encodeURI(status.status);
+    }
+    return query;
+  }
 
   const value = {
     searchText,
