@@ -134,7 +134,7 @@ const AuctionDetailPage = () => {
         pagination={false}
       >
         {images.map((img) => (
-          <StyledImg src={img.path} />
+          <StyledImg key={img.path} src={img.path} />
         ))}
       </StyledCarousel>
   );
