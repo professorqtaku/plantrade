@@ -6,7 +6,6 @@ import ListItemText from "@mui/material/ListItemText";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
 import { StyledForm } from "./StyledSelectBar";
-import FormControl from "@mui/material/FormControl";
 
 import { useCategory } from "../../Contexts/CategoryContext";
 import { Category } from "../../Pages/AuctionPage/AuctionPage";
@@ -24,7 +23,7 @@ const MenuProps = {
 
 interface Props {
   setCategoriesToUse: React.Dispatch<
-    React.SetStateAction<Category[] | undefined>
+    React.SetStateAction<Category[]>
   >;
 }
 
@@ -42,20 +41,10 @@ const SelectBar = ({ setCategoriesToUse }: Props) => {
       await getAllCategories();
     }
   };
-  // SelectChangeEvent<typeof categories>
-  const handleChange = (event: SelectChangeEvent<any>) => {
-    console.log(event, 'event')
-    const { target: { value } } = event;
-
-    console.log(value, 'value')
-    
-    setCategories([
-      ...categories,
-      value])
-
-    console.log(categories, 'categories')
-    // setCategories(typeof value === "string" ? value.split(",") : value);
-    // setCategoriesToUse(typeof value === "string" ? value.split(",") : value);
+  const handleChange = (event: any) => {
+    const category = event.target.value
+    setCategories(category);
+    setCategoriesToUse(category);
   };
 
   return (
@@ -68,13 +57,15 @@ const SelectBar = ({ setCategoriesToUse }: Props) => {
         value={categories}
         onChange={handleChange}
         input={<OutlinedInput label="Kategori" />}
-        // renderValue={(selected) => selected.join(", ")}
+        // can make nicer later.
+        renderValue={(selected) => selected.map(cat => cat.name + ' ')}
         MenuProps={MenuProps}
       >
         {allCategories && allCategories.map((category: Category) => (
-          <MenuItem key={category.id} value={category.name + ''}>
+          // @ts-ignore
+          <MenuItem key={category.id} value={category}>
             <Checkbox checked={categories.indexOf(category) > -1} />
-            <ListItemText primary={category.name} />
+            <ListItemText primary={category.name} /> 
           </MenuItem>
         ))}
       </Select>
