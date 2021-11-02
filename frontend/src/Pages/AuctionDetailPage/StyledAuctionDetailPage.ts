@@ -3,6 +3,9 @@ import CommentIcon from '@mui/icons-material/Comment';
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
 
+interface FormProps {
+  warning?: boolean
+}
 
 export const StyledWrapper = styled.div`
   margin: 1.5rem 1rem 5rem;
@@ -23,6 +26,15 @@ export const StyledPriceTitle = styled(StyledPrice)`
   line-height: 14px;
   text-transform: uppercase;
 `;
+
+export const StyledWarning = styled.p`
+  font-size: 1.3rem;
+  margin: 0;
+`
+
+export const StyledWarningPrice = styled.span`
+  color: crimson;
+`
 
 // export const StyledBidBtn = styled.button`
 //   /* text-align: center; */
