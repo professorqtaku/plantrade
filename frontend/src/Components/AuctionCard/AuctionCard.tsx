@@ -4,15 +4,15 @@ import {
   StyledTitle,
   StyledDesc,
   StyledAvatar,
-  StyledButton,
   StyledCardContent,
   StyledSpan,
 } from "./StyledAuctionCard";
 import { useBid } from "../../Contexts/BidContext";
 import { Auction } from "../../Interfaces/Interfaces";
 import { useEffect, useState } from "react";
-import { handleCount } from './auctionUtils'
+import { handleCount, ONE_DAY_IN_MILLIS } from "./auctionUtils";
 import ButtonComp from "../Button/ButtonComp";
+import { useAuth } from "../../Contexts/AuthContext";
 
 interface Props {
   auction: Auction;
@@ -20,7 +20,10 @@ interface Props {
 }
 
 const AuctionCard = ({ auction, fetchAuctions }: Props) => {
-  const ONE_DAY_IN_MILLIS = 86400000;
+  console.log(auction);
+  
+
+  const { user } = useAuth();
 
   const [daysLeft, setDaysLeft] = useState<number | null>(null);
   const [differenceInMillis, setDifferenceInMillis] = useState(0);

@@ -25,10 +25,9 @@ const Navigation = () => {
   const handleSelect = (
     url?: string
   ) => {
-    if (whoAmI == null) {
+    if (whoAmI == null && url == "/my-page") {
       toggleLoginModal();
-    } 
-    else {
+    } else {
       url && history.push(url);
     }
   };
