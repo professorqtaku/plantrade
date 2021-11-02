@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Button from "@mui/material/Button";
 
 export const StyledWrapper = styled.div``;
 
@@ -19,5 +20,15 @@ export const StyledForm = styled.form`
 export const StyledInput = styled.input`
   padding: 0.5rem;
   outline: none;
+`;
+
+export const StyledButton = styled.button`
+  background: var(--light-green);
+  text-transform: uppercase;
+  font-size:  "1rem";
+  letter-spacing: 1px;
+  &:hover {
+    background: var(--light-green);
+  }
 `;
 

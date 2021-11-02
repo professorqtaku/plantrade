@@ -2,6 +2,7 @@ import {
   StyledWrapper,
   StyledForm,
   StyledTitle,
+  StyledButton
 } from "./StyledCreateAuctionPage";
 import AuctionDatePicker from "../../Components/AuctionDatePicker/AuctionDatePicker";
 import SelectBar from "../../Components/SelectBar/SelectBar";
@@ -9,7 +10,6 @@ import InputField from "../../Components/InputField/InputField";
 import { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
-import ButtonComp from "../../Components/Button/ButtonComp"
 import { useAuction } from "../../Contexts/AuctionContext";
 import { useCategory } from "../../Contexts/CategoryContext";
 import { Category } from "../AuctionPage/AuctionPage";
@@ -100,7 +100,7 @@ const CreateAuctionPage = () => {
           setCategoriesToUse
         } />
         {renderUploadFiles()}
-        <ButtonComp label="Skapa auktion"/>
+        <StyledButton> Skapa auktion </StyledButton>
       </StyledForm>
     </StyledWrapper>
   );
