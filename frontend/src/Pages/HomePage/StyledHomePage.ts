@@ -77,7 +77,7 @@ export const StyledSearchFieldWrapper = styled.div`
 export const StyledCarouselWrapper = styled.div`
   width: 100;
   margin: 1rem 0 1rem 0;
-    @media (min-width: 769px) {
+  @media (min-width: 769px) {
     width: 60%;
     margin: 0 auto;
   }
@@ -127,15 +127,14 @@ export const StyledImageListItem = styled(ImageListItem)<GridProps>`
 `;
 
 export const StyledImageListItemBar = styled(ImageListItemBar)<WidthProps>`
-  width: ${(props) =>
-    props.width ? `${props.width}` : `90%`};
+  width: ${(props) => (props.width ? `${props.width}` : `90%`)};
   margin: 0 auto;
   border-radius: 0 0 3px 3px;
   display: grid;
 
-   @media (min-width: 769px) {
-     padding: 10px 1px 10px 10px;
-   }
+  @media (min-width: 769px) {
+    padding: 10px 1px 10px 10px;
+  }
 `;
 
 export const StyledNewsImg = styled.img`

@@ -8,7 +8,7 @@ interface Props {
 
 export const StyledTextField = styled(TextField)`
   background-color: var(--yellow);
-  border-radius: 50px;
+  border-radius: 50px 50px 0 0;
   padding: 2% 5%;
   width: 90%;
 `;

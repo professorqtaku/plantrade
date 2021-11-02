@@ -6,6 +6,8 @@ export const StyledCollapse = styled(Collapse)`
   width: 100%;
   border-radius: 5px;
   max-height: 500px;
+  position: relative;
+  z-index: 100;
 `;
 export const StyledDiv = styled.div`
   background: var(--light-yellow);
