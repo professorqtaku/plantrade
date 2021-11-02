@@ -52,9 +52,7 @@ public class AuctionController {
         }
     }
 
-//    public ResponseEntity<Auction> createAuction(@RequestBody Auction auction, @RequestParam(required=false) List<MultipartFile> files){
     @PostMapping
-    // @RequestBody Map<String, String> content
     public ResponseEntity<Auction> createAuction(
             @RequestParam(value = "auction") String _auction,
             @RequestParam(value = "categories") String _categories,
