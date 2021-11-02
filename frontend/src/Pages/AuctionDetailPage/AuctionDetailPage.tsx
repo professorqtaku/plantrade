@@ -64,7 +64,8 @@ const AuctionDetailPage = () => {
 
   }
 
-  const handleBid = async () => {
+  const handleBid = async (e: any) => {
+    e.preventDefault()
 
     const newBid = {
       // update to userId who is logged in
@@ -130,9 +131,9 @@ const AuctionDetailPage = () => {
             <Grid item xs={12} md={12} >
               #tags
             </Grid>
-            <StyledForm onSubmit={handleBid}>
+            <StyledForm >
               <InputField label="Lägg ett bud" type="number" value={bid} updateState={setBid} />
-              <ButtonComp label="Buda" />
+              <ButtonComp label="Buda" callback={handleBid} />
             </StyledForm>
         </Grid></>)}
     </StyledWrapper>
