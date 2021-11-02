@@ -64,6 +64,7 @@ export const StyledNavigationWrapper = styled.div`
   grid-gap: 0.5rem;
   grid-template-columns: 1fr 1fr;
   justify-items: center;
+  cursor: pointer;
 `;
 
 export const StyledNavigationBox = styled.div<BoxProps>`
