@@ -1,4 +1,4 @@
-import { BaseSyntheticEvent, FC, useState } from 'react'
+import { BaseSyntheticEvent, FC, useState } from "react";
 import {
   StyledLoginContainer,
   Styledh3,
@@ -11,11 +11,12 @@ import {
   StyledDivider,
   StyledSpan,
 } from "./StyledLoginForm";
-import InputField from '../../InputField/InputField';
-import { useAuth } from '../../../Contexts/AuthContext';
+import InputField from "../../InputField/InputField";
+import { useAuth } from "../../../Contexts/AuthContext";
+import { useSnackBar } from "../../../Contexts/SnackBarContext";
 
 interface Props {
-  toggleRegister: Function
+  toggleRegister: Function;
 }
 
 const LoginForm = ({ toggleRegister }: Props) => {
@@ -23,15 +24,15 @@ const LoginForm = ({ toggleRegister }: Props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = (e: BaseSyntheticEvent) => {
+  const handleLogin = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
 
     const userObj = {
       username: username,
       password: password,
     };
-    
-    login(userObj);
+
+    await login(userObj);
   };
 
   return (
@@ -70,4 +71,4 @@ const LoginForm = ({ toggleRegister }: Props) => {
   );
 };
 
-export default LoginForm
+export default LoginForm;
