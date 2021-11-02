@@ -26,6 +26,7 @@ export const StyledSearchFieldWrapper = styled.div`
   width: 80%;
   margin: 0 auto;
   position: absolute;
-  /* top: 60%; */
+  top: 60%;
+  left: 10%;
   z-index: 100;
 `;

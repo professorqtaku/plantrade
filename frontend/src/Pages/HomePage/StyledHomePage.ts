@@ -67,11 +67,11 @@ export const StyledImgFrame = styled.img`
 `;
 
 export const StyledSearchFieldWrapper = styled.div`
- width: 70%;
+  width: 70%;
   margin: 0 auto;
   position: absolute;
   top: 60%;
-  left: 12%;
+  left: 15%;
 `;
 
 export const StyledCarouselWrapper = styled.div`
