@@ -13,7 +13,7 @@ export const StyledTextField = styled(TextField)<Props>`
     props.isFilterOpen ? "50% 50% 0 0" : "50%"};
   padding: 2% 5%;
   width: 90%;
-  transition: 100ms;
+  transition: ${(props) => props.isFilterOpen ? "100ms" : "1200ms"};
 `;
 
 export const StyledFormControl = styled(FormControl)`
