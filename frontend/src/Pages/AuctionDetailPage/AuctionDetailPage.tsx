@@ -30,7 +30,6 @@ import {
   StyledForm
 } from "./StyledAuctionDetailPage";
 
-
 const AuctionDetailPage = () => {
   const { id }: any = useParams();
   const history = useHistory();

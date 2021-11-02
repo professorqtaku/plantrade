@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { useAuth } from "../../../Contexts/AuthContext";
 import InputField from "../../InputField/InputField";
+import { useSnackBar } from "../../../Contexts/SnackBarContext";
+import {User} from '../../../Interfaces/Interfaces'
 import {
   StyledWrapper,
   StyledForm,
@@ -11,17 +12,11 @@ import {
   StyledEmailIcon,
   StyledInputDiv,
   StyledTitle,
-  StyledText
+  StyledText,
 } from "./StyledRegisterForm";
 
-interface User {
-  username: string,
-  email: string,
-  password: string
-}
-
 interface Props {
-  toggleRegister: Function
+  toggleRegister: Function;
 }
 
 const RegisterForm = ({ toggleRegister }: Props) => {

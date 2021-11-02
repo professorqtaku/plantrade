@@ -4,16 +4,19 @@ import {
   StyledTitle,
   StyledDesc,
   StyledAvatar,
-  StyledButton,
   StyledCardContent,
   StyledSpan,
+  StyledDiv,
 } from "./StyledAuctionCard";
 // import { Auction } from "../../Pages/AuctionPage/AuctionPage";
 import { useAuction } from "../../Contexts/AuctionContext";
 import { useBid } from "../../Contexts/BidContext";
 import { Auction } from "../../Interfaces/Interfaces";
 import { useEffect, useState } from "react";
-import { handleCount } from './auctionUtils'
+import { handleCount, ONE_DAY_IN_MILLIS } from "./auctionUtils";
+import ButtonComp from "../Button/ButtonComp";
+import { useAuth } from "../../Contexts/AuthContext";
+import { useHistory } from "react-router";
 
 interface Props {
   auction: Auction;
@@ -21,32 +24,39 @@ interface Props {
 }
 
 const AuctionCard = ({ auction, fetchAuctions }: Props) => {
-  const ONE_DAY_IN_MILLIS = 86400000;
-
   const [daysLeft, setDaysLeft] = useState<number | null>(null);
   const [differenceInMillis, setDifferenceInMillis] = useState(0);
   const [counter, setCounter] = useState<number | null>(null);
   const [remainingTime, setRemainingTime] = useState("Dagar kvar:");
   const [bid, setBid] = useState<undefined | number>();
   const [quickBid, setQuickBid] = useState<number>();
-  
+
+  const history = useHistory();
+
   const { createBid } = useBid();
-  
+  const { whoAmI } = useAuth();
+  const isHost =
+    whoAmI && auction.host && auction.host.id && whoAmI.id == auction.host.id;
+
   useEffect(() => {
     if (!!auction?.bids?.length) {
       setBid(auction.bids.pop()?.price);
     } else {
-      setBid(auction?.startPrice)
+      setBid(auction?.startPrice);
     }
   }, [auction.bids]);
 
   useEffect(() => {
-    handleQuickBid()
-  }, [!!bid, bid])
+    handleQuickBid();
+  }, [!!bid, bid]);
 
   useEffect(() => {
     handleTime();
   }, [daysLeft]);
+
+  useEffect(() => {
+    handleCounter();
+  }, [counter]);
 
   const handleTime = async () => {
     const endDateInMillis = new Date(auction.endDate + "").getTime();
@@ -56,10 +66,6 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
     differenceInMillis <= ONE_DAY_IN_MILLIS && setCounter(differenceInMillis);
     setDaysLeft(Math.round(differenceInMillis / (60 * 60 * 24 * 1000)));
   };
-
-  useEffect(() => {
-    handleCounter();
-  }, [counter]);
 
   const handleCounter = () => {
     if (counter !== null) {
@@ -77,9 +83,9 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
   const handleQuickBid = () => {
     if (!!bid) {
       if (bid <= 10) {
-        setQuickBid(bid  + 1);
+        setQuickBid(bid + 1);
       }
-      if (bid  <= 100 && bid  > 10) {
+      if (bid <= 100 && bid > 10) {
         setQuickBid(bid + 10);
       }
       if (bid >= 1000 && bid > 100) {
@@ -94,21 +100,29 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
       userId: 3,
       auctionId: auction.id,
       price: quickBid,
-      createdDate: Date.now()
-    }
-    
+      createdDate: Date.now(),
+    };
+
     await createBid(newBid);
+  };
+
+  const toDetailPage = () => {
+    console.log(auction.id);
+    history.push(`/auctions/${auction.id}`);
   };
 
   return (
     <StyledCard>
-      <StyledImg src="https://i.pinimg.com/564x/9e/8b/dc/9e8bdc74df3cb2f87fae194a18ba569a.jpg" />
+      <StyledImg
+        src="https://i.pinimg.com/564x/9e/8b/dc/9e8bdc74df3cb2f87fae194a18ba569a.jpg"
+        onClick={toDetailPage}
+      />
       <StyledCardContent>
         <div>
           <StyledAvatar>{auction.title.charAt(0)}</StyledAvatar>
-          <StyledTitle>{auction.title}</StyledTitle>
+          <StyledTitle onClick={toDetailPage}>{auction.title}</StyledTitle>
         </div>
-        <div>
+        <StyledDiv onClick={toDetailPage}>
           <StyledDesc>
             <StyledSpan>Pris:</StyledSpan> {auction.startPrice} SEK
           </StyledDesc>
@@ -118,10 +132,13 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
           <StyledDesc>
             <StyledSpan>{remainingTime}</StyledSpan> {daysLeft}
           </StyledDesc>
-        </div>
-        <StyledButton onClick={() => handleBid()}>
-          Snabb bud {quickBid} SEK
-        </StyledButton>
+        </StyledDiv>
+        <ButtonComp
+          label={`Snabb bud ${quickBid} SEK`}
+          callback={handleBid}
+          costumFontSize="0.7rem"
+          disabled={isHost}
+        />
       </StyledCardContent>
     </StyledCard>
   );
