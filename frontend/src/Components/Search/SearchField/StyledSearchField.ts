@@ -4,16 +4,15 @@ import { FormControl, IconButton, TextField } from "@mui/material";
 interface Props {
   // check if input has content
   input: string;
-  isFilterOpen: boolean;
+  isfilteropen: boolean;
 }
 
 export const StyledTextField = styled(TextField)<Props>`
   background-color: var(--yellow);
-  border-radius: ${(props) =>
-    props.isFilterOpen ? "50% 50% 0 0" : "50%"};
+  border-radius: ${(props) => (props.isfilteropen ? "50% 50% 0 0" : "50%")};
   padding: 2% 5%;
   width: 90%;
-  transition: ${(props) => props.isFilterOpen ? "100ms" : "1200ms"};
+  transition: ${(props) => (props.isfilteropen ? "100ms" : "1200ms")};
 `;
 
 export const StyledFormControl = styled(FormControl)`
