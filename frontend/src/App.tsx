@@ -5,17 +5,19 @@ import LoginRegisterModal from "./Components/LoginRegisterModal/LoginRegisterMod
 import FloatingAddBtn from "./Components/FloatingAddBtn/FloatingAddBtn";
 import SnackBar from "./Components/SnackBar/SnackBar";
 import { useSnackBar } from "./Contexts/SnackBarContext";
+import { useAuth } from "./Contexts/AuthContext";
 
 function App() {
 
   const { showSnackBar, setShowOpenSnackBar, text } = useSnackBar();
+  const { whoAmI } = useAuth();
 
   return (
     <div className="App">
       <AllRoutes>
         <>
           <Navigation />
-          <FloatingAddBtn />
+          {whoAmI && <FloatingAddBtn />}
         </>
       </AllRoutes>
       <SnackBar isOpen={showSnackBar} setIsOpen={setShowOpenSnackBar} text={text} />
