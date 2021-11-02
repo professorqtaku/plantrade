@@ -4,7 +4,7 @@ import { StyledInput } from "./StyledInputField";
 interface Props {
   label?: string;
   type?: string;
-  updateState: React.Dispatch<React.SetStateAction<any>>;
+  updateState: Function | React.Dispatch<React.SetStateAction<any>>;
   required?: boolean;
   margintop?: number;
   value: string | number | undefined;

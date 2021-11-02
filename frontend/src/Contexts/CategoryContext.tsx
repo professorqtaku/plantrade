@@ -1,4 +1,4 @@
-import { createContext, FC, useContext, useState } from "react";
+import { createContext, FC, useContext, useEffect, useState } from "react";
 
 type Props = {
   children?: JSX.Element;
@@ -15,6 +15,12 @@ export const useCategory = () => useContext(CategoryContext);
 
 const CategoryProvider: FC<Props> = ({ children }: Props) => {
   const [allCategories, setAllCategories] = useState<Array<Category>>([]);
+
+  useEffect(() => {
+    console.log("useEff cat context");
+    
+    getAllCategories();
+  }, [])
 
   const getAllCategories = async () => {
     let res: Response = await fetch('/rest/categories');

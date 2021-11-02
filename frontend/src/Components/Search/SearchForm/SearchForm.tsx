@@ -6,7 +6,8 @@ import SearchField from '../SearchField/SearchField';
 import FilterCollapse from '../FilterCollapse/FilterCollapse';
 import { StyledForm } from './StyledSearchForm';
 import { HOUR_IN_DAY } from '../../AuctionCard/auctionUtils';
-import { Status, status, Auction, SearchObject } from '../../../Utils/types'
+import { Status, status, SearchObject } from '../../../Utils/types'
+import { Auction} from '../../../Interfaces/Interfaces'
 
 type Props = {
   searchWord?: string;
@@ -14,7 +15,7 @@ type Props = {
 
 const SearchForm = ({searchWord}: Props) => {
 
-  const { getAuctionsByOptions, getAuctionsByTitles, searchText, setSearchText } = useSearch();
+  const { getAuctionsByOptions, searchText, setSearchText } = useSearch();
   const { setAuctions, getAllAuctions } = useAuction();
   const history = useHistory();
 
@@ -29,9 +30,8 @@ const SearchForm = ({searchWord}: Props) => {
     e.preventDefault();
     await history.push('/auctions')
     if (searchText.trim().length > 0) {
-      let auctions: Array<Auction> = await getAuctionsByTitles(searchText ? searchText : searchWord);
       let option: SearchObject = {
-        title: searchText,
+        title: (searchText ? searchText : searchWord),
         categories: selectedCategories,
         hours: hours,
         status: selectedStatus,
