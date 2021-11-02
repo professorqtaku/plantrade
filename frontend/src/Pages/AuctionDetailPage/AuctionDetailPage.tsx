@@ -88,7 +88,7 @@ const AuctionDetailPage = () => {
       price: parseInt(bid),
       createdDate: Date.now(),
     };
-    
+
     await createBid(newBid);
     //rerender the new currently highest bid
     handleGetAuctionById();
@@ -98,6 +98,31 @@ const AuctionDetailPage = () => {
   const handleChat = () => {
     console.log("I want to chat with the seller");
   };
+
+  const renderBidContent = (
+    <>
+      {!isOverPrice ? (
+        <InputField
+          label="Lägg ett bud"
+          type="number"
+          value={bid}
+          updateState={setBid}
+        />
+      ) : (
+        <ButtonComp
+          label="Nej"
+          callback={() => setIsOverPrice(false)}
+          disabled={isHost}
+          costumBackgroundColor="crimson"
+        />
+      )}
+      {!isOverPrice ? (
+        <ButtonComp label="Buda" callback={handleBid} disabled={isHost} />
+      ) : (
+        <ButtonComp label="Ja" callback={handleBid} disabled={isHost} />
+      )}
+    </>
+  );
 
   return (
     <StyledWrapper>
@@ -156,35 +181,13 @@ const AuctionDetailPage = () => {
             <Grid item xs={12} md={12}>
               {isOverPrice && (
                 <StyledWarning>
-                  Är du säker? Ditt bud är 
+                  Är du säker? Ditt bud är
                   <StyledWarningPrice> {bid}</StyledWarningPrice> SEK
                 </StyledWarning>
               )}
             </Grid>
             <StyledForm warning={isOverPrice ? isOverPrice : false}>
-              {!isOverPrice ? (
-                <InputField
-                  label="Lägg ett bud"
-                  type="number"
-                  value={bid}
-                  updateState={setBid}
-                />
-              ) : (
-                <ButtonComp
-                  label="Nej"
-                  callback={() => setIsOverPrice(false)}
-                  disabled={isHost}             
-                />
-              )}
-              {!isOverPrice ? (
-                <ButtonComp
-                  label="Buda"
-                  callback={handleBid}
-                  disabled={isHost}
-                />
-              ) : (
-                <ButtonComp label="Ja" callback={handleBid} disabled={isHost} />
-              )}
+              {renderBidContent}
             </StyledForm>
           </Grid>
         </>
