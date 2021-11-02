@@ -24,10 +24,11 @@ const SearchField = ({ searchText, setSearchText, showFilter, setShowFilter }: P
         variant="standard"
         type="text"
         value={searchText}
+        isFilterOpen={showFilter}
         onChange={(e: BaseSyntheticEvent) => setSearchText(e.target.value)}
         onFocus={() => setShowFilter(true)}
         inputProps={{
-          style: { fontFamily: "var(--font-text)", fontSize: '1em' },
+          style: { fontFamily: "var(--font-text)", fontSize: "1em" },
         }}
         InputProps={{
           endAdornment: (
