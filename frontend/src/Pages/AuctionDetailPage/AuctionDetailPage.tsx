@@ -1,21 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useHistory } from 'react-router-dom'
-import { useAuction } from '../../Contexts/AuctionContext';
-import { useBid } from '../../Contexts/BidContext';
-import { Auction } from "../../Interfaces/Interfaces"
-import Grid from '@mui/material/Grid';
-import SkeletonCard from '../../Components/SkeletonCard/SkeletonCard';
-import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
-import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import CommentIcon from '@mui/icons-material/Comment';
-import InputField from '../../Components/InputField/InputField';
-import ImageCarousel from '../../Components/ImageCarousel/ImageCarousel';
+import { useHistory } from "react-router-dom";
+import { useAuction } from "../../Contexts/AuctionContext";
+import { useBid } from "../../Contexts/BidContext";
+import { Auction } from "../../Interfaces/Interfaces";
+import Grid from "@mui/material/Grid";
+import SkeletonCard from "../../Components/SkeletonCard/SkeletonCard";
+import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
+import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import CommentIcon from "@mui/icons-material/Comment";
+import InputField from "../../Components/InputField/InputField";
+import ImageCarousel from "../../Components/ImageCarousel/ImageCarousel";
 import Carousel from "react-elastic-carousel";
-import ExpandableDescriptionBox from '../../Components/ExpandableDesc/ExpandableDescriptionBox';
-import ButtonComp from "../../Components/Button/ButtonComp"
-import {images} from './images'
+import ExpandableDescriptionBox from "../../Components/ExpandableDesc/ExpandableDescriptionBox";
+import ButtonComp from "../../Components/Button/ButtonComp";
+import { images } from "./images";
 import {
   StyledWrapper,
   StyledPrice,
@@ -29,63 +29,83 @@ import {
   StyledDate,
   StyledAccessTimeOutlinedIcon,
   StyledCalendarTodayOutlinedIcon,
-  StyledForm
+  StyledForm,
+  StyledImg,
+  StyledCarousel,
 } from "./StyledAuctionDetailPage";
 
 const AuctionDetailPage = () => {
   const { id }: any = useParams();
   const history = useHistory();
-  
+
   const [auction, setAuction] = useState<Auction | undefined>();
-  const [bid, setBid] = useState<string>('');
+  const [bid, setBid] = useState<string>("");
   const [currentBid, setCurrentBid] = useState<number>(0);
   const [endDate, setEndDate] = useState<string>();
   const [endTime, setEndTime] = useState<string>();
-  const [bidText, setBidText] = useState<string>('');
+  const [bidText, setBidText] = useState<string>("");
 
   const { getAuctionById } = useAuction();
   const { createBid } = useBid();
 
   useEffect(() => {
     handleGetAuctionById();
-  }, [])
+  }, []);
 
   const handleGetAuctionById = async () => {
     const res = await getAuctionById(id);
-    setAuction(res)
-    setEndDate(new Date(res.endDate).toLocaleDateString('sv-SV'))
-    setEndTime(new Date(res.endDate).toLocaleTimeString('sv-SV'))
-    
-    if (res.bids.length) {
-      setCurrentBid(res.bids.pop(res.bids.length - 1).price)
-      setBidText('Högsta budet')
-    } else {
-      setCurrentBid(res.startPrice)
-      setBidText('Startpris')
-    }
+    setAuction(res);
+    setEndDate(new Date(res.endDate).toLocaleDateString("sv-SV"));
+    setEndTime(new Date(res.endDate).toLocaleTimeString("sv-SV"));
 
-  }
+    if (res.bids.length) {
+      setCurrentBid(res.bids.pop(res.bids.length - 1).price);
+      setBidText("Högsta budet");
+    } else {
+      setCurrentBid(res.startPrice);
+      setBidText("Startpris");
+    }
+  };
 
   const handleBid = async (e: any) => {
-    e.preventDefault()
+    e.preventDefault();
 
     const newBid = {
       // update to userId who is logged in
       userId: 5,
       auctionId: auction?.id,
       price: parseInt(bid),
-      createdDate: Date.now()
-    }
+      createdDate: Date.now(),
+    };
 
     await createBid(newBid);
     //rerender the new currently highest bid
     handleGetAuctionById();
-    setBid('')
-  }
+    setBid("");
+  };
 
   const handleChat = () => {
-    console.log('I want to chat with the seller')
-  }
+    console.log("I want to chat with the seller");
+  };
+
+  const renderCarousel = (
+    <StyledCarousel
+      initialActiveIndex={0}
+      isRTL={false}
+      showArrows={false}
+      itemsToShow={1}
+      pagination={true}
+      enableAutoPlay={true}
+      autoPlaySpeed={2000}
+      onNextEnd={(nextItemObject, currentPageIndex) => {
+        console.log(currentPageIndex);
+      }}
+    >
+      {images.map((img) => (
+        <StyledImg src={img.path} />
+      ))}
+    </StyledCarousel>
+  );
 
   return (
     <StyledWrapper>
@@ -99,9 +119,7 @@ const AuctionDetailPage = () => {
           </StyledBackBtn>
           <Grid container spacing={2}>
             <Grid item xs={12} md={12}>
-              {/* Remove when ImageCarousel is in place */}
-                <Carousel itemsToShow={1}>{images.map(img => <img src={img.path}/>)}</Carousel>
-              {/* <ImageCarousel images={auction.images} /> */}
+              {renderCarousel}
             </Grid>
             <Grid item xs={8} md={8}>
               <StyledTitle>{auction.title}</StyledTitle>
@@ -155,6 +173,6 @@ const AuctionDetailPage = () => {
       )}
     </StyledWrapper>
   );
-}
+};
 
 export default AuctionDetailPage;
