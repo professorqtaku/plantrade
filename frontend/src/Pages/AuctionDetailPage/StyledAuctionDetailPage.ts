@@ -3,6 +3,8 @@ import CommentIcon from "@mui/icons-material/Comment";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import Carousel from "react-elastic-carousel";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 export const StyledWrapper = styled.div`
   margin: 1.5rem 1rem 5rem;
@@ -117,9 +119,21 @@ export const StyledForm = styled.form`
 `;
 
 export const StyledCarousel = styled(Carousel)`
-  
+display: grid;
 `;
 
 export const StyledImg = styled.img`
   width: 100%;
+`;
+
+export const StyledLeft = styled(ArrowBackIosIcon)`
+  position: absolute;
+  top: 22%;
+  left: 2%;
+`;
+
+export const StyledRight = styled(ArrowForwardIosIcon)`
+  position: absolute;
+  top: 22%;
+  left: 94%;
 `;

@@ -25,13 +25,14 @@ import {
   StyledUnderTitle,
   StyledChat,
   StyledChatIcon,
-  StyleImg,
   StyledDate,
   StyledAccessTimeOutlinedIcon,
   StyledCalendarTodayOutlinedIcon,
   StyledForm,
   StyledImg,
   StyledCarousel,
+  StyledLeft,
+  StyledRight,
 } from "./StyledAuctionDetailPage";
 
 const AuctionDetailPage = () => {
@@ -89,22 +90,17 @@ const AuctionDetailPage = () => {
   };
 
   const renderCarousel = (
-    <StyledCarousel
-      initialActiveIndex={0}
-      isRTL={false}
-      showArrows={false}
-      itemsToShow={1}
-      pagination={true}
-      enableAutoPlay={true}
-      autoPlaySpeed={2000}
-      onNextEnd={(nextItemObject, currentPageIndex) => {
-        console.log(currentPageIndex);
-      }}
-    >
-      {images.map((img) => (
-        <StyledImg src={img.path} />
-      ))}
-    </StyledCarousel>
+      <StyledCarousel
+        initialActiveIndex={0}
+        isRTL={false}
+        showArrows={true}
+        itemsToShow={1}
+        pagination={false}
+      >
+        {images.map((img) => (
+          <StyledImg src={img.path} />
+        ))}
+      </StyledCarousel>
   );
 
   return (
