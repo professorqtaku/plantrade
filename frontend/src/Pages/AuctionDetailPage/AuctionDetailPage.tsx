@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useHistory } from 'react-router-dom'
 import { useAuction } from '../../Contexts/AuctionContext';
@@ -15,6 +15,7 @@ import InputField from '../../Components/InputField/InputField';
 import ImageCarousel from '../../Components/ImageCarousel/ImageCarousel';
 import ExpandableDescriptionBox from '../../Components/ExpandableDesc/ExpandableDescriptionBox';
 import ButtonComp from "../../Components/Button/ButtonComp"
+import { images } from "./images";
 import {
   StyledWrapper,
   StyledPrice,
@@ -24,11 +25,12 @@ import {
   StyledUnderTitle,
   StyledChat,
   StyledChatIcon,
-  StyleImg,
   StyledDate,
   StyledAccessTimeOutlinedIcon,
   StyledCalendarTodayOutlinedIcon,
-  StyledForm
+  StyledForm,
+  StyledImg,
+  StyledCarousel,
 } from "./StyledAuctionDetailPage";
 
 const AuctionDetailPage = () => {
@@ -40,7 +42,7 @@ const AuctionDetailPage = () => {
   const { whoAmI } = useAuth();
   
   const [auction, setAuction] = useState<Auction | undefined>();
-  const [bid, setBid] = useState<string>('');
+  const [bid, setBid] = useState<string>("");
   const [currentBid, setCurrentBid] = useState<number>(0);
   const [endDate, setEndDate] = useState<string>();
   const [endTime, setEndTime] = useState<string>();
@@ -49,7 +51,7 @@ const AuctionDetailPage = () => {
 
   useEffect(() => {
     handleGetAuctionById();
-  }, [])
+  }, []);
 
 
   const handleGetAuctionById = async () => {
@@ -63,11 +65,11 @@ const AuctionDetailPage = () => {
     }
     
     if (res.bids.length) {
-      setCurrentBid(res.bids.pop(res.bids.length - 1).price)
-      setBidText('Högsta budet')
+      setCurrentBid(res.bids.pop(res.bids.length - 1).price);
+      setBidText("Högsta budet");
     } else {
-      setCurrentBid(res.startPrice)
-      setBidText('Startpris')
+      setCurrentBid(res.startPrice);
+      setBidText("Startpris");
     }
   }
 
@@ -79,51 +81,69 @@ const AuctionDetailPage = () => {
       userId: whoAmI.id,
       auctionId: auction?.id,
       price: parseInt(bid),
-      createdDate: Date.now()
-    }
+      createdDate: Date.now(),
+    };
 
     await createBid(newBid);
     //rerender the new currently highest bid
     handleGetAuctionById();
-    setBid('')
-  }
+    setBid("");
+  };
 
   const handleChat = () => {
-    console.log('I want to chat with the seller')
-  }
+    console.log("I want to chat with the seller");
+  };
+
+  const renderCarousel = (
+      <StyledCarousel
+        initialActiveIndex={0}
+        isRTL={false}
+        showArrows={true}
+        itemsToShow={1}
+        pagination={false}
+      >
+        {images.map((img) => (
+          <StyledImg src={img.path} />
+        ))}
+      </StyledCarousel>
+  );
 
   return (
     <StyledWrapper>
-      {!auction ? <SkeletonCard /> :
-        (<>
-          <StyledBackBtn onClick={() => history.push('/auctions')}>
+      {!auction ? (
+        <SkeletonCard />
+      ) : (
+        <>
+          <StyledBackBtn onClick={() => history.push("/auctions")}>
             <ArrowBackIosIcon />
             Tillbaka
           </StyledBackBtn>
           <Grid container spacing={2}>
             <Grid item xs={12} md={12}>
-              {/* Remove when ImageCarousel is in place */}
-              <StyleImg src="https://cdn.shopify.com/s/files/1/0410/5696/0672/products/chocolatecovered-1_600x503.jpg?v=1592089346" />
-              {/* <ImageCarousel images={auction.images} /> */}
+              {renderCarousel}
             </Grid>
             <Grid item xs={8} md={8}>
               <StyledTitle>{auction.title}</StyledTitle>
             </Grid>
             <Grid item xs={4} md={4}>
               <StyledChat onClick={handleChat}>
-                  <StyledChatIcon>
-                    <CommentIcon />
-                  </StyledChatIcon>
-                </StyledChat>
+                <StyledChatIcon>
+                  <CommentIcon />
+                </StyledChatIcon>
+              </StyledChat>
             </Grid>
             <Grid item xs={8} md={8}>
               <StyledUnderTitle>Sluttid</StyledUnderTitle>
               <StyledDate>
-                <StyledCalendarTodayOutlinedIcon><CalendarTodayOutlinedIcon /></StyledCalendarTodayOutlinedIcon>
+                <StyledCalendarTodayOutlinedIcon>
+                  <CalendarTodayOutlinedIcon />
+                </StyledCalendarTodayOutlinedIcon>
                 {endDate}
               </StyledDate>
               <StyledDate>
-                <StyledAccessTimeOutlinedIcon><AccessTimeOutlinedIcon/></StyledAccessTimeOutlinedIcon>
+                <StyledAccessTimeOutlinedIcon>
+                  <AccessTimeOutlinedIcon />
+                </StyledAccessTimeOutlinedIcon>
                 {endTime}
               </StyledDate>
             </Grid>
@@ -133,9 +153,11 @@ const AuctionDetailPage = () => {
             </Grid>
             <Grid item xs={12} md={6}>
               <StyledUnderTitle>Beskrivning</StyledUnderTitle>
-              <ExpandableDescriptionBox auctionDescription={auction.description} />
+              <ExpandableDescriptionBox
+                auctionDescription={auction.description}
+              />
             </Grid>
-            <Grid item xs={12} md={12} >
+            <Grid item xs={12} md={12}>
               #tags
             </Grid>
             <StyledForm >
@@ -145,6 +167,6 @@ const AuctionDetailPage = () => {
           </Grid></>)}
     </StyledWrapper>
   );
-}
+};
 
 export default AuctionDetailPage;

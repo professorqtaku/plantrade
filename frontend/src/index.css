@@ -37,6 +37,13 @@ code {
   border-radius: 0;
   box-shadow: none;
   background-color: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+.cNNJIt, .jRFJkP{
+  width: 15px!important;
+  min-width: 15px!important;
 }
 
 .rec.rec-arrow:focus{
