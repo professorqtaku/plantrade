@@ -60,11 +60,10 @@ function MyWonAuctionsPage() {
 
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Card elevation={expandedUnpaid ? 0 : 1}>
+            <Card elevation={expandedUnpaid ? 0 : 1} onClick={handleUnpaid}>
               <StyledCardUnpaid isExpanded={expandedUnpaid}>
                 <MyAuctionsCard title="Obetalda auktioner"
                   expandState={expandedUnpaid}
-                  expandFunction={handleUnpaid}
                   userAuctionsListByStatus={unpaidList}
                 />
               </StyledCardUnpaid>
@@ -72,11 +71,10 @@ function MyWonAuctionsPage() {
           </Grid>
           
           <Grid item xs={12}>
-            <Card elevation={expandedPaid ? 0 : 1}>
+            <Card elevation={expandedPaid ? 0 : 1} onClick={handlePaid}>
               <StyledCardPaid isExpanded={expandedPaid}>
                 <MyAuctionsCard title="Betalda auktioner"
                   expandState={expandedPaid}
-                  expandFunction={handlePaid}
                   userAuctionsListByStatus={paidList}
                 />
               </StyledCardPaid>

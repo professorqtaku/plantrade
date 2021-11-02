@@ -5,15 +5,17 @@ import CardActions from '@mui/material/CardActions';
 import { styled } from '@mui/material/styles';
 import Collapse from '@mui/material/Collapse';
 import AuctionItem from '../AuctionItem/AuctionItem';
+import Chip from '@mui/material/Chip';
+import { StyledChip } from './StyledMyAuctionsCard';
 
 interface Props {
   title?: string,
   expandState?: boolean,
-  expandFunction?: Function,
   userAuctionsListByStatus?: Auction[]
 }
 
 function MyAuctionsCard(props: Props) {
+  const length = !props?.userAuctionsListByStatus ? 0 : props.userAuctionsListByStatus.length;
   
   const ExpandMore = styled((props) => {
   const { expand, ...other }: any = props;
@@ -29,10 +31,9 @@ function MyAuctionsCard(props: Props) {
   return (
     <>
       <CardActions disableSpacing>
-        <p>{props.title}</p>      
+        <p>{props.title}</p><StyledChip><Chip label={`${length}`} /></StyledChip>
         <ExpandMore
-          expand={props.expandState}
-          onClick={props.expandFunction}
+          expand={props.expandState} 
         >
           <KeyboardArrowDownIcon />
         </ExpandMore>

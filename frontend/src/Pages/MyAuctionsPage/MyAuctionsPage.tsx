@@ -40,27 +40,22 @@ function MyAuctionsPage() {
   }
 
   const handleLists = () => {
+    const list1: Auction[] = [];
+    const list2: Auction[] = [];
+    const list3: Auction[] = [];
+
     usersAuctions && usersAuctions.map((auction: Auction) => {
       if (auction.status === 'OPEN') {
-        if (!openList) {
-          setOpenList([auction]);
-        } else {
-          setOpenList([...openList, auction]);
-        }
+        list1.push(auction);
       } else if (auction.status === 'SOLD') {
-        if (!soldList) {
-          setSoldList([auction]);
-        } else {
-          setSoldList([...soldList, auction]);
-        }
+        list2.push(auction);
       } else if (auction.status === 'NOT_SOLD') {
-        if (!unSoldList) {
-          setUnSoldList([auction]);
-        } else {
-          setUnSoldList([...unSoldList, auction]);
-        }
+        list3.push(auction);
       }
     });
+    setOpenList(list1);
+    setSoldList(list2);
+    setUnSoldList(list3);
   }
 
   const handleExpandCurr = () => {
@@ -89,11 +84,10 @@ function MyAuctionsPage() {
         </StyledBackBtn>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Card elevation={expandedCurr ? 0 : 1}>
+            <Card elevation={expandedCurr ? 0 : 1} onClick={handleExpandCurr}>
               <StyledCardCurr isExpanded={expandedCurr}>
                 <MyAuctionsCard title="Pågående auktioner"
                   expandState={expandedCurr}
-                  expandFunction={handleExpandCurr}
                   userAuctionsListByStatus={openList}
                 />
               </StyledCardCurr>
@@ -101,11 +95,10 @@ function MyAuctionsPage() {
           </Grid>
           
           <Grid item xs={12}>
-            <Card elevation={expandedSold ? 0 : 1}>
+            <Card elevation={expandedSold ? 0 : 1} onClick={handleExpandSold}>
               <StyledCardSold isExpanded={expandedSold}>
                 <MyAuctionsCard title="Sålda auktioner"
                   expandState={expandedSold}
-                  expandFunction={handleExpandSold}
                   userAuctionsListByStatus={soldList}
                 />
               </StyledCardSold>
@@ -113,11 +106,10 @@ function MyAuctionsPage() {
           </Grid>
 
           <Grid item xs={12}>
-            <Card elevation={expandedNoSold ? 0 : 1}>
+            <Card elevation={expandedNoSold ? 0 : 1} onClick={handleExpandNoSold}>
               <StyledCardNoSold isExpanded={expandedNoSold}>
                 <MyAuctionsCard title="Inte sålda auktioner"
                   expandState={expandedNoSold}
-                  expandFunction={handleExpandNoSold}
                   userAuctionsListByStatus={unSoldList}
                 />
               </StyledCardNoSold>
