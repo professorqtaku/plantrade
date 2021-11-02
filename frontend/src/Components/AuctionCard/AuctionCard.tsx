@@ -93,7 +93,7 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
   };
 
   const handleBid = async () => {
-    if (whoAmI == null || whoAmI == auction.host?.id) return;
+    if (whoAmI == null) return;
     
     const newBid = {
       userId: whoAmI.id,
