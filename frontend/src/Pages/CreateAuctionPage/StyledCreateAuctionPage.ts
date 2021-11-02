@@ -22,7 +22,7 @@ export const StyledInput = styled.input`
   outline: none;
 `;
 
-export const StyledButton = styled.button`
+export const StyledButton = styled(Button)`
   background: var(--light-green);
   text-transform: uppercase;
   font-size:  "1rem";

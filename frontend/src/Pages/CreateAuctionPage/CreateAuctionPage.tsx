@@ -100,7 +100,7 @@ const CreateAuctionPage = () => {
           setCategoriesToUse
         } />
         {renderUploadFiles()}
-        <StyledButton> Skapa auktion </StyledButton>
+        <StyledButton type="submit" variant="contained"> Skapa auktion </StyledButton>
       </StyledForm>
     </StyledWrapper>
   );
