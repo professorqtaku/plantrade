@@ -11,8 +11,6 @@ import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import CommentIcon from "@mui/icons-material/Comment";
 import InputField from "../../Components/InputField/InputField";
-import ImageCarousel from "../../Components/ImageCarousel/ImageCarousel";
-import Carousel from "react-elastic-carousel";
 import ExpandableDescriptionBox from "../../Components/ExpandableDesc/ExpandableDescriptionBox";
 import ButtonComp from "../../Components/Button/ButtonComp";
 import { images } from "./images";
