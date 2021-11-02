@@ -33,7 +33,8 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
   
   const { createBid } = useBid();
   const { whoAmI } = useAuth();
-  const isHost = whoAmI && auction.host && whoAmI.id == auction.host.id;
+  const isHost =
+    whoAmI && auction.host && auction.host.id && whoAmI.id == auction.host.id;
   
   useEffect(() => {
     if (!!auction?.bids?.length) {
