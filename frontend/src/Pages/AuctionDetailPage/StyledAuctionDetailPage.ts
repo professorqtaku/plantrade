@@ -4,18 +4,17 @@ export const StyledWrapper = styled.div`
   margin: 2rem 0 5rem 0.5rem;
 `;
 
-
 export const StyledPrice = styled.div`
   text-align: center;
-  background-color: #122522;
-  color: #FBFDFF;
+  background-color: var(--dark-green);
+  color: #fbfdff;
   margin: 0;
   padding: 2rem;
 `;
 
 export const StyledBidInput = styled.div`
   text-align: center;
-  background-color: #FBFDFF;
+  background-color: #fbfdff;
   color: black;
   margin: 0;
   padding: 2rem;
@@ -23,8 +22,8 @@ export const StyledBidInput = styled.div`
 
 export const StyledBidBtn = styled.div`
   text-align: center;
-  background-color: #122522;
-  color: #FBFDFF;
+  background-color: var(--dark-green);
+  color: #fbfdff;
   margin: 0;
   padding: 2rem;
 `;
@@ -47,7 +46,3 @@ export const StyledBackBtn = styled.div`
   margin-left: 1rem;
   cursor: pointer;
 `;
-
-
-
-

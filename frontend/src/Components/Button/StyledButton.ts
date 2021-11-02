@@ -1,12 +1,16 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 import Button from "@mui/material/Button";
 
-export const StyledButton = styled(Button)`
-  background: #619463;
+interface Props {
+  fontSize?: string;
+}
+
+export const StyledButton = styled(Button)<Props>`
+  background: var(--light-green);
   text-transform: uppercase;
-  font-size: 1rem;
+  font-size: ${(props) => props.fontSize ? props.fontSize: "1rem"};
   letter-spacing: 1px;
   &:hover {
-    background: #619463;
+    background: var(--light-green);
   }
 `;

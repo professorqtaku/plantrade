@@ -1,9 +1,16 @@
 :root {
-  --yellow: #FFE500;
   --font-text: 'Abhaya Libre', serif;
   --font-title: 'Abel', sans-serif;
+  --font-normal-text: 'ABeeZee', sans-serif;
+  --yellow: #FFE500;
+  --light-yellow: #FFF6AA;
   --light-green: #619463;
   --dark-green: #122522;
+  --dark-grey: #36455A;
+  --background-color: #FBFDFF;
+  --status-green: #619463;
+  --status-yellow: #FFE500;
+  --status-red: #E44929;
 }
 
 p {
@@ -12,14 +19,39 @@ p {
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background-color);
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+/* Global style for the Carousel */
+.rec.rec-arrow {
+  border-radius: 0;
+  box-shadow: none;
+  background-color: transparent;
+}
+
+.rec.rec-arrow:focus{
+  outline: none;
+}
+
+.rec.rec-arrow:focus:enabled,
+.rec.rec-arrow:hover:enabled  {
+  background-color: transparent;
+  color: black;
+  box-shadow: none;
+  outline: none;
+}
+
+.rec .rec-arrow:focus {
+  background-color: transparent;
+  color: red;
 }
