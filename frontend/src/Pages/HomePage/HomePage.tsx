@@ -45,7 +45,8 @@ const HomePage = () => {
     <StyledCarouselWrapper>
       <Carousel isRTL={true} itemsToShow={3} outerSpacing={0} pagination={false} initialFirstItem={3}>
         {imageIcons.map((icon: IconImage) => {
-          return <StyledIconImageItem key={icon.text} ><StyledIconImg src={icon.imgFile} />
+          return <StyledIconImageItem key={icon.text} ><StyledIconImg src={icon.imgFile} onClick={() => console.log("klicka på karusell item")
+           }/>
             <StyledText>{icon.text}</StyledText>
           </StyledIconImageItem>
         })}
@@ -54,7 +55,7 @@ const HomePage = () => {
   );
 
   const renderNews = () => (
-    <StyledNewsWrapper>
+    <StyledNewsWrapper onClick={() => console.log("klicka på bild item")}>
       <StyledImageListItem>
         <StyledNewsImg
           src="https://i2.wp.com/www.livingloving.net/wp-content/uploads/2017/01/living-loving-indoor-plants-3.jpg?resize=1769%2C1000&ssl=1"

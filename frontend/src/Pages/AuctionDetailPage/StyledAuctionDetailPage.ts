@@ -4,6 +4,10 @@ import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import Carousel from "react-elastic-carousel";
 
+interface FormProps {
+  warning?: boolean
+}
+
 export const StyledWrapper = styled.div`
   margin: 1.5rem 1rem 5rem;
 `;
@@ -24,6 +28,14 @@ export const StyledPriceTitle = styled(StyledPrice)`
   text-transform: uppercase;
 `;
 
+export const StyledWarning = styled.p`
+  font-size: 1.3rem;
+  margin: 0;
+`
+
+export const StyledWarningPrice = styled.span`
+  color: crimson;
+`
 
 export const StyledImage = styled.div`
   display: block;
