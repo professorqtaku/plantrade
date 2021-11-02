@@ -35,8 +35,7 @@ const CreateAuctionPage = () => {
   const inOneDay = Date.now() + 1000*65*60*24;
   const [endDate, setEndDate] = useState<number | undefined>(inOneDay);
   const [categoriesToUse, setCategoriesToUse] = useState<
-    Category[] | undefined
-  >();
+    Category[]>([]);
 
   const handleAddAuction = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -46,23 +45,22 @@ const CreateAuctionPage = () => {
       description: desc,
       startPrice: price,
       endDate: endDate,
-    /*categories: categoriesToUse,  */
     };
-    createAuction(auction);
+    createAuction(auction, categoriesToUse, formData);
 
     setTitle(undefined);
     setDesc(undefined);
     setPrice(undefined);
     setImages(undefined);
     setEndDate(inOneDay);
-    setCategoriesToUse(undefined);
+    setCategoriesToUse([]);
   };
 
   const renderUploadFiles = () => (
     <label htmlFor="contained-button-file">
       <Input
         accept="image/*"
-        onChange={(e: any) => onFileLoad(e)}
+        onChange={onFileLoad}
         id="contained-button-file"
         multiple
         type="file"
@@ -75,52 +73,18 @@ const CreateAuctionPage = () => {
 
   async function onFileLoad(e: any) {
     let files = e.target.files
-    console.log(files);
 
     // add files to formData
     for (let file of files) {
       formData.append('files', file, file.name)
     }
 
-    /* // send files to server
-    let res = await fetch('/api/upload', {
-      method: 'POST',
-      body: formData
-    })
-
-    let filePaths = await res.json()
-    console.log(filePaths);
-
-    setPreview(filePaths[0])
-
     // clear input of files
-    e.target.value = '' */
+    e.target.value = '';
   }
-
-  const handleLogin = async (e: any) => {
-    e.preventDefault();
-    const user = {
-      "id": 3,
-      "username": "postila",
-      "email": "postila@haha.se",
-      "password": 123
-    }
-
-    let res: Response  = await fetch('/api/login', {
-      method: 'POST',
-      body: JSON.stringify(user),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    const userLoginResponse = await res.json();
-    console.log(userLoginResponse);
-  }
-
 
   return (
     <StyledWrapper>
-      <button onClick={(e) => handleLogin(e)}>Login</button>
       <StyledTitle>Skapa auktion</StyledTitle>
       <StyledForm onSubmit={handleAddAuction}>
         <InputField label="Titel" value={title} updateState={setTitle} />
@@ -132,10 +96,11 @@ const CreateAuctionPage = () => {
           updateState={setPrice}
         />
         <AuctionDatePicker endDate={setEndDate} />
-        <SelectBar setCategoriesToUse={setCategoriesToUse} />
+        <SelectBar setCategoriesToUse={
+          setCategoriesToUse
+        } />
         {renderUploadFiles()}
         <ButtonComp label="Skapa auktion"/>
-
       </StyledForm>
     </StyledWrapper>
   );
