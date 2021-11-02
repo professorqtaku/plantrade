@@ -14,6 +14,11 @@ type Auction = {
   status: String;
 }
 
+interface Category {
+  id: number;
+  name: String;
+}
+
 export const AuctionContext = createContext<any>(null);
 
 export const useAuction = () => useContext(AuctionContext);
@@ -34,24 +39,17 @@ const AuctionProvider: FC<Props> = ({ children }: Props) => {
     return auction;
   }
 
-  const createAuction = async (auction: Auction) => {
-    const content = {
-      auction,
-      categories: {
-        id: 58,
-        name: 'hey'
-      }
-    }
+  const createAuction = async (auction: Auction, categories: Category[], formData: FormData) => {
+    formData.append("auction", JSON.stringify(auction));
+    formData.append("categories", JSON.stringify(categories));
 
     let res: Response  = await fetch('/rest/auctions', {
       method: 'POST',
-      body: JSON.stringify(content),
-      headers: {
-        'Content-Type': 'application/json'
-      }
+      body: formData,
     })
     const auctionResponse = await res.json();
-    return null;
+    console.log(auctionResponse, 'what is here')
+    return auctionResponse;
   }
   
   const values = {
