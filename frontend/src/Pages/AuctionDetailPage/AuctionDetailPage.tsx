@@ -131,7 +131,7 @@ const AuctionDetailPage = () => {
               <StyledPrice>SEK {currentBid}</StyledPrice>
               <StyledPriceTitle>{bidText}</StyledPriceTitle>
             </Grid>
-          <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={6}>
               <StyledUnderTitle>Beskrivning</StyledUnderTitle>
               <ExpandableDescriptionBox auctionDescription={auction.description} />
             </Grid>
@@ -142,7 +142,7 @@ const AuctionDetailPage = () => {
               <InputField label="Lägg ett bud" type="number" value={bid} updateState={setBid} />
               <ButtonComp label="Buda" callback={handleBid} disabled={isHost} />
             </StyledForm>
-        </Grid></>)}
+          </Grid></>)}
     </StyledWrapper>
   );
 }
