@@ -23,6 +23,9 @@ export const StyledCardContent = styled(CardContent)`
 export const StyledImg = styled.img`
   width: 100%;
   height: 100%;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const StyledTitle = styled.p`
@@ -30,6 +33,9 @@ export const StyledTitle = styled.p`
   text-transform: uppercase;
   letter-spacing: 1.5px;
   margin-top: 0.3rem;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const StyledDesc = styled.p`
@@ -44,7 +50,12 @@ export const StyledAvatar = styled(Avatar)`
   float: right;
 `;
 
-
 export const StyledSpan = styled.span`
   font-weight: bolder;
+`;
+
+export const StyledDiv = styled.div`
+  &:hover {
+    cursor: pointer;
+  }
 `;

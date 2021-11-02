@@ -6,6 +6,7 @@ import {
   StyledAvatar,
   StyledCardContent,
   StyledSpan,
+  StyledDiv,
 } from "./StyledAuctionCard";
 import { useBid } from "../../Contexts/BidContext";
 import { Auction } from "../../Interfaces/Interfaces";
@@ -21,7 +22,6 @@ interface Props {
 }
 
 const AuctionCard = ({ auction, fetchAuctions }: Props) => {
-
   const [daysLeft, setDaysLeft] = useState<number | null>(null);
   const [differenceInMillis, setDifferenceInMillis] = useState(0);
   const [counter, setCounter] = useState<number | null>(null);
@@ -30,23 +30,23 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
   const [quickBid, setQuickBid] = useState<number>();
 
   const history = useHistory();
-  
+
   const { createBid } = useBid();
   const { whoAmI } = useAuth();
   const isHost =
     whoAmI && auction.host && auction.host.id && whoAmI.id == auction.host.id;
-  
+
   useEffect(() => {
     if (!!auction?.bids?.length) {
       setBid(auction.bids.pop()?.price);
     } else {
-      setBid(auction?.startPrice)
+      setBid(auction?.startPrice);
     }
   }, [auction.bids]);
 
   useEffect(() => {
-    handleQuickBid()
-  }, [!!bid, bid])
+    handleQuickBid();
+  }, [!!bid, bid]);
 
   useEffect(() => {
     handleTime();
@@ -81,9 +81,9 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
   const handleQuickBid = () => {
     if (!!bid) {
       if (bid <= 10) {
-        setQuickBid(bid  + 1);
+        setQuickBid(bid + 1);
       }
-      if (bid  <= 100 && bid  > 10) {
+      if (bid <= 100 && bid > 10) {
         setQuickBid(bid + 10);
       }
       if (bid >= 1000 && bid > 100) {
@@ -92,23 +92,22 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
     }
   };
 
-  const handleBid = async () => {  
+  const handleBid = async () => {
     const newBid = {
       // change userId to user that is logged in
       userId: 3,
       auctionId: auction.id,
       price: quickBid,
-      createdDate: Date.now()
-    }
-    
+      createdDate: Date.now(),
+    };
+
     await createBid(newBid);
   };
 
   const toDetailPage = () => {
     console.log(auction.id);
-    history.push(`/auctions/${auction.id}`)
-  }
-
+    history.push(`/auctions/${auction.id}`);
+  };
 
   return (
     <StyledCard>
@@ -121,7 +120,7 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
           <StyledAvatar>{auction.title.charAt(0)}</StyledAvatar>
           <StyledTitle onClick={toDetailPage}>{auction.title}</StyledTitle>
         </div>
-        <div onClick={toDetailPage}>
+        <StyledDiv onClick={toDetailPage}>
           <StyledDesc>
             <StyledSpan>Pris:</StyledSpan> {auction.startPrice} SEK
           </StyledDesc>
@@ -131,7 +130,7 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
           <StyledDesc>
             <StyledSpan>{remainingTime}</StyledSpan> {daysLeft}
           </StyledDesc>
-        </div>
+        </StyledDiv>
         <ButtonComp
           label={`Snabb bud ${quickBid} SEK`}
           callback={handleBid}
