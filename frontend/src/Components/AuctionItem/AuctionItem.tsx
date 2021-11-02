@@ -7,7 +7,6 @@ import Card from '@mui/material/Card';
 
 function AuctionItem({ auction }: Auction | any) {
   const history = useHistory();
-  console.log('what is auction in item ', auction);
   const status = auction.status == 'SOLD' ? 'Såld' : auction.status == 'OPEN' ? 'Pågående' : 'Inte såld';
   const color = auction.status == 'SOLD' ? 'var(--status-green)' : auction.status == 'OPEN' ? 'var(--status-yellow)' : 'var(--status-red)';
 
