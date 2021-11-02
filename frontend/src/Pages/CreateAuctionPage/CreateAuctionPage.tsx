@@ -7,11 +7,11 @@ import {
 import AuctionDatePicker from "../../Components/AuctionDatePicker/AuctionDatePicker";
 import SelectBar from "../../Components/SelectBar/SelectBar";
 import InputField from "../../Components/InputField/InputField";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import { useAuction } from "../../Contexts/AuctionContext";
-import { useCategory } from "../../Contexts/CategoryContext";
+import { useHistory } from "react-router";
 import { Category } from "../AuctionPage/AuctionPage";
 
 
@@ -22,14 +22,15 @@ const Input = styled("input")({
 
 const CreateAuctionPage = () => {
   const { createAuction } = useAuction();
+  const history = useHistory();
+
   // const [preview, setPreview] = useState('')
   // create a holder to store files
   const formData = new FormData()
 
-  const [title, setTitle] = useState<string | undefined>();
-  const [desc, setDesc] = useState<string | undefined>();
-  const [price, setPrice] = useState<number | undefined>();
-  const [images, setImages] = useState<String[] | undefined>();
+  const [title, setTitle] = useState<string>('');
+  const [desc, setDesc] = useState<string>('');
+  const [price, setPrice] = useState<number>(0);
   /*  not that i add 24 hr + 5 extra seconds.
   Had to do that because we have extra check in backend that checks that endDate is minimum one day and max one month, if i just add 1000*60*60*24 i get back an error as a response. */
   const inOneDay = Date.now() + 1000*65*60*24;
@@ -37,7 +38,7 @@ const CreateAuctionPage = () => {
   const [categoriesToUse, setCategoriesToUse] = useState<
     Category[]>([]);
 
-  const handleAddAuction = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleAddAuction = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const auction = {
@@ -46,14 +47,20 @@ const CreateAuctionPage = () => {
       startPrice: price,
       endDate: endDate,
     };
-    createAuction(auction, categoriesToUse, formData);
+    if(auction.title && auction.description && auction.startPrice){
 
-    setTitle(undefined);
-    setDesc(undefined);
-    setPrice(undefined);
-    setImages(undefined);
-    setEndDate(inOneDay);
-    setCategoriesToUse([]);
+      const res =  await createAuction(auction, categoriesToUse, formData);
+      
+      setTitle('');
+      setDesc('');
+      setPrice(0);
+      setEndDate(inOneDay);
+      setCategoriesToUse([]);
+      
+      if(res.id) {
+        history.push(`/auctions/${res.id}`)
+      }
+    }
   };
 
   const renderUploadFiles = () => (
@@ -87,9 +94,10 @@ const CreateAuctionPage = () => {
     <StyledWrapper>
       <StyledTitle>Skapa auktion</StyledTitle>
       <StyledForm onSubmit={handleAddAuction}>
-        <InputField label="Titel" value={title} updateState={setTitle} />
-        <InputField label="Beskrivning" value={desc} updateState={setDesc} />
+        <InputField required label="Titel" value={title} updateState={setTitle} />
+        <InputField required label="Beskrivning" value={desc} updateState={setDesc} />
         <InputField
+          required
           label="Start pris"
           type="number"
           value={price}
