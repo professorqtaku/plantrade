@@ -13,11 +13,11 @@ import CommentIcon from '@mui/icons-material/Comment';
 import InputField from '../../Components/InputField/InputField';
 import ImageCarousel from '../../Components/ImageCarousel/ImageCarousel';
 import ExpandableDescriptionBox from '../../Components/ExpandableDesc/ExpandableDescriptionBox';
+import ButtonComp from "../../Components/Button/ButtonComp"
 import {
   StyledWrapper,
   StyledPrice,
   StyledPriceTitle,
-  StyledBidBtn,
   StyledBackBtn,
   StyledTitle,
   StyledUnderTitle,
@@ -26,8 +26,10 @@ import {
   StyleImg,
   StyledDate,
   StyledAccessTimeOutlinedIcon,
-  StyledCalendarTodayOutlinedIcon
+  StyledCalendarTodayOutlinedIcon,
+  StyledForm
 } from "./StyledAuctionDetailPage";
+
 
 const AuctionDetailPage = () => {
   const { id }: any = useParams();
@@ -129,12 +131,10 @@ const AuctionDetailPage = () => {
             <Grid item xs={12} md={12} >
               #tags
             </Grid>
-            <Grid item xs={6} md={6}>
+            <StyledForm onSubmit={handleBid}>
               <InputField label="Lägg ett bud" type="number" value={bid} updateState={setBid} />
-            </Grid>
-            <Grid item xs={6} md={6}>
-              <StyledBidBtn onClick={handleBid}>Buda</StyledBidBtn>
-            </Grid>
+              <ButtonComp label="Buda" />
+            </StyledForm>
         </Grid></>)}
     </StyledWrapper>
   );

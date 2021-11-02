@@ -24,18 +24,17 @@ export const StyledPriceTitle = styled(StyledPrice)`
   text-transform: uppercase;
 `;
 
-export const StyledBidBtn = styled.div`
-  text-align: center;
-  background-color: var(--light-green);
-  color: var(--dark-green);
-  padding: 0.8rem;
-  border-radius: 30px;
-  cursor: pointer;
-  font-family: var(--font-title);
-  font-size: 1.5rem;
-  font-weight: 700;
-  box-shadow: 0.5px 0.5px 5px 0.1px #bdbdbd;
-`;
+// export const StyledBidBtn = styled.button`
+//   /* text-align: center; */
+//   /* background-color: var(--light-green); */
+//   /* color: var(--dark-green); */
+//   /* padding: 0.8rem; */
+//   /* border-radius: 30px; */
+//   /* cursor: pointer; */
+//   /* font-family: var(--font-title); */
+//   /* font-size: 1.5rem; */
+//   /* font-weight: 700; */
+// `;
 
 export const StyledImage = styled.div`
   display: block;
@@ -83,7 +82,6 @@ export const StyledChat = styled.div`
   border-radius: 50%;
   padding: 20px;
   margin: -50px 0 0 0;
-  box-shadow: 0.5px 0.5px 5px 0.1px #bdbdbd;
 `;
 
 export const StyledChatIcon = styled(CommentIcon)`
@@ -106,6 +104,14 @@ export const StyledAccessTimeOutlinedIcon = styled(AccessTimeOutlinedIcon)`
 export const StyledCalendarTodayOutlinedIcon = styled(CalendarTodayOutlinedIcon)`
   margin-right: 5px;
   font-size: 1rem;
+`;
+
+export const StyledForm = styled.form`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 1rem auto;
+  margin-left: 16px;
+  grid-gap: 10px;
 `;
 
 // REMOVE & use carusel instead
