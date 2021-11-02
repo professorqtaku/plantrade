@@ -2,6 +2,7 @@ import AuctionProvider from "./AuctionContext";
 import { AuthProvider } from "./AuthContext";
 import ModalProvider from "./ModalContext";
 import SearchProvider from "./SearchContext";
+import CategoryProvider from "./CategoryContext";
 import BidProvider from "./BidContext";
 import NavigationProvider from "./NavigationContext";
 import SnackBarProvider from "./SnackBarContext";
@@ -14,6 +15,7 @@ const AllContextProviders: React.FC<Props> = ({ children }) => {
   return (
     <>
       <SnackBarProvider>
+      <CategoryProvider>
         <AuthProvider>
           <AuctionProvider>
             <ModalProvider>
@@ -25,6 +27,7 @@ const AllContextProviders: React.FC<Props> = ({ children }) => {
             </ModalProvider>
           </AuctionProvider>
         </AuthProvider>
+        </CategoryProvider>
       </SnackBarProvider>
     </>
   );

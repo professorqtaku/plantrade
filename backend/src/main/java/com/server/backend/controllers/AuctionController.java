@@ -1,35 +1,29 @@
 package com.server.backend.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.server.backend.entities.Auction;
+import com.server.backend.entities.Category;
 import com.server.backend.entities.Status;
 import com.server.backend.services.AuctionService;
 import com.server.backend.services.UserService;
-import jdk.jshell.Snippet;
-import net.bytebuddy.asm.Advice;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.persistence.Column;
 
 @RestController
 @RequestMapping("/rest/auctions")
 public class AuctionController {
 
     @Autowired
-    private AuctionService auctionService;
+    private UserService userService;
 
     @Autowired
-    private UserService userService;
+    private AuctionService auctionService;
 
     @GetMapping
     public ResponseEntity<List<Auction>> getAllOpenAuctions() {
@@ -52,18 +46,32 @@ public class AuctionController {
     }
 
     @PostMapping
-    public ResponseEntity<Auction> createAuction(@RequestBody Auction auction){
+    public ResponseEntity<Auction> createAuction(
+            @RequestParam(value = "auction") String _auction,
+            @RequestParam(value = "categories") String _categories,
+            @RequestParam(value = "files", required = false) List<MultipartFile> files
+    ){
         var user = userService.findCurrentUser();
-        if(user != null) {
-            Auction savedAuction = auctionService.createAuction(auction, user);
-            if(savedAuction != null) {
-                return ResponseEntity.ok(savedAuction);
+        var mapper = new ObjectMapper();
+        try {
+            var auction = mapper.readValue(_auction, Auction.class);
+            List<Category> categories = mapper.readValue(_categories, mapper.getTypeFactory().constructCollectionType(List.class, Category.class));
+            if(user != null) {
+                Auction savedAuction = auctionService.createAuction(auction, categories, files, user);
+                if(savedAuction != null) {
+                    return ResponseEntity.ok(savedAuction);
+                } else {
+                    return ResponseEntity.badRequest().build();
+                }
             } else {
                 return ResponseEntity.badRequest().build();
             }
-        } else {
-            return ResponseEntity.badRequest().build();
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
         }
+        //if we get all the way here something went really wrong
+        return ResponseEntity.badRequest().build();
     }
     
     @GetMapping("/user")
