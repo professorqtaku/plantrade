@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { handleCount, ONE_DAY_IN_MILLIS } from "./auctionUtils";
 import ButtonComp from "../Button/ButtonComp";
 import { useAuth } from "../../Contexts/AuthContext";
+import { useHistory } from "react-router";
 
 interface Props {
   auction: Auction;
@@ -20,10 +21,6 @@ interface Props {
 }
 
 const AuctionCard = ({ auction, fetchAuctions }: Props) => {
-  console.log(auction);
-  
-
-  const { user } = useAuth();
 
   const [daysLeft, setDaysLeft] = useState<number | null>(null);
   const [differenceInMillis, setDifferenceInMillis] = useState(0);
@@ -31,8 +28,12 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
   const [remainingTime, setRemainingTime] = useState("Dagar kvar:");
   const [bid, setBid] = useState<undefined | number>();
   const [quickBid, setQuickBid] = useState<number>();
+
+  const history = useHistory();
   
   const { createBid } = useBid();
+  const { whoAmI } = useAuth();
+  const isHost = whoAmI && auction.host && whoAmI.id == auction.host.id;
   
   useEffect(() => {
     if (!!auction?.bids?.length) {
@@ -50,6 +51,10 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
     handleTime();
   }, [daysLeft]);
 
+  useEffect(() => {
+    handleCounter();
+  }, [counter]);
+
   const handleTime = async () => {
     const endDateInMillis = new Date(auction.endDate + "").getTime();
     const todayInMillis = new Date().getTime();
@@ -58,10 +63,6 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
     differenceInMillis <= ONE_DAY_IN_MILLIS && setCounter(differenceInMillis);
     setDaysLeft(Math.round(differenceInMillis / (60 * 60 * 24 * 1000)));
   };
-
-  useEffect(() => {
-    handleCounter();
-  }, [counter]);
 
   const handleCounter = () => {
     if (counter !== null) {
@@ -90,9 +91,7 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
     }
   };
 
-  const handleBid = async () => {
-    console.log("handle bid");
-    
+  const handleBid = async () => {  
     const newBid = {
       // change userId to user that is logged in
       userId: 3,
@@ -104,15 +103,24 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
     await createBid(newBid);
   };
 
+  const toDetailPage = () => {
+    console.log(auction.id);
+    history.push(`/auctions/${auction.id}`)
+  }
+
+
   return (
     <StyledCard>
-      <StyledImg src="https://i.pinimg.com/564x/9e/8b/dc/9e8bdc74df3cb2f87fae194a18ba569a.jpg" />
+      <StyledImg
+        src="https://i.pinimg.com/564x/9e/8b/dc/9e8bdc74df3cb2f87fae194a18ba569a.jpg"
+        onClick={toDetailPage}
+      />
       <StyledCardContent>
         <div>
           <StyledAvatar>{auction.title.charAt(0)}</StyledAvatar>
-          <StyledTitle>{auction.title}</StyledTitle>
+          <StyledTitle onClick={toDetailPage}>{auction.title}</StyledTitle>
         </div>
-        <div>
+        <div onClick={toDetailPage}>
           <StyledDesc>
             <StyledSpan>Pris:</StyledSpan> {auction.startPrice} SEK
           </StyledDesc>
@@ -126,7 +134,9 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
         <ButtonComp
           label={`Snabb bud ${quickBid} SEK`}
           callback={handleBid}
-          costumFontSize="0.7rem" />
+          costumFontSize="0.7rem"
+          disabled={isHost}
+        />
       </StyledCardContent>
     </StyledCard>
   );
