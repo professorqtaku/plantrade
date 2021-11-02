@@ -7,12 +7,16 @@ import {
 } from "./StyledAuctionPage";
 import AuctionCard from "../../Components/AuctionCard/AuctionCard";
 import { useAuction } from "../../Contexts/AuctionContext";
-import { Bid } from "../../Contexts/BidContext";
 import { useEffect } from "react";
 import SearchForm from "../../Components/Search/SearchForm/SearchForm";
 import { useSearch } from "../../Contexts/SearchContext";
 import { Auction } from '../../Interfaces/Interfaces';
 import { useNav } from "../../Contexts/NavigationContext";
+
+export interface Category {
+  id: number;
+  name: String;
+}
 
 const AuctionPage = () => {
   const { getAllAuctions, auctions } = useAuction();

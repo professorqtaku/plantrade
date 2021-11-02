@@ -1,16 +1,10 @@
 import React, { createContext, FC, useContext } from 'react'
 import { useAuction } from "./AuctionContext"
+import { Bid } from "../Interfaces/Interfaces"
 
 type Props = {
   children?: JSX.Element;
 };
-
-export interface Bid {
-  userId: Number;
-  auctionId: Number;
-  price: number | undefined;
-  createdDate: Date;
-}
 
 const BidContext = createContext<any>(null);
 
