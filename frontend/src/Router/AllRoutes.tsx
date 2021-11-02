@@ -8,7 +8,10 @@ import MyPage from "../Pages/MyPage/MyPage";
 import CreateAuctionPage from "../Pages/CreateAuctionPage/CreateAuctionPage";
 
 interface Props {
-  children: JSX.Element;
+  children:
+    | JSX.Element
+    | JSX.Element[]
+    | (false | Element)[];
 }
 
 const AllRoutes: React.FC<Props> = ({ children }) => {
@@ -22,7 +25,7 @@ const AllRoutes: React.FC<Props> = ({ children }) => {
         <Route path="/my-page/my-auctions" exact={true} component={MyAuctionsPage} />
         <Route path="/my-page/my-won-auctions" exact={true} component={MyWonAuctionsPage} />
         {/* <Route path="/register" exact={true} component={RegisterPage} /> */}
-        <Route path="/auction/:id" exact={true} component={AuctionDetailPage} />
+        <Route path="/auctions/:id" exact={true} component={AuctionDetailPage} />
         <Route
           path="/createAuction"
           exact={true}

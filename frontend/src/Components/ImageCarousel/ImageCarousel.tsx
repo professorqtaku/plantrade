@@ -48,7 +48,6 @@ function ImageCarousel(images:any) {
 
 function Item(props:any)
 {
-  console.log('this is props', props)
     return (
       <StyledPaper>
             <StyledImage><img src={props.item.path}></img></StyledImage>

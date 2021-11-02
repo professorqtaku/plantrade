@@ -1,4 +1,5 @@
 import { BaseSyntheticEvent, useState } from 'react'
+import { useHistory } from 'react-router-dom';
 import { useAuction } from '../../../Contexts/AuctionContext';
 import { useSearch } from '../../../Contexts/SearchContext';
 import SearchField from '../SearchField/SearchField';
@@ -7,10 +8,15 @@ import { StyledForm } from './StyledSearchForm';
 import { HOUR_IN_DAY } from '../../AuctionCard/auctionUtils';
 import { Status, status, Auction, SearchObject } from '../../../Utils/types'
 
-const SearchForm = () => {
-  
-  const { getAuctionsByOptions, searchText, setSearchText } = useSearch();
+type Props = {
+  searchWord?: string;
+}
+
+const SearchForm = ({searchWord}: Props) => {
+
+  const { getAuctionsByOptions, getAuctionsByTitles, searchText, setSearchText } = useSearch();
   const { setAuctions, getAllAuctions } = useAuction();
+  const history = useHistory();
 
   const [ selectedCategories, setSelectedCategories ] = useState<string[]>([]);
   const [ hours, setHours ] = useState<number>(HOUR_IN_DAY);
@@ -21,25 +27,26 @@ const SearchForm = () => {
 
   const search = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
-    let option: SearchObject = {
-      title: searchText,
-      categories: selectedCategories,
-      hours: hours,
-      status: selectedStatus,
-    };
-    
+    await history.push('/auctions')
     if (searchText.trim().length > 0) {
-      let auctions: Array<Auction> = await getAuctionsByOptions(option);
-
-      console.log("auctions");
-      console.log(auctions);
+      let auctions: Array<Auction> = await getAuctionsByTitles(searchText ? searchText : searchWord);
+      let option: SearchObject = {
+        title: searchText,
+        categories: selectedCategories,
+        hours: hours,
+        status: selectedStatus,
+      };
+    
+      if (searchText.trim().length > 0) {
+        let auctions: Array<Auction> = await getAuctionsByOptions(option);
       
-      setAuctions(auctions);
+        setAuctions(auctions);
+      }
+      else {
+        await getAllAuctions();
+      }
+      setShowFilter(false);
     }
-    else {
-      await getAllAuctions();
-    }
-    setShowFilter(false);
   }
 
   return (
@@ -65,4 +72,5 @@ const SearchForm = () => {
     </StyledForm>
   );
 }
+
 export default SearchForm;
