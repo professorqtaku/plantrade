@@ -5,16 +5,17 @@ import { useAuction } from "../../Contexts/AuctionContext";
 import { useBid } from "../../Contexts/BidContext";
 import { useAuth } from "../../Contexts/AuthContext";
 import { Auction } from "../../Interfaces/Interfaces";
-import Grid from "@mui/material/Grid";
-import SkeletonCard from "../../Components/SkeletonCard/SkeletonCard";
-import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
-import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import CommentIcon from "@mui/icons-material/Comment";
-import InputField from "../../Components/InputField/InputField";
-import ImageCarousel from "../../Components/ImageCarousel/ImageCarousel";
-import ExpandableDescriptionBox from "../../Components/ExpandableDesc/ExpandableDescriptionBox";
-import ButtonComp from "../../Components/Button/ButtonComp";
+import Grid from '@mui/material/Grid';
+import SkeletonCard from '../../Components/SkeletonCard/SkeletonCard';
+import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
+import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import CommentIcon from '@mui/icons-material/Comment';
+import InputField from '../../Components/InputField/InputField';
+import ImageCarousel from '../../Components/ImageCarousel/ImageCarousel';
+import ExpandableDescriptionBox from '../../Components/ExpandableDesc/ExpandableDescriptionBox';
+import ButtonComp from "../../Components/Button/ButtonComp"
+import { images } from "./images";
 import {
   StyledWrapper,
   StyledPrice,
@@ -24,13 +25,14 @@ import {
   StyledUnderTitle,
   StyledChat,
   StyledChatIcon,
-  StyleImg,
   StyledDate,
   StyledAccessTimeOutlinedIcon,
   StyledCalendarTodayOutlinedIcon,
   StyledForm,
   StyledWarning,
   StyledWarningPrice,
+  StyledImg,
+  StyledCarousel,
 } from "./StyledAuctionDetailPage";
 
 const AuctionDetailPage = () => {
@@ -53,7 +55,7 @@ const AuctionDetailPage = () => {
   useEffect(() => {
     handleGetAuctionById();
   }, []);
-
+  
   const handleGetAuctionById = async () => {
     const res = await getAuctionById(id);
     setAuction(res);
@@ -122,6 +124,19 @@ const AuctionDetailPage = () => {
         <ButtonComp label="Ja" callback={handleBid} disabled={isHost} />
       )}
     </>
+  )  
+  const renderCarousel = (
+      <StyledCarousel
+        initialActiveIndex={0}
+        isRTL={false}
+        showArrows={true}
+        itemsToShow={1}
+        pagination={false}
+      >
+        {images.map((img) => (
+          <StyledImg src={img.path} />
+        ))}
+      </StyledCarousel>
   );
 
   return (
@@ -136,9 +151,7 @@ const AuctionDetailPage = () => {
           </StyledBackBtn>
           <Grid container spacing={2}>
             <Grid item xs={12} md={12}>
-              {/* Remove when ImageCarousel is in place */}
-              <StyleImg src="https://cdn.shopify.com/s/files/1/0410/5696/0672/products/chocolatecovered-1_600x503.jpg?v=1592089346" />
-              {/* <ImageCarousel images={auction.images} /> */}
+              {renderCarousel}
             </Grid>
             <Grid item xs={8} md={8}>
               <StyledTitle>{auction.title}</StyledTitle>

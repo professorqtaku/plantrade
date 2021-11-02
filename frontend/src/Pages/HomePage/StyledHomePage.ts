@@ -75,9 +75,10 @@ export const StyledSearchFieldWrapper = styled.div`
 `;
 
 export const StyledCarouselWrapper = styled.div`
+  padding: 0 10px;
   width: 100;
   margin: 1rem 0 1rem 0;
-    @media (min-width: 769px) {
+  @media (min-width: 769px) {
     width: 60%;
     margin: 0 auto;
   }
@@ -157,6 +158,7 @@ export const StyledNewsWrapper = styled.div`
 `; 
 
 export const StyledSoonEndingWrapper = styled.div`
+  padding: 0 10px;
   display: grid;
   align-items: center;
   justify-items: center;

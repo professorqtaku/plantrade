@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import CommentIcon from '@mui/icons-material/Comment';
-import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
-import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
+import CommentIcon from "@mui/icons-material/Comment";
+import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
+import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
+import Carousel from "react-elastic-carousel";
 
 interface FormProps {
   warning?: boolean
@@ -36,18 +37,6 @@ export const StyledWarningPrice = styled.span`
   color: crimson;
 `
 
-// export const StyledBidBtn = styled.button`
-//   /* text-align: center; */
-//   /* background-color: var(--light-green); */
-//   /* color: var(--dark-green); */
-//   /* padding: 0.8rem; */
-//   /* border-radius: 30px; */
-//   /* cursor: pointer; */
-//   /* font-family: var(--font-title); */
-//   /* font-size: 1.5rem; */
-//   /* font-weight: 700; */
-// `;
-
 export const StyledImage = styled.div`
   display: block;
   margin-left: auto;
@@ -61,13 +50,12 @@ export const StyledPaper = styled.div`
   align-items: center;
 `;
 
-
 export const StyledTitle = styled.h1`
   font-size: 1.5rem;
   font-weight: 700;
   font-family: var(--font-title);
   margin: 0 0 0px;
-  `;
+`;
 
 export const StyledUnderTitle = styled.h2`
   font-size: 0.9rem;
@@ -76,10 +64,10 @@ export const StyledUnderTitle = styled.h2`
   line-height: 2px;
   letter-spacing: 0.9px;
   text-transform: uppercase;
-  `;
+`;
 
 export const StyledBackBtn = styled(StyledUnderTitle)`
-  display:flex;
+  display: flex;
   justify-content: flex-start;
   align-items: center;
   margin: 0 0 1rem;
@@ -94,6 +82,7 @@ export const StyledChat = styled.div`
   border-radius: 50%;
   padding: 20px;
   margin: -50px 0 0 0;
+  position: relative;
 `;
 
 export const StyledChatIcon = styled(CommentIcon)`
@@ -113,7 +102,9 @@ export const StyledAccessTimeOutlinedIcon = styled(AccessTimeOutlinedIcon)`
   font-size: 1rem;
 `;
 
-export const StyledCalendarTodayOutlinedIcon = styled(CalendarTodayOutlinedIcon)`
+export const StyledCalendarTodayOutlinedIcon = styled(
+  CalendarTodayOutlinedIcon
+)`
   margin-right: 5px;
   font-size: 1rem;
 `;
@@ -126,8 +117,10 @@ export const StyledForm = styled.form`
   grid-gap: 10px;
 `;
 
-// REMOVE & use carusel instead
-export const StyleImg = styled.img`
-  height: 32vh;
+export const StyledCarousel = styled(Carousel)`
+display: grid;
+`;
+
+export const StyledImg = styled.img`
   width: 100%;
 `;
