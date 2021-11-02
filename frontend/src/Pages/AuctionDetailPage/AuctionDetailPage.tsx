@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useHistory } from 'react-router-dom'
-import { useAuction } from '../../Contexts/AuctionContext';
-import { useBid } from '../../Contexts/BidContext';
-import { useAuth } from '../../Contexts/AuthContext';
+import { useHistory } from "react-router-dom";
+import { useAuction } from "../../Contexts/AuctionContext";
+import { useBid } from "../../Contexts/BidContext";
+import { useAuth } from "../../Contexts/AuthContext";
 import { Auction } from "../../Interfaces/Interfaces";
 import Grid from '@mui/material/Grid';
 import SkeletonCard from '../../Components/SkeletonCard/SkeletonCard';
@@ -29,6 +29,8 @@ import {
   StyledAccessTimeOutlinedIcon,
   StyledCalendarTodayOutlinedIcon,
   StyledForm,
+  StyledWarning,
+  StyledWarningPrice,
   StyledImg,
   StyledCarousel,
 } from "./StyledAuctionDetailPage";
@@ -40,30 +42,30 @@ const AuctionDetailPage = () => {
   const { getAuctionById } = useAuction();
   const { createBid } = useBid();
   const { whoAmI } = useAuth();
-  
+
   const [auction, setAuction] = useState<Auction | undefined>();
   const [bid, setBid] = useState<string>("");
   const [currentBid, setCurrentBid] = useState<number>(0);
   const [endDate, setEndDate] = useState<string>();
   const [endTime, setEndTime] = useState<string>();
-  const [bidText, setBidText] = useState<string>('');
+  const [bidText, setBidText] = useState<string>("");
   const [isHost, setIsHost] = useState<boolean>(false);
+  const [isOverPrice, setIsOverPrice] = useState(false);
 
   useEffect(() => {
     handleGetAuctionById();
   }, []);
-
-
+  
   const handleGetAuctionById = async () => {
     const res = await getAuctionById(id);
-    setAuction(res)
-    setEndDate(new Date(res.endDate).toLocaleDateString('sv-SV'))
-    setEndTime(new Date(res.endDate).toLocaleTimeString('sv-SV'))
+    setAuction(res);
+    setEndDate(new Date(res.endDate).toLocaleDateString("sv-SV"));
+    setEndTime(new Date(res.endDate).toLocaleTimeString("sv-SV"));
 
     if (whoAmI && whoAmI.id == res.host.id) {
       setIsHost(true);
     }
-    
+
     if (res.bids.length) {
       setCurrentBid(res.bids.pop(res.bids.length - 1).price);
       setBidText("Högsta budet");
@@ -71,11 +73,16 @@ const AuctionDetailPage = () => {
       setCurrentBid(res.startPrice);
       setBidText("Startpris");
     }
-  }
+  };
 
   const handleBid = async (e: any) => {
-    e.preventDefault()
+    e.preventDefault();
     if (whoAmI == null) return;
+    if (parseInt(bid) > currentBid * 2 && !isOverPrice) {
+      setIsOverPrice(true);
+      return;
+    }
+    setIsOverPrice(false);
 
     const newBid = {
       userId: whoAmI.id,
@@ -94,6 +101,30 @@ const AuctionDetailPage = () => {
     console.log("I want to chat with the seller");
   };
 
+  const renderBidContent = (
+    <>
+      {!isOverPrice ? (
+        <InputField
+          label="Lägg ett bud"
+          type="number"
+          value={bid}
+          updateState={setBid}
+        />
+      ) : (
+        <ButtonComp
+          label="Nej"
+          callback={() => setIsOverPrice(false)}
+          disabled={isHost}
+          costumBackgroundColor="crimson"
+        />
+      )}
+      {!isOverPrice ? (
+        <ButtonComp label="Buda" callback={handleBid} disabled={isHost} />
+      ) : (
+        <ButtonComp label="Ja" callback={handleBid} disabled={isHost} />
+      )}
+    </>
+  )  
   const renderCarousel = (
       <StyledCarousel
         initialActiveIndex={0}
@@ -103,7 +134,7 @@ const AuctionDetailPage = () => {
         pagination={false}
       >
         {images.map((img) => (
-          <StyledImg src={img.path} />
+          <StyledImg key={img.path} src={img.path} />
         ))}
       </StyledCarousel>
   );
@@ -160,11 +191,20 @@ const AuctionDetailPage = () => {
             <Grid item xs={12} md={12}>
               #tags
             </Grid>
-            <StyledForm >
-              <InputField label="Lägg ett bud" type="number" value={bid} updateState={setBid} />
-              <ButtonComp label="Buda" callback={handleBid} disabled={isHost} />
+            <Grid item xs={12} md={12}>
+              {isOverPrice && (
+                <StyledWarning>
+                  Är du säker? Ditt bud är
+                  <StyledWarningPrice> {bid}</StyledWarningPrice> SEK
+                </StyledWarning>
+              )}
+            </Grid>
+            <StyledForm warning={isOverPrice ? isOverPrice : false}>
+              {renderBidContent}
             </StyledForm>
-          </Grid></>)}
+          </Grid>
+        </>
+      )}
     </StyledWrapper>
   );
 };
