@@ -34,6 +34,10 @@ import {
 const AuctionDetailPage = () => {
   const { id }: any = useParams();
   const history = useHistory();
+
+  const { getAuctionById } = useAuction();
+  const { createBid } = useBid();
+  const { whoAmI } = useAuth();
   
   const [auction, setAuction] = useState<Auction | undefined>();
   const [bid, setBid] = useState<string>('');
@@ -41,23 +45,20 @@ const AuctionDetailPage = () => {
   const [endDate, setEndDate] = useState<string>();
   const [endTime, setEndTime] = useState<string>();
   const [bidText, setBidText] = useState<string>('');
-  const [isHost, setIsHost] = useState(false);
-
-  const { getAuctionById } = useAuction();
-  const { createBid } = useBid();
-  const { whoAmI } = useAuth();
+  const [isHost, setIsHost] = useState<boolean>(false);
 
   useEffect(() => {
     handleGetAuctionById();
   }, [])
+
 
   const handleGetAuctionById = async () => {
     const res = await getAuctionById(id);
     setAuction(res)
     setEndDate(new Date(res.endDate).toLocaleDateString('sv-SV'))
     setEndTime(new Date(res.endDate).toLocaleTimeString('sv-SV'))
-    
-    if (res.host.id == whoAmI.id) {
+
+    if (whoAmI && whoAmI.id == res.host.id) {
       setIsHost(true);
     }
     
@@ -68,7 +69,6 @@ const AuctionDetailPage = () => {
       setCurrentBid(res.startPrice)
       setBidText('Startpris')
     }
-
   }
 
   const handleBid = async (e: any) => {
