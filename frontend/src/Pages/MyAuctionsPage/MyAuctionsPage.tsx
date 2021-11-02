@@ -89,7 +89,7 @@ function MyAuctionsPage() {
         </StyledBackBtn>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Card>
+            <Card elevation={expandedCurr ? 0 : 1}>
               <StyledCardCurr isExpanded={expandedCurr}>
                 <MyAuctionsCard title="Pågående auktioner"
                   expandState={expandedCurr}
@@ -101,7 +101,7 @@ function MyAuctionsPage() {
           </Grid>
           
           <Grid item xs={12}>
-            <Card>
+            <Card elevation={expandedSold ? 0 : 1}>
               <StyledCardSold isExpanded={expandedSold}>
                 <MyAuctionsCard title="Sålda auktioner"
                   expandState={expandedSold}
@@ -113,7 +113,7 @@ function MyAuctionsPage() {
           </Grid>
 
           <Grid item xs={12}>
-            <Card>
+            <Card elevation={expandedNoSold ? 0 : 1}>
               <StyledCardNoSold isExpanded={expandedNoSold}>
                 <MyAuctionsCard title="Inte sålda auktioner"
                   expandState={expandedNoSold}

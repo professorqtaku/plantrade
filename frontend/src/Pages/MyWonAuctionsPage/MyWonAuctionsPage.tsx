@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { useAuction } from '../../Contexts/AuctionContext';
 import { useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
-import { StyledCardUnpaid, StyledCardPaid } from './StyledMyWonAuctionsPage';
+import { StyledCardUnpaid, StyledCardPaid} from './StyledMyWonAuctionsPage';
 import Card from '@mui/material/Card';
 import MyAuctionsCard from '../../Components/MyAuctions/MyAuctionsCard';
 import { Auction } from '../../Interfaces/Interfaces';
@@ -60,7 +60,7 @@ function MyWonAuctionsPage() {
 
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Card>
+            <Card elevation={expandedUnpaid ? 0 : 1}>
               <StyledCardUnpaid isExpanded={expandedUnpaid}>
                 <MyAuctionsCard title="Obetalda auktioner"
                   expandState={expandedUnpaid}
@@ -72,7 +72,7 @@ function MyWonAuctionsPage() {
           </Grid>
           
           <Grid item xs={12}>
-            <Card>
+            <Card elevation={expandedPaid ? 0 : 1}>
               <StyledCardPaid isExpanded={expandedPaid}>
                 <MyAuctionsCard title="Betalda auktioner"
                   expandState={expandedPaid}
