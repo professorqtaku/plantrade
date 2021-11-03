@@ -2,11 +2,12 @@ import { BaseSyntheticEvent } from 'react'
 import { Autocomplete, Checkbox, TextField } from "@mui/material";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import { Category } from '../../Interfaces/Interfaces';
 
 interface Props {
-  options: string[];
+  options: Category[];
   label?: string;
-  selected: string[];
+  selected: Category[];
   setSelected: Function;
   limitTags?: number;
 }
@@ -21,7 +22,7 @@ const SelectCheckbox = ({
   limitTags,
   selected,
 }: Props) => {
-  const handleChange = (event: BaseSyntheticEvent, value: string[]) => {
+  const handleChange = (event: BaseSyntheticEvent, value: Category[]) => {
     setSelected(value);
   };
 
@@ -33,7 +34,7 @@ const SelectCheckbox = ({
       onChange={(event, value) => handleChange(event, value)}
       disableCloseOnSelect
       defaultValue={selected}
-      getOptionLabel={(option) => option}
+      getOptionLabel={(option) => option.name}
       renderOption={(props, option, { selected }) => (
         <li {...props}>
           <Checkbox
@@ -43,7 +44,7 @@ const SelectCheckbox = ({
             style={{ marginRight: 8 }}
             checked={selected}
           />
-          {option}
+          {option.name}
         </li>
       )}
       renderInput={(params) => <TextField {...params} label={label} />}

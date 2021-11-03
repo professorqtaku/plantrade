@@ -27,6 +27,8 @@ public class AuctionService {
 
     @Autowired
     private UploadImagesService uploadImagesService;
+
+    @Autowired
     private SearchService searchService;
 
     public List<Auction> getAllOpenAuctions(Status status) {

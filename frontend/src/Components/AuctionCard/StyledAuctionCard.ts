@@ -2,7 +2,6 @@ import styled from "styled-components";
 import Card from "@mui/material/Card";
 import Avatar from "@mui/material/Avatar";
 import CardContent from "@mui/material/CardContent";
-import { Button } from "@mui/material";
 
 export const StyledCard = styled(Card)`
   max-width: 90%;

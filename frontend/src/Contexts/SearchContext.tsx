@@ -1,6 +1,7 @@
-import React, { createContext, FC, useContext, useState } from 'react'
-import { SearchObject } from '../Utils/types';
-import { Auction } from '../Interfaces/Interfaces';
+import React, { createContext, FC, useContext, useState } from "react";
+import { SearchObject, Status, status } from "../Utils/types";
+import { Auction, Category } from "../Interfaces/Interfaces";
+import { HOUR_IN_DAY } from "../Components/AuctionCard/auctionUtils";
 
 type Props = {
   children?: JSX.Element;
@@ -12,23 +13,21 @@ export const useSearch = () => useContext(SearchContext);
 
 const SearchProvider: FC<Props> = ({ children }: Props) => {
   const [searchText, setSearchText] = useState<string>("");
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedHours, setSelectedHours] = useState<number>(HOUR_IN_DAY);
+  const [selectedStatus, setSelectedStatus] = useState<Status>(status[0]);
 
   const getAuctionsByOptions = async (option: SearchObject) => {
     if (option.title.trim().length <= 0) {
       return [];
     }
 
-    let categoryQuery: string = '';
-    if (option.categories && option.categories.length > 0) {
-      categoryQuery = '&category=' + encodeURI(option.categories.join(" "));
-    }
-    
-    let statusQuery: string = '';
-    if (option.status) {
-      statusQuery = '&status=' + encodeURI(option.status.status)
-    }
+    let categoryQuery: string = getCategoryQuery(option.categories);
+    let statusQuery: string = getStatusQuery(option.status);
 
-    let res: Response = await fetch(`/rest/auctions/search?title=${option.title}${categoryQuery}${statusQuery}`);
+    let res: Response = await fetch(
+      `/rest/auctions/search?title=${option.title}${categoryQuery}${statusQuery}`
+    );
     if (res.ok && res.status == 200) {
       let newAuctions: Array<Auction> = await res.json();
       return newAuctions;
@@ -36,18 +35,42 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
     return [];
   };
 
+  const getCategoryQuery = (categories: Category[] | any) => {
+    let query: string = "";
+    if (categories) {
+      for (let cat of categories) {
+        if (query.length <= 0) {
+          query = `&category=${cat.name}`;
+        } else {
+          query += encodeURI(` ${cat.name}`);
+        }
+      }
+    }
+    return query;
+  };
+  const getStatusQuery = (status: Status | any) => {
+    let query: string = "";
+    if (status) {
+      query = "&status=" + encodeURI(status.status);
+    }
+    return query;
+  };
+
   const value = {
     searchText,
     setSearchText,
+    selectedCategories,
+    setSelectedCategories,
+    selectedHours,
+    setSelectedHours,
+    selectedStatus,
+    setSelectedStatus,
     getAuctionsByOptions,
   };
 
-
   return (
-    <SearchContext.Provider value={value}>
-      {children}
-    </SearchContext.Provider>
-  )
-}
+    <SearchContext.Provider value={value}>{children}</SearchContext.Provider>
+  );
+};
 
-export default SearchProvider
+export default SearchProvider;

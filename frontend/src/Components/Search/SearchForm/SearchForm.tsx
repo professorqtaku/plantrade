@@ -1,53 +1,56 @@
-import { BaseSyntheticEvent, useState } from 'react'
-import { useHistory } from 'react-router-dom';
-import { useAuction } from '../../../Contexts/AuctionContext';
-import { useSearch } from '../../../Contexts/SearchContext';
-import SearchField from '../SearchField/SearchField';
-import FilterCollapse from '../FilterCollapse/FilterCollapse';
-import { StyledForm } from './StyledSearchForm';
-import { HOUR_IN_DAY } from '../../AuctionCard/auctionUtils';
-import { Status, status, Auction, SearchObject } from '../../../Utils/types'
+import { BaseSyntheticEvent, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { useAuction } from "../../../Contexts/AuctionContext";
+import { useSearch } from "../../../Contexts/SearchContext";
+import SearchField from "../SearchField/SearchField";
+import FilterCollapse from "../FilterCollapse/FilterCollapse";
+import { StyledForm } from "./StyledSearchForm";
+import { SearchObject } from "../../../Utils/types";
+import { Auction } from "../../../Interfaces/Interfaces";
 
 type Props = {
   searchWord?: string;
-}
+};
 
-const SearchForm = ({searchWord}: Props) => {
-
-  const { getAuctionsByOptions, getAuctionsByTitles, searchText, setSearchText } = useSearch();
+const SearchForm = ({ searchWord }: Props) => {
+  const {
+    getAuctionsByOptions,
+    searchText,
+    setSearchText,
+    selectedCategories,
+    setSelectedCategories,
+    selectedHours,
+    setSelectedHours,
+    selectedStatus,
+    setSelectedStatus,
+  } = useSearch();
   const { setAuctions, getAllAuctions } = useAuction();
   const history = useHistory();
+  const [showFilter, setShowFilter] = useState<boolean>(false);
 
-  const [ selectedCategories, setSelectedCategories ] = useState<string[]>([]);
-  const [ hours, setHours ] = useState<number>(HOUR_IN_DAY);
-  const [ selectedStatus, setSelectedStatus ] = useState<Status>(status[0]);
-  const [ showFilter, setShowFilter ] = useState<boolean>(false);
-  
-  const toggleFilter = () => setShowFilter(!showFilter)
+  const toggleFilter = () => setShowFilter(!showFilter);
 
   const search = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
-    await history.push('/auctions')
+    await history.push("/auctions");
     if (searchText.trim().length > 0) {
-      let auctions: Array<Auction> = await getAuctionsByTitles(searchText ? searchText : searchWord);
       let option: SearchObject = {
-        title: searchText,
+        title: searchText ? searchText : searchWord,
         categories: selectedCategories,
-        hours: hours,
+        hours: selectedHours,
         status: selectedStatus,
       };
-    
+
       if (searchText.trim().length > 0) {
         let auctions: Array<Auction> = await getAuctionsByOptions(option);
-      
+
         setAuctions(auctions);
-      }
-      else {
+      } else {
         await getAllAuctions();
       }
       setShowFilter(false);
     }
-  }
+  };
 
   return (
     <StyledForm onSubmit={search}>
@@ -61,8 +64,8 @@ const SearchForm = ({searchWord}: Props) => {
         <FilterCollapse
           isOpen={showFilter}
           toggle={toggleFilter}
-          hours={hours}
-          setHours={setHours}
+          hours={selectedHours}
+          setHours={setSelectedHours}
           selectedStatus={selectedStatus}
           setSelectedStatus={setSelectedStatus}
           selectedCategories={selectedCategories}
@@ -71,6 +74,6 @@ const SearchForm = ({searchWord}: Props) => {
       </div>
     </StyledForm>
   );
-}
+};
 
 export default SearchForm;

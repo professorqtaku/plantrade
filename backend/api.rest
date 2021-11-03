@@ -60,7 +60,7 @@ Content-Type: application/json
 }
 
 ### get auctions by title
-GET http://localhost:4000/rest/auctions/search?title=blomma
+GET http://localhost:4000/rest/auctions/search?title=test
 
 ### get auctions by title and category
 GET http://localhost:4000/rest/auctions/search?title=blomma&category=Blomma%20Träd
