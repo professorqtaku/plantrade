@@ -50,7 +50,7 @@ const SearchForm = ({searchWord}: Props) => {
   }
 
   return (
-    <StyledForm onSubmit={search}>
+    <StyledForm autoComplete="off" onSubmit={search}>
       <div>
         <SearchField
           searchText={searchText}
