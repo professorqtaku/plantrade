@@ -1,7 +1,9 @@
+import { Category } from "../Interfaces/Interfaces"
+
 export type SearchObject = {
   title: string,
   hours?: number,
-  categories?: string[],
+  categories?: Category[],
   status?: Status
 }
 

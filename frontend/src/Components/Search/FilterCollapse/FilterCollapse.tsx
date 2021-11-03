@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import { Box } from "@mui/material";
 import {
   StyledCollapse,
@@ -6,12 +6,12 @@ import {
   StyledTitle,
   StyledIconButton,
 } from "./StyledFilterCollapse";
-import SelectCheckbox from '../../SelectCheckbox/SelectCheckbox';
-import InputField from '../../InputField/InputField';
-import SelectRadio from '../../SelectRadio/SelectRadio';
+import SelectCheckbox from "../../SelectCheckbox/SelectCheckbox";
+import InputField from "../../InputField/InputField";
+import SelectRadio from "../../SelectRadio/SelectRadio";
 import CloseIcon from "@mui/icons-material/Close";
-import { Status, status } from '../../../Utils/types';
-
+import { Status, status } from "../../../Utils/types";
+import { useCategory } from "../../../Contexts/CategoryContext";
 
 interface Props {
   isOpen: boolean;
@@ -24,9 +24,6 @@ interface Props {
   setSelectedCategories: Function;
 }
 
-// shall be replaced with categories from db
-const categories = ["Blomma", "Träd", "Stickling", "Frö", "Buske"];
-
 function FilterCollapse({
   isOpen,
   toggle,
@@ -37,7 +34,7 @@ function FilterCollapse({
   selectedCategories,
   setSelectedCategories,
 }: Props) {
-
+  const { allCategories } = useCategory();
   return (
     <StyledCollapse in={isOpen} timeout="auto" unmountOnExit>
       <StyledDiv>
@@ -47,7 +44,7 @@ function FilterCollapse({
         <Box>
           <StyledTitle>KATEGORIER</StyledTitle>
           <SelectCheckbox
-            options={categories}
+            options={allCategories}
             selected={selectedCategories}
             setSelected={setSelectedCategories}
             limitTags={1} // 1 for now (console.log)
