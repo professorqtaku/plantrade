@@ -22,6 +22,8 @@ public class AuctionService {
     @Autowired
     private ImageService imageService;
 
+    @Autowired
+    private UserService userService;
 
     public List<Auction> getAllOpenAuctions(Status status) {
         List<Auction> openAuctions = auctionRepository.findByStatus(status);
@@ -39,7 +41,11 @@ public class AuctionService {
         return auctionRepository.findByStatus(status);
     }
     
-    public Auction createAuction(Auction auction, List<Category> categories, List<MultipartFile> files, User user) {
+    public Auction createAuction(Auction auction, List<Category> categories, List<MultipartFile> files) {
+        User user = userService.findCurrentUser();
+        if (user == null) {
+            return null;
+        }
         Date date = new Date();
         var inputDate = auction.getEndDate().getTime();
         if(Long.toString(inputDate).length() < 13) {
@@ -78,11 +84,19 @@ public class AuctionService {
         return auctionRepository.findById(id);
     }
 
-    public List<Auction> getAuctionsByCurrentUser(User user) {
+    public List<Auction> getAuctionsByCurrentUser() {
+        User user = userService.findCurrentUser();
+        if(user == null) {
+            return null;
+        }
         return auctionRepository.findByHost(user);
     }
 
-    public List<Auction> getWonAuctionsByCurrentUser(User user) {
+    public List<Auction> getWonAuctionsByCurrentUser() {
+        User user = userService.findCurrentUser();
+        if(user == null) {
+            return null;
+        }
         return auctionRepository.findByWinner(user);
     }
 }
