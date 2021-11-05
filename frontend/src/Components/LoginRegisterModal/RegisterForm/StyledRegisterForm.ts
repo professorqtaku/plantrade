@@ -68,7 +68,7 @@ export const StyledTitle = styled.p`
   letter-spacing: 1.5px;
 `;
 
-export const StyledText = styled.p`
+export const StyledWarningText = styled.p`
   color: red;
   text-align: center;
   margin: 0;
