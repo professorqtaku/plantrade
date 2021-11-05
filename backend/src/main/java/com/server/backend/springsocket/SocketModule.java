@@ -14,7 +14,6 @@ public class SocketModule {
     public SocketModule() {
         // prevent accidental starting multiple servers
         if(server != null) return;
-
         Configuration config = new Configuration();
         // update host in production
         config.setHostname("0.0.0.0"); // default is "localhost"
@@ -26,7 +25,7 @@ public class SocketModule {
         server.addDisconnectListener(onDisconnected());
 
         // add custom message event listeners (ChatMessage gets stringified/parsed automatically)
-        server.addEventListener("chat", ChatMessage.class, onChatReceived());
+        //server.addEventListener("chat", ChatMessage.class, onChatReceived());
 
         // add room support (the data is the room name)
         server.addEventListener("join", String.class, onJoinRoom());
@@ -38,6 +37,7 @@ public class SocketModule {
 
     // method to emit message to all connected clients
     public void emit(String event, Object data) {
+        System.out.println("here");
         server.getBroadcastOperations().sendEvent(event, data);
     }
 
@@ -46,14 +46,14 @@ public class SocketModule {
         server.getRoomOperations(room).sendEvent(event, data);
     }
 
-    private DataListener<ChatMessage> onChatReceived() {
-        return (client, data, ackSender) -> {
-            System.out.printf("Client[%s] - Received chat message '%s'\n", client.getSessionId().toString(), data);
+    //private DataListener<ChatMessage> onChatReceived() {
+        //return (client, data, ackSender) -> {
+            //System.out.printf("Client[%s] - Received chat message '%s'\n", client.getSessionId().toString(), data);
 
             // send message to all connected clients
-            emit("chat", data);
-        };
-    }
+            //emit("chat", data);
+        //};
+    //}
 
     private DataListener<String> onJoinRoom() {
         return (client, roomName, ackSender) -> {
@@ -79,13 +79,13 @@ public class SocketModule {
 
     private ConnectListener onConnected() {
         return client -> {
-            System.out.printf("Client[%s] - Connected to chat module.\n", client.getSessionId().toString());
+            System.out.printf("Client[%s] - Has connected\n", client.getSessionId().toString());
         };
     }
 
     private DisconnectListener onDisconnected() {
         return client -> {
-            System.out.printf("Client[%s] - Disconnected from chat module.\n", client.getSessionId().toString());
+            System.out.printf("Client[%s] - Disconnected\n", client.getSessionId().toString());
         };
     }
 
