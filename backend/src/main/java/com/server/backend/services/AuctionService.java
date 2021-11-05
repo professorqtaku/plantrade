@@ -99,4 +99,5 @@ public class AuctionService {
         }
         return auctionRepository.findByWinner(user);
     }
+
 }
