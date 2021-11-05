@@ -54,6 +54,7 @@ const RegisterForm = ({ toggleRegister }: Props) => {
           <StyledEmailIcon />
           <InputField
             value={email}
+            type="email"
             label="email"
             updateState={(e) => setEmail(e)}
             required
