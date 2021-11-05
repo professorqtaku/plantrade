@@ -1,5 +1,6 @@
 package com.server.backend.services;
 
+import com.server.backend.Utilities;
 import com.server.backend.configs.MyUserDetailsService;
 import com.server.backend.entities.User;
 import com.server.backend.repositories.UserRepository;
@@ -16,7 +17,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
 
@@ -31,7 +33,6 @@ public class UserService {
     @Resource(name = "authenticationManager")
     private AuthenticationManager authManager;
 
-
     public User findCurrentUser(){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return userRepository.findByUsernameIgnoreCase(username);
@@ -44,6 +45,16 @@ public class UserService {
             return myUserDetailsService.addUser(user);
         }
             return null;
+    }
+
+    public Optional<User> getUserById(long id) {
+        return userRepository.findById(id);
+    }
+
+    public User updateUser(Map values) {
+        User user = findCurrentUser();
+        Utilities.updatePrivateFields(user, values);
+        return userRepository.save(user);
     }
 
 
