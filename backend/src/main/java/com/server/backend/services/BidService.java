@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class BidService {
@@ -89,5 +90,17 @@ public class BidService {
       }
     }
     return null;
+  }
+
+  public Optional<Bid> getHighestBid(long id) {
+    Auction auction = auctionRepository.findById((long) (int) id).get();
+
+    if (auction.getBids().isEmpty()) {
+      return Optional.empty();
+    } else {
+      int index = auction.getBids().size();
+      long bidId = auction.getBids().get(index -1).getId();
+      return bidRepository.findById(bidId);
+    }
   }
 }
