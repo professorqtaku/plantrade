@@ -3,6 +3,9 @@ package com.server.backend.services;
 import com.server.backend.entities.*;
 import com.server.backend.repositories.AuctionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,7 +25,14 @@ public class AuctionService {
     private UserService userService;
 
     public List<Auction> getAllOpenAuctions(Status status) {
-        List<Auction> openAuctions = auctionRepository.findByStatus(status);
+        // How page and size works in Pageable:
+        // at page 0 (first page), size should be the number of items you want to show
+        // at page 1, size should be the same as at page 0 because it counts it as offset
+        // aka if size is 3 at page 1, it will show the next 3 items (ex id 4 to 6)
+        // at page 2 and so on, size should add the number of elements size was at page 0,
+        // aka if size is 3 at page 0, size should be 6 at page 2, size 9 at page 3, size 12 at page 4 etc
+        Pageable pageable = PageRequest.of(2, 6, Sort.by(Sort.Order.asc("id")));
+        List<Auction> openAuctions = auctionRepository.findByStatus(status, pageable);
         Date date = new Date();
         for(Auction auction : openAuctions) {
             if(auction.getEndDate().getTime() < date.getTime()){
@@ -34,7 +44,7 @@ public class AuctionService {
                 auctionRepository.save(auction);
             }
         }
-        return auctionRepository.findByStatus(status);
+        return auctionRepository.findByStatus(status, pageable);
     }
     
     public Auction createAuction(Auction auction, List<Category> categories, List<MultipartFile> files) {
