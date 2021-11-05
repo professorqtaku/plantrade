@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/rest/auctions")
+@RequestMapping("/api/auctions")
 public class SearchController {
+
     @Autowired
     private SearchService searchService;
 
