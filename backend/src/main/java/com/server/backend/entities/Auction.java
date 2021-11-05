@@ -1,5 +1,6 @@
 package com.server.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import lombok.AllArgsConstructor;
@@ -23,25 +24,22 @@ public class Auction {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @ManyToOne
+    @JsonIncludeProperties({"id", "username"})
+    private User host, winner;
+
     @Column(nullable = false)
     private String title;
 
     @Column(nullable = false)
     private String description;
+
     private double startPrice;
+    private Date endDate;
 
     @Enumerated(EnumType.STRING)
     @Column(name="status", columnDefinition = "TEXT", length=50, nullable=false, unique=false)
     private Status status;
-    private Date endDate;
-
-    @ManyToOne
-    @JsonIncludeProperties({"id", "username"})
-    private User host;
-
-    @ManyToOne
-    @JsonIncludeProperties({"id", "username"})
-    private User winner;
 
     @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
     @JoinTable(
@@ -52,7 +50,7 @@ public class Auction {
     private List<Category> categories;
 
     @OneToMany(mappedBy = "auction", cascade = CascadeType.REMOVE)
-    @JsonIgnoreProperties({"auction"})
+    @JsonIgnore
     private List<Bid> bids;
 
     @OneToMany(mappedBy = "auction", cascade = CascadeType.REMOVE)

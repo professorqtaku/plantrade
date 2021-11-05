@@ -3,14 +3,20 @@ package com.server.backend.services;
 import com.server.backend.entities.Auction;
 import com.server.backend.entities.Status;
 import com.server.backend.specifications.AuctionSpecification;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Objects;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 @Service
 public class SearchService {
+
+    @Autowired
+    private AuctionService auctionService;
 
     public Specification<Auction> getTitleSpecification(List<String> words) {
         Specification<Auction> wordSpecification = null;
@@ -40,6 +46,41 @@ public class SearchService {
             }
         }
         return categorySpecification;
+    }
+
+    public List<Auction> getAuctionByTitleAndStatusAndCategory(String title, Status status, String categoryName) {
+        try{
+            title = URLDecoder.decode(title, StandardCharsets.UTF_8.name());
+            List<String> words = Arrays.asList(title.split(" "));
+            List<String> categoryNames = new ArrayList<>();
+
+            if (categoryName != null) {
+                categoryName = URLDecoder.decode(categoryName, StandardCharsets.UTF_8.name());
+                categoryNames = Arrays.asList(categoryName.split(" "));
+            }
+
+            return getAuctionByTitleAndStatusAndCategory(words, status, categoryNames);
+        } catch (UnsupportedEncodingException e) {
+            return null;
+        }
+    }
+
+    public List<Auction> getAuctionByTitleAndStatusAndCategory(List<String> words, Status status, List<String> categoryNames) {
+        if(words.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        Specification<Auction> wordSpecification = getTitleSpecification(words);
+        Specification<Auction> statusSpecification = getStatusSpecification(status);
+        Specification<Auction> categorySpecification = getCategorySpecification(categoryNames);
+
+        Specification<Auction> totalSpecification = Specification.where(wordSpecification).and(statusSpecification);
+
+        if (categorySpecification != null) {
+            totalSpecification = totalSpecification.and(categorySpecification);
+        }
+
+        return auctionService.findAll(totalSpecification);
     }
 
 
