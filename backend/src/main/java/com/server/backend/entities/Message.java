@@ -1,5 +1,6 @@
 package com.server.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,6 +31,6 @@ public class Message {
 
 //    private Long chatId;
     @OneToOne(fetch = FetchType.EAGER) // connects relation to the chat list of messages
-    @JsonIgnoreProperties("messages")
+    @JsonIgnore
     private Chat chat;
 }
