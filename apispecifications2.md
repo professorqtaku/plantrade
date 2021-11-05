@@ -6,7 +6,7 @@
 
 ### /api/bid
 #### **Method**: POST
-
+#### **Body**
 ```json
 {
   "userId": "Number",
@@ -17,7 +17,6 @@
 ```
 
 #### **Response**
-
 ```json
 {
   "id": "Number",
@@ -66,7 +65,6 @@
 
 ### /rest/categories
 #### **Method**: GET
-
 #### **Response**
 ```json
 [
@@ -91,9 +89,7 @@
 *example:*
 #### /rest/auctions/search?title=string&category=string&status=string
 #### **Method**: GET
-
 #### **Response**
-
 ```json
 [
   {
@@ -144,6 +140,91 @@
         }
       }
     ]
+  }
+]
+```
+<hr>
+
+## CHAT
+
+### /add-endpoint-create-chat
+#### **Method**: POST
+#### **Body**
+```json
+{
+  //send creator from frontend if extra validation of user is done
+  //if only findCurrentUser is used, no need to send creator from frontend
+  "creator": {
+      "id": "Number"
+    },
+  "receiver": {
+      "id": "Number"
+    },
+  "auction": {
+      "id": "Number"
+    }
+}
+```
+
+#### **Response**
+```json 
+{
+"id": "Number",
+"creator": {
+    "id": "Number",
+    "username": "string"
+  },
+"receiver": {
+    "id": "Number",
+    "username": "string"
+  },
+"auction": {
+    "id": "Number",
+    "title": "string"
+  }
+}
+```
+
+### /add-endpoint-get-chat-by-{id}
+#### **Method**: GET
+#### **Response**
+```json 
+{
+  "id": "Number",
+  "creator": {
+    "id": "Number",
+    "username": "string"
+  },
+"receiver": {
+    "id": "Number",
+    "username": "string"
+  },
+"auction": {
+    "id": "Number",
+    "title": "string"
+  }
+}
+```
+
+### /add-endpoint-get-chats-by-currentUser
+#### **Method**: GET
+#### **Response**
+```json 
+[
+  {
+  "id": "Number",
+  "creator": {
+      "id": "Number",
+      "username": "string"
+    },
+  "receiver": {
+      "id": "Number",
+      "username": "string"
+    },
+  "auction": {
+      "id": "Number",
+      "title": "string"
+    }
   }
 ]
 ```
