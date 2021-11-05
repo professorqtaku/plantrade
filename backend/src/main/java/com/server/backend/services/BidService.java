@@ -92,13 +92,7 @@ public class BidService {
     return null;
   }
 
-  public Optional<Bid> getHighestBid(long id) {
-    try {
-      Bid bid = bidRepository.findTopByAuctionIdOrderByPriceDesc(id);
-      return Optional.of(bid);
-    } catch (Exception e) {
-      e.printStackTrace();
-      return Optional.empty();
-    }
+  public Bid getHighestBid(long id) {
+    return bidRepository.findTopByAuctionIdOrderByPriceDesc(id);
   }
 }

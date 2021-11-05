@@ -29,12 +29,12 @@ public class BidController {
   }
 
   @GetMapping("/{id}/highest-bid")
-  public ResponseEntity<Optional<Bid>> getHighestBid(@PathVariable long id) {
-    Optional<Bid> bid = bidService.getHighestBid(id);
-
-    if (bid.isPresent()) {
+  public ResponseEntity<Bid> getHighestBid(@PathVariable long id) {
+    try {
+      Bid bid = bidService.getHighestBid(id);
       return ResponseEntity.ok(bid);
-    } else {
+    } catch (Exception e){
+      e.printStackTrace();
       return ResponseEntity.noContent().build();
     }
   }

@@ -70,4 +70,4 @@ GET http://localhost:4000/rest/auctions/won
 
 ### get highest bid
 
-GET http://localhost:4000/api/110/highest-bid
+GET http://localhost:4000/api/6/highest-bid
