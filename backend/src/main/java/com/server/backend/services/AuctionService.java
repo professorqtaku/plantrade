@@ -32,6 +32,10 @@ public class AuctionService {
         // at page 2 and so on, size should add the number of elements size was at page 0,
         // aka if size is 3 at page 0, size should be 6 at page 2, size 9 at page 3, size 12 at page 4 etc
         Pageable pageable = PageRequest.of(2, 6, Sort.by(Sort.Order.asc("id")));
+        // Only need to know from frontend if getOpenAuctions is called on a mount or a scroll?
+        // if scroll, handle the page and size here,
+        // if mount, set page = 0, and size default to get
+        // check johans example on pagination shieeet
         List<Auction> openAuctions = auctionRepository.findByStatus(status, pageable);
         Date date = new Date();
         for(Auction auction : openAuctions) {
