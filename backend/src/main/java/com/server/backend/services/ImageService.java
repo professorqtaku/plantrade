@@ -1,5 +1,8 @@
 package com.server.backend.services;
 
+import com.server.backend.entities.Image;
+import com.server.backend.repositories.ImageRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -9,6 +12,10 @@ import java.util.List;
 
 @Service
 public class ImageService {
+
+    @Autowired
+    private ImageRepository imageRepository;
+
     public List<String> saveFiles(List<MultipartFile> files) {
         List<String> uploadUrls = new ArrayList<>();
 
@@ -36,5 +43,9 @@ public class ImageService {
         }
 
         return uploadUrls;
+    }
+
+    public Image save(Image image) {
+        return imageRepository.save(image);
     }
 }

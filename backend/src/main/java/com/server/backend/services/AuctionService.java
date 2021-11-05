@@ -16,18 +16,12 @@ import java.util.*;
 @Service
 public class AuctionService {
 
-
     @Autowired
     private AuctionRepository auctionRepository;
 
     @Autowired
-    private ImageRepository imageRepository;
-
-    @Autowired
     private ImageService imageService;
 
-    @Autowired
-    private SearchService searchService;
 
     public List<Auction> getAllOpenAuctions(Status status) {
         List<Auction> openAuctions = auctionRepository.findByStatus(status);
@@ -70,10 +64,14 @@ public class AuctionService {
                         .path(url)
                         .auction(savedAuction)
                         .build();
-                imageRepository.save(image);
+                imageService.save(image);
             });
         }
         return savedAuction;
+    }
+
+    public List<Auction> findAll(Specification<Auction> specification) {
+        return auctionRepository.findAll(specification);
     }
 
     public Optional<Auction> getAuctionById(long id) {
@@ -82,41 +80,6 @@ public class AuctionService {
 
     public List<Auction> getAuctionsByCurrentUser(User user) {
         return auctionRepository.findByHost(user);
-    }
-
-    public List<Auction> getAuctionByTitleAndStatusAndCategory(String title, Status status, String categoryName) {
-        try{
-            title = URLDecoder.decode(title, StandardCharsets.UTF_8.name());
-            List<String> words = Arrays.asList(title.split(" "));
-            List<String> categoryNames = new ArrayList<>();
-
-            if (categoryName != null) {
-                categoryName = URLDecoder.decode(categoryName, StandardCharsets.UTF_8.name());
-                categoryNames = Arrays.asList(categoryName.split(" "));
-            }
-
-            return getAuctionByTitleAndStatusAndCategory(words, status, categoryNames);
-        } catch (UnsupportedEncodingException e) {
-            return null;
-        }
-    }
-
-    public List<Auction> getAuctionByTitleAndStatusAndCategory(List<String> words, Status status, List<String> categoryNames) {
-        if(words.isEmpty()) {
-            return Collections.emptyList();
-        }
-
-        Specification<Auction> wordSpecification = searchService.getTitleSpecification(words);
-        Specification<Auction> statusSpecification = searchService.getStatusSpecification(status);
-        Specification<Auction> categorySpecification = searchService.getCategorySpecification(categoryNames);
-
-        Specification<Auction> totalSpecification = Specification.where(wordSpecification).and(statusSpecification);
-
-        if (categorySpecification != null) {
-            totalSpecification = totalSpecification.and(categorySpecification);
-        }
-
-        return auctionRepository.findAll(totalSpecification);
     }
 
     public List<Auction> getWonAuctionsByCurrentUser(User user) {
