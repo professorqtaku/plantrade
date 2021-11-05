@@ -228,3 +228,49 @@
   }
 ]
 ```
+<hr>
+
+## MESSEGE
+### /add-endpoint/{chatId}/create-message
+#### **Method**: POST
+
+**Body**
+```json
+{
+  "writer": {
+      "id": "Number",
+    },
+  "message": "string",
+  "createdDate": "Date"
+}
+```
+#### **Response**
+```json 
+{
+  "id": "Number",
+  "writer": {
+      "id": "Number",
+      "username": "string"
+    },
+  "message": "string",
+  "createdDate": "Date"
+}
+```
+
+### /add-endpoint-get-messages-by-chat-id
+#### **Method**: GET
+
+#### **Response**
+```json 
+[
+  {
+    "id": "Number",
+    "writer": {
+      "id": "Number",
+      "username": "string"
+      },
+    "message": "string",
+    "createdDate": "Date"
+  }
+]
+```
