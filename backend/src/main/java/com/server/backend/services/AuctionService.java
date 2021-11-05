@@ -47,7 +47,7 @@ public class AuctionService {
             return null;
         }
         Date date = new Date();
-        var inputDate = auction.getEndDate().getTime();
+        long inputDate = auction.getEndDate().getTime();
         if(Long.toString(inputDate).length() < 13) {
             inputDate *= 1000;
             auction.setEndDate(new Date(inputDate));
@@ -64,7 +64,7 @@ public class AuctionService {
         Auction savedAuction = auctionRepository.save(auction);
 
         if(files != null) {
-            var urls = imageService.saveFiles(files);
+            List<String> urls = imageService.saveFiles(files);
             urls.forEach(url -> {
                 Image image = Image.builder()
                         .path(url)
