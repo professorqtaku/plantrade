@@ -26,11 +26,7 @@ public class Auction {
 
     @ManyToOne
     @JsonIncludeProperties({"id", "username"})
-    private User host;
-
-    @ManyToOne
-    @JsonIncludeProperties({"id", "username"})
-    private User winner;
+    private User host, winner;
 
     @Column(nullable = false)
     private String title;

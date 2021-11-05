@@ -26,6 +26,7 @@ public class Message {
 
     private String message;
     private Date createdDate;
+
     @Column(name="is_read", columnDefinition = "BOOLEAN", nullable=false)
     private Boolean isRead;
 
