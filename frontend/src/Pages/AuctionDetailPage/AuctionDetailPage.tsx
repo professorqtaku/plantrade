@@ -191,10 +191,10 @@ const AuctionDetailPage = () => {
             </Grid>
             <Grid item xs={12} md={12}>
               {auction.categories
-                ? auction.categories.map((c) => (
+                ? auction.categories.map(category => (
                     <StyledChip
-                      key={`${auction.id}-${c.name}`}
-                      label={`#${c.name}`}
+                      key={`${auction.id}-${category.name}`}
+                      label={`#${category.name}`}
                     />
                   ))
                 : null}
