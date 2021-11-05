@@ -3,9 +3,7 @@ package com.server.backend.services;
 import com.server.backend.entities.*;
 import com.server.backend.repositories.AuctionRepository;
 import com.server.backend.repositories.ImageRepository;
-import com.server.backend.specifications.AuctionSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,7 +24,7 @@ public class AuctionService {
     private ImageRepository imageRepository;
 
     @Autowired
-    private UploadImagesService uploadImagesService;
+    private ImageService imageService;
 
     @Autowired
     private SearchService searchService;
@@ -66,7 +64,7 @@ public class AuctionService {
         Auction savedAuction = auctionRepository.save(auction);
 
         if(files != null) {
-            var urls = uploadImagesService.saveFiles(files);
+            var urls = imageService.saveFiles(files);
             urls.forEach(url -> {
                 Image image = Image.builder()
                         .path(url)

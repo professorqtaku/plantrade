@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UploadImagesService {
+public class ImageService {
     public List<String> saveFiles(List<MultipartFile> files) {
         List<String> uploadUrls = new ArrayList<>();
 
