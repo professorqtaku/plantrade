@@ -96,7 +96,10 @@
       "id": "Number",
       "username": "string"
     },
-    "winner": null,
+    "winner": {
+      "id": "Number",
+      "username": "string"
+    },
     "categories": [
       {
         "id": "Number",
@@ -147,7 +150,10 @@
     "id": "Number",
     "username": "string"
   },
-  "winner": null,
+  "winner": {
+        "id": "Number",
+        "username": "string"
+      },
   "categories": [
     {
       "id": "Number",
@@ -217,7 +223,10 @@ files: List<MultipartFile> files
     "id": "Number",
     "username": "string"
   },
-  "winner": null,
+  "winner": {
+        "id": "Number",
+        "username": "string"
+      },
   "categories": [
     {
       "id": "Number",
@@ -246,13 +255,16 @@ files: List<MultipartFile> files
     "title": "string",
     "description": "string",
     "startPrice": "Number",
-    "status": "OPEN/NOT_SOLD/SOLD",
+    "status": "string",
     "endDate": "Date",
     "host": {
       "id": "Number",
       "username": "string"
     },
-    "winner": null,
+    "winner": {
+        "id": "Number",
+        "username": "string"
+      },
     "categories": [
       {
         "id": "Number",
