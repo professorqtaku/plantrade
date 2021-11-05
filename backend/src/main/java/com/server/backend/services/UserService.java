@@ -1,5 +1,6 @@
 package com.server.backend.services;
 
+import com.server.backend.Utilities;
 import com.server.backend.configs.MyUserDetailsService;
 import com.server.backend.entities.User;
 import com.server.backend.repositories.UserRepository;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
 
@@ -44,6 +46,12 @@ public class UserService {
             return myUserDetailsService.addUser(user);
         }
             return null;
+    }
+
+    public User updateUser(Map values) {
+        User user = findCurrentUser();
+        Utilities.updatePrivateFields(user, values);
+        return userRepository.save(user);
     }
 
 
