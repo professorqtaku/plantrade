@@ -30,10 +30,6 @@ public class User {
 
     @Column(nullable=false)
     private String password;
-
-    @OneToMany(mappedBy = "winner", fetch = FetchType.LAZY)
-    @JsonIncludeProperties({"id"})
-    private List<Auction> wonAuctions;
     
 
     @JsonIgnore
@@ -46,7 +42,4 @@ public class User {
         this.password = password;
     }
 
-    public void addWonAuction(Auction auction) {
-        this.wonAuctions.add(auction);
-    }
 }
