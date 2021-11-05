@@ -2,15 +2,11 @@ package com.server.backend.services;
 
 import com.server.backend.entities.*;
 import com.server.backend.repositories.AuctionRepository;
-import com.server.backend.repositories.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @Service
@@ -28,7 +24,7 @@ public class AuctionService {
     public List<Auction> getAllOpenAuctions(Status status) {
         List<Auction> openAuctions = auctionRepository.findByStatus(status);
         Date date = new Date();
-        for(var auction : openAuctions) {
+        for(Auction auction : openAuctions) {
             if(auction.getEndDate().getTime() < date.getTime()){
                 if(auction.getBids().size() > 0){
                     auction.setStatus(Status.SOLD);
@@ -47,7 +43,7 @@ public class AuctionService {
             return null;
         }
         Date date = new Date();
-        var inputDate = auction.getEndDate().getTime();
+        long inputDate = auction.getEndDate().getTime();
         if(Long.toString(inputDate).length() < 13) {
             inputDate *= 1000;
             auction.setEndDate(new Date(inputDate));
@@ -64,7 +60,7 @@ public class AuctionService {
         Auction savedAuction = auctionRepository.save(auction);
 
         if(files != null) {
-            var urls = imageService.saveFiles(files);
+            List<String> urls = imageService.saveFiles(files);
             urls.forEach(url -> {
                 Image image = Image.builder()
                         .path(url)
