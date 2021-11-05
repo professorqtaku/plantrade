@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.OneToOne;
 import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
@@ -93,14 +94,12 @@ public class BidService {
   }
 
   public Optional<Bid> getHighestBid(long id) {
-    Auction auction = auctionRepository.findById((long) (int) id).get();
-
-    if (auction.getBids().isEmpty()) {
+    try {
+      Bid bid = bidRepository.findTopByAuctionIdOrderByPriceDesc(id);
+      return Optional.of(bid);
+    } catch (Exception e) {
+      e.printStackTrace();
       return Optional.empty();
-    } else {
-      int index = auction.getBids().size();
-      long bidId = auction.getBids().get(index -1).getId();
-      return bidRepository.findById(bidId);
     }
   }
 }
