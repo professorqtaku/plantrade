@@ -6,6 +6,7 @@ import CategoryProvider from "./CategoryContext";
 import BidProvider from "./BidContext";
 import NavigationProvider from "./NavigationContext";
 import SnackBarProvider from "./SnackBarContext";
+import SocketProvider from "./SocketProvider";
 
 interface Props {
   children: JSX.Element;
@@ -14,21 +15,23 @@ interface Props {
 const AllContextProviders: React.FC<Props> = ({ children }) => {
   return (
     <>
-      <SnackBarProvider>
-      <CategoryProvider>
-        <AuthProvider>
-          <AuctionProvider>
-            <ModalProvider>
-              <NavigationProvider>
-                <BidProvider>
-                  <SearchProvider>{children}</SearchProvider>
-                </BidProvider>
-              </NavigationProvider>
-            </ModalProvider>
-          </AuctionProvider>
-        </AuthProvider>
-        </CategoryProvider>
-      </SnackBarProvider>
+      <SocketProvider>
+        <SnackBarProvider>
+          <CategoryProvider>
+            <AuthProvider>
+              <AuctionProvider>
+                <ModalProvider>
+                  <NavigationProvider>
+                    <BidProvider>
+                      <SearchProvider>{children}</SearchProvider>
+                    </BidProvider>
+                  </NavigationProvider>
+                </ModalProvider>
+              </AuctionProvider>
+            </AuthProvider>
+          </CategoryProvider>
+        </SnackBarProvider>
+      </SocketProvider>
     </>
   );
 };
