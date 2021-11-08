@@ -125,8 +125,3 @@ display: grid;
 export const StyledImg = styled.img`
   width: 100%;
 `;
-
-export const StyledChip = styled(Chip)`
-  color: white;
-  background-color: var(--light-green);
-`;

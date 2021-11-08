@@ -6,7 +6,7 @@ interface Props {
   categories: Category[];
   auctionId: Number;
 }
-import {  StyledChip, StyledAddIcon } from "./StyledAuctionDetailsPageCategories";
+import {  StyledChip } from "./StyledAuctionDetailsPageCategories";
 import AddIcon from "@mui/icons-material/Add";
 import { borderRadius } from "@mui/system";
 
