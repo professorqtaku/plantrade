@@ -30,7 +30,7 @@ const AuctionDetailsPageCategories = ({ categories, auctionId }: Props) => {
    {!toggleShowMore ? mapThroughAndRender(categoriesLimited) :
      mapThroughAndRender(categories)
      }
-     <ButtonComp label={!toggleShowMore ? "Visa mer" : "Dölj"} callback={() => setToggleShowMore(!toggleShowMore)} />
+     {categories.length > 2 && <ButtonComp label={!toggleShowMore ? "Visa mer" : "Dölj"} callback={() => setToggleShowMore(!toggleShowMore)} />}
      </Grid>
   )
 }
