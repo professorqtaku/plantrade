@@ -1,4 +1,4 @@
-import { createContext, FC, useContext, useState } from "react";
+import { createContext, useContext } from "react";
 import io from "socket.io-client";
 import { useAuction } from "./AuctionContext";
 

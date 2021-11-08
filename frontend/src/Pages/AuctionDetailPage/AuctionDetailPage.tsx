@@ -67,7 +67,7 @@ const AuctionDetailPage = () => {
       setIsHost(true);
     }
 
-    if (res.bids.length) {
+    if (res.bids?.length) {
       setCurrentBid(res.bids.pop(res.bids.length - 1).price);
       setBidText("Högsta budet");
     } else {
@@ -91,7 +91,8 @@ const AuctionDetailPage = () => {
       price: parseInt(bid),
       createdDate: Date.now(),
     };
-
+    console.log("VAAD?", newBid);
+    
     await createBid(newBid);
     //rerender the new currently highest bid
     handleGetAuctionById();

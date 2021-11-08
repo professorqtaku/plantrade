@@ -50,7 +50,7 @@ public class Auction {
     private List<Category> categories;
 
     @OneToMany(mappedBy = "auction", cascade = CascadeType.REMOVE)
-    @JsonIgnore
+    @JsonIgnoreProperties({"auction"})
     private List<Bid> bids;
 
     @OneToMany(mappedBy = "auction", cascade = CascadeType.REMOVE)
