@@ -37,7 +37,6 @@ public class ChatController {
             return ResponseEntity.ok(chats);
         }
         catch (Exception e) {
-            System.out.println(e);
             return ResponseEntity.badRequest().build();
         }
     }

@@ -7,7 +7,9 @@ import com.server.backend.repositories.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -35,11 +37,9 @@ public class MessageService {
         if (chat.getCreator() == currentUser || chat.getReceiver() == currentUser) {
             message.setWriter(currentUser);
             message.setChat(chat);
+            message.setCreatedDate(new Date());
             if (message.getIsRead() == null) {
                 message.setIsRead(false);
-            }
-            if (message.getCreatedDate() == null) {
-                message.setCreatedDate(new Date());
             }
             return saveMessage(message);
         }
@@ -49,4 +49,22 @@ public class MessageService {
     public Message saveMessage(Message message) {
         return messageRepository.save(message);
     }
+
+    public List<Message> getAllByChatId(long chatId) {
+        User currentUser = userService.findCurrentUser();
+        if (currentUser == null) {
+            return null;
+        }
+
+        Optional<Chat> chatOptional = chatService.getById(chatId);
+        if (chatOptional.isEmpty()) {
+            return null;
+        }
+        Chat chat = chatOptional.get();
+        if (chat.getCreator() == currentUser || chat.getReceiver() == currentUser) {
+            return messageRepository.findAllByChatIdOrderByCreatedDateAsc(chatId);
+        }
+        return null;
+    }
+
 }
