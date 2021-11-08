@@ -42,7 +42,7 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
     } else {
       setBid(auction.startPrice);
     }
-  }, [])
+  }, [auction.bids])
   
   useEffect(() => {
     handleQuickBid();
