@@ -35,10 +35,12 @@ import {
   StyledCarousel,
   StyledChip,
 } from "./StyledAuctionDetailPage";
+import { useSocket } from "../../Contexts/SocketContext";
 
 const AuctionDetailPage = () => {
   const { id }: any = useParams();
   const history = useHistory();
+  const { socket } = useSocket();
 
   const { getAuctionById } = useAuction();
   const { createBid } = useBid();
@@ -92,9 +94,12 @@ const AuctionDetailPage = () => {
       createdDate: Date.now(),
     };
     
-    await createBid(newBid);
-    //rerender the new currently highest bid
-    handleGetAuctionById();
+    const createdBid = await createBid(newBid);
+    if (createdBid) {
+      socket.emit("join", id);
+    }
+      //rerender the new currently highest bid
+      handleGetAuctionById();
     setBid("");
   };
 

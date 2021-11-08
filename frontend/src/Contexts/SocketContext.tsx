@@ -27,6 +27,9 @@ const SocketProvider = ({ children }: Props) => {
     console.log("Reconnecting");
   });
 
+   socket.on("join", (data:any) => {
+     console.log("Connected to room", data);
+   });
 
   const values = {
     socket,
