@@ -2,7 +2,8 @@ import {
   StyledWrapper,
   StyledForm,
   StyledTitle,
-  StyledButton
+  StyledButton,
+  StyledText,
 } from "./StyledCreateAuctionPage";
 import AuctionDatePicker from "../../Components/AuctionDatePicker/AuctionDatePicker";
 import SelectBar from "../../Components/SelectBar/SelectBar";
@@ -94,8 +95,18 @@ const CreateAuctionPage = () => {
     <StyledWrapper>
       <StyledTitle>Skapa auktion</StyledTitle>
       <StyledForm onSubmit={handleAddAuction}>
-        <InputField required label="Titel" value={title} updateState={setTitle} />
-        <InputField required label="Beskrivning" value={desc} updateState={setDesc} />
+        <InputField
+          required
+          label="Titel"
+          value={title}
+          updateState={setTitle}
+        />
+        <InputField
+          required
+          label="Beskrivning"
+          value={desc}
+          updateState={setDesc}
+        />
         <InputField
           required
           label="Start pris"
@@ -103,12 +114,16 @@ const CreateAuctionPage = () => {
           value={price}
           updateState={setPrice}
         />
-        <AuctionDatePicker endDate={setEndDate} />
-        <SelectBar setCategoriesToUse={
-          setCategoriesToUse
-        } />
+        <label>
+          <StyledText>Välj ett slutdatum</StyledText>
+          <AuctionDatePicker endDate={setEndDate} />
+        </label>
+        <SelectBar setCategoriesToUse={setCategoriesToUse} />
         {renderUploadFiles()}
-        <StyledButton type="submit" variant="contained"> Skapa auktion </StyledButton>
+        <StyledButton type="submit" variant="contained">
+          {" "}
+          Skapa auktion{" "}
+        </StyledButton>
       </StyledForm>
     </StyledWrapper>
   );
