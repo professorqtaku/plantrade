@@ -26,32 +26,27 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
   const [differenceInMillis, setDifferenceInMillis] = useState(0);
   const [counter, setCounter] = useState<number | null>(null);
   const [remainingTime, setRemainingTime] = useState("Dagar kvar:");
-  const [bid, setBid] = useState<undefined | number>();
+  const [bid, setBid] = useState<number | undefined>(0);
   const [quickBid, setQuickBid] = useState<number>();
   
   
   const history = useHistory();
-  const { createBid, getHighestBid, highestBid } = useBid();
+  const { createBid } = useBid();
   const { whoAmI } = useAuth();
   const isHost =
     whoAmI && auction.host && auction.host.id && whoAmI.id == auction.host.id;
   
   useEffect(() => {
-    getHighestBid(auction.id);
-  }, [])
-
-  useEffect(() => {
-    if (!auction.bids?.length) {
-      setBid(auction?.startPrice);
+    if (auction.bids?.length) {
+      setBid(auction.bids[auction.bids?.length - 1].price);
     } else {
-      setBid(highestBid);
+      setBid(auction.startPrice);
     }
-    handleQuickBid();
-  }, [highestBid, !!bid])
+  }, [])
   
-  // useEffect(() => {
-  // check if this is needed
-  // }, [!!bid, bid]);
+  useEffect(() => {
+    handleQuickBid();
+  }, [!!bid, bid]);
 
   useEffect(() => {
     handleTime();
@@ -91,8 +86,11 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
       if (bid <= 100 && bid > 10) {
         setQuickBid(bid + 10);
       }
-      if (bid >= 1000 && bid > 100) {
+      if (bid >= 100 && bid > 100) {
         setQuickBid(bid + 100);
+      }
+      if (bid == auction.startPrice) {
+        setQuickBid(bid + 1);
       }
     }
   };
@@ -108,7 +106,6 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
     };
 
     await createBid(newBid);
-    getHighestBid(auction.id);
   };
 
   const toDetailPage = () => {
@@ -131,7 +128,7 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
             <StyledSpan>Pris:</StyledSpan> {auction.startPrice} SEK
           </StyledDesc>
           <StyledDesc>
-            <StyledSpan>Högsta bud:</StyledSpan> {bid} SEK
+            <StyledSpan>Högsta bud:</StyledSpan> {bid == auction.startPrice ? "Inga bud" : bid + " SEK"} 
           </StyledDesc>
           <StyledDesc>
             <StyledSpan>{remainingTime}</StyledSpan> {daysLeft}
