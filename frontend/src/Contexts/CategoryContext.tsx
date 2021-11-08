@@ -17,8 +17,6 @@ const CategoryProvider: FC<Props> = ({ children }: Props) => {
   const [allCategories, setAllCategories] = useState<Array<Category>>([]);
 
   useEffect(() => {
-    console.log("useEff cat context");
-    
     getAllCategories();
   }, [])
 
