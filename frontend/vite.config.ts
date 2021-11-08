@@ -7,10 +7,11 @@ export default defineConfig({
   server: {
     host: true,
     proxy: {
-      '/api': 'http://localhost:4000',
-      '/rest': 'http://localhost:4000',
-      '/login': 'http://localhost:4000',
-      '/logout': 'http://localhost:4000'
-    }
-  }
-})
+      "*": "ws://localhost:9092",
+      "/api": "http://localhost:4000",
+      "/rest": "http://localhost:4000",
+      "/login": "http://localhost:4000",
+      "/logout": "http://localhost:4000",
+    },
+  },
+});

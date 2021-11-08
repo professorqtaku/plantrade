@@ -5,16 +5,16 @@ import { useAuction } from "../../Contexts/AuctionContext";
 import { useBid } from "../../Contexts/BidContext";
 import { useAuth } from "../../Contexts/AuthContext";
 import { Auction } from "../../Interfaces/Interfaces";
-import Grid from '@mui/material/Grid';
-import SkeletonCard from '../../Components/SkeletonCard/SkeletonCard';
-import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
-import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import CommentIcon from '@mui/icons-material/Comment';
-import InputField from '../../Components/InputField/InputField';
-import ImageCarousel from '../../Components/ImageCarousel/ImageCarousel';
-import ExpandableDescriptionBox from '../../Components/ExpandableDesc/ExpandableDescriptionBox';
-import ButtonComp from "../../Components/Button/ButtonComp"
+import Grid from "@mui/material/Grid";
+import SkeletonCard from "../../Components/SkeletonCard/SkeletonCard";
+import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
+import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import CommentIcon from "@mui/icons-material/Comment";
+import InputField from "../../Components/InputField/InputField";
+import ImageCarousel from "../../Components/ImageCarousel/ImageCarousel";
+import ExpandableDescriptionBox from "../../Components/ExpandableDesc/ExpandableDescriptionBox";
+import ButtonComp from "../../Components/Button/ButtonComp";
 import { images } from "./images";
 import {
   StyledWrapper,
@@ -35,6 +35,7 @@ import {
   StyledCarousel,
   StyledChip,
 } from "./StyledAuctionDetailPage";
+import { useModal } from "../../Contexts/ModalContext";
 
 const AuctionDetailPage = () => {
   const { id }: any = useParams();
@@ -43,6 +44,8 @@ const AuctionDetailPage = () => {
   const { getAuctionById } = useAuction();
   const { createBid, getHighestBid, highestBid } = useBid();
   const { whoAmI } = useAuth();
+
+  const { toggleLoginModal } = useModal();
 
   const [auction, setAuction] = useState<Auction | undefined>();
   const [bid, setBid] = useState<string>("");
@@ -94,7 +97,7 @@ const AuctionDetailPage = () => {
       price: parseInt(bid),
       createdDate: Date.now(),
     };
-
+    
     await createBid(newBid);
     getHighestBid(auction?.id);
     setBid("");
@@ -121,25 +124,37 @@ const AuctionDetailPage = () => {
           costumBackgroundColor="crimson"
         />
       )}
-      {!isOverPrice ? (
+      { !isOverPrice ? (
         <ButtonComp label="Buda" callback={handleBid} disabled={isHost} />
       ) : (
         <ButtonComp label="Ja" callback={handleBid} disabled={isHost} />
       )}
     </>
-  )  
+  );
+
+  const renderLoginToggle = (
+    <>
+    <p>Logga in för att placera ett bud.</p>
+    <ButtonComp
+          label="Login"
+          callback={() => toggleLoginModal()}
+        />
+        </>
+
+  );
+
   const renderCarousel = (
-      <StyledCarousel
-        initialActiveIndex={0}
-        isRTL={false}
-        showArrows={true}
-        itemsToShow={1}
-        pagination={false}
-      >
-        {images.map((img) => (
-          <StyledImg key={img.path} src={img.path} />
-        ))}
-      </StyledCarousel>
+    <StyledCarousel
+      initialActiveIndex={0}
+      isRTL={false}
+      showArrows={true}
+      itemsToShow={1}
+      pagination={false}
+    >
+      {images.map((img) => (
+        <StyledImg key={img.path} src={img.path} />
+      ))}
+    </StyledCarousel>
   );
 
   return (
@@ -209,9 +224,9 @@ const AuctionDetailPage = () => {
                 </StyledWarning>
               )}
             </Grid>
-              <StyledForm warning={isOverPrice ? isOverPrice : false}>
-                {renderBidContent}
-              </StyledForm>
+            <StyledForm warning={isOverPrice ? isOverPrice : false}>
+              {whoAmI ? renderBidContent : renderLoginToggle}
+            </StyledForm>
           </Grid>
         </>
       )}
