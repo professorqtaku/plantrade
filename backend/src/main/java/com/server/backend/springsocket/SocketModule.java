@@ -1,11 +1,13 @@
 package com.server.backend.springsocket;
 
 import com.corundumstudio.socketio.Configuration;
+import com.corundumstudio.socketio.SocketConfig;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.ConnectListener;
 import com.corundumstudio.socketio.listener.DataListener;
 import com.corundumstudio.socketio.listener.DisconnectListener;
 import com.server.backend.entities.Bid;
+import lombok.val;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,10 +17,14 @@ public class SocketModule {
     public SocketModule() {
         // prevent accidental starting multiple servers
         if(server != null) return;
-        Configuration config = new Configuration();
-        // update host in production
-        config.setHostname("0.0.0.0"); // default is "localhost"
-        config.setPort(9092); // could be any port
+        val config = new Configuration();
+        config.setPort(9092);
+        val sockConfig = new SocketConfig();
+        sockConfig.setReuseAddress(true);
+        config.setSocketConfig(sockConfig);
+        server = new SocketIOServer(config);
+        Runtime.getRuntime().addShutdownHook(new Thread(server::stop));
+
         server = new SocketIOServer(config);
 
         // add connection event listeners

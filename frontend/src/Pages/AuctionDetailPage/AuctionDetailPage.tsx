@@ -91,7 +91,6 @@ const AuctionDetailPage = () => {
       price: parseInt(bid),
       createdDate: Date.now(),
     };
-    console.log("VAAD?", newBid);
     
     await createBid(newBid);
     //rerender the new currently highest bid

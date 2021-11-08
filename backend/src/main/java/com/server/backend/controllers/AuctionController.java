@@ -23,7 +23,6 @@ public class AuctionController {
     @Autowired
     private AuctionService auctionService;
 
-
     @GetMapping
     public ResponseEntity<List<Auction>> getAllOpenAuctions() {
         List<Auction> auctions = auctionService.getAllOpenAuctions(Status.OPEN);
