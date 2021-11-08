@@ -26,7 +26,7 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
     let statusQuery: string = getStatusQuery(option.status);
 
     let res: Response = await fetch(
-      `/rest/auctions/search?title=${option.title}${categoryQuery}${statusQuery}`
+      `/api/auctions/search?title=${option.title}${categoryQuery}${statusQuery}`
     );
     if (res.ok && res.status == 200) {
       let newAuctions: Array<Auction> = await res.json();
