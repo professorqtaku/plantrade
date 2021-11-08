@@ -140,7 +140,11 @@ const AuctionDetailPage = () => {
       pagination={false}
     >
       {images.map((img) => (
-        <StyledImg key={img.path} src={img.path} />
+        <StyledImg
+          onClick={() => socket.emit("auctionUpdate", id)}
+          key={img.path}
+          src={img.path}
+        />
       ))}
     </StyledCarousel>
   );
