@@ -14,13 +14,15 @@ public class MessageController {
     private MessageService messageService;
 
     @PostMapping("/{chatId}")
-    public ResponseEntity<Message> sendMessage(@RequestBody Message message, @RequestParam long chatId) {
+    public ResponseEntity<Message> sendMessage(@RequestBody Message message, @PathVariable long chatId) {
         try{
             Message saved = messageService.sendMessage(message, chatId);
             if (saved != null) {
                 return ResponseEntity.ok(saved);
             }
-        } catch (Exception ignored) { }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         return ResponseEntity.badRequest().build();
     }
 }
