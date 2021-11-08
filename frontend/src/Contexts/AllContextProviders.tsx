@@ -15,23 +15,23 @@ interface Props {
 const AllContextProviders: React.FC<Props> = ({ children }) => {
   return (
     <>
-      <SocketProvider>
-        <SnackBarProvider>
-          <CategoryProvider>
-            <AuthProvider>
-              <AuctionProvider>
-                <ModalProvider>
-                  <NavigationProvider>
-                    <BidProvider>
+      <SnackBarProvider>
+        <CategoryProvider>
+          <AuthProvider>
+            <AuctionProvider>
+              <ModalProvider>
+                <NavigationProvider>
+                  <BidProvider>
+                    <SocketProvider>
                       <SearchProvider>{children}</SearchProvider>
-                    </BidProvider>
-                  </NavigationProvider>
-                </ModalProvider>
-              </AuctionProvider>
-            </AuthProvider>
-          </CategoryProvider>
-        </SnackBarProvider>
-      </SocketProvider>
+                    </SocketProvider>
+                  </BidProvider>
+                </NavigationProvider>
+              </ModalProvider>
+            </AuctionProvider>
+          </AuthProvider>
+        </CategoryProvider>
+      </SnackBarProvider>
     </>
   );
 };

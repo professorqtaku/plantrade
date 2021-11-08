@@ -2,6 +2,7 @@ import React, { createContext, FC, useContext } from 'react'
 import { useAuction } from "./AuctionContext"
 import { Bid } from "../Interfaces/Interfaces"
 
+
 type Props = {
   children?: JSX.Element;
 };
@@ -26,9 +27,11 @@ const BidProvider: FC<Props> = ({ children }: Props) => {
       let bid = await res.json();
       getAllAuctions();
       console.log(bid);
+      return bid;
     } else {
       console.log(res);
       console.log("Bad Request");
+      return null;
     }
   }
 
