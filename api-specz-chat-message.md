@@ -7,16 +7,16 @@
 ```json
 [
   {
-    "id": "long",
+    "id": "number",
     "auction": {
-      "id": "long"
+      "id": "number"
     },
     "creator": {
-      "id": "long",
+      "id": "number",
       "username": "string"
     },
     "receiver": {
-      "id": "long",
+      "id": "number",
       "username": "string"
     }
   }
@@ -30,13 +30,7 @@
 
 ```json
 {
-  "auction": {
-    "id": "long"
-  },
-  "receiver": {
-    "id": "long",
-    "username": "string"
-  }
+  "auctionId": "number"
 }
 ```
 
@@ -44,16 +38,16 @@
 ```json
 [
   {
-    "id": "long",
+    "id": "number",
     "auction": {
-      "id": "long"
+      "id": "number"
     },
     "creator": {
-      "id": "long",
+      "id": "number",
       "username": "string"
     },
     "receiver": {
-      "id": "long",
+      "id": "number",
       "username": "string"
     }
   }
@@ -67,9 +61,9 @@
 ```json
 [
   {
-    "id": "long",
+    "id": "number",
     "writer": {
-      "id": "long",
+      "id": "number",
       "username": "string"
     },
     "message": "string",
@@ -93,9 +87,9 @@
 #### Response:
 ```json
 {
-  "id": "long",
+  "id": "number",
   "writer": {
-    "id": "long",
+    "id": "number",
     "username": "string"
   },
   "message": "string",
