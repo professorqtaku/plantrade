@@ -6,7 +6,7 @@ import CategoryProvider from "./CategoryContext";
 import BidProvider from "./BidContext";
 import NavigationProvider from "./NavigationContext";
 import SnackBarProvider from "./SnackBarContext";
-import SocketProvider from "./SocketProvider";
+import SocketProvider from "./SocketContext";
 
 interface Props {
   children: JSX.Element;
