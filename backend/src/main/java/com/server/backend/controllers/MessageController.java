@@ -28,7 +28,7 @@ public class MessageController {
         return ResponseEntity.badRequest().build();
     }
 
-    @GetMapping("{chatId}")
+    @GetMapping("/{chatId}")
     public ResponseEntity<List<Message>> getAllChatMessages(@PathVariable long chatId) {
         try {
             List<Message> messages = messageService.getAllByChatId(chatId);
