@@ -31,22 +31,27 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
   
   
   const history = useHistory();
-  const { createBid } = useBid();
+  const { createBid, getHighestBid, highestBid } = useBid();
   const { whoAmI } = useAuth();
   const isHost =
     whoAmI && auction.host && auction.host.id && whoAmI.id == auction.host.id;
+  
+  useEffect(() => {
+    getHighestBid(auction.id);
+  }, [])
 
   useEffect(() => {
-    if (!!auction?.bids?.length) {
-      setBid(auction.bids.pop()?.price);
-    } else {
+    if (!auction.bids?.length) {
       setBid(auction?.startPrice);
+    } else {
+      setBid(highestBid);
     }
-  }, [auction.bids]);
-
-  useEffect(() => {
     handleQuickBid();
-  }, [!!bid, bid]);
+  }, [highestBid, !!bid])
+  
+  // useEffect(() => {
+  // check if this is needed
+  // }, [!!bid, bid]);
 
   useEffect(() => {
     handleTime();
@@ -103,6 +108,7 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
     };
 
     await createBid(newBid);
+    getHighestBid(auction.id);
   };
 
   const toDetailPage = () => {
