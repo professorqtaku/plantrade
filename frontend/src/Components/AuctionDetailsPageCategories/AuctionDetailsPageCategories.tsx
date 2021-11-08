@@ -31,7 +31,6 @@ const AuctionDetailsPageCategories = ({ categories, auctionId }: Props) => {
      mapThroughAndRender(categories)
      }
      <ButtonComp label={!toggleShowMore ? "Visa mer" : "Dölj"} callback={() => setToggleShowMore(!toggleShowMore)} />
-     
      </Grid>
   )
 }
