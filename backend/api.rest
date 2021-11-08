@@ -76,6 +76,16 @@ GET http://localhost:4000/api/6/highest-bid
 GET http://localhost:4000/api/chats
 ### get currentUser's chats
 
+### create chat
+POST http://localhost:4000/api/chats
+Content-Type: application/json
+
+{
+  "auctionId": 115
+}
+
+###
+
 POST http://localhost:4000/api/messages/3
 Content-Type: application/json
 

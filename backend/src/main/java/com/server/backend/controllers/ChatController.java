@@ -4,12 +4,10 @@ import com.server.backend.entities.Chat;
 import com.server.backend.services.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/chats")
@@ -18,14 +16,15 @@ public class ChatController {
     private ChatService chatService;
 
     @PostMapping
-    public ResponseEntity<Chat> createChat(Chat chat){
+    public ResponseEntity<Chat> createChat(@RequestBody Map values){
         try {
-            Chat saved = chatService.saveChat(chat);
+            Chat saved = chatService.createChat(values);
             return ResponseEntity.ok(saved);
         }
         catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            System.out.println(e);
         }
+        return ResponseEntity.badRequest().build();
     }
     @GetMapping
     public ResponseEntity<List<Chat>> getChatsByCurrentUser(){
