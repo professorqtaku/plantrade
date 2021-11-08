@@ -24,7 +24,7 @@ const SocketProvider = ({ children }: Props) => {
   });
 
   socket.on("reconnect_attempt", () => {
-    console.log("updated");
+    console.log("Reconnecting");
   });
 
 

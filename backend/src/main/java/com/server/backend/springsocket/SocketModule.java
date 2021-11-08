@@ -33,17 +33,15 @@ public class SocketModule {
         server.start();
     }
 
-    // method to emit message to all connected clients
     public void emit(String event, Object data) {
         server.getBroadcastOperations().sendEvent(event, data);
     }
 
-    // method to emit message to all connected clients in a room
     public void emitToRoom(String room, String event, Object data) {
         server.getRoomOperations(room).sendEvent(event, data);
     }
 
-    private DataListener<Bid> onChatReceived() {
+    private DataListener<Bid> onBidReceived() {
         return (client, data, ackSender) -> {
             emit("bid", data);
         };
