@@ -59,6 +59,52 @@
   "createdDate": "Date"
 }
 ```
+### /api/{id}/highest-bid
+#### **Method**: GET
+
+#### **Response**
+```json
+{
+  "id": "Number",
+  "user": {
+    "id": "Number",
+    "username": "string",
+  },
+  "auction": {
+    "id": "Number",
+    "title": "string",
+    "description": "string",
+    "startPrice": "Number",
+    "status": "string",
+    "endDate": "Date",
+    "host": {
+      "id": "Number",
+      "username": "string",
+    },
+    "winner": {
+      "id": "Number",
+      "username": "string"
+      },
+    "Category": [
+      {
+        "id": "Number",
+        "name": "string"
+      }
+    ],
+    "images": [
+      {
+        "id": "Number",
+        "path": "string",
+        "auction": {
+          "id": "Number"
+        }
+      }
+    ]
+  },
+  "price": "Number",
+  "createdDate": "Date"
+}
+```
 <hr>
 
 ## CATEGORY
