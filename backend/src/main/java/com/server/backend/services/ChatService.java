@@ -6,6 +6,7 @@ import com.server.backend.repositories.ChatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,5 +26,13 @@ public class ChatService {
 
     public Optional<Chat> getById(long id) {
         return chatRepository.findById(id);
+    }
+
+    public List<Chat> getChatsByCurrentUser() {
+        User currentUser = userService.findCurrentUser();
+        if (currentUser == null) {
+            return null;
+        }
+        return chatRepository.customFindByCreatorIdOrReceiverId((currentUser.getId()));
     }
 }
