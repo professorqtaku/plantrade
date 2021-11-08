@@ -7,9 +7,6 @@ interface Props {
   auctionId: Number;
 }
 import {  StyledChip } from "./StyledAuctionDetailsPageCategories";
-import AddIcon from "@mui/icons-material/Add";
-import { borderRadius } from "@mui/system";
-
 
 const AuctionDetailsPageCategories = ({ categories, auctionId }: Props) => {
   const [toggleShowMore, setToggleShowMore ] = useState(false);
