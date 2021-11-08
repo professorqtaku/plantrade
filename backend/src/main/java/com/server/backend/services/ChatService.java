@@ -31,12 +31,22 @@ public class ChatService {
         }
 
         Auction auction = auctionOptional.get();
-        Chat chat = Chat.builder()
+        // creator cannot be host of auction
+        if(auction.getHost() == currentUser){
+            return null;
+        }
+
+        Chat chat = chatRepository.findByAuctionIdAndCreatorIdAndReceiverId(auction.getId(), currentUser.getId(), auction.getHost().getId());
+        if (chat != null) {
+            return chat;
+        }
+
+        Chat newChat = Chat.builder()
                 .auction(auction)
                 .creator(currentUser)
                 .receiver(auction.getHost())
                 .build();
-        return saveChat(chat);
+        return saveChat(newChat);
     }
 
     public Chat saveChat(Chat chat) {

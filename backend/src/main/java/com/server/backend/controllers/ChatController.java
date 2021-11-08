@@ -19,7 +19,9 @@ public class ChatController {
     public ResponseEntity<Chat> createChat(@RequestBody Map values){
         try {
             Chat saved = chatService.createChat(values);
-            return ResponseEntity.ok(saved);
+            if(saved != null){
+                return ResponseEntity.ok(saved);
+            }
         }
         catch (Exception e) {
             System.out.println(e);
