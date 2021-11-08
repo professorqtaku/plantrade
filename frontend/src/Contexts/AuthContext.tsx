@@ -63,16 +63,16 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
   };
 
   const whoIsOnline = async () => {
-    fetch("/api/whoami").then((res) =>
-      res.json().then((data) => {
-        if (!data) {
-          setWhoAmI(null);
-          return null;
-        }
-        setWhoAmI({ ...data });
-        return data;
-      })
-    );
+    let res = await fetch("/api/whoami")
+    try {
+      let data = await res.json();
+      setWhoAmI(data);
+      return data;
+    }
+    catch (e) {
+        setWhoAmI(null);
+        return null;
+    }
   };
 
   const logout = async () => {
