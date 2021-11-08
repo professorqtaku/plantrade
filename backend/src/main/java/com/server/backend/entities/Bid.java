@@ -27,8 +27,9 @@ public class Bid {
   private User user;
 
   @ManyToOne
-  @JsonIgnoreProperties({"bids"})
+  @JsonIncludeProperties({"id"})
   private Auction auction;
+
   private double price;
   private Date createdDate;
 

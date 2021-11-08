@@ -33,4 +33,15 @@ public class BidController {
 
   }
 
+  @GetMapping("/{id}/highest-bid")
+  public ResponseEntity<Bid> getHighestBid(@PathVariable long id) {
+    try {
+      Bid bid = bidService.getHighestBid(id);
+      return ResponseEntity.ok(bid);
+    } catch (Exception e){
+      e.printStackTrace();
+      return ResponseEntity.noContent().build();
+    }
+  }
+
 }

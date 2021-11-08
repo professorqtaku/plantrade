@@ -68,4 +68,6 @@ GET http://localhost:4000/rest/auctions/search?title=blomma&category=Blomma%20Tr
 ### get won auctions by current user
 GET http://localhost:4000/rest/auctions/won
 
-###
+### get highest bid
+
+GET http://localhost:4000/api/6/highest-bid

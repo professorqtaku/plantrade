@@ -21,9 +21,6 @@ import java.util.Optional;
 public class AuctionController {
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private AuctionService auctionService;
 
 
@@ -53,18 +50,14 @@ public class AuctionController {
             @RequestParam(value = "categories") String _categories,
             @RequestParam(value = "files", required = false) List<MultipartFile> files
     ){
-        var user = userService.findCurrentUser();
-        var mapper = new ObjectMapper();
+        ObjectMapper mapper = new ObjectMapper();
         try {
-            var auction = mapper.readValue(_auction, Auction.class);
+            Auction auction = mapper.readValue(_auction, Auction.class);
             List<Category> categories = mapper.readValue(_categories, mapper.getTypeFactory().constructCollectionType(List.class, Category.class));
-            if(user != null) {
-                Auction savedAuction = auctionService.createAuction(auction, categories, files, user);
-                if(savedAuction != null) {
-                    return ResponseEntity.ok(savedAuction);
-                } else {
-                    return ResponseEntity.badRequest().build();
-                }
+            Auction savedAuction = auctionService.createAuction(auction, categories, files);
+
+            if(savedAuction != null) {
+                return ResponseEntity.ok(savedAuction);
             } else {
                 return ResponseEntity.badRequest().build();
             }
@@ -78,32 +71,29 @@ public class AuctionController {
     
     @GetMapping("/user")
     public ResponseEntity<List<Auction>> getAuctionsByCurrentUser() {
-        var user = userService.findCurrentUser();
-        if(user != null){
-            List<Auction> auctions = auctionService.getAuctionsByCurrentUser(user);
-            if(auctions.size() > 0){
+        try {
+            List<Auction> auctions = auctionService.getAuctionsByCurrentUser();
+            if (auctions != null && auctions.size() > 0) {
                 return ResponseEntity.ok(auctions);
             } else {
                 return ResponseEntity.noContent().build();
             }
-        } else {
-            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
         }
-
     }
 
     @GetMapping("/won")
     public ResponseEntity<List<Auction>> getWonAuctionsByCurrentUser() {
-        var user = userService.findCurrentUser();
-        if(user != null){
-            List<Auction> auctions = auctionService.getWonAuctionsByCurrentUser(user);
-            if(auctions.size() > 0) {
+        try {
+            List<Auction> auctions = auctionService.getWonAuctionsByCurrentUser();
+            if (auctions != null && auctions.size() > 0) {
                 return ResponseEntity.ok(auctions);
             } else {
                 return ResponseEntity.noContent().build();
             }
-        } else {
-            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
         }
     }
 

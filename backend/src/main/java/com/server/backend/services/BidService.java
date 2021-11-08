@@ -5,13 +5,14 @@ import com.server.backend.entities.Bid;
 import com.server.backend.entities.User;
 import com.server.backend.repositories.AuctionRepository;
 import com.server.backend.repositories.BidRepository;
-import com.server.backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.OneToOne;
 import java.util.Date;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class BidService {
@@ -20,10 +21,10 @@ public class BidService {
   private BidRepository bidRepository;
 
   @Autowired
-  private UserRepository userRepository;
+  private UserService userService;
 
   @Autowired
-  private AuctionRepository auctionRepository;
+  private AuctionService auctionService;
 
   public Boolean validateUser(User user) {
     return user.getUsername().equals(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -67,8 +68,8 @@ public class BidService {
   }
 
   public Bid createBid(Map values) {
-    User user =  userRepository.findById((long) (int) values.get("userId")).get();
-    Auction auction = auctionRepository.findById((long) (int) values.get("auctionId")).get();
+    User user =  userService.getUserById((long) (int) values.get("userId")).get();
+    Auction auction = auctionService.getAuctionById((long) (int) values.get("auctionId")).get();
     // validate user, bid price and time before creating a new bid
 
     if (isOwner(user, auction)) {
@@ -89,5 +90,9 @@ public class BidService {
       }
     }
     return null;
+  }
+
+  public Bid getHighestBid(long id) {
+    return bidRepository.findTopByAuctionIdOrderByPriceDesc(id);
   }
 }

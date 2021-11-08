@@ -15,13 +15,9 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private UserRepository userRepository;
-
-
     @PostMapping("/login")
     public ResponseEntity<User> login(@RequestBody User user, HttpServletRequest req){
-        User usern = userService.login(user,req);
+        User usern = userService.login(user, req);
         if(usern == null){
             return ResponseEntity.notFound().build();
         }
