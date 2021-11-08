@@ -204,7 +204,8 @@ const AuctionDetailPage = () => {
                 auctionDescription={auction.description}
               />
             </Grid>
-            <AuctionDetailsPageCategories categories={auction.categories} auctionId={auction.id} />
+            {auction.categories &&
+            <AuctionDetailsPageCategories categories={auction.categories} auctionId={auction.id} />}
             <Grid item xs={12} md={12}>
               {isOverPrice && (
                 <StyledWarning>
