@@ -27,7 +27,6 @@ import {
   StyledSoonEndingWrapper,
 } from "./StyledHomePage";
 import { useAuction } from "../../Contexts/AuctionContext";
-
 import { useEffect } from "react";
 import { useNav } from "../../Contexts/NavigationContext";
 import { useHistory } from "react-router-dom";
