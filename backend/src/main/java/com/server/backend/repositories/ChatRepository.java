@@ -14,4 +14,6 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
             "OR receiver_id = :userId"
             , nativeQuery = true)
     List<Chat> customFindByCreatorIdOrReceiverId(@Param("userId") long userId);
+
+    Chat findByAuctionIdAndCreatorIdAndReceiverId(long auctionId, long creatorId, long receiverId);
 }
