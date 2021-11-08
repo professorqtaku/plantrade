@@ -33,6 +33,7 @@ import {
   StyledWarningPrice,
   StyledImg,
   StyledCarousel,
+  StyledChip,
 } from "./StyledAuctionDetailPage";
 
 const AuctionDetailPage = () => {
@@ -189,7 +190,14 @@ const AuctionDetailPage = () => {
               />
             </Grid>
             <Grid item xs={12} md={12}>
-              #tags
+              {auction.categories
+                ? auction.categories.map(category => (
+                    <StyledChip
+                      key={`${auction.id}-${category.name}`}
+                      label={`#${category.name}`}
+                    />
+                  ))
+                : null}
             </Grid>
             <Grid item xs={12} md={12}>
               {isOverPrice && (
