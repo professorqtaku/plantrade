@@ -122,9 +122,9 @@ const AuctionDetailPage = () => {
         />
       )}
       {!isOverPrice ? (
-        <ButtonComp label="Buda" callback={(e) => handleBid(e)} disabled={isHost} />
+        <ButtonComp label="Buda" callback={handleBid} disabled={isHost} />
       ) : (
-        <ButtonComp label="Ja" callback={(e) => handleBid(e)} disabled={isHost} />
+        <ButtonComp label="Ja" callback={handleBid} disabled={isHost} />
       )}
     </>
   )  
