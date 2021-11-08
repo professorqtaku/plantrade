@@ -35,6 +35,7 @@ import {
   StyledCarousel,
   StyledChip,
 } from "./StyledAuctionDetailPage";
+import { useModal } from "../../Contexts/ModalContext";
 
 const AuctionDetailPage = () => {
   const { id }: any = useParams();
@@ -43,6 +44,8 @@ const AuctionDetailPage = () => {
   const { getAuctionById } = useAuction();
   const { createBid } = useBid();
   const { whoAmI } = useAuth();
+
+  const { toggleLoginModal } = useModal();
 
   const [auction, setAuction] = useState<Auction | undefined>();
   const [bid, setBid] = useState<string>("");
@@ -119,13 +122,25 @@ const AuctionDetailPage = () => {
           costumBackgroundColor="crimson"
         />
       )}
-      {!isOverPrice ? (
+      { !isOverPrice ? (
         <ButtonComp label="Buda" callback={handleBid} disabled={isHost} />
       ) : (
         <ButtonComp label="Ja" callback={handleBid} disabled={isHost} />
       )}
     </>
   );
+
+  const renderLoginToggle = (
+    <>
+    <p>Logga in för att placera ett bud.</p>
+    <ButtonComp
+          label="Login"
+          callback={() => toggleLoginModal()}
+        />
+        </>
+
+  );
+
   const renderCarousel = (
     <StyledCarousel
       initialActiveIndex={0}
@@ -208,7 +223,8 @@ const AuctionDetailPage = () => {
               )}
             </Grid>
             <StyledForm warning={isOverPrice ? isOverPrice : false}>
-              {renderBidContent}
+              {whoAmI && renderBidContent}
+              {!whoAmI && renderLoginToggle}
             </StyledForm>
           </Grid>
         </>
