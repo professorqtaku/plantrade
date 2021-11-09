@@ -48,7 +48,7 @@ public class SearchService {
         return categorySpecification;
     }
 
-    public List<Auction> getAuctionByTitleAndStatusAndCategory(String title, Status status, String categoryName) {
+    public List<Auction> getAuctionByTitleAndStatusAndCategory(String title, Status status, String categoryName, Integer page, String sort) {
         try{
             title = URLDecoder.decode(title, StandardCharsets.UTF_8.name());
             List<String> words = Arrays.asList(title.split(" "));
@@ -59,13 +59,13 @@ public class SearchService {
                 categoryNames = Arrays.asList(categoryName.split(" "));
             }
 
-            return getAuctionByTitleAndStatusAndCategory(words, status, categoryNames);
+            return getAuctionByTitleAndStatusAndCategory(words, status, categoryNames, page, sort);
         } catch (UnsupportedEncodingException e) {
             return null;
         }
     }
 
-    public List<Auction> getAuctionByTitleAndStatusAndCategory(List<String> words, Status status, List<String> categoryNames) {
+    public List<Auction> getAuctionByTitleAndStatusAndCategory(List<String> words, Status status, List<String> categoryNames, Integer page, String sort) {
         if(words.isEmpty()) {
             return Collections.emptyList();
         }
@@ -80,7 +80,7 @@ public class SearchService {
             totalSpecification = totalSpecification.and(categorySpecification);
         }
 
-        return auctionService.findAll(totalSpecification);
+        return auctionService.findAll(totalSpecification, page, sort);
     }
 
 

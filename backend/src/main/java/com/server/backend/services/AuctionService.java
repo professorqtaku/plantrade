@@ -24,23 +24,35 @@ public class AuctionService {
     @Autowired
     private UserService userService;
 
-    public Pageable getPageable(Integer page){
+    public Pageable getPageable(Integer page, String sort, Specification specification, Boolean filter){
         // How page and size works in Pageable:
         // at page 0 (first page), size should be the number of items you want to show
         // at page 1, size should be the same as at page 0 because it counts it as offset
         // aka if size is 3 at page 1, it will show the next 3 items (ex id 4 to 6)
         // at page 2 and so on, size should add the number of elements size was at page 0,
         // aka if size is 3 at page 0, size should be 6 at page 2, size 9 at page 3, size 12 at page 4 etc
-        var offset = 5;
-        var size = 5;
+        var offset = 5; // will be added on as scrolling
+        var size = 5; // the constant size of elements showing at a time
+        long counter = 0; // how many elements in total
         if(page > 1){
             offset *= page;
         }
-        long counter = auctionRepository.countByStatus(Status.OPEN);
+
+        if(filter){
+            counter = auctionRepository.count(specification);
+        } else {
+            counter = auctionRepository.countByStatus(Status.OPEN);
+        }
+
+        var sortBy = Objects.equals(sort, "asc") ? Sort.Order.asc("endDate")
+                : Objects.equals(sort, "desc") ? Sort.Order.desc("endDate") : Sort.Order.asc("id");
+        System.out.println("what is counter " + counter);
+        System.out.println("what is page " + page);
+        System.out.println("page is bigger than size " + (page > Math.floor((double)counter / size)));
         if(page > Math.floor((double)counter / size)){
             return null;
         }
-        return PageRequest.of(page, offset, Sort.by(Sort.Order.asc("id")));
+        return PageRequest.of(page, offset, Sort.by(sortBy));
     }
 
     public void removeOldAuctions(List<Auction> listToClean){
@@ -58,7 +70,7 @@ public class AuctionService {
     }
 
     public List<Auction> getAllOpenAuctions(Status status, Integer page) {
-        var pageable = getPageable(page);
+        var pageable = getPageable(page, null, null, false);
         List<Auction> openAuctions = auctionRepository.findByStatus(status, pageable);
         removeOldAuctions(openAuctions);
         return auctionRepository.findByStatus(status, pageable);
@@ -99,8 +111,14 @@ public class AuctionService {
         return savedAuction;
     }
 
-    public List<Auction> findAll(Specification<Auction> specification) {
-        return auctionRepository.findAll(specification);
+    public List<Auction> findAll(Specification<Auction> specification, Integer page, String sort) {
+        var pageable = getPageable(page, sort, specification, true);
+        if(pageable == null){
+            return null;
+        }
+        var list = auctionRepository.findAll(specification, pageable).getContent();
+        removeOldAuctions(list);
+        return auctionRepository.findAll(specification, pageable).getContent();
     }
 
     public Optional<Auction> getAuctionById(long id) {
