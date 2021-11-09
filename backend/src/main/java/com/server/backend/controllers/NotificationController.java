@@ -9,24 +9,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/notification")
+@RequestMapping("/api/notifications")
 public class NotificationController {
 
   @Autowired
   private NotificationService notificationService;
-
-/*  @PostMapping
-  public ResponseEntity<Notification> createNotification(@RequestBody long id) {
-    try {
-      Notification notification = notificationService.createNotification(id);
-      if (notification != null){
-        return ResponseEntity.ok(notification);
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return ResponseEntity.badRequest().build();
-  }*/
 
   @GetMapping("/{id}")
   public ResponseEntity<List<Notification>> getNotificationsByCurrentUser() {
