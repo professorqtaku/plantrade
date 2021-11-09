@@ -1,42 +1,56 @@
 import { createContext, FC, useContext, useState, useEffect } from "react";
+import { Auction, Category } from '../Interfaces/Interfaces';
 
 type Props = {
   children?: JSX.Element;
 };
 
-type Auction = {
-  id: Number;
-  host: { id: Number, username: String };
-  title: String;
-  description: String;
-  startPrice: Number;
-  endDate: Date;
-  status: String;
-}
+// type Auction = {
+//   id: Number;
+//   host: { id: Number, username: String };
+//   title: String;
+//   description: String;
+//   startPrice: Number;
+//   endDate: Date;
+//   status: String;
+// }
 
-interface Category {
-  id: number;
-  name: String;
-}
+// interface Category {
+//   id: number;
+//   name: String;
+// }
+
+// type AuctionObjects = {
+//   auctions: Auction[] | undefined,
+//   error: number | null,
+//   noMoreContent: boolean
+// }
 
 export const AuctionContext = createContext<any>(null);
 
 export const useAuction = () => useContext(AuctionContext);
 
 const AuctionProvider: FC<Props> = ({ children }: Props) => {
-  const [auctions, setAuctions] = useState<Array<Auction>>([]);
+  const [auctions, setAuctions] = useState<Auction[]>([]);
   const [usersAuctions, setUsersAuctions] = useState<Array<Auction>>();
   const [usersWonAuctions, setUsersWonAuctions] = useState<Array<Auction>>();
 
-  useEffect(() => {
-    getAllAuctions();
-  },[]);
-
-  const getAllAuctions = async () => {
-    let res: Response = await fetch('/rest/auctions');
-    let newAuctions: Array<Auction> = await res.json();
-    setAuctions(newAuctions);
-    return newAuctions;
+  const getAllAuctions = async (pageNumber: number) => {
+    let res: Response = await fetch(`/rest/auctions?page=${pageNumber}`);
+    if (res.status === 200) {
+      let newAuctions: Array<Auction> = await res.json();
+      if (pageNumber === 0 || !auctions || !auctions.length) {
+        setAuctions(newAuctions);
+      } else if (auctions) {
+        let updateAuctionslist: Auction[] = auctions;
+        for (let auction of newAuctions) {
+          updateAuctionslist.push(auction);
+        }
+        setAuctions(updateAuctionslist);
+      }
+    } else if (res.status === 204) {
+      console.log('no more content');
+    }
   }
 
   const getAuctionById = async (id: Number) => {
@@ -83,7 +97,7 @@ const AuctionProvider: FC<Props> = ({ children }: Props) => {
     usersAuctions,
     getUsersAuctions,
     getWonAuctionsByUser,
-    usersWonAuctions
+    usersWonAuctions,
   }
 
   return (

@@ -7,11 +7,13 @@ import {
 } from "./StyledAuctionPage";
 import AuctionCard from "../../Components/AuctionCard/AuctionCard";
 import { useAuction } from "../../Contexts/AuctionContext";
-import { useEffect } from "react";
+import React, { useEffect, useRef, useCallback, useState } from "react";
 import SearchForm from "../../Components/Search/SearchForm/SearchForm";
 import { useSearch } from "../../Contexts/SearchContext";
 import { Auction } from '../../Interfaces/Interfaces';
 import { useNav } from "../../Contexts/NavigationContext";
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 export interface Category {
   id: number;
@@ -19,20 +21,51 @@ export interface Category {
 }
 
 const AuctionPage = () => {
-  const { getAllAuctions, auctions } = useAuction();
+  const { getAllAuctions, auctions, setAuctions } = useAuction();
   const { searchText } = useSearch();
   const { setAuction, handleSelect } = useNav();
-
+  const observer = useRef<IntersectionObserver>();
+  let [pageNumber, setPageNumber] = useState(0);
+  
   useEffect(() => {
     handleGetAuctions();
     handleSelect(setAuction);
+    return () => {
+      setAuctions([]);
+      setPageNumber(0);
+    }
   }, []);
-
+  
   const handleGetAuctions = async () => {
     if (auctions.length <= 0 && searchText.trim().length <= 0) {
-      await getAllAuctions();
+      await getAllAuctions(pageNumber);
     }
   };
+
+  const handleScroll = async () => {
+    await getAllAuctions(pageNumber);
+  }
+
+  const handleLastAuction = useCallback(
+    (node: any, _deps: any) => {
+      if (observer.current) {
+        // disconnecting the last element so
+        // the new last element can be connected
+        observer.current.disconnect();
+      }
+      observer.current = new IntersectionObserver((entries: any) => {
+        // if the node is intersecting, aka on the page somewhere
+        if (entries[0].isIntersecting) {
+          setPageNumber(pageNumber++);
+          handleScroll();
+        }
+      });
+      if (node) {
+        observer.current.observe(node);
+      }
+    }, [auctions]);
+  
+  
 
   return (
     <StyledWrapper>
@@ -44,15 +77,27 @@ const AuctionPage = () => {
       </StyledSearchWrapper>
       <StyledContentWrapper>
         {auctions && auctions.length > 0
-        ? auctions.map((auction: Auction) => (
-            <AuctionCard
-              key={auction.id}
-              auction={auction}
-              fetchAuctions={handleGetAuctions}
-            />
-          ))
+          ? auctions.map((auction: Auction, i: number) => {
+            const isLastElement = auctions.length === i + 1;
+          
+            {
+              return isLastElement ?
+                (<AuctionCard
+                  key={auction.id}
+                  auction={auction}
+                  fetchAuctions={handleGetAuctions}
+                  forwardRef={handleLastAuction}
+                />) : (<AuctionCard
+                  key={auction.id}
+                  auction={auction}
+                  fetchAuctions={handleGetAuctions}
+                />)
+            }
+          })
           :
-          <p>Finns tyvärr inget uppe just nu :(</p>
+          <Box sx={{ display: 'flex' }}>
+            <CircularProgress sx={{color: 'var(--light-green)'}} />
+          </Box>
         }
       </StyledContentWrapper>
     </StyledWrapper>

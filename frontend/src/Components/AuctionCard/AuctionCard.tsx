@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { useAuth } from "../../Contexts/AuthContext";
 import { useBid } from "../../Contexts/BidContext";
@@ -15,13 +15,16 @@ import {
   StyledSpan,
   StyledDiv,
 } from "./StyledAuctionCard";
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 interface Props {
   auction: Auction;
   fetchAuctions: () => Promise<void>;
+  forwardRef?: any;
 }
 
-const AuctionCard = ({ auction, fetchAuctions }: Props) => {
+const AuctionCard = ({ auction, fetchAuctions, forwardRef}: Props) => {
   const [daysLeft, setDaysLeft] = useState<number | null>(null);
   const [differenceInMillis, setDifferenceInMillis] = useState(0);
   const [counter, setCounter] = useState<number | null>(null);
@@ -29,7 +32,7 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
   const [bid, setBid] = useState<undefined | number>();
   const [quickBid, setQuickBid] = useState<number>();
   
-  
+
   const history = useHistory();
   const { createBid } = useBid();
   const { whoAmI } = useAuth();
@@ -110,7 +113,7 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
   };
 
   return (
-    <StyledCard>
+    <StyledCard ref={forwardRef}>
       <StyledImg
         src="https://i.pinimg.com/564x/9e/8b/dc/9e8bdc74df3cb2f87fae194a18ba569a.jpg"
         onClick={toDetailPage}
