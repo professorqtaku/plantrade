@@ -5,6 +5,7 @@ import com.server.backend.entities.Bid;
 import com.server.backend.entities.User;
 import com.server.backend.repositories.AuctionRepository;
 import com.server.backend.repositories.BidRepository;
+import com.server.backend.springsocket.SocketModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,9 @@ public class BidService {
 
   @Autowired
   private AuctionService auctionService;
+
+  @Autowired
+  private SocketModule socketModule;
 
   public Boolean validateUser(User user) {
     return user.getUsername().equals(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -82,7 +86,9 @@ public class BidService {
                 .price((int) values.get("price"))
                 .createdDate(new Date((long) values.get("createdDate")))
                 .build();
-
+        var secondHighestAuctionUserId = getHighestBid(auction.getId()).getUser().getId();
+        // This emit will be removed, when notification service is done.
+        socketModule.emit("notification", secondHighestAuctionUserId);
         auction.addBid(bid);
         return bidRepository.save(bid);
       } catch(Exception e) {

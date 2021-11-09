@@ -34,6 +34,7 @@ public class SocketModule {
         // add room support (the data is the room name)
         server.addEventListener("join", String.class, onJoinRoom());
         server.addEventListener("leave", String.class, onLeaveRoom());
+        server.addEventListener("auctionUpdate", String.class, onAuctionReceived());
 
         // start socket.io server
         server.start();
@@ -47,9 +48,9 @@ public class SocketModule {
         server.getRoomOperations(room).sendEvent(event, data);
     }
 
-    private DataListener<Bid> onBidReceived() {
-        return (client, data, ackSender) -> {
-            emit("bid", data);
+    private DataListener<String> onAuctionReceived() {
+        return (client, room, ackSender) -> {
+            emitToRoom(room,"auctionUpdate", "auction updated");
         };
     }
 
