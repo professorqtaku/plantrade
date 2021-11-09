@@ -15,6 +15,7 @@ import { useCategory } from "../../../Contexts/CategoryContext";
 import { Category } from "../../../Interfaces/Interfaces";
 import ClearButton from "../../ClearButton/ClearButton";
 import { useSearch } from "../../../Contexts/SearchContext";
+import { useAuction } from "../../../Contexts/AuctionContext";
 
 interface Props {
   isOpen: boolean;
@@ -39,12 +40,19 @@ function FilterCollapse({
 }: Props) {
   const { allCategories } = useCategory();
   const { clearFilter, isRerender } = useSearch();
+  const { getAllAuctions } = useAuction();
+
+  const handleClearFilter = () => {
+    clearFilter();
+    toggle();
+    getAllAuctions();
+  }
 
   return (
     <StyledCollapse in={isOpen} timeout="auto" unmountOnExit>
       <StyledDiv>
         <StyledHeader>
-          <ClearButton label="Rensa" type="button" callback={clearFilter} />
+          <ClearButton label="Rensa" type="button" callback={handleClearFilter} />
           <IconButton type="button" onClick={() => toggle()}>
             <CloseIcon />
           </IconButton>
