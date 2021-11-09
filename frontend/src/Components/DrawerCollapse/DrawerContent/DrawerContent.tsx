@@ -7,36 +7,7 @@ const DrawerContent = () => {
 
   return (
     <StyledContentWrapper>
-      <p>{content}</p>
-      <p>{content}</p>
-      <p>{content}</p>
-      <p>{content}</p>
-      <p>{content}</p>
-      <p>{content}</p>
-      <p>{content}</p>
-      <p>{content}</p>
-      <p>{content}</p>
-      <p>{content}</p>
-      <p>{content}</p>
-      <p>{content}</p>
-      <p>{content}</p>
-      <p>{content}</p>
-      <p>{content}</p>
-      <p>{content}</p>
-      <p>{content}</p>
-      <p>{content}</p>
-      <p>{content}</p>
-      <p>{content}</p>
-      <p>{content}</p>
-      <p>{content}</p>
-      <p>{content}</p>
-      <p>{content}</p>
-      <p>{content}</p>
-      <p>{content}</p>
-      <p>{content}</p>
-      <p>{content}</p>
-      <p>{content}</p>
-      <p>{content}</p>
+      {content}
     </StyledContentWrapper>
   );
 };
