@@ -24,23 +24,7 @@ public class AuctionService {
     @Autowired
     private UserService userService;
 
-//    public Integer getPage() {
-//        return page;
-//    }
-//
-//    public void setPage(Integer page) {
-//        this.page = page;
-//    }
-
-    public Boolean scrollAuctions(Integer pageNumber){
-        Long auctionSize = auctionRepository.countByStatus(Status.OPEN);
-        System.out.println(auctionSize);
-
-//        setPage(pageNumber);
-        return true;
-    }
-
-    public List<Auction> getAllOpenAuctions(Status status, Integer page) {
+    public Pageable getPageable(Integer page){
         // How page and size works in Pageable:
         // at page 0 (first page), size should be the number of items you want to show
         // at page 1, size should be the same as at page 0 because it counts it as offset
@@ -52,14 +36,16 @@ public class AuctionService {
         if(page > 1){
             offset *= page;
         }
-        long counter = auctionRepository.countByStatus(status);
+        long counter = auctionRepository.countByStatus(Status.OPEN);
         if(page > Math.floor((double)counter / size)){
             return null;
         }
-        Pageable pageable = PageRequest.of(page, offset, Sort.by(Sort.Order.asc("id")));
-        List<Auction> openAuctions = auctionRepository.findByStatus(status, pageable);
+        return PageRequest.of(page, offset, Sort.by(Sort.Order.asc("id")));
+    }
+
+    public void removeOldAuctions(List<Auction> listToClean){
         Date date = new Date();
-        for(Auction auction : openAuctions) {
+        for(Auction auction : listToClean) {
             if(auction.getEndDate().getTime() < date.getTime()){
                 if(auction.getBids().size() > 0){
                     auction.setStatus(Status.SOLD);
@@ -69,6 +55,12 @@ public class AuctionService {
                 auctionRepository.save(auction);
             }
         }
+    }
+
+    public List<Auction> getAllOpenAuctions(Status status, Integer page) {
+        var pageable = getPageable(page);
+        List<Auction> openAuctions = auctionRepository.findByStatus(status, pageable);
+        removeOldAuctions(openAuctions);
         return auctionRepository.findByStatus(status, pageable);
     }
     
