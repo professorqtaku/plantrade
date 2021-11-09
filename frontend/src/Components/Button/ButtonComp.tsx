@@ -2,7 +2,7 @@ import { StyledButton } from "./StyledButton";
 
 interface Props {
   label: String;
-  callback?: () => any;
+  callback?: (data?:any) => any;
   costumFontSize?: string;
   costumBackgroundColor?: string;
   disabled?: boolean;

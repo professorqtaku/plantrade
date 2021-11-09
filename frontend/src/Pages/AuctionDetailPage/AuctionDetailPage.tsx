@@ -36,6 +36,7 @@ import {
   StyledChip,
 } from "./StyledAuctionDetailPage";
 import { useSocket } from "../../Contexts/SocketContext";
+import { useModal } from "../../Contexts/ModalContext";
 
 const AuctionDetailPage = () => {
   const { id }: any = useParams();
@@ -43,8 +44,10 @@ const AuctionDetailPage = () => {
   const { socket } = useSocket();
 
   const { getAuctionById } = useAuction();
-  const { createBid } = useBid();
+  const { createBid, getHighestBid, highestBid } = useBid();
   const { whoAmI } = useAuth();
+
+  const { toggleLoginModal } = useModal();
 
   const [auction, setAuction] = useState<Auction | undefined>();
   const [bid, setBid] = useState<string>("");
@@ -59,20 +62,23 @@ const AuctionDetailPage = () => {
     handleGetAuctionById();
   }, []);
 
+  useEffect(() => {
+    setCurrentBid(highestBid);
+    setBidText("Högsta budet");
+  }, [highestBid])
+  
   const handleGetAuctionById = async () => {
     const res = await getAuctionById(id);
     setAuction(res);
+    getHighestBid(res.id);
     setEndDate(new Date(res.endDate).toLocaleDateString("sv-SV"));
     setEndTime(new Date(res.endDate).toLocaleTimeString("sv-SV"));
-
+    
     if (whoAmI && whoAmI.id == res.host.id) {
       setIsHost(true);
     }
-
-    if (res.bids?.length) {
-      setCurrentBid(res.bids.pop(res.bids.length - 1).price);
-      setBidText("Högsta budet");
-    } else {
+    
+    if (!res.bids.length) {
       setCurrentBid(res.startPrice);
       setBidText("Startpris");
     }
@@ -86,7 +92,7 @@ const AuctionDetailPage = () => {
       return;
     }
     setIsOverPrice(false);
-
+    
     const newBid = {
       userId: whoAmI.id,
       auctionId: auction?.id,
@@ -95,6 +101,7 @@ const AuctionDetailPage = () => {
     };
     
     const createdBid = await createBid(newBid);
+    getHighestBid(auction?.id);
     if (createdBid) {
       socket.emit("join", id);
     }
@@ -124,13 +131,25 @@ const AuctionDetailPage = () => {
           costumBackgroundColor="crimson"
         />
       )}
-      {!isOverPrice ? (
+      { !isOverPrice ? (
         <ButtonComp label="Buda" callback={handleBid} disabled={isHost} />
       ) : (
         <ButtonComp label="Ja" callback={handleBid} disabled={isHost} />
       )}
     </>
   );
+
+  const renderLoginToggle = (
+    <>
+    <p>Logga in för att placera ett bud.</p>
+    <ButtonComp
+          label="Login"
+          callback={() => toggleLoginModal()}
+        />
+        </>
+
+  );
+
   const renderCarousel = (
     <StyledCarousel
       initialActiveIndex={0}
@@ -217,7 +236,7 @@ const AuctionDetailPage = () => {
               )}
             </Grid>
             <StyledForm warning={isOverPrice ? isOverPrice : false}>
-              {renderBidContent}
+              {whoAmI ? renderBidContent : renderLoginToggle}
             </StyledForm>
           </Grid>
         </>
