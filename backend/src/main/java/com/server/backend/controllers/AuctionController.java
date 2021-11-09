@@ -23,6 +23,9 @@ public class AuctionController {
     @Autowired
     private AuctionService auctionService;
 
+    //@Autowired
+    //private SocketModule socketModule;
+
     @GetMapping
     public ResponseEntity<List<Auction>> getAllOpenAuctions() {
         List<Auction> auctions = auctionService.getAllOpenAuctions(Status.OPEN);
@@ -56,6 +59,7 @@ public class AuctionController {
             Auction savedAuction = auctionService.createAuction(auction, categories, files);
 
             if(savedAuction != null) {
+                //socketModule.emitToRoom("Auction room", "join", savedAuction);
                 return ResponseEntity.ok(savedAuction);
             } else {
                 return ResponseEntity.badRequest().build();

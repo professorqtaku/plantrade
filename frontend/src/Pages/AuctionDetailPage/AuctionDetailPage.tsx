@@ -98,8 +98,10 @@ const AuctionDetailPage = () => {
       createdDate: Date.now(),
     };
     
-    await createBid(newBid);
+    const createdBid = await createBid(newBid);
     getHighestBid(auction?.id);
+      //rerender the new currently highest bid
+      handleGetAuctionById();
     setBid("");
   };
 
@@ -152,7 +154,10 @@ const AuctionDetailPage = () => {
       pagination={false}
     >
       {images.map((img) => (
-        <StyledImg key={img.path} src={img.path} />
+        <StyledImg
+          key={img.path}
+          src={img.path}
+        />
       ))}
     </StyledCarousel>
   );
