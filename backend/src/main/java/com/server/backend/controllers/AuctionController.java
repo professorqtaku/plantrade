@@ -7,6 +7,7 @@ import com.server.backend.entities.Category;
 import com.server.backend.entities.Status;
 import com.server.backend.services.AuctionService;
 import com.server.backend.services.UserService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +24,11 @@ public class AuctionController {
     private AuctionService auctionService;
 
     @GetMapping
-    public ResponseEntity<List<Auction>> getAllOpenAuctions() {
-        List<Auction> auctions = auctionService.getAllOpenAuctions(Status.OPEN);
-        if(auctions.size() > 0) {
+    public ResponseEntity<List<Auction>> getAllOpenAuctions(@RequestParam(value = "page") Integer page) {
+        List<Auction> auctions = auctionService.getAllOpenAuctions(Status.OPEN, page);
+        if(auctions == null) {
+            return ResponseEntity.noContent().build();
+        } else if(auctions.size() > 0) {
             return ResponseEntity.ok(auctions);
         } else {
             return ResponseEntity.noContent().build();

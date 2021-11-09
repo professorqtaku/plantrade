@@ -24,18 +24,39 @@ public class AuctionService {
     @Autowired
     private UserService userService;
 
-    public List<Auction> getAllOpenAuctions(Status status) {
+//    public Integer getPage() {
+//        return page;
+//    }
+//
+//    public void setPage(Integer page) {
+//        this.page = page;
+//    }
+
+    public Boolean scrollAuctions(Integer pageNumber){
+        Long auctionSize = auctionRepository.countByStatus(Status.OPEN);
+        System.out.println(auctionSize);
+
+//        setPage(pageNumber);
+        return true;
+    }
+
+    public List<Auction> getAllOpenAuctions(Status status, Integer page) {
         // How page and size works in Pageable:
         // at page 0 (first page), size should be the number of items you want to show
         // at page 1, size should be the same as at page 0 because it counts it as offset
         // aka if size is 3 at page 1, it will show the next 3 items (ex id 4 to 6)
         // at page 2 and so on, size should add the number of elements size was at page 0,
         // aka if size is 3 at page 0, size should be 6 at page 2, size 9 at page 3, size 12 at page 4 etc
-        Pageable pageable = PageRequest.of(2, 6, Sort.by(Sort.Order.asc("id")));
-        // Only need to know from frontend if getOpenAuctions is called on a mount or a scroll?
-        // if scroll, handle the page and size here,
-        // if mount, set page = 0, and size default to get
-        // check johans example on pagination shieeet
+        var offset = 5;
+        var size = 5;
+        if(page > 1){
+            offset *= page;
+        }
+        long counter = auctionRepository.countByStatus(status);
+        if(page > Math.floor((double)counter / size)){
+            return null;
+        }
+        Pageable pageable = PageRequest.of(page, offset, Sort.by(Sort.Order.asc("id")));
         List<Auction> openAuctions = auctionRepository.findByStatus(status, pageable);
         Date date = new Date();
         for(Auction auction : openAuctions) {
