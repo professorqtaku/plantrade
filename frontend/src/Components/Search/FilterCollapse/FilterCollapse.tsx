@@ -12,6 +12,7 @@ import SelectRadio from "../../SelectRadio/SelectRadio";
 import CloseIcon from "@mui/icons-material/Close";
 import { Status, status } from "../../../Utils/types";
 import { useCategory } from "../../../Contexts/CategoryContext";
+import { Category } from "../../../Interfaces/Interfaces";
 
 interface Props {
   isOpen: boolean;
@@ -19,7 +20,7 @@ interface Props {
   hours: number;
   setHours: Function;
   selectedStatus: Status;
-  selectedCategories: string[];
+  selectedCategories: Category[];
   setSelectedStatus: Function;
   setSelectedCategories: Function;
 }

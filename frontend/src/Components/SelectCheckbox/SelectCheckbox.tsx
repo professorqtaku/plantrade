@@ -3,6 +3,7 @@ import { Autocomplete, Checkbox, TextField } from "@mui/material";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { Category } from '../../Interfaces/Interfaces';
+import { StyledChip } from './StyledSelectCheckbox';
 
 interface Props {
   options: Category[];
@@ -35,6 +36,12 @@ const SelectCheckbox = ({
       disableCloseOnSelect
       defaultValue={selected}
       getOptionLabel={(option) => option.name}
+      renderTags={
+        (tagValue, getTagProps) => {
+          return tagValue.map((option, index) => (
+            <StyledChip {...getTagProps({index})} label={option.name}/>
+          ))
+      }}
       renderOption={(props, option, { selected }) => (
         <li {...props}>
           <Checkbox

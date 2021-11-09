@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Collapse, IconButton } from '@mui/material'
 
 export const StyledCollapse = styled(Collapse)`
-  background: var(--yellow);
+  background: white;
   width: 100%;
   border-radius: 0 0 5px 5px;
   max-height: 500px;
@@ -10,7 +10,7 @@ export const StyledCollapse = styled(Collapse)`
   z-index: 100;
 `;
 export const StyledDiv = styled.div`
-  background: var(--light-yellow);
+  background: var(--background-color);
   width: 90%;
   margin: 3% auto;
   margin-top: 0;
