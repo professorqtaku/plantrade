@@ -15,7 +15,6 @@ import InputField from "../../Components/InputField/InputField";
 import ImageCarousel from "../../Components/ImageCarousel/ImageCarousel";
 import ExpandableDescriptionBox from "../../Components/ExpandableDesc/ExpandableDescriptionBox";
 import ButtonComp from "../../Components/Button/ButtonComp";
-import { images } from "./images";
 import AuctionDetailsPageCategories  from "../../Components/AuctionDetailsPageCategories/AuctionDetailsPageCategories"
 import {
   StyledWrapper,
@@ -143,19 +142,6 @@ const AuctionDetailPage = () => {
 
   );
 
-  const renderCarousel = (
-    <StyledCarousel
-      initialActiveIndex={0}
-      isRTL={false}
-      showArrows={true}
-      itemsToShow={1}
-      pagination={false}
-    >
-      {images.map((img) => (
-        <StyledImg key={img.path} src={img.path} />
-      ))}
-    </StyledCarousel>
-  );
 
   return (
     <StyledWrapper>
@@ -168,9 +154,21 @@ const AuctionDetailPage = () => {
             Tillbaka
           </StyledBackBtn>
           <Grid container spacing={2}>
+            // images carousel
             <Grid item xs={12} md={12}>
-              {renderCarousel}
+              <StyledCarousel
+              initialActiveIndex={0}
+              isRTL={false}
+              showArrows={true}
+              itemsToShow={1}
+              pagination={false}
+              >
+                {auction.images.map((img) => (
+                <StyledImg key={img.path} src={img.path} />
+                ))}
+              </StyledCarousel>
             </Grid>
+
             <Grid item xs={8} md={8}>
               <StyledTitle>{auction.title}</StyledTitle>
             </Grid>
