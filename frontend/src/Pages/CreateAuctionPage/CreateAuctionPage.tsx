@@ -82,7 +82,7 @@ const CreateAuctionPage = () => {
       <Button variant="contained" component="span" style={{ width: "100%" }}>
         Ladda upp bilder
       </Button>
-      {errorMsg && <div>Please choose atleast one file</div>}
+      {errorMsg && <div>Välj åtminstone 1 bild</div>}
     </label>
   );
 
