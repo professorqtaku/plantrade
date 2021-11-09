@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.OneToOne;
 import java.util.Date;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class BidService {
@@ -88,5 +90,9 @@ public class BidService {
       }
     }
     return null;
+  }
+
+  public Bid getHighestBid(long id) {
+    return bidRepository.findTopByAuctionIdOrderByPriceDesc(id);
   }
 }

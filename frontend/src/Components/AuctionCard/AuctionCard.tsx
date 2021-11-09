@@ -29,7 +29,7 @@ const AuctionCard = ({ auction, fetchAuctions, forwardRef}: Props) => {
   const [differenceInMillis, setDifferenceInMillis] = useState(0);
   const [counter, setCounter] = useState<number | null>(null);
   const [remainingTime, setRemainingTime] = useState("Dagar kvar:");
-  const [bid, setBid] = useState<undefined | number>();
+  const [bid, setBid] = useState<number | undefined>(0);
   const [quickBid, setQuickBid] = useState<number>();
   
 
@@ -38,15 +38,15 @@ const AuctionCard = ({ auction, fetchAuctions, forwardRef}: Props) => {
   const { whoAmI } = useAuth();
   const isHost =
     whoAmI && auction.host && auction.host.id && whoAmI.id == auction.host.id;
-
+  
   useEffect(() => {
-    if (!!auction?.bids?.length) {
-      setBid(auction.bids.pop()?.price);
+    if (auction.bids?.length) {
+      setBid(auction.bids[auction.bids?.length - 1].price);
     } else {
-      setBid(auction?.startPrice);
+      setBid(auction.startPrice);
     }
-  }, [auction.bids]);
-
+  }, [auction.bids])
+  
   useEffect(() => {
     handleQuickBid();
   }, [!!bid, bid]);
@@ -89,8 +89,11 @@ const AuctionCard = ({ auction, fetchAuctions, forwardRef}: Props) => {
       if (bid <= 100 && bid > 10) {
         setQuickBid(bid + 10);
       }
-      if (bid >= 1000 && bid > 100) {
+      if (bid >= 100 && bid > 100) {
         setQuickBid(bid + 100);
+      }
+      if (bid == auction.startPrice) {
+        setQuickBid(bid + 1);
       }
     }
   };
@@ -128,7 +131,7 @@ const AuctionCard = ({ auction, fetchAuctions, forwardRef}: Props) => {
             <StyledSpan>Pris:</StyledSpan> {auction.startPrice} SEK
           </StyledDesc>
           <StyledDesc>
-            <StyledSpan>Högsta bud:</StyledSpan> {bid} SEK
+            <StyledSpan>Högsta bud:</StyledSpan> {bid == auction.startPrice ? "Inga bud" : bid + " SEK"} 
           </StyledDesc>
           <StyledDesc>
             <StyledSpan>{remainingTime}</StyledSpan> {daysLeft}

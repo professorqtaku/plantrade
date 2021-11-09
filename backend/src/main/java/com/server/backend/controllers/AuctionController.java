@@ -8,6 +8,7 @@ import com.server.backend.entities.Status;
 import com.server.backend.services.AuctionService;
 import com.server.backend.services.UserService;
 import org.apache.coyote.Response;
+import com.server.backend.springsocket.SocketModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

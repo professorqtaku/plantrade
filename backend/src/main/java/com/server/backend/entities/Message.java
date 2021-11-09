@@ -2,6 +2,7 @@ package com.server.backend.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +23,7 @@ public class Message {
     private long id;
 
     @ManyToOne
+    @JsonIncludeProperties({"id", "username"})
     private User writer;
 
     private String message;

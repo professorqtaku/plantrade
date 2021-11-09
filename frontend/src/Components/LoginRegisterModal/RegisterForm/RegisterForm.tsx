@@ -12,8 +12,9 @@ import {
   StyledEmailIcon,
   StyledInputDiv,
   StyledTitle,
-  StyledText,
+  StyledWarningText,
 } from "./StyledRegisterForm";
+import { StyledDivider, StyledSpan, StyledText } from "../LoginForm/StyledLoginForm";
 
 interface Props {
   toggleRegister: Function;
@@ -54,6 +55,7 @@ const RegisterForm = ({ toggleRegister }: Props) => {
           <StyledEmailIcon />
           <InputField
             value={email}
+            type="email"
             label="email"
             updateState={(e) => setEmail(e)}
             required
@@ -67,8 +69,15 @@ const RegisterForm = ({ toggleRegister }: Props) => {
             required
           />
         </StyledInputDiv>
-        {userExists && <StyledText>The user already exists.</StyledText>}
+        {userExists && <StyledWarningText>The user already exists.</StyledWarningText>}
         <StyledBtn>Skapa Konto</StyledBtn>
+        <StyledDivider />
+        <StyledText>
+          Har du redan ett konto?{" "}
+          <StyledSpan onClick={() => toggleRegister()}>
+            Logga in här
+          </StyledSpan>
+        </StyledText>
       </StyledForm>
     </StyledWrapper>
   );

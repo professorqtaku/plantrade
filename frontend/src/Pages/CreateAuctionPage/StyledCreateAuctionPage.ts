@@ -32,3 +32,10 @@ export const StyledButton = styled(Button)`
   }
 `;
 
+export const StyledText = styled.p`
+  margin: 0;
+  color: darkgrey;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.9rem;
+`;
+

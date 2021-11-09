@@ -8,7 +8,6 @@ import { useSnackBar } from "./Contexts/SnackBarContext";
 import { useAuth } from "./Contexts/AuthContext";
 
 function App() {
-
   const { showSnackBar, setShowOpenSnackBar, text } = useSnackBar();
   const { whoAmI } = useAuth();
 
@@ -20,7 +19,11 @@ function App() {
           {whoAmI && <FloatingAddBtn />}
         </>
       </AllRoutes>
-      <SnackBar isOpen={showSnackBar} setIsOpen={setShowOpenSnackBar} text={text} />
+      <SnackBar
+        isOpen={showSnackBar}
+        setIsOpen={setShowOpenSnackBar}
+        text={text}
+      />
       <LoginRegisterModal />
     </div>
   );
