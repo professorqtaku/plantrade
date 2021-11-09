@@ -17,8 +17,14 @@ public class NotificationService {
   @Autowired
   private SocketModule socketModule;
 
-  public void createNotificationForHost(Auction auction, int price) {
+  public void sendNotifications(Auction auction, int price, User user) {
+    createNotificationForHost(auction, price);
+    if (user != null) {
+      createNotificationForUser(user, auction);
+    }
+  }
 
+  public void createNotificationForHost(Auction auction, int price) {
     Notification notification = Notification.builder()
             .auction(auction)
             .user(auction.getHost())
