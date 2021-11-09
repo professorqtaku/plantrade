@@ -39,9 +39,9 @@ const SocketProvider = ({ children }: Props) => {
     console.log(data);
   });
 
-  socket.on("notification", (userId: number) => {
-      if (whoAmI?.id === userId) {
-        setText("Någon har budat över dig!");
+  socket.on("notification", (data: number) => {
+      if (whoAmI?.id === data) {
+        setText("Någon har budat över dig!" );
         setShowOpenSnackBar(true);
       }
   });

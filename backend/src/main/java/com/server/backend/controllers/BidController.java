@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
 import java.util.Map;
 import java.util.Optional;
 
@@ -22,18 +23,13 @@ public class BidController {
   @Autowired
   private SocketModule socketModule;
 
-  @Autowired
-  private AuctionService auctionService;
 
   @PostMapping("/bid")
   public ResponseEntity<Bid> createBid(@RequestBody Map values) {
-    Auction auction = auctionService.getAuctionById((long) (int) values.get("auctionId")).get();
-    var secondHighestAuctionId = bidService.getHighestBid(auction.getId()).getUser().getId();
     Bid bid = bidService.createBid(values);
-    socketModule.emit("notification", secondHighestAuctionId);
-    socketModule.emit("bid", bid);
 
     if (bid != null) {
+      socketModule.emit("bid", bid);
       return ResponseEntity.ok(bid);
     } else {
       return ResponseEntity.badRequest().build();

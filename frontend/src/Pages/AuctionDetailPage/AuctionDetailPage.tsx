@@ -35,13 +35,11 @@ import {
   StyledCarousel,
   StyledChip,
 } from "./StyledAuctionDetailPage";
-import { useSocket } from "../../Contexts/SocketContext";
 import { useModal } from "../../Contexts/ModalContext";
 
 const AuctionDetailPage = () => {
   const { id }: any = useParams();
   const history = useHistory();
-  const { socket } = useSocket();
 
   const { getAuctionById } = useAuction();
   const { createBid, getHighestBid, highestBid } = useBid();
@@ -102,9 +100,6 @@ const AuctionDetailPage = () => {
     
     const createdBid = await createBid(newBid);
     getHighestBid(auction?.id);
-    if (createdBid) {
-      socket.emit("join", id);
-    }
       //rerender the new currently highest bid
       handleGetAuctionById();
     setBid("");
@@ -160,7 +155,6 @@ const AuctionDetailPage = () => {
     >
       {images.map((img) => (
         <StyledImg
-          onClick={() => socket.emit("auctionUpdate", id)}
           key={img.path}
           src={img.path}
         />
