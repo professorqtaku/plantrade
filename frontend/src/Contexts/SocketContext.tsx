@@ -1,6 +1,8 @@
 import { createContext, useContext } from "react";
 import io from "socket.io-client";
 import { useAuction } from "./AuctionContext";
+import { useAuth } from './AuthContext';
+import { useSnackBar } from './SnackBarContext';
 
 type Props = {
   children?: JSX.Element;
@@ -14,6 +16,8 @@ const SocketProvider = ({ children }: Props) => {
   const endpoint = "http://localhost:9092";
   const socket = io(endpoint, { transports: ["websocket"] });
   const { getAllAuctions } = useAuction();
+  const { whoAmI } = useAuth();
+  const { setText, setShowOpenSnackBar } = useSnackBar();
 
   socket.on("connect", () => {
     console.log("conneted");
@@ -35,8 +39,11 @@ const SocketProvider = ({ children }: Props) => {
     console.log(data);
   });
 
-  socket.on("notification", (data: any) => {
-    console.log('Notification', data);
+  socket.on("notification", (userId: number) => {
+      if (whoAmI?.id === userId) {
+        setText("Någon har budat över dig!");
+        setShowOpenSnackBar(true);
+      }
   });
 
   const values = {
