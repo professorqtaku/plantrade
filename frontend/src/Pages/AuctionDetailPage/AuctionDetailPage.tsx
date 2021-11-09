@@ -16,6 +16,7 @@ import ImageCarousel from "../../Components/ImageCarousel/ImageCarousel";
 import ExpandableDescriptionBox from "../../Components/ExpandableDesc/ExpandableDescriptionBox";
 import ButtonComp from "../../Components/Button/ButtonComp";
 import { images } from "./images";
+import AuctionDetailsPageCategories  from "../../Components/AuctionDetailsPageCategories/AuctionDetailsPageCategories"
 import {
   StyledWrapper,
   StyledPrice,
@@ -33,7 +34,6 @@ import {
   StyledWarningPrice,
   StyledImg,
   StyledCarousel,
-  StyledChip,
 } from "./StyledAuctionDetailPage";
 import { useModal } from "../../Contexts/ModalContext";
 
@@ -211,16 +211,8 @@ const AuctionDetailPage = () => {
                 auctionDescription={auction.description}
               />
             </Grid>
-            <Grid item xs={12} md={12}>
-              {auction.categories
-                ? auction.categories.map(category => (
-                    <StyledChip
-                      key={`${auction.id}-${category.name}`}
-                      label={`#${category.name}`}
-                    />
-                  ))
-                : null}
-            </Grid>
+            {auction.categories &&
+            <AuctionDetailsPageCategories categories={auction.categories} auctionId={auction.id} />}
             <Grid item xs={12} md={12}>
               {isOverPrice && (
                 <StyledWarning>
