@@ -39,7 +39,7 @@ public class AuctionService {
     
     public Auction createAuction(Auction auction, List<Category> categories, List<MultipartFile> files) {
         User user = userService.findCurrentUser();
-        if (user == null) {
+        if (user == null || auction.getTitle().length() > 20) {
             return null;
         }
         Date date = new Date();
