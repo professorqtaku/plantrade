@@ -28,7 +28,6 @@ const CreateAuctionPage = () => {
   // const [preview, setPreview] = useState('')
   // create a holder to store files
   const formData = new FormData()
-
   const [title, setTitle] = useState<string>('');
   const [desc, setDesc] = useState<string>('');
   const [price, setPrice] = useState<number>(0);
@@ -38,30 +37,37 @@ const CreateAuctionPage = () => {
   const [endDate, setEndDate] = useState<number | undefined>(inOneDay);
   const [categoriesToUse, setCategoriesToUse] = useState<
     Category[]>([]);
+  const [errorMsg, setErrorMsg] = useState(false);
 
   const handleAddAuction = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const auction = {
-      title: title,
-      description: desc,
-      startPrice: price,
-      endDate: endDate,
-    };
-    if(auction.title && auction.description && auction.startPrice){
-
-      const res =  await createAuction(auction, categoriesToUse, formData);
-      
-      setTitle('');
-      setDesc('');
-      setPrice(0);
-      setEndDate(inOneDay);
-      setCategoriesToUse([]);
-      
-      if(res.id) {
-        history.push(`/auctions/${res.id}`)
+      if(formData.has('files')){
+        setErrorMsg(false);
+      } else {
+        setErrorMsg(true);
+        return;
       }
-    }
+
+      const auction = {
+        title: title,
+        description: desc,
+        startPrice: price,
+        endDate: endDate,
+      };
+  
+      if(auction.title && auction.description && auction.startPrice){
+        const res =  await createAuction(auction, categoriesToUse, formData);
+        
+        setTitle('');
+        setDesc('');
+        setPrice(0);
+        setEndDate(inOneDay);
+        setCategoriesToUse([]);
+        
+        if(res.id) {
+          history.push(`/auctions/${res.id}`)
+        }
+      }
   };
 
   const renderUploadFiles = () => (
@@ -76,15 +82,16 @@ const CreateAuctionPage = () => {
       <Button variant="contained" component="span" style={{ width: "100%" }}>
         Ladda upp bilder
       </Button>
+      {errorMsg && <div>Please choose atleast one file</div>}
     </label>
   );
 
   async function onFileLoad(e: any) {
-    let files = e.target.files
+    const files = e.target.files;
 
     // add files to formData
     for (let file of files) {
-      formData.append('files', file, file.name)
+      formData.append('files', file, file.name);
     }
 
     // clear input of files
