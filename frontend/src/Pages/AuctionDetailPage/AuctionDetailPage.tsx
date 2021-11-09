@@ -215,7 +215,7 @@ const AuctionDetailPage = () => {
                 </StyledWarning>
               )}
             </Grid>
-            <StyledForm warning={isOverPrice ? isOverPrice : false}>
+            <StyledForm>
               {whoAmI ? renderBidContent : renderLoginToggle}
             </StyledForm>
           </Grid>
