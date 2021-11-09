@@ -9,7 +9,7 @@ import {
 import SelectCheckbox from "../../SelectCheckbox/SelectCheckbox";
 import InputField from "../../InputField/InputField";
 import SelectRadio from "../../SelectRadio/SelectRadio";
-import CloseIcon from "@mui/icons-material/Close";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import { Status, status } from "../../../Utils/types";
 import { useCategory } from "../../../Contexts/CategoryContext";
 import { Category } from "../../../Interfaces/Interfaces";
@@ -40,10 +40,10 @@ function FilterCollapse({
     <StyledCollapse in={isOpen} timeout="auto" unmountOnExit>
       <StyledDiv>
         <StyledIconButton type="button" onClick={() => toggle()}>
-          <CloseIcon />
+          <ExpandLessIcon />
         </StyledIconButton>
         <Box>
-          <StyledTitle>KATEGORIER</StyledTitle>
+          <StyledTitle paddingtop="0">KATEGORIER</StyledTitle>
           <SelectCheckbox
             options={allCategories}
             selected={selectedCategories}

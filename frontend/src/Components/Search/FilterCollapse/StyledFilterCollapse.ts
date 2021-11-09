@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import { Collapse, IconButton } from '@mui/material'
 
+interface Props {
+  paddingtop?: string;
+}
+
 export const StyledCollapse = styled(Collapse)`
   background: white;
   width: 100%;
@@ -19,13 +23,16 @@ export const StyledDiv = styled.div`
   max-height: 400px;
 `;
 
-export const StyledTitle = styled.p`
-  padding: 40px 10px 10px;
+export const StyledTitle = styled.p<Props>`
+  padding: ${(props) =>
+    props.paddingtop ? `${props.paddingtop} 10px 10px` : "30px 10px 10px"};
   margin: 0;
   font-family: var(--font-text);
 `;
 
 export const StyledIconButton = styled(IconButton)`
   position: absolute;
+  bottom: 5%;
   right: 5%;
+  z-index: 100;
 `;
