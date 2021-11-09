@@ -28,6 +28,9 @@ public class BidService {
   private AuctionService auctionService;
 
   @Autowired
+  private NotificationService notificationService;
+
+  @Autowired
   private SocketModule socketModule;
 
   public Boolean validateUser(User user) {
@@ -44,24 +47,22 @@ public class BidService {
   }
 
   public Boolean validateBid(Auction auction, int bidPrice) {
-    int index = auction.getBids().size();
-    double latestPrice = 0;
-    try{
-      latestPrice = auction.getBids().get(index - 1).getPrice();
-    } catch (Exception e){
-      e.printStackTrace();
+    int index;
+    double currentPrice = auction.getStartPrice();
+
+    if (auction.getBids().size() > 0) {
+      index = auction.getBids().size();
+      currentPrice = auction.getBids().get(index - 1).getPrice();
     }
 
-    if (auction.getStartPrice() < bidPrice && latestPrice < bidPrice){
-      // price placed by user must be higher than both startPrice and latestPrice
+    if (currentPrice < bidPrice){
       return true;
-    } else if (auction.getStartPrice() > bidPrice || latestPrice > bidPrice) {
-      // if startPrice or latestPrice is higher than bidPrice
+    } else if (currentPrice > bidPrice) {
       return false;
     } else {
-      // if list of bids is empty and bidPrice is higher than startPrice return true
+      // if list of bids is empty and bidPrice is higher or equal to startPrice return true
       // otherwise return false
-      return auction.getBids().isEmpty() && auction.getStartPrice() < bidPrice;
+      return auction.getBids().isEmpty() && currentPrice <= bidPrice;
     }
 
   }
@@ -86,9 +87,14 @@ public class BidService {
                 .price((int) values.get("price"))
                 .createdDate(new Date((long) values.get("createdDate")))
                 .build();
-        var secondHighestAuctionUserId = getHighestBid(auction.getId()).getUser().getId();
-        // This emit will be removed, when notification service is done.
-        socketModule.emit("notification", secondHighestAuctionUserId);
+
+        User secondHighestAuctionUser = null;
+
+        if (auction.getBids().size() > 0){
+          secondHighestAuctionUser = getHighestBid(auction.getId()).getUser();
+        }
+
+        notificationService.sendNotifications(auction, (int) values.get("price"), secondHighestAuctionUser);
         auction.addBid(bid);
         return bidRepository.save(bid);
       } catch(Exception e) {
