@@ -3,17 +3,14 @@ package com.server.backend.services;
 import com.server.backend.entities.Auction;
 import com.server.backend.entities.Bid;
 import com.server.backend.entities.User;
-import com.server.backend.repositories.AuctionRepository;
 import com.server.backend.repositories.BidRepository;
 import com.server.backend.springsocket.SocketModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.OneToOne;
 import java.util.Date;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 public class BidService {
@@ -47,18 +44,16 @@ public class BidService {
   }
 
   public Boolean validateBid(Auction auction, int bidPrice) {
-    int index;
     double currentPrice = auction.getStartPrice();
 
-    if (auction.getBids().size() > 0) {
-      index = auction.getBids().size();
-      currentPrice = auction.getBids().get(index - 1).getPrice();
+    Bid highestBid = getHighestBid(auction.getId());
+    if (highestBid != null) {
+      currentPrice = highestBid.getPrice();
     }
 
     if (auction.getBids().isEmpty()) {
       return bidPrice >= currentPrice;
     }
-
     return bidPrice > currentPrice;
   }
 
@@ -76,30 +71,26 @@ public class BidService {
       return null;
     } else if (validateUser(user)
             && validateBid(auction, (int) values.get("price"))
-            && validateTime(auction, (long) values.get("createdDate"))){
-      try{
-        Bid bid = Bid.builder()
-                .user(user)
-                .auction(auction)
-                .price((int) values.get("price"))
-                .createdDate(new Date((long) values.get("createdDate")))
-                .build();
+            && validateTime(auction, (long) values.get("createdDate"))) {
+      Bid bid = Bid.builder()
+              .user(user)
+              .auction(auction)
+              .price((int) values.get("price"))
+              .createdDate(new Date((long) values.get("createdDate")))
+              .build();
 
-        User secondHighestAuctionUser = null;
+      User secondHighestAuctionUser = null;
 
-        if (auction.getBids().size() > 0){
-          User highestBidder = getHighestBid(auction.getId()).getUser();
-          if(highestBidder != user) {
-            secondHighestAuctionUser = highestBidder;
-          }
+      if (auction.getBids().size() > 0){
+        User highestBidder = getHighestBid(auction.getId()).getUser();
+        if(highestBidder != user) {
+          secondHighestAuctionUser = highestBidder;
         }
-
-        notificationService.sendNotifications(auction, (int) values.get("price"), secondHighestAuctionUser);
-        auction.addBid(bid);
-        return bidRepository.save(bid);
-      } catch(Exception e) {
-        e.printStackTrace();
       }
+
+      notificationService.sendNotifications(auction, (int) values.get("price"), secondHighestAuctionUser);
+      auction.addBid(bid);
+      return bidRepository.save(bid);
     }
     return null;
   }
