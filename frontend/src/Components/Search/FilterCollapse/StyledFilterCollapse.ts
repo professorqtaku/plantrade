@@ -12,9 +12,11 @@ export const StyledCollapse = styled(Collapse)`
   max-height: 500px;
   position: relative;
   z-index: 100;
+  box-shadow: 0 10px 10px rgb(0 0 0 / 0.2);
+  /* box-shadow: 0px 10px 15px 5px var(--dark-grey); */
 `;
 export const StyledDiv = styled.div`
-  background: var(--background-color);
+  background: white;
   width: 90%;
   margin: 3% auto;
   margin-top: 0;
