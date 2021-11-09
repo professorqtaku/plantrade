@@ -35,6 +35,10 @@ const SocketProvider = ({ children }: Props) => {
     console.log(data);
   });
 
+  socket.on("notification", (data: any) => {
+    console.log('Notification', data);
+  });
+
   const values = {
     socket,
   };
