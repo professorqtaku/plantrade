@@ -9,13 +9,15 @@ const DrawerContext = createContext<any>(null);
 export const useDrawer = () => useContext(DrawerContext);
 
 const DrawerProvider: FC<Props> = ({ children }: Props) => {
-  const [showDrawer, setShowDrawer] = useState(false);
+  const [showDrawer, setShowDrawer] = useState<boolean>(false);
+  const [content, setContent] = useState("some content");
   const toggleDrawer = () => setShowDrawer(!showDrawer);
 
   const values = {
     showDrawer,
     setShowDrawer,
-    toggleDrawer
+    toggleDrawer,
+    content
   };
 
   return (

@@ -1,25 +1,25 @@
-import { useState } from 'react';
-import { useDrawer } from '../../Contexts/DrawerContext';
+import { useState } from "react";
+import { useDrawer } from "../../Contexts/DrawerContext";
+import DrawerHeader from "./DrawerHeader/DrawerHeader";
 import { StyledCollapse, StyledDiv } from "./StyledDrawerCollapse";
+import { Divider } from "@mui/material";
+import DrawerContent from "./DrawerContent/DrawerContent";
 
-type Anchor = "bottom";
-
-const Drawer = () => {
+const DrawerCollapse = () => {
   const { showDrawer, toggleDrawer } = useDrawer();
+
+  const emptyFooter = <div></div>;
 
   const drawer = (
     <StyledDiv>
-      hej
+      <DrawerHeader toggle={toggleDrawer} />
+      <Divider />
+      <DrawerContent />
+      {emptyFooter}
     </StyledDiv>
-  )
-
-  return (
-    <StyledCollapse
-      in={showDrawer}
-    >
-      {drawer}
-    </StyledCollapse>
   );
-}
 
-export default Drawer;
+  return <StyledCollapse in={showDrawer}>{drawer}</StyledCollapse>;
+};
+
+export default DrawerCollapse;
