@@ -1,13 +1,43 @@
 import { useDrawer } from "../../../Contexts/DrawerContext";
+import {StyledContentWrapper} from "./StyledDrawerContent"
 
 
 const DrawerContent = () => {
   const { content } = useDrawer();
 
   return (
-    <div>
-      {content}
-    </div>
+    <StyledContentWrapper>
+      <p>{content}</p>
+      <p>{content}</p>
+      <p>{content}</p>
+      <p>{content}</p>
+      <p>{content}</p>
+      <p>{content}</p>
+      <p>{content}</p>
+      <p>{content}</p>
+      <p>{content}</p>
+      <p>{content}</p>
+      <p>{content}</p>
+      <p>{content}</p>
+      <p>{content}</p>
+      <p>{content}</p>
+      <p>{content}</p>
+      <p>{content}</p>
+      <p>{content}</p>
+      <p>{content}</p>
+      <p>{content}</p>
+      <p>{content}</p>
+      <p>{content}</p>
+      <p>{content}</p>
+      <p>{content}</p>
+      <p>{content}</p>
+      <p>{content}</p>
+      <p>{content}</p>
+      <p>{content}</p>
+      <p>{content}</p>
+      <p>{content}</p>
+      <p>{content}</p>
+    </StyledContentWrapper>
   );
 };
 
