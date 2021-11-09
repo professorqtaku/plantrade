@@ -6,6 +6,7 @@ import FloatingAddBtn from "./Components/FloatingAddBtn/FloatingAddBtn";
 import SnackBar from "./Components/SnackBar/SnackBar";
 import { useSnackBar } from "./Contexts/SnackBarContext";
 import { useAuth } from "./Contexts/AuthContext";
+import Drawer from "./Components/DrawerCollapse/DrawerCollapse";
 
 function App() {
   const { showSnackBar, setShowOpenSnackBar, text } = useSnackBar();
@@ -17,6 +18,7 @@ function App() {
         <>
           <Navigation />
           {whoAmI && <FloatingAddBtn />}
+          <Drawer />
         </>
       </AllRoutes>
       <SnackBar
