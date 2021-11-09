@@ -44,7 +44,7 @@ function FilterCollapse({
     <StyledCollapse in={isOpen} timeout="auto" unmountOnExit>
       <StyledDiv>
         <StyledHeader>
-          <ClearButton label="rensa" type="button" callback={clearFilter} />
+          <ClearButton label="Rensa" type="button" callback={clearFilter} />
           <IconButton type="button" onClick={() => toggle()}>
             <CloseIcon />
           </IconButton>

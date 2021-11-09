@@ -6,7 +6,8 @@ interface Props {
   backgroundcolor?: string;
 }
 
-export const StyledButton = styled(Button)<Props>`
+export const StyledButton = styled(Button) <Props>`
+  text-transform: none;
   background: ${(props) => props.backgroundcolor};
   font-size: ${(props) => props.fontSize};
   letter-spacing: 1px;
