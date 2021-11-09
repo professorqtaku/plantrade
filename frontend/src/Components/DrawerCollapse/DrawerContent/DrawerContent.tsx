@@ -1,13 +1,16 @@
 import { useDrawer } from "../../../Contexts/DrawerContext";
-import {StyledContentWrapper} from "./StyledDrawerContent"
-
+import { StyledContentWrapper } from "./StyledDrawerContent";
 
 const DrawerContent = () => {
-  const { content } = useDrawer();
+  const { content, setShowChatRoom } = useDrawer();
 
   return (
     <StyledContentWrapper>
-      {content}
+      {content.map((item: string) => (
+        <p key={item} onClick={() => setShowChatRoom(true)}>
+          {item}
+        </p>
+      ))}
     </StyledContentWrapper>
   );
 };
