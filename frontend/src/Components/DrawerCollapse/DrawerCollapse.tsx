@@ -14,7 +14,7 @@ const DrawerCollapse = () => {
   const drawer = (
     <StyledDiv>
       <DrawerHeader toggle={toggleDrawer} />
-      <Divider />
+      <Divider style={{marginBottom: '1rem'}}/>
       {!showChatRoom ? <DrawerContent /> : <ChatRoom/>}
       {emptyFooter}
     </StyledDiv>

@@ -13,11 +13,11 @@ const MessageProvider: FC<Props> = ({ children }: Props) => {
   const [messages, setMessages] = useState([
     {
       id: "1",
-      text: "Tjena",
+      text: "Tjena hur är läget? Ska du partaja i helgen elloor? Om jag köper din blomma kan jag följa med då? snälle.. ",
     },
     {
       id: "2",
-      text: "Halloj!",
+      text: "Halloj! Betala 10 krön mer så får du komme..",
     },
     {
       id: "1",
@@ -29,7 +29,7 @@ const MessageProvider: FC<Props> = ({ children }: Props) => {
     },
     {
       id: "1",
-      text: "Nej inte idäg, behöver social",
+      text: "Nej inte idäg, behöver social.",
     },
   ]);
 
