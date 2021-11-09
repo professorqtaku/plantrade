@@ -55,16 +55,11 @@ public class BidService {
       currentPrice = auction.getBids().get(index - 1).getPrice();
     }
 
-    if (currentPrice < bidPrice){
-      return true;
-    } else if (currentPrice > bidPrice) {
-      return false;
-    } else {
-      // if list of bids is empty and bidPrice is higher or equal to startPrice return true
-      // otherwise return false
-      return auction.getBids().isEmpty() && currentPrice <= bidPrice;
-    }
+    if (auction.getBids().isEmpty()) {
+      return bidPrice >= currentPrice;
+    } 
 
+    return bidPrice > currentPrice;
   }
 
   public Boolean validateTime(Auction auction, long time) {
