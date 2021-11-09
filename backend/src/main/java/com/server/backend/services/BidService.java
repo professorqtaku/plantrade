@@ -57,7 +57,7 @@ public class BidService {
 
     if (auction.getBids().isEmpty()) {
       return bidPrice >= currentPrice;
-    } 
+    }
 
     return bidPrice > currentPrice;
   }
@@ -74,7 +74,9 @@ public class BidService {
 
     if (isOwner(user, auction)) {
       return null;
-    } else if (validateUser(user) && validateBid(auction, (int) values.get("price")) && validateTime(auction, (long) values.get("createdDate"))){
+    } else if (validateUser(user)
+            && validateBid(auction, (int) values.get("price"))
+            && validateTime(auction, (long) values.get("createdDate"))){
       try{
         Bid bid = Bid.builder()
                 .user(user)
@@ -86,7 +88,10 @@ public class BidService {
         User secondHighestAuctionUser = null;
 
         if (auction.getBids().size() > 0){
-          secondHighestAuctionUser = getHighestBid(auction.getId()).getUser();
+          User highestBidder = getHighestBid(auction.getId()).getUser();
+          if(highestBidder != user) {
+            secondHighestAuctionUser = highestBidder;
+          }
         }
 
         notificationService.sendNotifications(auction, (int) values.get("price"), secondHighestAuctionUser);
