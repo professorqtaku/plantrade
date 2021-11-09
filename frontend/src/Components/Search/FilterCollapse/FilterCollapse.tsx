@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import { Box, IconButton } from "@mui/material";
 import {
   StyledCollapse,
