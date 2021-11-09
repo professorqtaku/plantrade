@@ -4,8 +4,8 @@ import com.server.backend.entities.Auction;
 import com.server.backend.entities.Notification;
 import com.server.backend.entities.User;
 import com.server.backend.repositories.NotificationRepository;
+import com.server.backend.springsocket.SocketModule;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,39 +14,31 @@ public class NotificationService {
   @Autowired
   private NotificationRepository notificationRepository;
 
-  public ResponseEntity<Notification> createNotificationForHost(Auction auction) {
-    try{
-      Notification notification = Notification.builder()
-              .auction(auction)
-              .user(auction.getHost())
-              .message("har fått ett nytt bud")
-              .isRead(false)
-              .build();
+  @Autowired
+  private SocketModule socketModule;
 
-      notificationRepository.save(notification);
+  public void createNotificationForHost(Auction auction, int price) {
 
-      return ResponseEntity.ok(notification);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return ResponseEntity.badRequest().build();
+    Notification notification = Notification.builder()
+            .auction(auction)
+            .user(auction.getHost())
+            .message("har fått ett nytt bud: " + price)
+            .isRead(false)
+            .build();
+
+    notificationRepository.save(notification);
+    socketModule.emit("notification", notification);
   }
 
-  public ResponseEntity<Notification> createNotificationForUser(User user, Auction auction) {
-    try{
+  public void createNotificationForUser(User user, Auction auction) {
       Notification notification = Notification.builder()
               .auction(auction)
               .user(user)
-              .message("")
+              .message("Någon har lagt ett högre bud på: ")
               .isRead(false)
               .build();
 
       notificationRepository.save(notification);
-
-      return ResponseEntity.ok(notification);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return ResponseEntity.badRequest().build();
+      socketModule.emit("notification", notification);
   }
 }
