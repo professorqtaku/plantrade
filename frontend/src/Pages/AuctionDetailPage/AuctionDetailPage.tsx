@@ -42,7 +42,7 @@ const AuctionDetailPage = () => {
   const history = useHistory();
 
   const { getAuctionById } = useAuction();
-  const { createBid } = useBid();
+  const { createBid, getHighestBid, highestBid } = useBid();
   const { whoAmI } = useAuth();
 
   const { toggleLoginModal } = useModal();
@@ -60,20 +60,23 @@ const AuctionDetailPage = () => {
     handleGetAuctionById();
   }, []);
 
+  useEffect(() => {
+    setCurrentBid(highestBid);
+    setBidText("Högsta budet");
+  }, [highestBid])
+  
   const handleGetAuctionById = async () => {
     const res = await getAuctionById(id);
     setAuction(res);
+    getHighestBid(res.id);
     setEndDate(new Date(res.endDate).toLocaleDateString("sv-SV"));
     setEndTime(new Date(res.endDate).toLocaleTimeString("sv-SV"));
-
+    
     if (whoAmI && whoAmI.id == res.host.id) {
       setIsHost(true);
     }
-
-    if (res.bids?.length) {
-      setCurrentBid(res.bids.pop(res.bids.length - 1).price);
-      setBidText("Högsta budet");
-    } else {
+    
+    if (!res.bids.length) {
       setCurrentBid(res.startPrice);
       setBidText("Startpris");
     }
@@ -87,7 +90,7 @@ const AuctionDetailPage = () => {
       return;
     }
     setIsOverPrice(false);
-
+    
     const newBid = {
       userId: whoAmI.id,
       auctionId: auction?.id,
@@ -96,8 +99,7 @@ const AuctionDetailPage = () => {
     };
     
     await createBid(newBid);
-    //rerender the new currently highest bid
-    handleGetAuctionById();
+    getHighestBid(auction?.id);
     setBid("");
   };
 
