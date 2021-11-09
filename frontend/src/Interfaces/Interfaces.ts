@@ -15,7 +15,7 @@ export interface Auction {
   host?: User,
   bids?: Array<Bid> | undefined,
   categories?: [Category],
-  images?: [Image],
+  images: [Image],
   winner?: User
 }
 
