@@ -2,12 +2,14 @@ import {
   StyledHeader,
   StyledExpandIcon,
   StyledText,
+  StyledGoBackIcon,
+  StyledTextWrapper,
 } from "./StyledDrawerHeader";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import {useDrawer} from '../../../Contexts/DrawerContext'
+import { useDrawer } from "../../../Contexts/DrawerContext";
 
 interface Props {
-  toggle: Function
+  toggle: Function;
 }
 
 const DrawerHeader = ({ toggle }: Props) => {
@@ -16,15 +18,18 @@ const DrawerHeader = ({ toggle }: Props) => {
   return (
     <StyledHeader>
       {!showChatRoom ? (
-        <StyledText>Meddelanden</StyledText>
+        <StyledText isright={false}>Meddelanden</StyledText>
       ) : (
-        <StyledText onClick={() => setShowChatRoom(false)}>Tillbaka</StyledText>
+        <StyledTextWrapper onClick={() => setShowChatRoom(false)}>
+          <StyledGoBackIcon />
+          <StyledText isright={false}>Tillbaka</StyledText>
+        </StyledTextWrapper>
       )}
       <StyledExpandIcon onClick={() => toggle()} />
       {!showChatRoom ? (
-        <StyledText>Antal: {content.length}</StyledText>
+        <StyledText isright={true}>Antal: {content.length}</StyledText>
       ) : (
-        <StyledText>Name on auction</StyledText>
+        <StyledText isright={true}>Name on auction</StyledText>
       )}
     </StyledHeader>
   );
