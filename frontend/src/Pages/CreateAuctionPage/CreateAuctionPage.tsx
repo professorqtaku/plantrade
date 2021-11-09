@@ -14,6 +14,7 @@ import Button from "@mui/material/Button";
 import { useAuction } from "../../Contexts/AuctionContext";
 import { useHistory } from "react-router";
 import { Category } from "../AuctionPage/AuctionPage";
+import { useSocket } from "../../Contexts/SocketContext";
 
 
 
@@ -24,6 +25,7 @@ const Input = styled("input")({
 const CreateAuctionPage = () => {
   const { createAuction } = useAuction();
   const history = useHistory();
+  const { socket } = useSocket();
 
   // const [preview, setPreview] = useState('')
   // create a holder to store files
@@ -48,27 +50,28 @@ const CreateAuctionPage = () => {
         return;
       }
 
-      const auction = {
-        title: title,
-        description: desc,
-        startPrice: price,
-        endDate: endDate,
-      };
-  
-      if(auction.title && auction.description && auction.startPrice){
-        const res =  await createAuction(auction, categoriesToUse, formData);
-        
-        setTitle('');
-        setDesc('');
-        setPrice(0);
-        setEndDate(inOneDay);
-        setCategoriesToUse([]);
-        
-        if(res.id) {
-          history.push(`/auctions/${res.id}`)
-        }
+    const auction = {
+      title: title,
+      description: desc,
+      startPrice: price,
+      endDate: endDate,
+    };
+    if(auction.title && auction.description && auction.startPrice){
+
+      const res =  await createAuction(auction, categoriesToUse, formData);
+      
+      setTitle('');
+      setDesc('');
+      setPrice(0);
+      setEndDate(inOneDay);
+      setCategoriesToUse([]);
+      
+      if (res.id) {
+        socket.emit("join", res.id);
+        history.push(`/auctions/${res.id}`)
       }
   };
+}
 
   const renderUploadFiles = () => (
     <label htmlFor="contained-button-file">

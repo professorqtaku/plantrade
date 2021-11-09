@@ -97,8 +97,10 @@ const AuctionDetailPage = () => {
       createdDate: Date.now(),
     };
     
-    await createBid(newBid);
+    const createdBid = await createBid(newBid);
     getHighestBid(auction?.id);
+      //rerender the new currently highest bid
+      handleGetAuctionById();
     setBid("");
   };
 
@@ -154,7 +156,7 @@ const AuctionDetailPage = () => {
             Tillbaka
           </StyledBackBtn>
           <Grid container spacing={2}>
-            // images carousel
+            {/* images carousel */}
             <Grid item xs={12} md={12}>
               <StyledCarousel
               initialActiveIndex={0}
