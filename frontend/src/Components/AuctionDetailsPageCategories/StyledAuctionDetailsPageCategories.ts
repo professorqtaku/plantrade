@@ -6,3 +6,9 @@ export const StyledChip = styled(Chip)`
   color: white;
   background-color: var(--light-green);
 `;
+
+export const ShowMore = styled.button`
+  border: 0;
+  background: none;
+  cursor: pointer;
+`;

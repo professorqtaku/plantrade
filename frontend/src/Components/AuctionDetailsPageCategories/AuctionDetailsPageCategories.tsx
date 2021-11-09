@@ -6,7 +6,7 @@ interface Props {
   categories: Category[];
   auctionId: Number;
 }
-import {  StyledChip } from "./StyledAuctionDetailsPageCategories";
+import {  StyledChip, ShowMore } from "./StyledAuctionDetailsPageCategories";
 
 const AuctionDetailsPageCategories = ({ categories, auctionId }: Props) => {
   const [toggleShowMore, setToggleShowMore ] = useState(false);
@@ -27,7 +27,7 @@ const AuctionDetailsPageCategories = ({ categories, auctionId }: Props) => {
    {!toggleShowMore ? mapThroughAndRender(categoriesLimited) :
      mapThroughAndRender(categories)
      }
-     {categories.length > 2 && <ButtonComp label={!toggleShowMore ? "Visa mer" : "Dölj"} callback={() => setToggleShowMore(!toggleShowMore)} />}
+     {categories.length > 2 && <ShowMore onClick={() => setToggleShowMore(!toggleShowMore)}> {!toggleShowMore ? "Visa mer" : "Visa mindre"} </ShowMore>}
      </Grid>
   )
 }
