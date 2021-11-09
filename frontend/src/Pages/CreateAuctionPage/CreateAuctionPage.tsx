@@ -14,6 +14,7 @@ import Button from "@mui/material/Button";
 import { useAuction } from "../../Contexts/AuctionContext";
 import { useHistory } from "react-router";
 import { Category } from "../AuctionPage/AuctionPage";
+import { useSocket } from "../../Contexts/SocketContext";
 
 
 
@@ -24,6 +25,7 @@ const Input = styled("input")({
 const CreateAuctionPage = () => {
   const { createAuction } = useAuction();
   const history = useHistory();
+  const { socket } = useSocket();
 
   // const [preview, setPreview] = useState('')
   // create a holder to store files
@@ -58,7 +60,8 @@ const CreateAuctionPage = () => {
       setEndDate(inOneDay);
       setCategoriesToUse([]);
       
-      if(res.id) {
+      if (res.id) {
+        socket.emit("join", res.id);
         history.push(`/auctions/${res.id}`)
       }
     }
