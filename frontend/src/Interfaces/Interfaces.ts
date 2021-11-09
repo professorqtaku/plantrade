@@ -37,3 +37,11 @@ export interface Image {
   path: string;
   auctionId: number;
 }
+
+export interface Notification {
+  id: Number,
+  auction: Auction,
+  user: User,
+  message: string,
+  isRead: boolean
+}
