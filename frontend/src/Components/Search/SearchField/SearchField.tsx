@@ -23,7 +23,7 @@ const SearchField = ({ searchText, setSearchText, showFilter, setShowFilter }: P
         variant="standard"
         type="text"
         value={searchText}
-        isfilteropen={showFilter}
+        isfilteropen={showFilter.toString()}
         onChange={(e: BaseSyntheticEvent) => setSearchText(e.target.value)}
         onFocus={() => setShowFilter(true)}
         inputProps={{
