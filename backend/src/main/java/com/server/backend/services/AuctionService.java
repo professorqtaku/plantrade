@@ -68,13 +68,6 @@ public class AuctionService {
             }
         }
     }
-
-    public List<Auction> getAllOpenAuctions(Status status, Integer page) {
-        Pageable pageable = getPageable(page, null, null, false);
-        List<Auction> openAuctions = auctionRepository.findByStatus(status, pageable);
-        removeOldAuctions(openAuctions);
-        return auctionRepository.findByStatus(status, pageable);
-    }
     
     public Auction createAuction(Auction auction, List<Category> categories, List<MultipartFile> files) {
         User user = userService.findCurrentUser();

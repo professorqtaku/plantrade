@@ -24,18 +24,6 @@ public class AuctionController {
     @Autowired
     private AuctionService auctionService;
 
-    @GetMapping
-    public ResponseEntity<List<Auction>> getAllOpenAuctions(@RequestParam(value = "page") Integer page) {
-        List<Auction> auctions = auctionService.getAllOpenAuctions(Status.OPEN, page);
-        if(auctions == null) {
-            return ResponseEntity.noContent().build();
-        } else if(auctions.size() > 0) {
-            return ResponseEntity.ok(auctions);
-        } else {
-            return ResponseEntity.noContent().build();
-        }
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<Optional<Auction>> getAuctionById(@PathVariable long id) {
         Optional<Auction> auction = auctionService.getAuctionById(id);

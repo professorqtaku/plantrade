@@ -21,8 +21,7 @@ export interface Category {
 }
 
 const AuctionPage = () => {
-  const { getAllAuctions, auctions, setAuctions } = useAuction();
-  const { searchText } = useSearch();
+  const { getAuctionsByOptions, auctions, setAuctions } = useSearch();
   const { setAuction, handleSelect } = useNav();
   const observer = useRef<IntersectionObserver>();
   let [pageNumber, setPageNumber] = useState(0);
@@ -36,15 +35,15 @@ const AuctionPage = () => {
     }
   }, []);
   
-  const handleGetAuctions = async () => {
-    if (auctions.length <= 0 && searchText.trim().length <= 0) {
-      await getAllAuctions(pageNumber);
-    }
-  };
+  // const handleGetAuctions = async () => {
+  //   if (auctions.length <= 0) {
+  //     await getAuctionsByOptions(pageNumber);
+  //   }
+  // };
 
-  const handleScroll = async () => {
-    await getAllAuctions(pageNumber);
-  }
+  const handleGetAuctions = async () => {
+    await getAuctionsByOptions(pageNumber);
+  };
 
   const handleLastAuction = useCallback(
     (node: any, _deps: any) => {
@@ -57,7 +56,7 @@ const AuctionPage = () => {
         // if the node is intersecting, aka on the page somewhere
         if (entries[0].isIntersecting) {
           setPageNumber(pageNumber++);
-          handleScroll();
+          handleGetAuctions();
         }
       });
       if (node) {

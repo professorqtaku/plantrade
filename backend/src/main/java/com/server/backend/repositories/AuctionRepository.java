@@ -22,8 +22,6 @@ public interface AuctionRepository extends JpaRepository<Auction, Long>, JpaSpec
 
     List<Auction> findByHost(User user);
 
-    List<Auction> findByStatus(Status status, Pageable pageable);
-
     Long countByStatus(Status status);
 
     List<Auction> findByWinner(User user);
