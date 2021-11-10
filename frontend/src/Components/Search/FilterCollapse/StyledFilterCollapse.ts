@@ -43,4 +43,5 @@ export const StyledIconButton = styled(IconButton)`
   position: absolute;
   bottom: 5%;
   right: 5%;
+  z-index: 100;
 `;

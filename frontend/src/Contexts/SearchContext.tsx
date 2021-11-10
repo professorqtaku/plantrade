@@ -23,10 +23,13 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
     setSearchText("");
     setSelectedCategories([]);
     setSelectedStatus(status[0]);
+    setSelectedSortTime(sortByTimes[2]);
     setIsRerender(!isRerender);
   }
 
-  const getAuctionsByOptions = async (page: number) => {
+  const getAuctionsByOptions = async (pageNumber?: number) => {
+    let page: number = pageNumber ? pageNumber : 0;
+    
     const option: SearchObject = {
       title: searchText,
       sort: selectedSortTime,
@@ -34,7 +37,7 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
       status: selectedStatus,
       page
     };
-
+    
     console.log("what is options page", option.page);
 
     let categoryQuery: string = getCategoryQuery(option.categories);
@@ -44,21 +47,33 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
     let res: Response = await fetch(
       `/api/auctions/search?title=${option.title}${categoryQuery}${statusQuery}&page=${option.page}${sortQuery}`
     );
-    console.log("what is res", res);
+    // console.log("what is res", res);
     if (res.ok && res.status == 200) {
       let newAuctions: Array<Auction> = await res.json();
       console.log("what is new Auctions?", newAuctions);
+
       if (option.page === 0 || !auctions || !auctions.length) {
         setAuctions(newAuctions);
-      } else if (auctions) {
+        console.log("normal set");
+        
+      }
+      
+      else if (auctions) {
         let updateAuctionslist: Auction[] = auctions;
         for (let auction of newAuctions) {
           updateAuctionslist.push(auction);
         }
         setAuctions(updateAuctionslist);
+        console.log("pushing set");
       }
+
+      console.log("change DONE");
+      
+
     } else if (res.status === 204) {
-      console.log("no more content");
+      if (option.page === 0)
+        setAuctions([])
+        // console.log("no more content");
     }
   };
 
@@ -95,6 +110,8 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
 
 
   const value = {
+    auctions,
+    setAuctions,
     clearFilter,
     searchText,
     setSearchText,
@@ -105,8 +122,6 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
     selectedStatus,
     setSelectedStatus,
     getAuctionsByOptions,
-    auctions,
-    setAuctions,
     isRerender,
   };
 
