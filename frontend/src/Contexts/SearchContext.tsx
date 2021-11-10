@@ -1,5 +1,11 @@
 import React, { createContext, FC, useContext, useState } from "react";
-import { SearchObject, Status, status, sortByTimes, SortByTimes } from "../Utils/types";
+import {
+  SearchObject,
+  Status,
+  status,
+  sortByTimes,
+  SortByTimes,
+} from "../Utils/types";
 import { Auction, Category } from "../Interfaces/Interfaces";
 
 type Props = {
@@ -11,11 +17,12 @@ const SearchContext = createContext<any>(null);
 export const useSearch = () => useContext(SearchContext);
 
 const SearchProvider: FC<Props> = ({ children }: Props) => {
-
   const [auctions, setAuctions] = useState<Auction[]>([]);
   const [searchText, setSearchText] = useState<string>("");
   const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
-  const [selectedSortTime, setSelectedSortTime] = useState<SortByTimes>(sortByTimes[2]);
+  const [selectedSortTime, setSelectedSortTime] = useState<SortByTimes>(
+    sortByTimes[2]
+  );
   const [selectedStatus, setSelectedStatus] = useState<Status>(status[0]);
   const [isRerender, setIsRerender] = useState(false);
 
@@ -25,17 +32,19 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
     setSelectedStatus(status[0]);
     setSelectedSortTime(sortByTimes[2]);
     setIsRerender(!isRerender);
-  }
+    setSelectedSortTime(sortByTimes[2]);
+    setAuctions([]);
+    getAuctionsByOptions(0);
+  };
 
-  const getAuctionsByOptions = async (pageNumber?: number) => {
-    let page: number = pageNumber ? pageNumber : 0;
-    
+  const getAuctionsByOptions = async (page: number) => {
+    let auctionResult: Array<Auction> = [];
     const option: SearchObject = {
       title: searchText,
       sort: selectedSortTime,
       categories: selectedCategories,
       status: selectedStatus,
-      page
+      page,
     };
     
     console.log("what is options page", option.page);
@@ -51,39 +60,36 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
     if (res.ok && res.status == 200) {
       let newAuctions: Array<Auction> = await res.json();
       console.log("what is new Auctions?", newAuctions);
-
-      if (option.page === 0 || !auctions || !auctions.length) {
-        setAuctions(newAuctions);
-        console.log("normal set");
-        
-      }
+      // if (auctions) {
+      console.log("before clone", auctions);
       
-      else if (auctions) {
-        let updateAuctionslist: Auction[] = auctions;
-        for (let auction of newAuctions) {
-          updateAuctionslist.push(auction);
-        }
-        setAuctions(updateAuctionslist);
-        console.log("pushing set");
-      }
-
-      console.log("change DONE");
-      
-
-    } else if (res.status === 204) {
-      if (option.page === 0)
-        setAuctions([])
-        // console.log("no more content");
+      let updateAuctionslist: Array<Auction> =
+        option.page === 0 ? auctionResult : Object.assign([], auctions);
+      // for (let auction of newAuctions) {
+      //   updateAuctionslist.push(auction);
+      // }
+      // setAuctions(updateAuctionslist);
+      setAuctions([...updateAuctionslist, ...newAuctions]);
     }
+    // else if (option.page === 0 || !auctions.length) {
+      //   setAuctions(newAuctions);
+      // }
+      // } else
+      if (res.status === 204) {
+        console.log("no more content");
+        if (option.page === 0)
+        setAuctions(auctionResult);
+    }
+    console.log("what is context auctions?", auctions);
   };
 
   const getSortQuery = (sort: SortByTimes | any) => {
     let query: string = "";
-    if (sort.sort !== 'none') {
-      query =`&sort=${sort.sort}`
+    if (sort.sort !== "none") {
+      query = `&sort=${sort.sort}`;
     }
     return query;
-  }
+  };
 
   const getCategoryQuery = (categories: Category[] | any) => {
     let query: string = "";
@@ -107,8 +113,6 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
     return query;
   };
 
-
-
   const value = {
     auctions,
     setAuctions,
@@ -123,6 +127,8 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
     setSelectedStatus,
     getAuctionsByOptions,
     isRerender,
+    // pageNumber,
+    // setPageNumber
   };
 
   return (

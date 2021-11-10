@@ -10,27 +10,8 @@ export const AuctionContext = createContext<any>(null);
 export const useAuction = () => useContext(AuctionContext);
 
 const AuctionProvider: FC<Props> = ({ children }: Props) => {
-  const [auctions, setAuctions] = useState<Auction[]>([]);
   const [usersAuctions, setUsersAuctions] = useState<Array<Auction>>();
   const [usersWonAuctions, setUsersWonAuctions] = useState<Array<Auction>>();
-
-  const getAllAuctions = async (pageNumber: number) => {
-    let res: Response = await fetch(`/rest/auctions?page=${pageNumber}`);
-    if (res.status === 200) {
-      let newAuctions: Array<Auction> = await res.json();
-      if (pageNumber === 0 || !auctions || !auctions.length) {
-        setAuctions(newAuctions);
-      } else if (auctions) {
-        let updateAuctionslist: Auction[] = auctions;
-        for (let auction of newAuctions) {
-          updateAuctionslist.push(auction);
-        }
-        setAuctions(updateAuctionslist);
-      }
-    } else if (res.status === 204) {
-      console.log('no more content');
-    }
-  }
 
   const getAuctionById = async (id: Number) => {
     let res: Response = await fetch('/rest/auctions/' + id);
@@ -72,9 +53,6 @@ const AuctionProvider: FC<Props> = ({ children }: Props) => {
   }
   
   const values = {
-    auctions,
-    setAuctions,
-    getAllAuctions,
     getAuctionById,
     createAuction,
     usersAuctions,

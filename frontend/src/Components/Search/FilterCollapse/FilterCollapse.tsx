@@ -44,7 +44,6 @@ function FilterCollapse({
   const handleClearFilter = async () => {
     await clearFilter();
     toggle();
-    getAuctionsByOptions();
   }
 
   useEffect(() => { console.log("change",auctions);

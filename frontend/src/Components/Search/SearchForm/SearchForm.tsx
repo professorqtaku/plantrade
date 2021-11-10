@@ -14,6 +14,7 @@ type Props = {
 
 const SearchForm = ({ searchWord }: Props) => {
   const {
+    setAuctions,
     getAuctionsByOptions,
     searchText,
     setSearchText,
@@ -31,9 +32,10 @@ const SearchForm = ({ searchWord }: Props) => {
 
   const search = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
-    await history.push("/auctions");
-    await getAuctionsByOptions();
+    await setAuctions([]);
+    await getAuctionsByOptions(0);
     setShowFilter(false);
+    history.push("/auctions");
   };
 
   return (

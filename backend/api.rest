@@ -63,7 +63,7 @@ Content-Type: application/json
 GET http://localhost:4000/rest/auctions/search?title=test
 
 ### get auctions by title and category
-GET http://localhost:4000/api/auctions/search?title=test&page=0&sort=desc
+GET http://localhost:4000/api/auctions/search?title=china&status=SOLD&page=0&sort=asc
 
 ### get won auctions by current user
 GET http://localhost:4000/rest/auctions/won
