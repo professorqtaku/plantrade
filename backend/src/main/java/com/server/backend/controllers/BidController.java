@@ -1,12 +1,15 @@
 package com.server.backend.controllers;
 
+import com.server.backend.entities.Auction;
 import com.server.backend.entities.Bid;
+import com.server.backend.services.AuctionService;
 import com.server.backend.services.BidService;
 import com.server.backend.springsocket.SocketModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
 import java.util.Map;
 import java.util.Optional;
 
@@ -20,12 +23,13 @@ public class BidController {
   @Autowired
   private SocketModule socketModule;
 
+
   @PostMapping("/bid")
   public ResponseEntity<Bid> createBid(@RequestBody Map values) {
     Bid bid = bidService.createBid(values);
-    socketModule.emit("bid", bid);
-    
+
     if (bid != null) {
+      socketModule.emit("bid", bid);
       return ResponseEntity.ok(bid);
     } else {
       return ResponseEntity.badRequest().build();

@@ -7,5 +7,5 @@ export const StyledAddIcon = styled(Fab)`
   bottom: 4.5rem;
   right: 1rem;
   background: var(--light-green);
-  z-index: 100;
+  z-index: 98;
 `;

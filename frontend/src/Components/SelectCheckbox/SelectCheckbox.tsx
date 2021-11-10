@@ -7,6 +7,7 @@ import { Category } from '../../Interfaces/Interfaces';
 interface Props {
   options: Category[];
   label?: string;
+  isRerender: boolean;
   selected: Category[];
   setSelected: Function;
   limitTags?: number;
@@ -16,8 +17,9 @@ const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 const SelectCheckbox = ({
-  options,
   label,
+  options,
+  isRerender,
   setSelected,
   limitTags,
   selected,
@@ -29,6 +31,7 @@ const SelectCheckbox = ({
   return (
     <Autocomplete
       multiple
+      key={`search-category-${isRerender}`}
       limitTags={limitTags}
       options={options}
       onChange={(event, value) => handleChange(event, value)}

@@ -47,6 +47,7 @@ public class AuctionController {
             Auction savedAuction = auctionService.createAuction(auction, categories, files);
 
             if(savedAuction != null) {
+                //socketModule.emitToRoom("Auction room", "join", savedAuction);
                 return ResponseEntity.ok(savedAuction);
             } else {
                 return ResponseEntity.badRequest().build();

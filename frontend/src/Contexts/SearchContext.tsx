@@ -17,6 +17,14 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
   const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
   const [selectedSortTime, setSelectedSortTime] = useState<SortByTimes>(sortByTimes[2]);
   const [selectedStatus, setSelectedStatus] = useState<Status>(status[0]);
+  const [isRerender, setIsRerender] = useState(false);
+
+  const clearFilter = () => {
+    setSearchText("");
+    setSelectedCategories([]);
+    setSelectedStatus(status[0]);
+    setIsRerender(!isRerender);
+  }
 
   const getAuctionsByOptions = async (page: number) => {
     const option: SearchObject = {
@@ -84,7 +92,10 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
     return query;
   };
 
+
+
   const value = {
+    clearFilter,
     searchText,
     setSearchText,
     selectedCategories,
@@ -95,7 +106,8 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
     setSelectedStatus,
     getAuctionsByOptions,
     auctions,
-    setAuctions
+    setAuctions,
+    isRerender,
   };
 
   return (

@@ -10,6 +10,7 @@ interface Props {
   value: string | number | undefined;
   InputLabelProps?: Object;
   InputProps?: Object;
+  inputProps?: Object;
 }
 
 const InputField = ({
@@ -19,6 +20,7 @@ const InputField = ({
   value,
   InputLabelProps,
   InputProps,
+  inputProps,
   required,
   margintop,
 }: Props) => {
@@ -33,6 +35,7 @@ const InputField = ({
       id={label}
       InputLabelProps={InputLabelProps}
       InputProps={InputProps}
+      inputProps={inputProps}
       margintop={margintop ? margintop : 0}
     />
   );
