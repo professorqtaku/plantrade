@@ -14,7 +14,7 @@ const DrawerContent = () => {
   return (
     <StyledContentWrapper>
       {content.map((item: Props) => (
-        <DrawerItem content={item}/>
+        <DrawerItem content={item} />
       ))}
     </StyledContentWrapper>
   );

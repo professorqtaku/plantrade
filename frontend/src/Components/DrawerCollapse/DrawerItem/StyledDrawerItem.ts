@@ -1,6 +1,12 @@
 import styled from "styled-components";
 import Avatar from "@mui/material/Avatar";
 import Badge from "@mui/material/Badge";
+import {
+  SwipeableList,
+  SwipeableListItem,
+  SwipeAction,
+  TrailingActions,
+} from "react-swipeable-list";
 
 export const StyledWrapper = styled.div`
   width: 90%;
@@ -46,4 +52,22 @@ export const StyledBadge = styled(Badge)`
   color: var(--status-red);
   align-self: center;
   margin-right: 0.5rem;
+`;
+
+export const StyledSwipe = styled(SwipeableList)`
+  height: auto;
+`;
+
+export const StyledSwipeList = styled(SwipeableListItem)`
+
+`;
+
+export const StyledSwipeAction = styled(SwipeAction)`
+
+`;
+
+export const StyledDelete = styled.div`
+  background: rgba(169, 0, 11, 0.47);
+  height: 78px;
+  margin-top: 5px;
 `;

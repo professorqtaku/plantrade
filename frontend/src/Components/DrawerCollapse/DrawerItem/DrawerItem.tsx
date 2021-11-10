@@ -6,7 +6,18 @@ import {
   StyledAvatar,
   StyledInnerWrapper,
   StyledBadge,
+  StyledSwipe,
+  StyledSwipeAction,
+  StyledSwipeList,
+  StyledDelete,
 } from "./StyledDrawerItem";
+import {
+  SwipeableList,
+  SwipeableListItem,
+  SwipeAction,
+  TrailingActions,
+} from "react-swipeable-list";
+import "react-swipeable-list/dist/styles.css";
 
 interface Props {
   content: {
@@ -17,6 +28,17 @@ interface Props {
 }
 
 const DrawerItem = ({ content }: Props) => {
+  const trailingActions = () => (
+    <TrailingActions>
+      <StyledSwipeAction
+        destructive={true}
+        onClick={() => console.info("swipe action triggered")}
+      >
+        <StyledDelete>Ta bort</StyledDelete>
+      </StyledSwipeAction>
+    </TrailingActions>
+  );
+
   const renderMsgContent = (
     <StyledInnerWrapper>
       <StyledTitle>{content.title}</StyledTitle>
@@ -34,10 +56,14 @@ const DrawerItem = ({ content }: Props) => {
   );
 
   return (
-    <StyledWrapper>
-      {renderMsgContent}
-      {renderBadge}
-    </StyledWrapper>
+    <StyledSwipe>
+      <StyledSwipeList trailingActions={trailingActions()}>
+        <StyledWrapper>
+          {renderMsgContent}
+          {renderBadge}
+        </StyledWrapper>
+      </StyledSwipeList>
+    </StyledSwipe>
   );
 };
 
