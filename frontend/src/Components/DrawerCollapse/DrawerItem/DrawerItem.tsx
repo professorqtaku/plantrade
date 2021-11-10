@@ -10,6 +10,8 @@ import {
   StyledSwipeAction,
   StyledSwipeList,
   StyledDelete,
+  StyledTrashCan,
+  StyledDeleteText,
 } from "./StyledDrawerItem";
 import {
   SwipeableList,
@@ -34,7 +36,10 @@ const DrawerItem = ({ content }: Props) => {
         destructive={true}
         onClick={() => console.info("swipe action triggered")}
       >
-        <StyledDelete>Ta bort</StyledDelete>
+        <StyledDelete>
+          <StyledTrashCan />
+          <StyledDeleteText>Ta bort</StyledDeleteText>
+        </StyledDelete>
       </StyledSwipeAction>
     </TrailingActions>
   );

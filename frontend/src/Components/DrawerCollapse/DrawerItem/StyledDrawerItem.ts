@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Avatar from "@mui/material/Avatar";
 import Badge from "@mui/material/Badge";
+import DeleteIcon from "@mui/icons-material/Delete";
 import {
   SwipeableList,
   SwipeableListItem,
@@ -9,7 +10,7 @@ import {
 } from "react-swipeable-list";
 
 export const StyledWrapper = styled.div`
-  width: 90%;
+  width: 92%;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr auto;
@@ -70,4 +71,19 @@ export const StyledDelete = styled.div`
   background: rgba(169, 0, 11, 0.47);
   height: 78px;
   margin-top: 5px;
+
+`;
+
+export const StyledTrashCan = styled(DeleteIcon)`
+  color: white;
+  margin: 0;
+  margin-top: 1rem;
+  margin-left: 1rem;
+`;
+
+export const StyledDeleteText = styled.p`
+  font-size: 1rem;
+  color: white;
+  margin: 0;
+  margin-left: 0.5rem;
 `;
