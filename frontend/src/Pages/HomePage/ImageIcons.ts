@@ -11,7 +11,7 @@ export const imageIcons: Record<string, IconImage> = {
     imgFile: Tree,
     text: "TRÄD",
   },
-  frö: {
+  frön: {
     imgFile: Seed,
     text: "FRÖ",
   },

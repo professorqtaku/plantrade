@@ -37,12 +37,13 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
     getAuctionsByOptions(0);
   };
 
-  const getAuctionsByOptions = async (page: number) => {
+  const getAuctionsByOptions = async (page: number, search?: SearchObject) => {
     let auctionResult: Array<Auction> = [];
+    
     const option: SearchObject = {
       title: searchText,
       sort: selectedSortTime,
-      categories: selectedCategories,
+      categories: search?.categories ? search.categories : selectedCategories,
       status: selectedStatus,
       page,
     };
@@ -56,31 +57,18 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
     let res: Response = await fetch(
       `/api/auctions/search?title=${option.title}${categoryQuery}${statusQuery}&page=${option.page}${sortQuery}`
     );
-    // console.log("what is res", res);
+
     if (res.ok && res.status == 200) {
       let newAuctions: Array<Auction> = await res.json();
-      console.log("what is new Auctions?", newAuctions);
-      // if (auctions) {
-      console.log("before clone", auctions);
-      
       let updateAuctionslist: Array<Auction> =
         option.page === 0 ? auctionResult : Object.assign([], auctions);
-      // for (let auction of newAuctions) {
-      //   updateAuctionslist.push(auction);
-      // }
-      // setAuctions(updateAuctionslist);
       setAuctions([...updateAuctionslist, ...newAuctions]);
     }
-    // else if (option.page === 0 || !auctions.length) {
-      //   setAuctions(newAuctions);
-      // }
-      // } else
-      if (res.status === 204) {
-        console.log("no more content");
+
+    else if (res.status === 204) {
         if (option.page === 0)
         setAuctions(auctionResult);
     }
-    console.log("what is context auctions?", auctions);
   };
 
   const getSortQuery = (sort: SortByTimes | any) => {

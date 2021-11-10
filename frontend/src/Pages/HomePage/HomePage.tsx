@@ -34,43 +34,46 @@ import { useCategory } from "../../Contexts/CategoryContext";
 
 const HomePage = () => {
   const history = useHistory();
-  const { searchText } = useSearch();
+  const {
+    searchText,
+    clearFilter,
+    setSelectedCategories,
+    getAuctionsByOptions,
+  } = useSearch();
   const { whoAmI } = useAuth();
   const { auctions } = useAuction();
   const { allCategories } = useCategory();
 
-  const equalsIgnoringCase = (text: string, other: string) => {
-    return text.localeCompare(other, undefined, { sensitivity: "base" }) === 0;
-  }
-
   const getCategoryIcon = (name: string) => {
-    console.log(name);
-    console.log(imageIcons[name].imgFile);
+    let icon: IconImage = imageIcons[name.toLocaleLowerCase()];
     
-    let icon: IconImage = imageIcons[name];
     if (icon == null) {
-      icon = imageIcons["träd"];
+      icon = imageIcons["träd"]; // default icon
     }
     return icon.imgFile;
   }
-
-  getCategoryIcon("blomma");
+  const handleSearchByCategory = async (category: Category) => {
+    await clearFilter();
+    await setSelectedCategories([category]);
+    await getAuctionsByOptions(0, { categories: [category] });
+    history.push("/auctions")
+  };
 
   const renderCategories = () => (
     <StyledCarouselWrapper>
-      <Carousel
+        <Carousel
         isRTL={true}
         itemsToShow={3}
         outerSpacing={0}
         pagination={false}
         initialFirstItem={3}
-      >
-        {allCategories.map((category: Category) => {
+        >
+        {allCategories && allCategories.map((category: Category) => {
           return (
             <StyledIconImageItem key={category.name}>
               <StyledIconImg
                 src={getCategoryIcon(category.name)}
-                onClick={() => console.log("klicka på karusell item")}
+                onClick={() => handleSearchByCategory(category)}
               />
               <StyledText>{category.name}</StyledText>
             </StyledIconImageItem>
