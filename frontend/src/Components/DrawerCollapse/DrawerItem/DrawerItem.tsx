@@ -7,14 +7,11 @@ import {
   StyledInnerWrapper,
   StyledBadge,
   StyledSwipe,
-  StyledSwipeAction,
-  StyledSwipeList,
   StyledDelete,
   StyledTrashCan,
   StyledDeleteText,
 } from "./StyledDrawerItem";
 import {
-  SwipeableList,
   SwipeableListItem,
   SwipeAction,
   TrailingActions,
@@ -32,7 +29,7 @@ interface Props {
 const DrawerItem = ({ content }: Props) => {
   const trailingActions = () => (
     <TrailingActions>
-      <StyledSwipeAction
+      <SwipeAction
         destructive={true}
         onClick={() => console.info("swipe action triggered")}
       >
@@ -40,7 +37,7 @@ const DrawerItem = ({ content }: Props) => {
           <StyledTrashCan />
           <StyledDeleteText>Ta bort</StyledDeleteText>
         </StyledDelete>
-      </StyledSwipeAction>
+      </SwipeAction>
     </TrailingActions>
   );
 
@@ -62,12 +59,12 @@ const DrawerItem = ({ content }: Props) => {
 
   return (
     <StyledSwipe>
-      <StyledSwipeList trailingActions={trailingActions()}>
+      <SwipeableListItem trailingActions={trailingActions()}>
         <StyledWrapper>
           {renderMsgContent}
           {renderBadge}
         </StyledWrapper>
-      </StyledSwipeList>
+      </SwipeableListItem>
     </StyledSwipe>
   );
 };
