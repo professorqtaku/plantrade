@@ -4,12 +4,13 @@
   --font-normal-text: 'ABeeZee', sans-serif;
   --yellow: #FFE500;
   --light-yellow: #FFF6AA;
-  --light-green: #619463;
+  --light-green: #8EA08E;
   --dark-green: #122522;
   --dark-grey: #36455A;
+  --background-color: #F8F8F8;
   --grey: #868686;
-  --background-color: #FBFDFF;
   --status-green: #619463;
+  --chat-green: #8EA08E;
   --status-yellow: #FFE500;
   --status-red: #E44929;
 }

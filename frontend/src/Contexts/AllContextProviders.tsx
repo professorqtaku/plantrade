@@ -8,6 +8,7 @@ import NavigationProvider from "./NavigationContext";
 import SnackBarProvider from "./SnackBarContext";
 import SocketProvider from "./SocketContext";
 import DrawerProvider from "./DrawerContext";
+import MessageProvider from "./MessageContext";
 
 interface Props {
   children: JSX.Element;
@@ -25,7 +26,9 @@ const AllContextProviders: React.FC<Props> = ({ children }) => {
                   <DrawerProvider>
                     <BidProvider>
                       <SocketProvider>
-                        <SearchProvider>{children}</SearchProvider>
+                        <MessageProvider>
+                          <SearchProvider>{children}</SearchProvider>
+                        </MessageProvider>
                       </SocketProvider>
                     </BidProvider>
                   </DrawerProvider>

@@ -1,16 +1,39 @@
-import { StyledHeader } from "./StyledDrawerHeader";
+import {
+  StyledHeader,
+  StyledExpandIcon,
+  StyledText,
+  StyledGoBackIcon,
+  StyledTextWrapper,
+  StyledAmountOfMsg,
+} from "./StyledDrawerHeader";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { useDrawer } from "../../../Contexts/DrawerContext";
 
 interface Props {
-  toggle: Function
+  toggle: Function;
 }
 
-const DrawerHeader = ({toggle} : Props) => {
+const DrawerHeader = ({ toggle }: Props) => {
+  const { showChatRoom, content, setShowChatRoom } = useDrawer();
+
   return (
     <StyledHeader>
-      <div onClick={() => toggle()}>
-        <ExpandMoreIcon />
-      </div>
+      {!showChatRoom ? (
+        <StyledText isright={false}>Meddelanden</StyledText>
+      ) : (
+        <StyledTextWrapper onClick={() => setShowChatRoom(false)}>
+          <StyledGoBackIcon />
+          <StyledText isright={false}>Tillbaka</StyledText>
+        </StyledTextWrapper>
+      )}
+      <StyledExpandIcon onClick={() => toggle()} />
+      {!showChatRoom ? (
+        <StyledText isright={true}>
+          Antal: <StyledAmountOfMsg>{content.length}</StyledAmountOfMsg>
+        </StyledText>
+      ) : (
+        <StyledText isright={true}>Name on auction</StyledText>
+      )}
     </StyledHeader>
   );
 };
