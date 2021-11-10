@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import Avatar from "@mui/material/Avatar";
+import CheckIcon from "@mui/icons-material/Check";
 
 interface MessageProps {
   id: string;
+  read?: boolean
 }
 
 export const StyledWrapper = styled.div`
@@ -14,6 +16,9 @@ export const StyledWrapper = styled.div`
 export const StyledMessageWrapper = styled.div`
   display: grid;
   height: fit-content;
+  &:last-child {
+    
+  }
 `;
 
 export const StyledMessage = styled.div<MessageProps>`
@@ -34,12 +39,13 @@ export const StyledText = styled.p`
   padding: 0;
 `;
 
-export const StyledDate = styled.p<MessageProps>`
+
+export const StyledDateOrRead = styled.p<MessageProps>`
   font-size: 0.7rem;
   color: black;
   font-style: italic;
   width: fit-content;
-  height: 2rem;
+  height: ${props => props.read ? 'auto' : '2rem' };
   justify-self: ${(props) => (props.id === "1" ? "end" : "start")};
   margin: ${(props) => (props.id === "1" ? "0 2rem 0 0" : "0 0 0 5rem")};
 `;
@@ -49,8 +55,18 @@ export const StyledAvatarWrapper = styled.div`
   grid-template-columns: auto 1fr;
 `;
 
+export const StyledDateAndRead = styled.div`
+  display: grid;
+`
+
 export const StyledAvatar = styled(Avatar)`
   background: var(--dark-green);
   align-self: center;
   margin-left: 0.7rem;
+`;
+
+export const StyledCheckedIcon = styled(CheckIcon)`
+  color: var(--light-green);
+  font-size: 0.6rem;
+  margin-right: 0.2rem;
 `;
