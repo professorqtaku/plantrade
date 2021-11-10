@@ -10,29 +10,31 @@ import SelectCheckbox from "../../SelectCheckbox/SelectCheckbox";
 import InputField from "../../InputField/InputField";
 import SelectRadio from "../../SelectRadio/SelectRadio";
 import CloseIcon from "@mui/icons-material/Close";
-import { Status, status } from "../../../Utils/types";
+import { Status, status, SortByTimes, sortByTimes } from "../../../Utils/types";
 import { useCategory } from "../../../Contexts/CategoryContext";
 
 interface Props {
   isOpen: boolean;
   toggle: Function;
-  hours: number;
-  setHours: Function;
+  // hours: number;
+  // setHours: Function;
   selectedStatus: Status;
   selectedCategories: string[];
   setSelectedStatus: Function;
   setSelectedCategories: Function;
+  setSelectedSortTime: Function;
+  selectedSortTime: SortByTimes;
 }
 
 function FilterCollapse({
   isOpen,
   toggle,
-  hours,
-  setHours,
   selectedStatus,
   setSelectedStatus,
   selectedCategories,
   setSelectedCategories,
+  selectedSortTime,
+  setSelectedSortTime
 }: Props) {
   const { allCategories } = useCategory();
   return (
@@ -52,7 +54,13 @@ function FilterCollapse({
         </Box>
         <Box>
           <StyledTitle>ANNONSER SOM AVSLUTAS INOM</StyledTitle>
-          <InputField
+          <SelectRadio
+            options={sortByTimes}
+            updateState={setSelectedSortTime}
+            optionKey={"title"}
+            defaultValue={selectedSortTime}
+          />
+          {/* <InputField
             type="number"
             value={hours}
             updateState={setHours}
@@ -63,7 +71,7 @@ function FilterCollapse({
               endAdornment: <p>TIMMAR</p>,
               inputProps: { min: 1 },
             }}
-          />
+          /> */}
         </Box>
         <Box>
           <StyledTitle>SE ENDAST</StyledTitle>

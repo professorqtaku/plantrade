@@ -2,9 +2,10 @@ import { Category } from "../Interfaces/Interfaces"
 
 export type SearchObject = {
   title: string,
-  hours?: number,
+  sort?: SortByTimes,
   categories?: Category[],
-  status?: Status
+  status?: Status,
+  page: number
 }
 
 export type Status = {
@@ -17,6 +18,11 @@ export type IconImage = {
   text: string;
 }
 
+export type SortByTimes = {
+  sort: string,
+  title: string;
+}
+
 export const status: Status[] = [
   {
     status: "OPEN",
@@ -25,5 +31,20 @@ export const status: Status[] = [
   {
     status: "SOLD",
     title: "Avslutade"
+  }
+]
+
+export const sortByTimes: SortByTimes[] = [
+  {
+    sort: 'asc',
+    title: "Kortast tid kvar",
+  },
+  {
+    sort: 'desc',
+    title: "Längst tid kvar"
+  },
+  {
+    sort: 'none',
+    title: "Ingen sortering"
   }
 ]

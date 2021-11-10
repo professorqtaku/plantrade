@@ -19,14 +19,15 @@ const SearchForm = ({ searchWord }: Props) => {
     setSearchText,
     selectedCategories,
     setSelectedCategories,
-    selectedHours,
-    setSelectedHours,
+    setSelectedSortTime,
+    selectedSortTime,
     selectedStatus,
     setSelectedStatus,
   } = useSearch();
-  const { setAuctions, getAllAuctions } = useAuction();
+  const { setAuctions, getAllAuctions, auctionsFromSearch } = useAuction();
   const history = useHistory();
   const [showFilter, setShowFilter] = useState<boolean>(false);
+  const [pageNumber, setPageNumber] = useState(0);
 
   const toggleFilter = () => setShowFilter(!showFilter);
 
@@ -37,14 +38,15 @@ const SearchForm = ({ searchWord }: Props) => {
       let option: SearchObject = {
         title: searchText ? searchText : searchWord,
         categories: selectedCategories,
-        hours: selectedHours,
+        sort: selectedSortTime,
         status: selectedStatus,
+        page: pageNumber
       };
 
       if (searchText.trim().length > 0) {
-        let auctions: Array<Auction> = await getAuctionsByOptions(option);
+        await getAuctionsByOptions(option);
 
-        setAuctions(auctions);
+        setAuctions(auctionsFromSearch);
       } else {
         await getAllAuctions();
       }
@@ -64,8 +66,8 @@ const SearchForm = ({ searchWord }: Props) => {
         <FilterCollapse
           isOpen={showFilter}
           toggle={toggleFilter}
-          hours={selectedHours}
-          setHours={setSelectedHours}
+          selectedSortTime={selectedSortTime}
+          setSelectedSortTime={setSelectedSortTime}
           selectedStatus={selectedStatus}
           setSelectedStatus={setSelectedStatus}
           selectedCategories={selectedCategories}

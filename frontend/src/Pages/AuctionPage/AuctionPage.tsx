@@ -98,6 +98,7 @@ const AuctionPage = () => {
           <Box sx={{ display: 'flex' }}>
             <CircularProgress sx={{color: 'var(--light-green)'}} />
           </Box>
+
         }
       </StyledContentWrapper>
     </StyledWrapper>
