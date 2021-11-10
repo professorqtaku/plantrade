@@ -29,8 +29,6 @@ public class SearchController {
             @RequestParam(required = false, value = "page") Integer page,
             @RequestParam(required = false, value = "sort") String sort
     ) {
-        System.out.println("what is page" + page);
-        System.out.println("what is sort" + sort);
         try {
             List<Auction> auctions = searchService.getAuctionByTitleAndStatusAndCategory(title, status, category, page, sort);
             if(auctions == null || auctions.size() <= 0){
