@@ -9,10 +9,10 @@ import AuctionCard from "../../Components/AuctionCard/AuctionCard";
 import { useEffect, useRef, useCallback, useState } from "react";
 import SearchForm from "../../Components/Search/SearchForm/SearchForm";
 import { useSearch } from "../../Contexts/SearchContext";
-import { Auction } from '../../Interfaces/Interfaces';
+import { Auction } from "../../Interfaces/Interfaces";
 import { useNav } from "../../Contexts/NavigationContext";
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
 export interface Category {
   id: number;
@@ -20,31 +20,34 @@ export interface Category {
 }
 
 const AuctionPage = () => {
-  const { searchText, getAuctionsByOptions, auctions, setAuctions, noContent} = useSearch();
+  const { searchText, getAuctionsByOptions, auctions, setAuctions, noContent } =
+    useSearch();
   const { setAuction, handleSelect } = useNav();
   const observer = useRef<IntersectionObserver>();
-  let [pageNumber, setPageNumber] = useState(0);
-  
+  const [pageNumber, setPageNumber] = useState<number>(0);
+
+  console.log("------- aj ------");
+
   useEffect(() => {
-    console.log('1. --- RENDERING AUCTION PAGE ---')
+    console.log("1. --- RENDERING AUCTION PAGE ---");
     handleGetAuctions();
     handleSelect(setAuction);
     return () => {
       setAuctions([]);
-    }
+    };
   }, []);
-  
+
   const handleGetAuctions = async () => {
     if (auctions.length <= 0 && searchText.trim().length <= 0) {
-      console.log('2. --- Get auctions from Auction Page ---')
+      console.log("2. --- Get auctions from Auction Page ---");
       await getAuctionsByOptions(0);
     }
   };
 
   const handleScroll = async () => {
-    console.log('3. --- WANT TO SCROLL ---')
+    console.log("3. --- WANT TO SCROLL ---");
     await getAuctionsByOptions(pageNumber);
-  }
+  };
 
   const handleLastAuction = useCallback(
     (node: any, _deps: any) => {
@@ -56,16 +59,16 @@ const AuctionPage = () => {
       observer.current = new IntersectionObserver((entries: any) => {
         // if the node is intersecting, aka on the page somewhere
         if (entries[0].isIntersecting) {
-          setPageNumber(pageNumber++)
+          setPageNumber(pageNumber + 1);
           handleScroll();
         }
       });
       if (node) {
         observer.current.observe(node);
       }
-    }, [auctions]);
-  
-  
+    },
+    [auctions]
+  );
 
   return (
     <StyledWrapper>
@@ -76,29 +79,34 @@ const AuctionPage = () => {
         </StyledSearchFieldWrapper>
       </StyledSearchWrapper>
       <StyledContentWrapper>
-        {auctions && auctions.length > 0
-          ? auctions.map((auction: Auction, i: number) => {
+        {auctions && auctions.length > 0 ? (
+          auctions.map((auction: Auction, i: number) => {
             const isLastElement = auctions.length === i + 1;
-          
+
             {
-              return isLastElement ?
-                (<AuctionCard
+              return isLastElement ? (
+                <AuctionCard
                   key={auction.id}
                   auction={auction}
                   fetchAuctions={handleGetAuctions}
                   forwardRef={handleLastAuction}
-                />) : (<AuctionCard
+                />
+              ) : (
+                <AuctionCard
                   key={auction.id}
                   auction={auction}
                   fetchAuctions={handleGetAuctions}
-                />)
+                />
+              );
             }
           })
-          : noContent ? <p>Inga resultat av din sökning :/</p> : 
-          <Box sx={{ display: 'flex' }}>
-            <CircularProgress sx={{color: 'var(--light-green)'}} />
+        ) : noContent ? (
+          <p>Inga resultat av din sökning :/</p>
+        ) : (
+          <Box sx={{ display: "flex" }}>
+            <CircularProgress sx={{ color: "var(--light-green)" }} />
           </Box>
-        }
+        )}
       </StyledContentWrapper>
     </StyledWrapper>
   );
