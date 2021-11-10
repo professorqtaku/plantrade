@@ -3,11 +3,7 @@ import CommentIcon from "@mui/icons-material/Comment";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import Carousel from "react-elastic-carousel";
-import {Chip} from '@mui/material'
 
-interface FormProps {
-  warning?: boolean
-}
 
 export const StyledWrapper = styled.div`
   margin: 1.5rem 1rem 5rem;

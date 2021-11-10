@@ -16,6 +16,15 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedHours, setSelectedHours] = useState<number>(HOUR_IN_DAY);
   const [selectedStatus, setSelectedStatus] = useState<Status>(status[0]);
+  const [isRerender, setIsRerender] = useState(false);
+
+  const clearFilter = () => {
+    setSearchText("");
+    setSelectedCategories([]);
+    setSelectedHours(HOUR_IN_DAY);
+    setSelectedStatus(status[0]);
+    setIsRerender(!isRerender);
+  }
 
   const getAuctionsByOptions = async (option: SearchObject) => {
     if (option.title.trim().length <= 0) {
@@ -48,6 +57,7 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
     }
     return query;
   };
+
   const getStatusQuery = (status: Status | any) => {
     let query: string = "";
     if (status) {
@@ -56,7 +66,10 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
     return query;
   };
 
+
+
   const value = {
+    clearFilter,
     searchText,
     setSearchText,
     selectedCategories,
@@ -66,6 +79,7 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
     selectedStatus,
     setSelectedStatus,
     getAuctionsByOptions,
+    isRerender,
   };
 
   return (

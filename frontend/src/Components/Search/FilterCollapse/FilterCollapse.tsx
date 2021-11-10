@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import { Box } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import {
   StyledCollapse,
   StyledDiv,
   StyledTitle,
-  StyledIconButton,
+  StyledHeader,
 } from "./StyledFilterCollapse";
 import SelectCheckbox from "../../SelectCheckbox/SelectCheckbox";
 import InputField from "../../InputField/InputField";
@@ -12,6 +11,10 @@ import SelectRadio from "../../SelectRadio/SelectRadio";
 import CloseIcon from "@mui/icons-material/Close";
 import { Status, status } from "../../../Utils/types";
 import { useCategory } from "../../../Contexts/CategoryContext";
+import { Category } from "../../../Interfaces/Interfaces";
+import ClearButton from "../../ClearButton/ClearButton";
+import { useSearch } from "../../../Contexts/SearchContext";
+import { useAuction } from "../../../Contexts/AuctionContext";
 
 interface Props {
   isOpen: boolean;
@@ -19,7 +22,7 @@ interface Props {
   hours: number;
   setHours: Function;
   selectedStatus: Status;
-  selectedCategories: string[];
+  selectedCategories: Category[];
   setSelectedStatus: Function;
   setSelectedCategories: Function;
 }
@@ -35,15 +38,28 @@ function FilterCollapse({
   setSelectedCategories,
 }: Props) {
   const { allCategories } = useCategory();
+  const { clearFilter, isRerender } = useSearch();
+  const { getAllAuctions } = useAuction();
+
+  const handleClearFilter = () => {
+    clearFilter();
+    toggle();
+    getAllAuctions();
+  }
+
   return (
     <StyledCollapse in={isOpen} timeout="auto" unmountOnExit>
       <StyledDiv>
-        <StyledIconButton type="button" onClick={() => toggle()}>
-          <CloseIcon />
-        </StyledIconButton>
+        <StyledHeader>
+          <ClearButton label="Rensa" type="button" callback={handleClearFilter} />
+          <IconButton type="button" onClick={() => toggle()}>
+            <CloseIcon />
+          </IconButton>
+        </StyledHeader>
         <Box>
           <StyledTitle>KATEGORIER</StyledTitle>
           <SelectCheckbox
+            isRerender={isRerender}
             options={allCategories}
             selected={selectedCategories}
             setSelected={setSelectedCategories}
@@ -68,6 +84,7 @@ function FilterCollapse({
         <Box>
           <StyledTitle>SE ENDAST</StyledTitle>
           <SelectRadio
+            isRerender={isRerender}
             options={status}
             updateState={setSelectedStatus}
             optionKey={"title"}
