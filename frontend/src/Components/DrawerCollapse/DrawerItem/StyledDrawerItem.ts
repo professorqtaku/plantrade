@@ -40,3 +40,7 @@ export const StyledAvatar = styled(Avatar)`
   background: var(--chat-green);
 `;
 
+export const StyledBadge = styled(Badge)`
+  color: var(--status-red);
+  align-self: center;
+`;
