@@ -30,7 +30,6 @@ const CreateAuctionPage = () => {
   // const [preview, setPreview] = useState('')
   // create a holder to store files
   const formData = new FormData()
-
   const [title, setTitle] = useState<string>('');
   const [desc, setDesc] = useState<string>('');
   const [price, setPrice] = useState<number>(0);
@@ -40,9 +39,16 @@ const CreateAuctionPage = () => {
   const [endDate, setEndDate] = useState<number | undefined>(inOneDay);
   const [categoriesToUse, setCategoriesToUse] = useState<
     Category[]>([]);
+  const [errorMsg, setErrorMsg] = useState(false);
 
   const handleAddAuction = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+      if(formData.has('files')){
+        setErrorMsg(false);
+      } else {
+        setErrorMsg(true);
+        return;
+      }
 
     const auction = {
       title: title,
@@ -64,8 +70,8 @@ const CreateAuctionPage = () => {
         socket.emit("join", res.id);
         history.push(`/auctions/${res.id}`)
       }
-    }
   };
+}
 
   const renderUploadFiles = () => (
     <label htmlFor="contained-button-file">
@@ -79,15 +85,16 @@ const CreateAuctionPage = () => {
       <Button variant="contained" component="span" style={{ width: "100%" }}>
         Ladda upp bilder
       </Button>
+      {errorMsg && <div>Välj åtminstone 1 bild</div>}
     </label>
   );
 
   async function onFileLoad(e: any) {
-    let files = e.target.files
+    const files = e.target.files;
 
     // add files to formData
     for (let file of files) {
-      formData.append('files', file, file.name)
+      formData.append('files', file, file.name);
     }
 
     // clear input of files
