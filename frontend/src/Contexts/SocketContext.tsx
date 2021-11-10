@@ -3,6 +3,7 @@ import io from "socket.io-client";
 import { useAuction } from "./AuctionContext";
 import { useAuth } from './AuthContext';
 import { useSnackBar } from './SnackBarContext';
+import { Notification } from "../Interfaces/Interfaces"
 
 type Props = {
   children?: JSX.Element;
@@ -39,11 +40,11 @@ const SocketProvider = ({ children }: Props) => {
     console.log(data);
   });
 
-  socket.on("notification", (data: number) => {
-      if (whoAmI?.id === data) {
-        setText("Någon har budat över dig!" );
-        setShowOpenSnackBar(true);
-      }
+  socket.on("notification", (data: Notification) => {
+    if (whoAmI?.id === data.user.id) {
+      setText(data.message);
+      setShowOpenSnackBar(true);
+    }
   });
 
   const values = {
