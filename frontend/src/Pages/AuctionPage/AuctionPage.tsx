@@ -23,7 +23,7 @@ const AuctionPage = () => {
   const { searchText, getAuctionsByOptions, auctions, setAuctions, noContent} = useSearch();
   const { setAuction, handleSelect } = useNav();
   const observer = useRef<IntersectionObserver>();
-  let pageNumber = 0;
+  let [pageNumber, setPageNumber] = useState(0);
   
   useEffect(() => {
     console.log('1. --- RENDERING AUCTION PAGE ---')
@@ -31,7 +31,6 @@ const AuctionPage = () => {
     handleSelect(setAuction);
     return () => {
       setAuctions([]);
-      pageNumber = 0;
     }
   }, []);
   
@@ -57,10 +56,7 @@ const AuctionPage = () => {
       observer.current = new IntersectionObserver((entries: any) => {
         // if the node is intersecting, aka on the page somewhere
         if (entries[0].isIntersecting) {
-          console.log("7. --- Scrolling in auctions list ---", auctions)
-          console.log(" --- Page number BEFORE update ---", pageNumber)
-          pageNumber++;
-          console.log(" --- Page number AFTER update ---", pageNumber)
+          setPageNumber(pageNumber++)
           handleScroll();
         }
       });
