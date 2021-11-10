@@ -37,3 +37,7 @@ export const StyledText = styled.p<TextProps>`
   margin: 0;
   margin: ${(props) => (props.isright ? "0 0.5rem 0 0" : "0 0 0 0.5rem ")};
 `;
+
+export const StyledAmountOfMsg = styled.span`
+  color: red;
+`

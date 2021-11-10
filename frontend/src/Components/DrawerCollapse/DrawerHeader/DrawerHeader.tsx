@@ -4,6 +4,7 @@ import {
   StyledText,
   StyledGoBackIcon,
   StyledTextWrapper,
+  StyledAmountOfMsg,
 } from "./StyledDrawerHeader";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useDrawer } from "../../../Contexts/DrawerContext";
@@ -27,7 +28,9 @@ const DrawerHeader = ({ toggle }: Props) => {
       )}
       <StyledExpandIcon onClick={() => toggle()} />
       {!showChatRoom ? (
-        <StyledText isright={true}>Antal: {content.length}</StyledText>
+        <StyledText isright={true}>
+          Antal: <StyledAmountOfMsg>{content.length}</StyledAmountOfMsg>
+        </StyledText>
       ) : (
         <StyledText isright={true}>Name on auction</StyledText>
       )}
