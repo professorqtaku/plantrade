@@ -34,7 +34,6 @@ const SearchForm = ({ searchWord }: Props) => {
     e.preventDefault();
     await setAuctions([]);
     await getAuctionsByOptions(0);
-    console.log('8. --- CLICK TO SEARCH ---')
     setShowFilter(false);
     history.push("/auctions");
   };

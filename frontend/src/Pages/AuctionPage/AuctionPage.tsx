@@ -26,10 +26,7 @@ const AuctionPage = () => {
   const observer = useRef<IntersectionObserver>();
   const [pageNumber, setPageNumber] = useState<number>(0);
 
-  console.log("------- aj ------");
-
   useEffect(() => {
-    console.log("1. --- RENDERING AUCTION PAGE ---");
     handleGetAuctions();
     handleSelect(setAuction);
     return () => {
@@ -39,13 +36,11 @@ const AuctionPage = () => {
 
   const handleGetAuctions = async () => {
     if (auctions.length <= 0 && searchText.trim().length <= 0) {
-      console.log("2. --- Get auctions from Auction Page ---");
       await getAuctionsByOptions(0);
     }
   };
 
   const handleScroll = async () => {
-    console.log("3. --- WANT TO SCROLL ---");
     await getAuctionsByOptions(pageNumber);
   };
 

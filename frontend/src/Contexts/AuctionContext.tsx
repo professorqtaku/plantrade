@@ -5,27 +5,6 @@ type Props = {
   children?: JSX.Element;
 };
 
-// type Auction = {
-//   id: Number;
-//   host: { id: Number, username: String };
-//   title: String;
-//   description: String;
-//   startPrice: Number;
-//   endDate: Date;
-//   status: String;
-// }
-
-// interface Category {
-//   id: number;
-//   name: String;
-// }
-
-// type AuctionObjects = {
-//   auctions: Auction[] | undefined,
-//   error: number | null,
-//   noMoreContent: boolean
-// }
-
 export const AuctionContext = createContext<any>(null);
 
 export const useAuction = () => useContext(AuctionContext);
@@ -62,7 +41,6 @@ const AuctionProvider: FC<Props> = ({ children }: Props) => {
       let auctions = await res.json();
       setUsersAuctions(auctions);
     }
-    // return auctions;
   }
 
   const getWonAuctionsByUser = async () => {

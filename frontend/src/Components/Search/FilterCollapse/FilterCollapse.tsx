@@ -75,18 +75,6 @@ function FilterCollapse({
             optionKey={"title"}
             defaultValue={selectedSortTime}
           />
-          {/* <InputField
-            type="number"
-            value={hours}
-            updateState={setHours}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            InputProps={{
-              endAdornment: <p>TIMMAR</p>,
-              inputProps: { min: 1 },
-            }}
-          /> */}
         </Box>
         <Box>
           <StyledTitle>SE ENDAST</StyledTitle>

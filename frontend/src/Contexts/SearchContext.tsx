@@ -47,8 +47,6 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
       page,
     };
 
-    console.log("4. --- PAGE IN CONTEXT ---", page);
-
     let categoryQuery: string = getCategoryQuery(option.categories);
     let statusQuery: string = getStatusQuery(option.status);
     let sortQuery: string = getSortQuery(option.sort);
@@ -58,20 +56,17 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
     );
     if (res.ok && res.status == 200) {
       let newAuctions: Array<Auction> = await res.json();
-      console.log("5. --- Get new auctions from context as RESPONSE ---", newAuctions)
       let updateAuctionslist: Array<Auction> =
         option.page === 0 ? auctionResult : Object.assign([], auctions);
       setAuctions([...updateAuctionslist, ...newAuctions]);
       setNoContent(false);
     }
       if (res.status === 204) {
-        console.log("no more content");
         if (option.page === 0) {
           setNoContent(true);
           setAuctions(auctionResult);
         }
     }
-    console.log("6. --- Auctions in context after fetching method ---", auctions)
   };
 
   const getSortQuery = (sort: SortByTimes | any) => {
