@@ -20,8 +20,6 @@ import { useAuction } from "../../../Contexts/AuctionContext";
 interface Props {
   isOpen: boolean;
   toggle: Function;
-  // hours: number;
-  // setHours: Function;
   selectedStatus: Status;
   selectedCategories: Category[];
   setSelectedStatus: Function;
@@ -72,23 +70,12 @@ function FilterCollapse({
         <Box>
           <StyledTitle>ANNONSER SOM AVSLUTAS INOM</StyledTitle>
           <SelectRadio
+            isRerender={isRerender}
             options={sortByTimes}
             updateState={setSelectedSortTime}
             optionKey={"title"}
             defaultValue={selectedSortTime}
           />
-          {/* <InputField
-            type="number"
-            value={hours}
-            updateState={setHours}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            InputProps={{
-              endAdornment: <p>TIMMAR</p>,
-              inputProps: { min: 1 },
-            }}
-          /> */}
         </Box>
         <Box>
           <StyledTitle>SE ENDAST</StyledTitle>
