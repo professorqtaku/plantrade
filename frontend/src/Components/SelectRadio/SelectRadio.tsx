@@ -10,6 +10,7 @@ interface Props {
   defaultValue?: string | Object;
   optionKey?: string;
   updateState: Function;
+  isRerender: boolean;
 }
 
 const SelectRadio = ({
@@ -17,6 +18,7 @@ const SelectRadio = ({
   updateState,
   optionKey,
   defaultValue,
+  isRerender,
 }: Props) => {
   const handleChange = (event: BaseSyntheticEvent) => {
     if (typeof options == "object" && optionKey) {
@@ -34,6 +36,7 @@ const SelectRadio = ({
     <StyledFormControl>
       <StyledRadioGroup
         row
+        key={`search-status-${isRerender}`}
         aria-label="gender"
         name="row-radio-buttons-group"
         onChange={handleChange}

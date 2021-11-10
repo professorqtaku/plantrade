@@ -4,11 +4,13 @@ import {
   StyledTitle,
   StyledButton,
   StyledText,
+  StyledImage
 } from "./StyledCreateAuctionPage";
+import Grid from '@mui/material/Grid';
 import AuctionDatePicker from "../../Components/AuctionDatePicker/AuctionDatePicker";
 import SelectBar from "../../Components/SelectBar/SelectBar";
 import InputField from "../../Components/InputField/InputField";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import { useAuction } from "../../Contexts/AuctionContext";
@@ -16,21 +18,19 @@ import { useHistory } from "react-router";
 import { Category } from "../AuctionPage/AuctionPage";
 import { useSocket } from "../../Contexts/SocketContext";
 
-
-
 const Input = styled("input")({
   display: "none",
 });
+
+const formData = new FormData();
 
 const CreateAuctionPage = () => {
   const { createAuction } = useAuction();
   const history = useHistory();
   const { socket } = useSocket();
 
-  // const [preview, setPreview] = useState('')
+  const [preview, setPreview] = useState<string[]>([]);
   // create a holder to store files
-  const formData = new FormData()
-
   const [title, setTitle] = useState<string>('');
   const [desc, setDesc] = useState<string>('');
   const [price, setPrice] = useState<number>(0);
@@ -40,32 +40,37 @@ const CreateAuctionPage = () => {
   const [endDate, setEndDate] = useState<number | undefined>(inOneDay);
   const [categoriesToUse, setCategoriesToUse] = useState<
     Category[]>([]);
+  const [errorMsg, setErrorMsg] = useState(false);
 
   const handleAddAuction = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setErrorMsg(formData.has('files') ? false : true)
 
-    const auction = {
-      title: title,
-      description: desc,
-      startPrice: price,
-      endDate: endDate,
+    if(formData.has('files')){
+      const auction = {
+        title: title,
+        description: desc,
+        startPrice: price,
+        endDate: endDate,
+      };
+
+      
+      if(auction.title && auction.description && auction.startPrice){
+        const res =  await createAuction(auction, categoriesToUse, formData);
+        setTitle('');
+        setDesc('');
+        setPrice(0);
+        setEndDate(inOneDay);
+        setCategoriesToUse([]);
+        formData.delete('files');
+
+        if (res.id) {
+          socket.emit("join", res.id);
+          history.push(`/auctions/${res.id}`)
+        }
     };
-    if(auction.title && auction.description && auction.startPrice){
-
-      const res =  await createAuction(auction, categoriesToUse, formData);
-      
-      setTitle('');
-      setDesc('');
-      setPrice(0);
-      setEndDate(inOneDay);
-      setCategoriesToUse([]);
-      
-      if (res.id) {
-        socket.emit("join", res.id);
-        history.push(`/auctions/${res.id}`)
-      }
-    }
-  };
+  }
+}
 
   const renderUploadFiles = () => (
     <label htmlFor="contained-button-file">
@@ -79,20 +84,35 @@ const CreateAuctionPage = () => {
       <Button variant="contained" component="span" style={{ width: "100%" }}>
         Ladda upp bilder
       </Button>
+      {errorMsg && <div>Välj åtminstone 1 bild</div>}
     </label>
   );
 
   async function onFileLoad(e: any) {
-    let files = e.target.files
+    const files = e.target.files;
+    let arr = [];
 
     // add files to formData
     for (let file of files) {
-      formData.append('files', file, file.name)
+      formData.append('files', file, file.name);
+      const src = URL.createObjectURL(file);
+      arr.push(src)
     }
-
-    // clear input of files
+    setPreview(arr);
+    setErrorMsg(files.length ? false : true)
     e.target.value = '';
-  }
+    arr = [];
+}
+
+  const renderImagePreview = () => (
+  <Grid container>
+    <Grid item xs={12} md={12}>
+      {preview.map(img => (
+        <StyledImage key={img} src={img} alt="" />
+      ))}
+    </Grid>
+  </Grid>
+  )
 
   return (
     <StyledWrapper>
@@ -103,6 +123,7 @@ const CreateAuctionPage = () => {
           label="Titel"
           value={title}
           updateState={setTitle}
+          inputProps={{ maxLength: 20 }}
         />
         <InputField
           required
@@ -123,6 +144,7 @@ const CreateAuctionPage = () => {
         </label>
         <SelectBar setCategoriesToUse={setCategoriesToUse} />
         {renderUploadFiles()}
+        {renderImagePreview()}
         <StyledButton type="submit" variant="contained">
           {" "}
           Skapa auktion{" "}

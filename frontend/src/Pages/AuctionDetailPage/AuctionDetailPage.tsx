@@ -15,8 +15,7 @@ import InputField from "../../Components/InputField/InputField";
 import ImageCarousel from "../../Components/ImageCarousel/ImageCarousel";
 import ExpandableDescriptionBox from "../../Components/ExpandableDesc/ExpandableDescriptionBox";
 import ButtonComp from "../../Components/Button/ButtonComp";
-import { images } from "./images";
-import AuctionDetailsPageCategories  from "../../Components/AuctionDetailsPageCategories/AuctionDetailsPageCategories"
+import AuctionDetailsPageCategories from "../../Components/AuctionDetailsPageCategories/AuctionDetailsPageCategories";
 import {
   StyledWrapper,
   StyledPrice,
@@ -58,24 +57,24 @@ const AuctionDetailPage = () => {
 
   useEffect(() => {
     handleGetAuctionById();
-  }, []);
+  }, [id, whoAmI]);
 
   useEffect(() => {
     setCurrentBid(highestBid);
     setBidText("Högsta budet");
-  }, [highestBid])
-  
+  }, [highestBid]);
+
   const handleGetAuctionById = async () => {
     const res = await getAuctionById(id);
     setAuction(res);
     getHighestBid(res.id);
     setEndDate(new Date(res.endDate).toLocaleDateString("sv-SV"));
     setEndTime(new Date(res.endDate).toLocaleTimeString("sv-SV"));
-    
+
     if (whoAmI && whoAmI.id == res.host.id) {
       setIsHost(true);
     }
-    
+
     if (!res.bids.length) {
       setCurrentBid(res.startPrice);
       setBidText("Startpris");
@@ -90,18 +89,18 @@ const AuctionDetailPage = () => {
       return;
     }
     setIsOverPrice(false);
-    
+
     const newBid = {
       userId: whoAmI.id,
       auctionId: auction?.id,
       price: parseInt(bid),
       createdDate: Date.now(),
     };
-    
+
     const createdBid = await createBid(newBid);
     getHighestBid(auction?.id);
-      //rerender the new currently highest bid
-      handleGetAuctionById();
+    //rerender the new currently highest bid
+    handleGetAuctionById();
     setBid("");
   };
 
@@ -126,7 +125,7 @@ const AuctionDetailPage = () => {
           costumBackgroundColor="crimson"
         />
       )}
-      { !isOverPrice ? (
+      {!isOverPrice ? (
         <ButtonComp label="Buda" callback={handleBid} disabled={isHost} />
       ) : (
         <ButtonComp label="Ja" callback={handleBid} disabled={isHost} />
@@ -136,30 +135,9 @@ const AuctionDetailPage = () => {
 
   const renderLoginToggle = (
     <>
-    <p>Logga in för att placera ett bud.</p>
-    <ButtonComp
-          label="Login"
-          callback={() => toggleLoginModal()}
-        />
-        </>
-
-  );
-
-  const renderCarousel = (
-    <StyledCarousel
-      initialActiveIndex={0}
-      isRTL={false}
-      showArrows={true}
-      itemsToShow={1}
-      pagination={false}
-    >
-      {images.map((img) => (
-        <StyledImg
-          key={img.path}
-          src={img.path}
-        />
-      ))}
-    </StyledCarousel>
+      <p>Logga in för att placera ett bud.</p>
+      <ButtonComp label="Login" callback={() => toggleLoginModal()} />
+    </>
   );
 
   return (
@@ -173,9 +151,21 @@ const AuctionDetailPage = () => {
             Tillbaka
           </StyledBackBtn>
           <Grid container spacing={2}>
+            {/* images carousel */}
             <Grid item xs={12} md={12}>
-              {renderCarousel}
+              <StyledCarousel
+                initialActiveIndex={0}
+                isRTL={false}
+                showArrows={true}
+                itemsToShow={1}
+                pagination={false}
+              >
+                {auction.images.map((img) => (
+                  <StyledImg key={img.path} src={img.path} />
+                ))}
+              </StyledCarousel>
             </Grid>
+
             <Grid item xs={8} md={8}>
               <StyledTitle>{auction.title}</StyledTitle>
             </Grid>
@@ -211,8 +201,12 @@ const AuctionDetailPage = () => {
                 auctionDescription={auction.description}
               />
             </Grid>
-            {auction.categories &&
-            <AuctionDetailsPageCategories categories={auction.categories} auctionId={auction.id} />}
+            {auction.categories && (
+              <AuctionDetailsPageCategories
+                categories={auction.categories}
+                auctionId={auction.id}
+              />
+            )}
             <Grid item xs={12} md={12}>
               {isOverPrice && (
                 <StyledWarning>
@@ -221,7 +215,7 @@ const AuctionDetailPage = () => {
                 </StyledWarning>
               )}
             </Grid>
-            <StyledForm warning={isOverPrice ? isOverPrice : false}>
+            <StyledForm>
               {whoAmI ? renderBidContent : renderLoginToggle}
             </StyledForm>
           </Grid>
