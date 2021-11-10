@@ -24,10 +24,10 @@ const SearchForm = ({ searchWord }: Props) => {
     selectedStatus,
     setSelectedStatus,
   } = useSearch();
-  const { setAuctions, getAllAuctions, auctionsFromSearch } = useAuction();
+  // const { setAuctions, getAuctionsByOptions, auctions, pageNumber, setPageNumber } = useSearch();
   const history = useHistory();
   const [showFilter, setShowFilter] = useState<boolean>(false);
-  const [pageNumber, setPageNumber] = useState(0);
+  // let [pageNumber, setPageNumber] = useState(0);
 
   const toggleFilter = () => setShowFilter(!showFilter);
 
@@ -35,21 +35,22 @@ const SearchForm = ({ searchWord }: Props) => {
     e.preventDefault();
     await history.push("/auctions");
     if (searchText.trim().length > 0) {
-      let option: SearchObject = {
-        title: searchText ? searchText : searchWord,
-        categories: selectedCategories,
-        sort: selectedSortTime,
-        status: selectedStatus,
-        page: pageNumber
-      };
+      // let option: SearchObject = {
+      //   title: searchText ? searchText : searchWord,
+      //   categories: selectedCategories,
+      //   sort: selectedSortTime,
+      //   status: selectedStatus,
+      //   page: pageNumber
+      // };
+      await getAuctionsByOptions(0);
 
-      if (searchText.trim().length > 0) {
-        await getAuctionsByOptions(option);
+      // if (searchText.trim().length > 0) {
+      //   await getAuctionsByOptions();
 
-        setAuctions(auctionsFromSearch);
-      } else {
-        await getAllAuctions();
-      }
+      //   // setAuctions(auctionsFromSearch);
+      // } else {
+      //   await getAuctionsByOptions();
+      // }
       setShowFilter(false);
     }
   };

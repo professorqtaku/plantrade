@@ -21,10 +21,17 @@ export interface Category {
 }
 
 const AuctionPage = () => {
-  const { getAuctionsByOptions, auctions, setAuctions } = useSearch();
+  // const { getAllAuctions, auctions, setAuctions } = useAuction();
+  const { searchText, getAuctionsByOptions, auctions, setAuctions} = useSearch();
   const { setAuction, handleSelect } = useNav();
   const observer = useRef<IntersectionObserver>();
   let [pageNumber, setPageNumber] = useState(0);
+
+  console.log('what is auctions ', auctions)
+
+  // useEffect(() => {
+  //   console.log('auctions changed', auctions);
+  // }, [auctions])
   
   useEffect(() => {
     handleGetAuctions();
@@ -35,15 +42,16 @@ const AuctionPage = () => {
     }
   }, []);
   
-  // const handleGetAuctions = async () => {
-  //   if (auctions.length <= 0) {
-  //     await getAuctionsByOptions(pageNumber);
-  //   }
-  // };
-
   const handleGetAuctions = async () => {
-    await getAuctionsByOptions(pageNumber);
+    if (auctions.length <= 0 && searchText.trim().length <= 0) {
+      console.log('wants to get auctions in auction page')
+      await getAuctionsByOptions(0);
+    }
   };
+
+  const handleScroll = async () => {
+    await getAuctionsByOptions(pageNumber);
+  }
 
   const handleLastAuction = useCallback(
     (node: any, _deps: any) => {
@@ -55,8 +63,9 @@ const AuctionPage = () => {
       observer.current = new IntersectionObserver((entries: any) => {
         // if the node is intersecting, aka on the page somewhere
         if (entries[0].isIntersecting) {
+          console.log('what is page number', pageNumber)
           setPageNumber(pageNumber++);
-          handleGetAuctions();
+          handleScroll();
         }
       });
       if (node) {
@@ -97,7 +106,6 @@ const AuctionPage = () => {
           <Box sx={{ display: 'flex' }}>
             <CircularProgress sx={{color: 'var(--light-green)'}} />
           </Box>
-
         }
       </StyledContentWrapper>
     </StyledWrapper>

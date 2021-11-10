@@ -18,12 +18,17 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
   const [selectedSortTime, setSelectedSortTime] = useState<SortByTimes>(sortByTimes[2]);
   const [selectedStatus, setSelectedStatus] = useState<Status>(status[0]);
   const [isRerender, setIsRerender] = useState(false);
+  // let [pageNumber, setPageNumber] = useState(0);
 
   const clearFilter = () => {
     setSearchText("");
     setSelectedCategories([]);
     setSelectedStatus(status[0]);
     setIsRerender(!isRerender);
+    // setPageNumber(0);
+    setSelectedSortTime(sortByTimes[2]);
+    setAuctions([]);
+    getAuctionsByOptions(0);
   }
 
   const getAuctionsByOptions = async (page: number) => {
@@ -48,18 +53,21 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
     if (res.ok && res.status == 200) {
       let newAuctions: Array<Auction> = await res.json();
       console.log("what is new Auctions?", newAuctions);
-      if (option.page === 0 || !auctions || !auctions.length) {
-        setAuctions(newAuctions);
-      } else if (auctions) {
+      // if (auctions) {
         let updateAuctionslist: Auction[] = auctions;
         for (let auction of newAuctions) {
           updateAuctionslist.push(auction);
         }
         setAuctions(updateAuctionslist);
       }
-    } else if (res.status === 204) {
-      console.log("no more content");
-    }
+      // else if (option.page === 0 || !auctions.length) {
+        //   setAuctions(newAuctions);
+        // }
+  // } else
+  if (res.status === 204) {
+        console.log("no more content");
+      }
+      console.log('what is context auctions?', auctions);
   };
 
   const getSortQuery = (sort: SortByTimes | any) => {
@@ -108,6 +116,8 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
     auctions,
     setAuctions,
     isRerender,
+    // pageNumber,
+    // setPageNumber
   };
 
   return (

@@ -40,13 +40,14 @@ function FilterCollapse({
   setSelectedSortTime
 }: Props) {
   const { allCategories } = useCategory();
-  const { clearFilter, isRerender } = useSearch();
-  const { getAllAuctions } = useAuction();
+  const { clearFilter, isRerender, getAuctionsByOptions } = useSearch();
+  // const { getAllAuctions } = useAuction();
 
   const handleClearFilter = () => {
     clearFilter();
     toggle();
-    getAllAuctions();
+    // getAuctionsByOptions();
+    // getAllAuctions();
   }
 
   return (
@@ -71,6 +72,7 @@ function FilterCollapse({
         <Box>
           <StyledTitle>ANNONSER SOM AVSLUTAS INOM</StyledTitle>
           <SelectRadio
+            isRerender={isRerender}
             options={sortByTimes}
             updateState={setSelectedSortTime}
             optionKey={"title"}
