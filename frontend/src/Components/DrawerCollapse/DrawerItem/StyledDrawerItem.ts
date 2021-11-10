@@ -3,13 +3,15 @@ import Avatar from "@mui/material/Avatar";
 import Badge from "@mui/material/Badge";
 
 export const StyledWrapper = styled.div`
+  width: 90%;
+  margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr auto;
   background: white;
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
   margin-bottom: 1rem;
   padding: 0.5rem;
-  &:first-child{
+  &:first-child {
     margin-top: 0.3rem;
   }
 `;
@@ -43,4 +45,5 @@ export const StyledAvatar = styled(Avatar)`
 export const StyledBadge = styled(Badge)`
   color: var(--status-red);
   align-self: center;
+  margin-right: 0.5rem;
 `;
