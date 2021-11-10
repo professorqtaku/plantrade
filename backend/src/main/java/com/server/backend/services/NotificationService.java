@@ -28,7 +28,7 @@ public class NotificationService {
     Notification notification = Notification.builder()
             .auction(auction)
             .user(auction.getHost())
-            .message("har fått ett nytt bud: " + price)
+            .message("har fått ett nytt bud: " + price + " SEK")
             .isRead(false)
             .build();
 
