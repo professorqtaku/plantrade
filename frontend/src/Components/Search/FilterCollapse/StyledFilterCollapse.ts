@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Collapse, IconButton } from '@mui/material'
+import { Collapse } from '@mui/material'
 
 export const StyledCollapse = styled(Collapse)`
   background: var(--yellow);
@@ -25,7 +25,7 @@ export const StyledTitle = styled.p`
   font-family: var(--font-text);
 `;
 
-export const StyledIconButton = styled(IconButton)`
+export const StyledHeader = styled.div`
   position: absolute;
   right: 5%;
 `;
