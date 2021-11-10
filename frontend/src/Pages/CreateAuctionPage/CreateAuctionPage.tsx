@@ -110,6 +110,7 @@ const CreateAuctionPage = () => {
           label="Titel"
           value={title}
           updateState={setTitle}
+          inputProps={{ maxLength: 20 }}
         />
         <InputField
           required
