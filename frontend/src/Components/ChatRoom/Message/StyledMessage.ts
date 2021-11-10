@@ -8,25 +8,24 @@ interface MessageProps {
 export const StyledWrapper = styled.div`
   background: #f8f8f8;
   max-height: 70vh;
-  display: grid;
   overflow: scroll;
 `;
 
 export const StyledMessageWrapper = styled.div`
   display: grid;
+  height: fit-content;
 `;
 
 export const StyledMessage = styled.div<MessageProps>`
   background: ${(props) =>
     props.id === "1" ? "var(--dark-green)" : "var(--chat-green)"};
   width: fit-content;
-  height: fit-content;
   max-width: 70%;
   padding: 1rem;
   border-radius: 1.5rem;
   justify-self: ${(props) => (props.id === "1" ? "end" : "start")};
   margin: ${(props) => (props.id === "1" ? "0 1rem 0 0" : "0 0 0 1rem")};
-  align-self: end;
+  align-self: center;
 `;
 
 export const StyledText = styled.p`
@@ -40,10 +39,18 @@ export const StyledDate = styled.p<MessageProps>`
   color: black;
   font-style: italic;
   width: fit-content;
+  height: 2rem;
   justify-self: ${(props) => (props.id === "1" ? "end" : "start")};
-  margin: ${(props) => (props.id === "1" ? "0 1.7rem 0 0" : "0 0 0 1.7rem")};
+  margin: ${(props) => (props.id === "1" ? "0 2rem 0 0" : "0 0 0 5rem")};
+`;
+
+export const StyledAvatarWrapper = styled.div`
+  display: grid;
+  grid-template-columns: auto 1fr;
 `;
 
 export const StyledAvatar = styled(Avatar)`
-  
+  background: var(--dark-green);
+  align-self: center;
+  margin-left: 0.7rem;
 `;
