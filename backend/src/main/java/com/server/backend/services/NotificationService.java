@@ -58,6 +58,10 @@ public class NotificationService {
     if (currentUser == null){
       return null;
     }
-    return notificationRepository.findNotificationsByUserId(currentUser.getId());
+    List<Notification> notificationList = notificationRepository.findNotificationsByUserId(currentUser.getId());
+    if (notificationList.size() > 30){
+      notificationList.subList(30, notificationList.size()).clear();
+    }
+    return notificationList;
   }
 }
