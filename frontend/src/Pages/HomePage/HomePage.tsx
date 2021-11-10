@@ -48,7 +48,7 @@ const HomePage = () => {
     let icon: IconImage = imageIcons[name.toLocaleLowerCase()];
     
     if (icon == null) {
-      icon = imageIcons["träd"]; // default icon
+      icon = imageIcons["stickling"]; // default icon
     }
     return icon.imgFile;
   }
