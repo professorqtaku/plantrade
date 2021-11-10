@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
 
-  @Query(value = "SELECT * FROM notifications WHERE user_id = :userId", nativeQuery = true)
+  @Query(value = "SELECT * FROM notifications WHERE user_id = :userId ORDER BY id DESC", nativeQuery = true)
   List<Notification> findNotificationsByUserId(@Param("userId") long userId);
 }
