@@ -8,16 +8,17 @@ interface Props {
 }
 
 export const StyledTextField = styled(TextField)<Props>`
-  background-color: var(--yellow);
-  border-radius: ${(props) => (props.isfilteropen === "true" ? "50% 50% 0 0" : "50%")};
+  background-color: ${(props) =>
+    props.isfilteropen === "true" ? "white" : "var(--yellow)"};
+  border-radius: ${(props) =>
+    props.isfilteropen === "true" ? "25px 25px 0 0" : "100px"};
   padding: 2% 5%;
   width: 90%;
-  transition: ${(props) => (props.isfilteropen === "true" ? "100ms" : "1200ms")};
+  transition: ${(props) =>
+    props.isfilteropen === "true" ? "100ms" : "1200ms"};
 `;
 
-export const StyledFormControl = styled(FormControl)`
-  background-color: var(--yellow);
-  border-radius: 50px;
+export const StyledFormControl = styled(FormControl)<Props>`
   width: 100%;
 `;
 

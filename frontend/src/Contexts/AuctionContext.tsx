@@ -41,8 +41,12 @@ const AuctionProvider: FC<Props> = ({ children }: Props) => {
   }
 
   const createAuction = async (auction: Auction, categories: Category[], formData: FormData) => {
-    formData.append("auction", JSON.stringify(auction));
-    formData.append("categories", JSON.stringify(categories));
+    // must clean formdata first before appending categories
+    formData.delete('auction');
+    formData.delete('categories');
+    
+    formData.append('auction', JSON.stringify(auction));
+    formData.append('categories', JSON.stringify(categories));
 
     let res: Response  = await fetch('/rest/auctions', {
       method: 'POST',
