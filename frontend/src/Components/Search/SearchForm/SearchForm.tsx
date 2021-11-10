@@ -14,6 +14,7 @@ type Props = {
 
 const SearchForm = ({ searchWord }: Props) => {
   const {
+    setAuctions,
     getAuctionsByOptions,
     searchText,
     setSearchText,
@@ -24,7 +25,6 @@ const SearchForm = ({ searchWord }: Props) => {
     selectedStatus,
     setSelectedStatus,
   } = useSearch();
-  // const { setAuctions, getAuctionsByOptions, auctions, pageNumber, setPageNumber } = useSearch();
   const history = useHistory();
   const [showFilter, setShowFilter] = useState<boolean>(false);
   // let [pageNumber, setPageNumber] = useState(0);
@@ -33,26 +33,10 @@ const SearchForm = ({ searchWord }: Props) => {
 
   const search = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
-    await history.push("/auctions");
-    if (searchText.trim().length > 0) {
-      // let option: SearchObject = {
-      //   title: searchText ? searchText : searchWord,
-      //   categories: selectedCategories,
-      //   sort: selectedSortTime,
-      //   status: selectedStatus,
-      //   page: pageNumber
-      // };
-      await getAuctionsByOptions(0);
-
-      // if (searchText.trim().length > 0) {
-      //   await getAuctionsByOptions();
-
-      //   // setAuctions(auctionsFromSearch);
-      // } else {
-      //   await getAuctionsByOptions();
-      // }
-      setShowFilter(false);
-    }
+    await setAuctions([]);
+    await getAuctionsByOptions(0);
+    setShowFilter(false);
+    history.push("/auctions");
   };
 
   return (

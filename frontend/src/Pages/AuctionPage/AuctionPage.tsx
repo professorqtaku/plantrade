@@ -6,8 +6,7 @@ import {
   StyledSearchFieldWrapper,
 } from "./StyledAuctionPage";
 import AuctionCard from "../../Components/AuctionCard/AuctionCard";
-import { useAuction } from "../../Contexts/AuctionContext";
-import React, { useEffect, useRef, useCallback, useState } from "react";
+import { useEffect, useRef, useCallback, useState } from "react";
 import SearchForm from "../../Components/Search/SearchForm/SearchForm";
 import { useSearch } from "../../Contexts/SearchContext";
 import { Auction } from '../../Interfaces/Interfaces';
@@ -21,17 +20,14 @@ export interface Category {
 }
 
 const AuctionPage = () => {
-  // const { getAllAuctions, auctions, setAuctions } = useAuction();
   const { searchText, getAuctionsByOptions, auctions, setAuctions} = useSearch();
   const { setAuction, handleSelect } = useNav();
   const observer = useRef<IntersectionObserver>();
   let [pageNumber, setPageNumber] = useState(0);
 
-  console.log('what is auctions ', auctions)
-
-  // useEffect(() => {
-  //   console.log('auctions changed', auctions);
-  // }, [auctions])
+  useEffect(() => {
+    console.log('auctions changed', auctions);
+  }, [auctions])
   
   useEffect(() => {
     handleGetAuctions();
