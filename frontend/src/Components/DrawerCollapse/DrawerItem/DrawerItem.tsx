@@ -6,6 +6,7 @@ import {
   StyledAvatar,
   StyledInnerWrapper,
 } from "./StyledDrawerItem";
+import Badge from "@mui/material/Badge";
 
 interface Props {
   content: {
@@ -25,7 +26,9 @@ const DrawerItem = ({ content }: Props) => {
           Tjena gubben, kan du sälja blomman svart?
         </StyledLastMsg>
       </StyledInnerWrapper>
-      <StyledAvatar>{content.username.charAt(0)}</StyledAvatar>
+      <Badge color="secondary" badgeContent={3}>
+        <StyledAvatar>{content.username.charAt(0)}</StyledAvatar>
+      </Badge>
     </StyledWrapper>
   );
 };

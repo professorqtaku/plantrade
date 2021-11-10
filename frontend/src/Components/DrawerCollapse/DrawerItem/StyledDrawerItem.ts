@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Avatar from "@mui/material/Avatar";
+import Badge from "@mui/material/Badge";
 
 export const StyledWrapper = styled.div`
   display: grid;
@@ -38,3 +39,4 @@ export const StyledName = styled.span`
 export const StyledAvatar = styled(Avatar)`
   background: var(--chat-green);
 `;
+
