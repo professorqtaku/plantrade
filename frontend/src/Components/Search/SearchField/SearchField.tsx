@@ -5,7 +5,6 @@ import {
   StyledIconButton,
 } from "./StyledSearchField";
 import SearchIcon from "@mui/icons-material/Search";
-import FilterCollapse from "../FilterCollapse/FilterCollapse"
 
 
 interface Props {
@@ -24,7 +23,7 @@ const SearchField = ({ searchText, setSearchText, showFilter, setShowFilter }: P
         variant="standard"
         type="text"
         value={searchText}
-        isfilteropen={showFilter.toString()}
+        isfilteropen={showFilter}
         onChange={(e: BaseSyntheticEvent) => setSearchText(e.target.value)}
         onFocus={() => setShowFilter(true)}
         inputProps={{

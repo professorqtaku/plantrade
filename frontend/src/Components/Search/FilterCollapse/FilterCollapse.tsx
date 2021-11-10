@@ -4,11 +4,12 @@ import {
   StyledDiv,
   StyledTitle,
   StyledHeader,
+  StyledIconButton,
 } from "./StyledFilterCollapse";
 import SelectCheckbox from "../../SelectCheckbox/SelectCheckbox";
-import InputField from "../../InputField/InputField";
 import SelectRadio from "../../SelectRadio/SelectRadio";
 import CloseIcon from "@mui/icons-material/Close";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import { Status, status, SortByTimes, sortByTimes } from "../../../Utils/types";
 import { useCategory } from "../../../Contexts/CategoryContext";
 import { Category } from "../../../Interfaces/Interfaces";
@@ -52,14 +53,14 @@ function FilterCollapse({
   return (
     <StyledCollapse in={isOpen} timeout="auto" unmountOnExit>
       <StyledDiv>
+        <StyledIconButton type="button" onClick={() => toggle()}>
+          <ExpandLessIcon />
+        </StyledIconButton>
         <StyledHeader>
           <ClearButton label="Rensa" type="button" callback={handleClearFilter} />
-          <IconButton type="button" onClick={() => toggle()}>
-            <CloseIcon />
-          </IconButton>
         </StyledHeader>
         <Box>
-          <StyledTitle>KATEGORIER</StyledTitle>
+          <StyledTitle paddingtop="0">KATEGORIER</StyledTitle>
           <SelectCheckbox
             isRerender={isRerender}
             options={allCategories}
