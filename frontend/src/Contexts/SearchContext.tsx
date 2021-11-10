@@ -12,6 +12,8 @@ const SearchContext = createContext<any>(null);
 export const useSearch = () => useContext(SearchContext);
 
 const SearchProvider: FC<Props> = ({ children }: Props) => {
+  
+  const [auctions, setAuctions] = useState<Auction[]>([]);
   const [searchText, setSearchText] = useState<string>("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedSortTime, setSelectedSortTime] = useState<SortByTimes>(sortByTimes[2]);

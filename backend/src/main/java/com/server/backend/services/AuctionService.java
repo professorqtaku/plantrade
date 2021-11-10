@@ -70,7 +70,7 @@ public class AuctionService {
     }
 
     public List<Auction> getAllOpenAuctions(Status status, Integer page) {
-        var pageable = getPageable(page, null, null, false);
+        Pageable pageable = getPageable(page, null, null, false);
         List<Auction> openAuctions = auctionRepository.findByStatus(status, pageable);
         removeOldAuctions(openAuctions);
         return auctionRepository.findByStatus(status, pageable);
@@ -112,11 +112,11 @@ public class AuctionService {
     }
 
     public List<Auction> findAll(Specification<Auction> specification, Integer page, String sort) {
-        var pageable = getPageable(page, sort, specification, true);
+        Pageable pageable = getPageable(page, sort, specification, true);
         if(pageable == null){
             return null;
         }
-        var list = auctionRepository.findAll(specification, pageable).getContent();
+        List<Auction> list = auctionRepository.findAll(specification, pageable).getContent();
         removeOldAuctions(list);
         return auctionRepository.findAll(specification, pageable).getContent();
     }

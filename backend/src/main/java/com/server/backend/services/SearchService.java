@@ -32,6 +32,7 @@ public class SearchService {
     }
 
     public Specification<Auction> getStatusSpecification(Status status) {
+        // Status.OPEN by default
         return AuctionSpecification.hasStatus(Objects.requireNonNullElse(status, Status.OPEN));
     }
 

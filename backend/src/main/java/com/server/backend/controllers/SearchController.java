@@ -33,14 +33,12 @@ public class SearchController {
         System.out.println("what is sort" + sort);
         try {
             List<Auction> auctions = searchService.getAuctionByTitleAndStatusAndCategory(title, status, category, page, sort);
-            if(auctions == null){
+            if(auctions == null || auctions.size() <= 0){
                 return ResponseEntity.noContent().build();
             }
-            if (auctions.size() > 0) {
-                return ResponseEntity.ok(auctions);
-            } else {
-                return ResponseEntity.noContent().build();
-            }
+
+            return ResponseEntity.ok(auctions);
+
         } catch (Exception e) {
             System.out.println(e);
             return ResponseEntity.badRequest().build();
