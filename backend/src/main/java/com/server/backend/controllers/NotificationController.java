@@ -15,9 +15,17 @@ public class NotificationController {
   @Autowired
   private NotificationService notificationService;
 
-  @GetMapping("/{id}")
+  @GetMapping
   public ResponseEntity<List<Notification>> getNotificationsByCurrentUser() {
-    return null;
+    try {
+      List<Notification> notifications = notificationService.getNotificationsByUser();
+      if (notifications != null) {
+        return ResponseEntity.ok(notifications);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return ResponseEntity.noContent().build();
   }
 
 }
