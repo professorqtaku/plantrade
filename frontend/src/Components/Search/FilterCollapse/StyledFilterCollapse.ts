@@ -32,9 +32,15 @@ export const StyledTitle = styled.p<Props>`
   font-family: var(--font-text);
 `;
 
+export const StyledHeader = styled.div`
+  position: absolute;
+  top: 0;
+  right: 5%;
+  z-index: 100;
+`;
+
 export const StyledIconButton = styled(IconButton)`
   position: absolute;
   bottom: 5%;
   right: 5%;
-  z-index: 100;
 `;
