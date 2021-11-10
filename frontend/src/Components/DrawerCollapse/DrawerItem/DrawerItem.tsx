@@ -17,18 +17,26 @@ interface Props {
 }
 
 const DrawerItem = ({ content }: Props) => {
+  const renderMsgContent = (
+    <StyledInnerWrapper>
+      <StyledTitle>{content.title}</StyledTitle>
+      <StyledLastMsg>
+        <StyledName>{content.lastSender}: </StyledName>
+        Tjena gubben, kan du sälja blomman svart?
+      </StyledLastMsg>
+    </StyledInnerWrapper>
+  );
+
+  const renderBadge = (
+    <StyledBadge badgeContent={100}>
+      <StyledAvatar>{content.username.charAt(0)}</StyledAvatar>
+    </StyledBadge>
+  );
+
   return (
     <StyledWrapper>
-      <StyledInnerWrapper>
-        <StyledTitle>{content.title}</StyledTitle>
-        <StyledLastMsg>
-          <StyledName>{content.lastSender}: </StyledName>
-          Tjena gubben, kan du sälja blomman svart?
-        </StyledLastMsg>
-      </StyledInnerWrapper>
-      <StyledBadge badgeContent={100}>
-        <StyledAvatar>{content.username.charAt(0)}</StyledAvatar>
-      </StyledBadge>
+      {renderMsgContent}
+      {renderBadge}
     </StyledWrapper>
   );
 };
