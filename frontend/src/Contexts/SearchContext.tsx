@@ -41,10 +41,10 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
     let auctionResult: Array<Auction> = [];
     
     const option: SearchObject = {
-      title: searchText,
-      sort: selectedSortTime,
+      title: search?.title ? search?.title : searchText,
+      sort: search?.sort ? search?.sort : selectedSortTime,
       categories: search?.categories ? search.categories : selectedCategories,
-      status: selectedStatus,
+      status: search?.status ? search?.status : selectedStatus,
       page,
     };
     
