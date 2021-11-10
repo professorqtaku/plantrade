@@ -40,14 +40,11 @@ function FilterCollapse({
   setSelectedSortTime
 }: Props) {
   const { allCategories } = useCategory();
-  const { clearFilter, isRerender, getAuctionsByOptions } = useSearch();
-  // const { getAllAuctions } = useAuction();
+  const { clearFilter, isRerender } = useSearch();
 
   const handleClearFilter = () => {
     clearFilter();
     toggle();
-    // getAuctionsByOptions();
-    // getAllAuctions();
   }
 
   return (

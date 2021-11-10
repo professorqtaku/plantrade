@@ -20,32 +20,30 @@ export interface Category {
 }
 
 const AuctionPage = () => {
-  const { searchText, getAuctionsByOptions, auctions, setAuctions} = useSearch();
+  const { searchText, getAuctionsByOptions, auctions, setAuctions, noContent} = useSearch();
   const { setAuction, handleSelect } = useNav();
   const observer = useRef<IntersectionObserver>();
-  let [pageNumber, setPageNumber] = useState(0);
-
-  useEffect(() => {
-    console.log('auctions changed', auctions);
-  }, [auctions])
+  let pageNumber = 0;
   
   useEffect(() => {
+    console.log('1. --- RENDERING AUCTION PAGE ---')
     handleGetAuctions();
     handleSelect(setAuction);
     return () => {
       setAuctions([]);
-      setPageNumber(0);
+      pageNumber = 0;
     }
   }, []);
   
   const handleGetAuctions = async () => {
     if (auctions.length <= 0 && searchText.trim().length <= 0) {
-      console.log('wants to get auctions in auction page')
+      console.log('2. --- Get auctions from Auction Page ---')
       await getAuctionsByOptions(0);
     }
   };
 
   const handleScroll = async () => {
+    console.log('3. --- WANT TO SCROLL ---')
     await getAuctionsByOptions(pageNumber);
   }
 
@@ -59,8 +57,10 @@ const AuctionPage = () => {
       observer.current = new IntersectionObserver((entries: any) => {
         // if the node is intersecting, aka on the page somewhere
         if (entries[0].isIntersecting) {
-          console.log('what is page number', pageNumber)
-          setPageNumber(pageNumber++);
+          console.log("7. --- Scrolling in auctions list ---", auctions)
+          console.log(" --- Page number BEFORE update ---", pageNumber)
+          pageNumber++;
+          console.log(" --- Page number AFTER update ---", pageNumber)
           handleScroll();
         }
       });
@@ -98,7 +98,7 @@ const AuctionPage = () => {
                 />)
             }
           })
-          :
+          : noContent ? <p>Inga resultat av din sökning :/</p> : 
           <Box sx={{ display: 'flex' }}>
             <CircularProgress sx={{color: 'var(--light-green)'}} />
           </Box>

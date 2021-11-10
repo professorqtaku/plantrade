@@ -27,7 +27,6 @@ const SearchForm = ({ searchWord }: Props) => {
   } = useSearch();
   const history = useHistory();
   const [showFilter, setShowFilter] = useState<boolean>(false);
-  // let [pageNumber, setPageNumber] = useState(0);
 
   const toggleFilter = () => setShowFilter(!showFilter);
 
@@ -35,6 +34,7 @@ const SearchForm = ({ searchWord }: Props) => {
     e.preventDefault();
     await setAuctions([]);
     await getAuctionsByOptions(0);
+    console.log('8. --- CLICK TO SEARCH ---')
     setShowFilter(false);
     history.push("/auctions");
   };

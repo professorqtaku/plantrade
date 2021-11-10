@@ -25,14 +25,13 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
   );
   const [selectedStatus, setSelectedStatus] = useState<Status>(status[0]);
   const [isRerender, setIsRerender] = useState(false);
-  // let [pageNumber, setPageNumber] = useState(0);
+  const [noContent, setNoContent] = useState(false);
 
   const clearFilter = () => {
     setSearchText("");
     setSelectedCategories([]);
     setSelectedStatus(status[0]);
     setIsRerender(!isRerender);
-    // setPageNumber(0);
     setSelectedSortTime(sortByTimes[2]);
     setAuctions([]);
     getAuctionsByOptions(0);
@@ -48,7 +47,7 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
       page,
     };
 
-    console.log("what is options page", option.page);
+    console.log("4. --- PAGE IN CONTEXT ---", page);
 
     let categoryQuery: string = getCategoryQuery(option.categories);
     let statusQuery: string = getStatusQuery(option.status);
@@ -57,31 +56,22 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
     let res: Response = await fetch(
       `/api/auctions/search?title=${option.title}${categoryQuery}${statusQuery}&page=${option.page}${sortQuery}`
     );
-    // console.log("what is res", res);
     if (res.ok && res.status == 200) {
       let newAuctions: Array<Auction> = await res.json();
-      console.log("what is new Auctions?", newAuctions);
-      // if (auctions) {
-      console.log("before clone", auctions);
-      
+      console.log("5. --- Get new auctions from context as RESPONSE ---", newAuctions)
       let updateAuctionslist: Array<Auction> =
         option.page === 0 ? auctionResult : Object.assign([], auctions);
-      // for (let auction of newAuctions) {
-      //   updateAuctionslist.push(auction);
-      // }
-      // setAuctions(updateAuctionslist);
       setAuctions([...updateAuctionslist, ...newAuctions]);
+      setNoContent(false);
     }
-    // else if (option.page === 0 || !auctions.length) {
-      //   setAuctions(newAuctions);
-      // }
-      // } else
       if (res.status === 204) {
         console.log("no more content");
-        if (option.page === 0)
-        setAuctions(auctionResult);
+        if (option.page === 0) {
+          setNoContent(true);
+          setAuctions(auctionResult);
+        }
     }
-    console.log("what is context auctions?", auctions);
+    console.log("6. --- Auctions in context after fetching method ---", auctions)
   };
 
   const getSortQuery = (sort: SortByTimes | any) => {
@@ -128,6 +118,7 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
     auctions,
     setAuctions,
     isRerender,
+    noContent
     // pageNumber,
     // setPageNumber
   };
