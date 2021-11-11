@@ -30,7 +30,6 @@ const MessageProvider: FC<Props> = ({ children }: Props) => {
       },
     });
     if (res.status === 200) {
-      const msgResponse = await res.json();
       getAllChatMsg(chatId);
     }
   };

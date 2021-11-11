@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 type Props = {
   children?: JSX.Element;
@@ -14,7 +14,6 @@ const ChatProvider = ({ children }: Props) => {
 
   const getChatsByCurrentUser = async () => {
     let res: Response = await fetch(`/api/chats`);
-    console.log('here',res)
     if (res.status == 200) {
       const chatResponse = await res.json();
       setChats(chatResponse);
