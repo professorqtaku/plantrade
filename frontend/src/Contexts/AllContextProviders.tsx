@@ -10,6 +10,7 @@ import SocketContextProvider from "./SocketContext";
 import DrawerContextProvider from "./DrawerContext";
 import MessageContextProvider from "./MessageContext";
 import NotificationContextProvider from "./NotificationContext";
+import ChatContextProvider from "./ChatContext";
 
 interface Props {
   children: JSX.Element;
@@ -28,11 +29,13 @@ const AllContextProviders: React.FC<Props> = ({ children }) => {
                     <BidContextProvider>
                       <NotificationContextProvider>
                         <SocketContextProvider>
-                          <MessageContextProvider>
-                            <SearchContextProvider>
-                              {children}
-                            </SearchContextProvider>
-                          </MessageContextProvider>
+                          <ChatContextProvider>
+                            <MessageContextProvider>
+                              <SearchContextProvider>
+                                {children}
+                              </SearchContextProvider>
+                            </MessageContextProvider>
+                          </ChatContextProvider>
                         </SocketContextProvider>
                       </NotificationContextProvider>
                     </BidContextProvider>

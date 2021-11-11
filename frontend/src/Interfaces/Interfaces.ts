@@ -1,5 +1,5 @@
 export interface User {
-  id?: number;
+  id: number;
   username: string;
   email: string;
   password: string;
@@ -39,10 +39,27 @@ export interface Image {
 }
 
 export interface Notification {
-  id: Number;
-  auction: Auction;
-  user: User;
-  message: string;
-  isRead: boolean;
+  id: Number,
+  auction: Auction,
+  user: User,
+  message: string,
+  isRead: boolean,
   status?: "success" | "error" | "warning" | "info";
+}
+
+export interface Chat {
+  id: number;
+  auction: Auction;
+  creator: User;
+  receiver: User;
+  messages?: Message[];
+}
+
+export interface Message {
+  id: number;
+  writer: User;
+  message: string;
+  createdDate: Date;
+  isRead: boolean;
+  chat: Chat;
 }

@@ -41,7 +41,7 @@ export const StyledName = styled.span`
 `;
 
 export const StyledAvatar = styled(Avatar)`
-  background: var(--chat-green);
+  background: var(--light-green);
 `;
 
 export const StyledBadge = styled(Badge)`
