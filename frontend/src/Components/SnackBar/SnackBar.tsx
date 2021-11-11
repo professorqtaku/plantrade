@@ -1,5 +1,5 @@
 import React, { forwardRef, useCallback } from "react";
-import { useSnackbar, SnackbarContent } from "notistack";
+import { useSnackbar, SnackbarContent, SnackbarMessage } from "notistack";
 import { Typography, IconButton } from "@mui/material";
 import CloseIcon from "@material-ui/icons/Close";
 import { StyledCard, StyledCardActions } from "./StyledSnackBar";
