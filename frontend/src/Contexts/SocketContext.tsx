@@ -19,7 +19,7 @@ const SocketContextProvider = ({ children }: Props) => {
   const socket = io(endpoint, { transports: ["websocket"] });
   const { getAllAuctions } = useAuction();
   const { whoAmI } = useAuth();
-  const { setText, setShowOpenSnackBar } = useSnackBar();
+  const { addSnackbar, setShowOpenSnackBar } = useSnackBar();
   const { getNotifications } = useNotification();
 
   socket.on("connect", () => {
@@ -44,7 +44,7 @@ const SocketContextProvider = ({ children }: Props) => {
 
   socket.on("notification", (data: Notification) => {
     if (whoAmI?.id === data.user.id) {
-      setText(data.message);
+      addSnackbar(data.message);
       setShowOpenSnackBar(true);
       getNotifications();
     }

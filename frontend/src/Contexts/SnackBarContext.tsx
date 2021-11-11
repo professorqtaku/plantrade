@@ -1,4 +1,5 @@
 import { createContext, FC, useContext, useState } from "react";
+import { useSnackbar } from 'notistack'
 
 type Props = {
   children?: JSX.Element;
@@ -12,8 +13,10 @@ const SnackBarContextProvider: FC<Props> = ({ children }: Props) => {
   const [showSnackBar, setShowOpenSnackBar] = useState(false);
   const [text, setText] = useState("");
 
+  const { enqueueSnackbar } = useSnackbar();
+
   const addSnackbar = (text: string) => {
-    console.log("snackbar trigger ", text);
+    enqueueSnackbar(text);
   };
 
   const values = {
