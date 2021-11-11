@@ -17,9 +17,9 @@ POST http://localhost:4000/api/login
 Content-Type: application/json
 
 {
-  "id": 3,
-  "username": "postila",
-  "email": "postila@haha.se",
+  "id": 130,
+  "username": "mason",
+  "email": "mason@haha.se",
   "password": 123
 }
 
@@ -98,3 +98,30 @@ GET http://localhost:4000/api/messages/3
 
 ### get notifications by userId
 GET http://localhost:4000/api/notifications
+
+### update is-read
+PUT http://localhost:4000/api/notifications/update-is-read
+Content-Type: application/json
+
+[ {
+    "id": 207,
+    "message": "har fått ett nytt bud: 8",
+    "user": {
+      "id": 130
+    },
+    "auction": {
+      "id": 131
+    },
+    "isRead": false
+  },
+  {
+    "id": 204,
+    "message": "har fått ett nytt bud: 7",
+    "user": {
+      "id": 130
+    },
+    "auction": {
+      "id": 131
+    },
+    "isRead": false
+  }]
