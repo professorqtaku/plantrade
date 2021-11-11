@@ -26,6 +26,7 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
   const [selectedStatus, setSelectedStatus] = useState<Status>(status[0]);
   const [isRerender, setIsRerender] = useState(false);
   const [noContent, setNoContent] = useState(false);
+  const [lastItem, setLastItem] = useState(false);
 
   const clearFilter = () => {
     setSearchText("");
@@ -62,11 +63,15 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
         option.page === 0 ? auctionResult : Object.assign([], auctions);
       setAuctions([...updateAuctionslist, ...newAuctions]);
       setNoContent(false);
+      setLastItem(false);
     }
       if (res.status === 204) {
         if (option.page === 0) {
           setNoContent(true);
           setAuctions(auctionResult);
+          setLastItem(false);
+        } else if (auctions.length > 0) {
+          setLastItem(true);
         }
     }
   };
@@ -115,9 +120,8 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
     setSelectedStatus,
     getAuctionsByOptions,
     isRerender,
-    noContent
-    // pageNumber,
-    // setPageNumber
+    noContent,
+    lastItem
   };
 
   return (

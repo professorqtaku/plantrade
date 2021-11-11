@@ -4,6 +4,7 @@ import {
   StyledContentWrapper,
   StyledSearchWrapper,
   StyledSearchFieldWrapper,
+  StyledEndAuctions
 } from "./StyledAuctionPage";
 import AuctionCard from "../../Components/AuctionCard/AuctionCard";
 import { useEffect, useRef, useCallback, useState } from "react";
@@ -20,22 +21,39 @@ export interface Category {
 }
 
 const AuctionPage = () => {
-  const { searchText, getAuctionsByOptions, auctions, setAuctions, noContent } =
+  const { getAuctionsByOptions, auctions, setAuctions, noContent, lastItem } =
     useSearch();
   const { setAuction, handleSelect } = useNav();
   const observer = useRef<IntersectionObserver>();
   const [pageNumber, setPageNumber] = useState<number>(0);
-
+  const [endOfScroll, setEndOfScroll] = useState('');
+  
   useEffect(() => {
     handleGetAuctions();
     handleSelect(setAuction);
     return () => {
       setAuctions([]);
+      setPageNumber(0);
     };
   }, []);
 
+  useEffect(() => {
+    if(!auctions.length){
+      setPageNumber(0);
+    }
+  }, [auctions])
+
+  useEffect(() => {
+    console.log('what is last item', lastItem);
+    if (lastItem) {
+      setEndOfScroll('Inga fler auktioner');
+    } else {
+      setEndOfScroll('');
+    }
+  }, [lastItem])
+
   const handleGetAuctions = async () => {
-    if (auctions.length <= 0 && searchText.trim().length <= 0) {
+    if (auctions.length <= 0) {
       await getAuctionsByOptions(0);
     }
   };
@@ -56,6 +74,7 @@ const AuctionPage = () => {
         if (entries[0].isIntersecting) {
           setPageNumber(pageNumber + 1);
           handleScroll();
+          
         }
       });
       if (node) {
@@ -77,7 +96,6 @@ const AuctionPage = () => {
         {auctions && auctions.length > 0 ? (
           auctions.map((auction: Auction, i: number) => {
             const isLastElement = auctions.length === i + 1;
-
             {
               return isLastElement ? (
                 <AuctionCard
@@ -102,6 +120,7 @@ const AuctionPage = () => {
             <CircularProgress sx={{ color: "var(--light-green)" }} />
           </Box>
         )}
+        {endOfScroll && <StyledEndAuctions>{endOfScroll}</StyledEndAuctions>}
       </StyledContentWrapper>
     </StyledWrapper>
   );
