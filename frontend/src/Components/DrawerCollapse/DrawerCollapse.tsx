@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDrawer } from "../../Contexts/DrawerContext";
 import DrawerHeader from "./DrawerHeader/DrawerHeader";
 import { StyledCollapse, StyledDiv } from "./StyledDrawerCollapse";

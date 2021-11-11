@@ -15,6 +15,7 @@ import { useState } from "react";
 import { useHistory } from "react-router";
 import {useNav} from '../../Contexts/NavigationContext'
 import { useDrawer } from "../../Contexts/DrawerContext";
+import { useChat } from "../../Contexts/ChatContext";
 
 const Navigation = () => {
 
@@ -23,6 +24,7 @@ const Navigation = () => {
   const { toggleLoginModal } = useModal();
   const { whoAmI } = useAuth();
   const { toggleDrawer } = useDrawer();
+   const { getChatsByCurrentUser } = useChat();
 
   const handleSelect = (
     url?: string
@@ -33,6 +35,11 @@ const Navigation = () => {
       url && history.push(url);
     }
   };
+
+  const handleMsg = () => {
+    toggleDrawer();
+    getChatsByCurrentUser();
+  }
 
   const renderIcons = () => (
     <StyledIconWrapper>
@@ -52,7 +59,7 @@ const Navigation = () => {
       </StyledInnerWrapper>
 
       <StyledInnerWrapper selected={message}>
-        <StyledMsgIcon selected={message} onClick={toggleDrawer} />
+        <StyledMsgIcon selected={message} onClick={handleMsg} />
       </StyledInnerWrapper>
 
       <StyledInnerWrapper selected={profile}>
