@@ -21,7 +21,7 @@ const ChatProvider = ({ children }: Props) => {
     }
   }
 
-  const createChat = async (auctionId: number) => {
+  const createChat = async (auctionId: any) => {
     let res: Response = await fetch(`/api/chats`, {
       method: "POST",
       body: JSON.stringify(auctionId),
@@ -32,6 +32,7 @@ const ChatProvider = ({ children }: Props) => {
     const chatResponse = await res.json();
     if (chatResponse.status === 200) {
       getChatsByCurrentUser();
+      return true;
     }
   };
 
