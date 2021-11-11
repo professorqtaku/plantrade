@@ -39,12 +39,8 @@ const SnackBarStackProvider: FC<Props> = ({ children }: Props) => {
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const addSnackbar = (content: string | Notification, variant?: VariantType) => {
-    let newVariant = variant ? variant : "default";
-    
-    enqueueSnackbar(content, {
-      variant: newVariant
-    });
+  const addSnackbar = (content: string | Notification) => {  
+    enqueueSnackbar(content);
   };
 
   const values = {

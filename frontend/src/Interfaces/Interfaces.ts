@@ -39,9 +39,10 @@ export interface Image {
 }
 
 export interface Notification {
-  id: Number,
-  auction: Auction,
-  user: User,
-  message: string,
-  isRead: boolean
+  id: Number;
+  auction: Auction;
+  user: User;
+  message: string;
+  isRead: boolean;
+  status?: "success" | "error" | "warning" | "info";
 }
