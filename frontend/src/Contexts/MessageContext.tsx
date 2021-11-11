@@ -1,5 +1,4 @@
-import { createContext, FC, useContext, useState, useEffect } from "react";
-import { useAuth } from "./AuthContext";
+import { createContext, FC, useContext, useState } from "react";
 
 type Props = {
   children?: JSX.Element;
@@ -32,7 +31,6 @@ const MessageProvider: FC<Props> = ({ children }: Props) => {
 
   const values = {
     messages,
-    setMessages,
     getAllChatMsg,
     createMsg,
   };

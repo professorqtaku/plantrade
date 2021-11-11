@@ -1,4 +1,4 @@
-import { createContext, FC, useContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 type Props = {
   children?: JSX.Element;
@@ -36,7 +36,11 @@ const ChatProvider = ({ children }: Props) => {
   };
 
 
-  const values = {};
+  const values = {
+    chats,
+    getChatsByCurrentUser,
+    createChat,
+  };
 
   return <ChatContext.Provider value={values}>{children}</ChatContext.Provider>;
 };
