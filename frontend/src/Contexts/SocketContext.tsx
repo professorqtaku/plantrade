@@ -24,9 +24,9 @@ const SocketProvider = ({ children }: Props) => {
     console.log("conneted");
   });
 
-  socket.on("bid", async function () {
-    await getAllAuctions();
-  });
+  // socket.on("bid", async function () {
+  //   await getAllAuctions();
+  // });
 
   socket.on("reconnect_attempt", () => {
     console.log("Reconnecting");

@@ -14,7 +14,7 @@ export const useBid = () => useContext(BidContext);
 const BidProvider: FC<Props> = ({ children }: Props) => {
   const [highestBid, setHighestBid] = useState();
 
-  const { getAllAuctions } = useAuction();
+  // const { getAllAuctions } = useAuction();
 
     const createBid = async (newBid: Bid) => {
     let res: Response = await fetch('/api/bid', {
@@ -24,10 +24,12 @@ const BidProvider: FC<Props> = ({ children }: Props) => {
         'Content-Type': 'application/json'
       }
     })
+      
+      console.log('what is res', res)
 
     if (res.status == 200) {
       let bid = await res.json();
-      getAllAuctions();
+      // getAllAuctions();
       console.log(bid);
       return bid;
     } else {
