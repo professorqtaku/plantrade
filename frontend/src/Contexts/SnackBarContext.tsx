@@ -1,6 +1,7 @@
 import { createContext, FC, useContext, useState } from "react";
-import { SnackbarProvider, useSnackbar } from 'notistack'
+import { SnackbarProvider, useSnackbar, VariantType } from 'notistack'
 import SnackBar from '../Components/SnackBar/SnackBar'
+import { Notification } from "../Interfaces/Interfaces";
 
 type Props = {
   children?: JSX.Element;
@@ -13,6 +14,13 @@ export const useSnackBar = () => useContext(SnackBarContext);
 // wrap the contextprovider so we can use useSnackbar from notistack
 // in the context
 const SnackBarContextProvider = ({ children }: Props) => {
+  const styles = {
+    success: { backgroundColor: 'purple' },
+    error: { backgroundColor: 'blue' },
+    warning: { backgroundColor: 'green' },
+    info: { backgroundColor: 'yellow' },
+  };
+  
   return (
     <SnackbarProvider
       // preventDuplicate
@@ -22,9 +30,7 @@ const SnackBarContextProvider = ({ children }: Props) => {
       }}
       content={(key, message) => <SnackBar id={key} message={message} />}
     >
-      <SnackBarStackProvider>
-        {children}
-      </SnackBarStackProvider>
+      <SnackBarStackProvider>{children}</SnackBarStackProvider>
     </SnackbarProvider>
   );
 };
@@ -35,8 +41,14 @@ const SnackBarStackProvider: FC<Props> = ({ children }: Props) => {
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const addSnackbar = (text: string) => {
-    enqueueSnackbar(text);
+  const addSnackbar = (text: string | Notification, variant?: VariantType) => {
+    let newVariant = variant ? variant : "default";
+    console.log("----TYPE OF TEXT----");
+    console.log(typeof text);
+    
+    enqueueSnackbar(text, {
+      variant: newVariant
+    });
   };
 
   const values = {

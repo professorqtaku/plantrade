@@ -44,7 +44,7 @@ const SocketContextProvider = ({ children }: Props) => {
 
   socket.on("notification", (data: Notification) => {
     if (whoAmI?.id === data.user.id) {
-      addSnackbar(data.message);
+      addSnackbar(data);
       getNotifications();
     }
   });

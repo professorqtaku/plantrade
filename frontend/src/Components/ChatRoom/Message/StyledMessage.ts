@@ -23,7 +23,7 @@ export const StyledMessageWrapper = styled.div`
 
 export const StyledMessage = styled.div<MessageProps>`
   background: ${(props) =>
-    props.id === "1" ? "var(--dark-green)" : "var(--chat-green)"};
+    props.id === "1" ? "var(--dark-green)" : "var(--light-green)"};
   width: fit-content;
   max-width: 70%;
   padding: 1rem;
