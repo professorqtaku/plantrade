@@ -7,16 +7,17 @@ import { Notification } from "../../Interfaces/Interfaces";
 
 const SnackMessage = forwardRef<
   HTMLDivElement,
-  { id: string | number; message: string | Notification; variant: "success" | "error" | "warning" | "info" }
+  { id: string | number; message: string | Notification; variant?: "success" | "error" | "warning" | "info"; }
 >((props, ref) => {
   const { closeSnackbar } = useSnackbar();
 
-const styles = {
-  success: "purple" ,
-  error: "blue" ,
-  warning: "green",
-  info: "yellow" ,
-};
+
+const variants: Record<string, string> = {
+    success: "var(--status-green)",
+    error: "var(--status-red)",
+    warning: "var(--status-yellow)",
+    info: "var(--dark-grey)",
+  }
 
   const handleDismiss = useCallback(() => {
     closeSnackbar(props.id);
@@ -24,7 +25,7 @@ const styles = {
 
   return (
     <SnackbarContent ref={ref}>
-      <StyledCard colour={styles[variant]}>
+      <StyledCard colour={props.variant ? variants[props.variant] : variants.succeed }>
         <StyledCardActions>
           <Typography variant="subtitle2">
             {typeof props.message === "object"

@@ -1,8 +1,12 @@
 import styled from 'styled-components'
 import { Card, CardActions } from "@mui/material";
 
-export const StyledCard = styled(Card)`
-  background-color: var(--status-green);
+interface Props {
+  colour?: string;
+}
+
+export const StyledCard = styled(Card)<Props>`
+  background-color: ${props => props.colour ? props.colour : "var(--status - green"};
   color: white;
   width: 100%;
   max-width: 500px;
