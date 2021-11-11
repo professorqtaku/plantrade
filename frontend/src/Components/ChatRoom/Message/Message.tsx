@@ -24,9 +24,9 @@ const Message = () => {
 
   useEffect(() => {
     getAllChatMsg(chatId);
-    socket.emit("join", "chat");
+    socket.emit("join", chatId);
     return () => {
-      socket.emit("leave", "chat")
+      socket.emit("leave", chatId);
     }
   }, []);
 

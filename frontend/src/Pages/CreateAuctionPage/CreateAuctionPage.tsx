@@ -65,7 +65,6 @@ const CreateAuctionPage = () => {
         formData.delete('files');
 
         if (res.id) {
-          socket.emit("join", res.id);
           history.push(`/auctions/${res.id}`)
         }
     };

@@ -2,6 +2,7 @@ package com.server.backend.springsocket;
 
 import com.corundumstudio.socketio.Configuration;
 import com.corundumstudio.socketio.SocketConfig;
+import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.ConnectListener;
 import com.corundumstudio.socketio.listener.DataListener;
@@ -9,6 +10,8 @@ import com.corundumstudio.socketio.listener.DisconnectListener;
 import com.server.backend.entities.Bid;
 import lombok.val;
 import org.springframework.stereotype.Component;
+
+import java.util.Collection;
 
 @Component
 public class SocketModule {
@@ -50,7 +53,6 @@ public class SocketModule {
 
     private DataListener<String> onMsgReceived() {
         return (client, room, ackSender) -> {
-            //System.out.println("------- works???:" + num + "-------");
             emitToRoom(room,"recivedMsg", "msg update");
         };
     }

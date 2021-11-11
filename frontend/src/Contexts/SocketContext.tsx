@@ -1,10 +1,10 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 import io from "socket.io-client";
 import { useAuction } from "./AuctionContext";
-import { useAuth } from './AuthContext';
-import { useSnackBar } from './SnackBarContext';
+import { useAuth } from "./AuthContext";
+import { useSnackBar } from "./SnackBarContext";
 import { useNotification } from "./NotificationContext";
-import { Notification } from "../Interfaces/Interfaces"
+import { Notification } from "../Interfaces/Interfaces";
 import { useMessage } from "./MessageContext";
 import { useDrawer } from "./DrawerContext";
 
@@ -17,8 +17,8 @@ const SocketContext = createContext<any>(null);
 export const useSocket = () => useContext(SocketContext);
 
 const SocketContextProvider = ({ children }: Props) => {
-  const endpoint = "http://localhost:9092";
-  const socket = io(endpoint, { transports: ["websocket"] });
+  let socket;
+  const [isConnected, setIsConnected] = useState(false);
   const { getAllAuctions } = useAuction();
   const { whoAmI } = useAuth();
   const { addSnackbar } = useSnackBar();
@@ -26,32 +26,33 @@ const SocketContextProvider = ({ children }: Props) => {
   const { getAllChatMsg } = useMessage();
   const { chatId } = useDrawer();
 
-  socket.on("connect", () => {
-    console.log("conneted");
-  });
+  if (!isConnected) {
+    const endpoint = "http://localhost:9092";
+    socket = io(endpoint, { upgrade: false, transports: ["websocket"] });
 
-  socket.on("bid", async function () {
-    await getAllAuctions();
-  });
+    socket.on("connect", () => {
+      console.log("conneted to ws");
+      setIsConnected(true);
+    });
+    socket.on("bid", async function () {
+      await getAllAuctions();
+    });
 
-  socket.on("reconnect_attempt", () => {
-    console.log("Reconnecting");
-  });
+    socket.on("join", (data: any) => {
+      console.log("Connected to room", data);
+    });
 
-  socket.on("join", (data: any) => {
-    console.log("Connected to room", data);
-  });
+    socket.on("recivedMsg", (data: any) => {
+      getAllChatMsg(chatId);
+    });
 
-  socket.on("recivedMsg", (data: any) => {
-    getAllChatMsg(chatId);
-  });
-
-  socket.on("notification", (data: Notification) => {
-    if (whoAmI?.id === data.user.id) {
-      addSnackbar(data);
-      getNotifications();
-    }
-  });
+    socket.on("notification", (data: Notification) => {
+      if (whoAmI?.id === data.user.id) {
+        addSnackbar(data);
+        getNotifications();
+      }
+    });
+  }
 
   const values = {
     socket,
