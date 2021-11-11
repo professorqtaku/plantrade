@@ -54,11 +54,12 @@ const CreateAuctionPage = () => {
 
   const handleAddAuction = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setErrorMsg(formData.has('files') ? false : true)
-
+    
     for (let file of formDataPreview) {
       formData.append('files', file, file.name);
     }
+    
+    setErrorMsg(formData.has('files') ? false : true);
 
     if(formData.has('files')){
       const auction = {
@@ -75,6 +76,7 @@ const CreateAuctionPage = () => {
         setPrice(0);
         setEndDate(inOneDay);
         setCategoriesToUse([]);
+        setErrorMsg(false);
         formData.delete('files');
 
         if (res.id) {
