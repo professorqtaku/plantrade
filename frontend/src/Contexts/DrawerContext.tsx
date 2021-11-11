@@ -8,7 +8,7 @@ const DrawerContext = createContext<any>(null);
 
 export const useDrawer = () => useContext(DrawerContext);
 
-const DrawerProvider: FC<Props> = ({ children }: Props) => {
+const DrawerContextProvider: FC<Props> = ({ children }: Props) => {
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
   const [content, setContent] = useState([
     {
@@ -40,10 +40,8 @@ const DrawerProvider: FC<Props> = ({ children }: Props) => {
   };
 
   return (
-    <DrawerContext.Provider value={values}>
-      {children}
-    </DrawerContext.Provider>
+    <DrawerContext.Provider value={values}>{children}</DrawerContext.Provider>
   );
 };
 
-export default DrawerProvider;
+export default DrawerContextProvider;

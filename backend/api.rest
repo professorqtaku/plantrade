@@ -18,8 +18,8 @@ Content-Type: application/json
 
 {
   "id": 3,
-  "username": "postila",
-  "email": "postila@haha.se",
+  "username": "rebbe",
+  "email": "rebbe@haha.se",
   "password": 123
 }
 
