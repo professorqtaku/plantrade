@@ -10,7 +10,23 @@ export const useDrawer = () => useContext(DrawerContext);
 
 const DrawerContextProvider: FC<Props> = ({ children }: Props) => {
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
-  const [content, setContent] = useState(["Some content"]);
+  const [content, setContent] = useState([
+    {
+      title: "Stickling",
+      lastSender: "Anders",
+      username: "Kalle",
+    },
+    {
+      title: "Blomma",
+      lastSender: "Pelle",
+      username: "Ahmed",
+    },
+    {
+      title: "Träd",
+      lastSender: "Tommy",
+      username: "Pelle",
+    },
+  ]);
   const [showChatRoom, setShowChatRoom] = useState(false);
   const toggleDrawer = () => setShowDrawer(!showDrawer);
 

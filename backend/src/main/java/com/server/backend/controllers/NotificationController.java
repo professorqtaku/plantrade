@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/notifications")
@@ -30,6 +32,19 @@ public class NotificationController {
       e.printStackTrace();
     }
     return ResponseEntity.noContent().build();
+  }
+
+  @PutMapping("/update/is-read/all")
+  public ResponseEntity<List<Notification>> updateIsRead() {
+    try {
+      List<Notification> updatedNotifications = notificationService.updateIsRead();
+      if (updatedNotifications != null) {
+        return ResponseEntity.ok(updatedNotifications);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return ResponseEntity.status(403).build();
   }
 
 }

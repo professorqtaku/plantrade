@@ -60,4 +60,17 @@ public class NotificationService {
     }
     return notificationRepository.findNotificationsByUserId(currentUser.getId());
   }
+
+  public List<Notification> updateIsRead() {
+    List<Notification> notifications = getNotificationsByUser();
+    if (notifications == null) {
+      return null;
+    }
+
+    for (Notification notification : notifications) {
+      notification.setIsRead(true);
+      notificationRepository.save(notification);
+    }
+    return notifications;
+  }
 }
