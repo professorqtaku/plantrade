@@ -1,5 +1,7 @@
 package com.server.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,11 +24,11 @@ public class Notification {
     private String message;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JsonIncludeProperties("id")
+    @JsonIncludeProperties({"id"})
     private User user;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JsonIncludeProperties("id")
+    @JsonIncludeProperties({"id"})
     private Auction auction;
 
     @Column(name="is_read", columnDefinition = "BOOLEAN", nullable=false)
