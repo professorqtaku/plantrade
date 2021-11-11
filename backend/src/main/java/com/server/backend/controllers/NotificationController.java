@@ -27,7 +27,7 @@ public class NotificationController {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    return ResponseEntity.noContent().build();
+    return ResponseEntity.status(403).build();
   }
 
   @PutMapping("/update/is-read/all")
