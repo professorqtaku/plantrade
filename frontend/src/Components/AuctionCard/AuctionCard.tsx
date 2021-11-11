@@ -15,8 +15,6 @@ import {
   StyledSpan,
   StyledDiv,
 } from "./StyledAuctionCard";
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
 
 interface Props {
   auction: Auction;
