@@ -320,3 +320,40 @@
   }
 ]
 ```
+<hr>
+
+## NOTIFICATION
+### /api/notifications
+#### **Method**: GET
+#### **Response**
+```json
+  {
+    "id": "Number",
+    "message": "string",
+    "auction": {
+      "id": "Number"
+    },
+    "user": {
+      "id": "Number"
+    },
+    "isRead": "boolean"
+  }
+```
+### /api/notifications/update/all
+#### **Method**: PUT
+#### **Response**
+```json
+[
+  {
+    "id": "Number",
+    "message": "string",
+    "auction": {
+      "id": "Number"
+    },
+    "user": {
+      "id": "Number"
+    },
+    "isRead": "boolean"
+  }
+]
+```
