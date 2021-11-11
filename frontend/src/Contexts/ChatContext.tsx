@@ -1,25 +1,27 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 type Props = {
   children?: JSX.Element;
 };
-
 
 const ChatContext = createContext<any>(null);
 
 export const useChat = () => useContext(ChatContext);
 
 const ChatProvider = ({ children }: Props) => {
-
   const [chats, setChats] = useState([]);
+
+  useEffect(() => {
+    getChatsByCurrentUser();
+  }, []);
 
   const getChatsByCurrentUser = async () => {
     let res: Response = await fetch(`/api/chats`);
-    const chatResponse = await res.json();
-    if (chatResponse.status === 200) {
+    if (res.status == 200) {
+      const chatResponse = await res.json();
       setChats(chatResponse);
     }
-  }
+  };
 
   const createChat = async (auctionId: any) => {
     let res: Response = await fetch(`/api/chats`, {
@@ -29,13 +31,11 @@ const ChatProvider = ({ children }: Props) => {
         "Content-Type": "application/json",
       },
     });
-    const chatResponse = await res.json();
-    if (chatResponse.status === 200) {
+    if (res.status === 200) {
       getChatsByCurrentUser();
       return true;
     }
   };
-
 
   const values = {
     chats,

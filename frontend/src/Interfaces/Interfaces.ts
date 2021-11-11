@@ -45,3 +45,20 @@ export interface Notification {
   message: string,
   isRead: boolean
 }
+
+export interface Chat {
+  id: number;
+  auction: Auction;
+  creator: User;
+  receiver: User;
+  messages?: Messages[];
+}
+
+export interface Messages {
+  id: number;
+  writer: User;
+  message: string;
+  createdDate: Date;
+  isRead: boolean;
+  chat: Chat;
+}
