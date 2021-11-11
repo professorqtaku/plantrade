@@ -1,10 +1,6 @@
 import styled from "styled-components";
 import Button from "@mui/material/Button";
 
-// interface Props {
-//   isPrimary: boolean,
-// }
-
 export const StyledWrapper = styled.div`
   padding: 0.5rem;
 `;
@@ -37,6 +33,7 @@ export const StyledButton = styled(Button)`
     background: var(--light-green);
   }
   margin-bottom: 70px;
+  width: 100%;
 `;
 
 export const StyledText = styled.p`

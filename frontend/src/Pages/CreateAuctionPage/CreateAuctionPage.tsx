@@ -4,14 +4,13 @@ import {
   StyledTitle,
   StyledButton,
   StyledText,
-  StyledImage,
-  StyledTextPrimary
+  StyledImage
 } from "./StyledCreateAuctionPage";
 import Grid from '@mui/material/Grid';
 import AuctionDatePicker from "../../Components/AuctionDatePicker/AuctionDatePicker";
 import SelectBar from "../../Components/SelectBar/SelectBar";
 import InputField from "../../Components/InputField/InputField";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import { useAuction } from "../../Contexts/AuctionContext";
@@ -20,6 +19,7 @@ import { Category } from "../AuctionPage/AuctionPage";
 import { useSocket } from "../../Contexts/SocketContext";
 import Badge from '@mui/material/Badge';
 import Chip from '@mui/material/Chip';
+import TextField from '@mui/material/TextField';
 
 const Input = styled("input")({
   display: "none",
@@ -109,7 +109,6 @@ const CreateAuctionPage = () => {
     // add files to formData
     for (let file of files) {
       const src = URL.createObjectURL(file);
-      console.log('what is file', file);
       formDataArr.push(file);
       previewArr.push({name: file.name, src}) 
     }
@@ -192,39 +191,55 @@ const CreateAuctionPage = () => {
   return (
     <StyledWrapper>
       <StyledTitle>Skapa auktion</StyledTitle>
+      <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
       <StyledForm onSubmit={handleAddAuction}>
+        <Grid item>
         <InputField
           required
           label="Titel"
           value={title}
           updateState={setTitle}
           inputProps={{ maxLength: 20 }}
-        />
-        <InputField
-          required
-          label="Beskrivning"
-          value={desc}
-          updateState={setDesc}
-        />
+            /></Grid>
+        <Grid item>  
+            <TextField
+              required
+              label="Beskrivning"
+              multiline
+              maxRows={5}
+              value={desc}
+              onChange={(e) => setDesc(e.target.value)}
+              style={{width: '100%'}}
+            /></Grid>
+          <Grid item>  
         <InputField
           required
           label="Start pris"
           type="number"
           value={price}
           updateState={setPrice}
-        />
+            /></Grid>
+          <Grid item xs={12}>  
         <label>
           <StyledText>Välj ett slutdatum</StyledText>
           <AuctionDatePicker endDate={setEndDate} />
         </label>
-        <SelectBar setCategoriesToUse={setCategoriesToUse} />
+          </Grid>
+          <Grid item>  
+            <SelectBar setCategoriesToUse={setCategoriesToUse} />
+          </Grid>
+          <Grid item>  
         {renderUploadFiles()}
         {renderImagePreview()}
+          </Grid>
+          <Grid item> 
         <StyledButton type="submit" variant="contained">
           {" "}
           Skapa auktion{" "}
         </StyledButton>
+        </Grid>
       </StyledForm>
+      </Grid>
     </StyledWrapper>
   );
 };
