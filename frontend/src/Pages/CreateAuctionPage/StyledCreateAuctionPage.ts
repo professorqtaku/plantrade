@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import Button from "@mui/material/Button";
 
+interface Props {
+  isPrimary: boolean
+}
+
 export const StyledWrapper = styled.div`
   padding: 0.5rem;
 `;
@@ -41,9 +45,10 @@ export const StyledText = styled.p`
   font-size: 0.9rem;
 `;
 
-export const StyledImage = styled.img`
+export const StyledImage = styled.img<Props>`
   max-width: 100px;
   max-height: 100px;
   margin: 0.5rem;
+  border: ´${(props) => (props.isPrimary ? '5px solid #555' : 'none')}´;
 `;
 

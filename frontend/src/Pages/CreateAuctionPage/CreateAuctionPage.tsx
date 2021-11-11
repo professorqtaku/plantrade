@@ -89,7 +89,7 @@ const CreateAuctionPage = () => {
         type="file"
       />
       <Button variant="contained" component="span" style={{ width: "100%" }}>
-        Ladda upp bilder
+        Ladda upp bilder (max 5 st)
       </Button>
       {errorMsg && <div>Välj åtminstone 1 bild</div>}
     </label>
@@ -120,12 +120,26 @@ const CreateAuctionPage = () => {
     formDataArr = [];
   }
   
-  const handleRemovePic = (img: string) => {
+  const handleRemovePic = (img: string, e: any) => {
     let copyOfPreview = Object.assign([], preview);
     let copyOfFormData = Object.assign([], formDataPreview);
     let index = copyOfPreview.indexOf(img);
+    if(e.tagName === 'IMG'){
+      console.log('its clicked on the image')
+      handlePrimaryPic(img, copyOfPreview, copyOfFormData, index);
+      return;
+    }
     copyOfPreview.splice(index, 1);
     copyOfFormData.splice(index, 1);
+    setPreview([...copyOfPreview]);
+    setFormDataPreview([...copyOfFormData]);
+  }
+
+  const handlePrimaryPic = (img: string, copyOfPreview: string[], copyOfFormData: any[], index: number) => {
+    let primaryImg = copyOfPreview.splice(index, 1);
+    let primaryFormData = copyOfFormData.splice(index, 1);
+    copyOfPreview.unshift(primaryImg[0]);
+    copyOfFormData.unshift(primaryFormData[0]);
     setPreview([...copyOfPreview]);
     setFormDataPreview([...copyOfFormData]);
   }
@@ -133,15 +147,19 @@ const CreateAuctionPage = () => {
   const renderImagePreview = () => (
   <Grid container>
     <Grid item>
-        {preview.map(img => (
-          <Badge badgeContent={'-'}
-            color="error"
-            key={img}
-            onClick={() => handleRemovePic(img)}
-          >
-            <StyledImage key={img} src={img} alt="" />
-          </Badge>
-      ))}
+        {preview.map((img: string, index: number) => {
+          const primary = index == 0 ? true : false;
+          return (
+            <Badge badgeContent={'-'}
+              color="error"
+              key={img}
+              onClick={(e) => handleRemovePic(img, e.target)}
+            >
+              <StyledImage isPrimary={primary} key={img} src={img} alt="" />
+            </Badge>
+          )
+        })
+    }
     </Grid>
   </Grid>
   )
