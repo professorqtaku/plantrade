@@ -39,6 +39,7 @@ const SnackBarStackProvider: FC<Props> = ({ children }: Props) => {
 
   const { enqueueSnackbar } = useSnackbar();
 
+  // add status in Notification object to change snackbar colour
   const addSnackbar = (content: string | Notification) => {  
     enqueueSnackbar(content);
   };
