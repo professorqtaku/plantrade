@@ -1,20 +1,15 @@
-import { useDrawer } from "../../../Contexts/DrawerContext";
 import { StyledContentWrapper } from "./StyledDrawerContent";
 import DrawerItem from "../DrawerItem/DrawerItem";
-
-interface Props {
-  title: string;
-  username: string;
-  lastSender: string;
-}
+import { useChat } from "../../../Contexts/ChatContext";
+import { Chat } from "../../../Interfaces/Interfaces";
 
 const DrawerContent = () => {
-  const { content, setShowChatRoom } = useDrawer();
+  const { chats } = useChat();
 
   return (
     <StyledContentWrapper>
-      {content.map((item: Props) => (
-        <DrawerItem key={item.title} content={item} />
+      {chats && chats.map((chat: Chat) => (
+        <DrawerItem key={chat.id} chat={chat} />
       ))}
     </StyledContentWrapper>
   );

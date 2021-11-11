@@ -8,13 +8,20 @@ import {
 } from "./StyledDrawerHeader";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useDrawer } from "../../../Contexts/DrawerContext";
+import { useChat } from "../../../Contexts/ChatContext";
 
 interface Props {
   toggle: Function;
 }
 
 const DrawerHeader = ({ toggle }: Props) => {
-  const { showChatRoom, content, setShowChatRoom } = useDrawer();
+  const { showChatRoom, setShowChatRoom } = useDrawer();
+  const { chats, chatTitle } = useChat();
+
+  const handleToggle = () => {
+    toggle();
+    setShowChatRoom(false);
+  }
 
   return (
     <StyledHeader>
@@ -26,13 +33,13 @@ const DrawerHeader = ({ toggle }: Props) => {
           <StyledText isright={false}>Tillbaka</StyledText>
         </StyledTextWrapper>
       )}
-      <StyledExpandIcon onClick={() => toggle()} />
+      <StyledExpandIcon onClick={handleToggle} />
       {!showChatRoom ? (
         <StyledText isright={true}>
-          Antal: <StyledAmountOfMsg>{content.length}</StyledAmountOfMsg>
+          Antal: <StyledAmountOfMsg>{chats.length}</StyledAmountOfMsg>
         </StyledText>
       ) : (
-        <StyledText isright={true}>Name on auction</StyledText>
+        <StyledText isright={true}>{chatTitle}</StyledText>
       )}
     </StyledHeader>
   );
