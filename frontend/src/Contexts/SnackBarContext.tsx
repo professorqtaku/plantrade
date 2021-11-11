@@ -20,7 +20,7 @@ const SnackBarContextProvider = ({ children }: Props) => {
         vertical: "top",
         horizontal: "right",
       }}
-      content={(key, message) => <SnackBar id={key} message={{message}} />}
+      content={(key, message) => <SnackBar id={key} message={message} />}
     >
       <SnackBarStackProvider>
         {children}
