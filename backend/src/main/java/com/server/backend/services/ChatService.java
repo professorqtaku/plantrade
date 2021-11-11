@@ -24,7 +24,6 @@ public class ChatService {
     private AuctionService auctionService;
 
     public Chat createChat(Map values) {
-        System.out.println("inne");
         User currentUser = userService.findCurrentUser();
         Optional<Auction> auctionOptional = auctionService.getAuctionById((int) values.get("auctionId"));
         if (currentUser == null || !values.containsKey("auctionId") || auctionOptional.isEmpty()) {
