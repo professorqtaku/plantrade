@@ -24,6 +24,11 @@ const Input = styled("input")({
   display: "none",
 });
 
+interface previewProps {
+  name: string,
+  src: string
+}
+
 const formData = new FormData();
 
 const CreateAuctionPage = () => {
@@ -31,7 +36,7 @@ const CreateAuctionPage = () => {
   const history = useHistory();
   const { socket } = useSocket();
 
-  const [preview, setPreview] = useState<string[]>([]);
+  const [preview, setPreview] = useState<previewProps[]>([]);
   const [formDataPreview, setFormDataPreview] = useState<any[]>([]);
   // const [placeHolderList, placeHolderList] = useState();
   // create a holder to store files
@@ -62,7 +67,6 @@ const CreateAuctionPage = () => {
         endDate: endDate,
       };
 
-      
       if(auction.title && auction.description && auction.startPrice){
         const res =  await createAuction(auction, categoriesToUse, formData);
         setTitle('');
@@ -98,15 +102,28 @@ const CreateAuctionPage = () => {
 
   async function onFileLoad(e: any) {
     const files = e.target.files;
-    let previewArr = [];
-    let formDataArr = [];
+    let previewArr: previewProps[] = [];
+    let formDataArr: any[] = [];
 
     // add files to formData
     for (let file of files) {
       const src = URL.createObjectURL(file);
+      console.log('what is file', file);
       formDataArr.push(file);
-      previewArr.push(src)
+      previewArr.push({name: file.name, src}) 
     }
+
+    // check if pic is unique, dont push dublicates
+    for (let i = previewArr.length - 1; i >= 0; i--){
+      preview.map((p: previewProps) => {
+        if (p.name === previewArr[i].name) {
+          previewArr.splice(i, 1);
+          formDataArr.splice(i, 1);
+        }
+      });
+    }
+
+    // only add total of five pictures
     if (preview.length < 5) {
       if (preview.length + previewArr.length > 5) {
         previewArr = previewArr.slice(0, 5 - preview.length);
@@ -114,6 +131,9 @@ const CreateAuctionPage = () => {
       }
       setPreview([...preview, ...previewArr]);
       setFormDataPreview([...formDataPreview, ...formDataArr]);
+    } else {
+      setPreview(previewArr.slice(0, 6));
+      setFormDataPreview(formDataArr.slice(0, 6));
     }
     setErrorMsg(files.length ? false : true)
     e.target.value = '';
@@ -121,12 +141,11 @@ const CreateAuctionPage = () => {
     formDataArr = [];
   }
   
-  const handleRemovePic = (img: string, e: any) => {
+  const handleRemovePic = (previewObject: previewProps, e: any) => {
     let copyOfPreview = Object.assign([], preview);
     let copyOfFormData = Object.assign([], formDataPreview);
-    let index = copyOfPreview.indexOf(img);
+    let index = copyOfPreview.indexOf(previewObject);
     if(e.tagName === 'IMG'){
-      console.log('its clicked on the image')
       handlePrimaryPic(copyOfPreview, copyOfFormData, index);
       return;
     }
@@ -136,7 +155,7 @@ const CreateAuctionPage = () => {
     setFormDataPreview([...copyOfFormData]);
   }
 
-  const handlePrimaryPic = (copyOfPreview: string[], copyOfFormData: any[], index: number) => {
+  const handlePrimaryPic = (copyOfPreview: previewProps[], copyOfFormData: any[], index: number) => {
     let primaryImg = copyOfPreview.splice(index, 1);
     let primaryFormData = copyOfFormData.splice(index, 1);
     copyOfPreview.unshift(primaryImg[0]);
@@ -149,15 +168,15 @@ const CreateAuctionPage = () => {
   <>{preview.length > 0 && <p style={{textAlign: 'center'}}>Klicka på den bild du vill ha som huvudvy</p>}
   <Grid container>
       <Grid item xs={12}>
-        {preview.map((img: string, index: number) => {
+        {preview.map((p: previewProps, index: number) => {
           const primary = index == 0 ? true : false;
           return (
           <Badge badgeContent={'-'}
               color="error"
-              key={img}
-              onClick={(e) => handleRemovePic(img, e.target)}
+              key={p.src}
+              onClick={(e) => handleRemovePic(p, e.target)}
             >
-                <StyledImage src={img} key={img} />
+                <StyledImage src={p.src} key={p.src} />
               {primary && <StyledTextPrimary>Huvudbild</StyledTextPrimary>}
               </Badge>
           )
