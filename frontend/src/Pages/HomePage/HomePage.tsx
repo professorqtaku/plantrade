@@ -26,11 +26,11 @@ import {
   StyledAuctionImg,
   StyledSoonEndingWrapper,
 } from "./StyledHomePage";
-import { useAuction } from "../../Contexts/AuctionContext";
 import { useEffect } from "react";
 import { useNav } from "../../Contexts/NavigationContext";
 import { useHistory } from "react-router-dom";
 import { useCategory } from "../../Contexts/CategoryContext";
+import { sortByTimes } from "../../Utils/types";
 
 const HomePage = () => {
   const history = useHistory();
@@ -39,10 +39,21 @@ const HomePage = () => {
     clearFilter,
     setSelectedCategories,
     getAuctionsByOptions,
+    auctions,
+    setSelectedSortTime,
   } = useSearch();
+
   const { whoAmI } = useAuth();
-  const { auctions } = useAuction();
   const { allCategories } = useCategory();
+
+  useEffect(() => {
+    handleGetDescAuctions();
+  }, []);
+
+  const handleGetDescAuctions = async () => {
+    setSelectedSortTime(sortByTimes[0]);
+    await getAuctionsByOptions(0)
+  };
 
   const getCategoryIcon = (name: string) => {
     let icon: IconImage = imageIcons[name.toLocaleLowerCase()];
@@ -57,6 +68,11 @@ const HomePage = () => {
     await setSelectedCategories([category]);
     await getAuctionsByOptions(0, { categories: [category] });
     history.push("/auctions")
+  };
+
+  const handleGoToDetailPage = (auctionId: number) => {
+    clearFilter();
+    history.push("/auctions/" + auctionId)
   };
 
   const renderCategories = () => (
@@ -113,11 +129,11 @@ const HomePage = () => {
             return (
               <StyledAuctionitem
                 key={auction.id}
-                onClick={() => history.push("/auctions/" + auction.id)}
+                onClick={() => handleGoToDetailPage(auction.id)}
               >
                 <StyledImageListItem gridignore="true">
                   <StyledAuctionImg
-                    src="https://i.pinimg.com/564x/9e/8b/dc/9e8bdc74df3cb2f87fae194a18ba569a.jpg"
+                    src={!auction.images.length ? `https://i.pinimg.com/564x/9e/8b/dc/9e8bdc74df3cb2f87fae194a18ba569a.jpg` : auction.images[0].path}
                     alt="Auction"
                     loading="lazy"
                   />
@@ -161,7 +177,7 @@ const HomePage = () => {
         <StyledTitle>Nyheter</StyledTitle>
         {renderNews()}
 
-        <StyledTitle>Snart avslutade auctioner</StyledTitle>
+        <StyledTitle>Snart avslutade auktioner</StyledTitle>
         {renderSoonEndingAuction()}
       </StyledPageWrapper>
     </StyledWrapper>
