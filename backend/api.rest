@@ -32,7 +32,7 @@ DELETE http://localhost:4000/api/logout
 GET http://localhost:4000/rest/auctions
 
 ### Get auctions by id
-GET http://localhost:4000/rest/auctions/6
+GET http://localhost:4000/rest/auctions/4353453
 
 ### Get auctions by id sorted by priece DESC
 GET http://localhost:4000/rest/auctions/6?sorted=true

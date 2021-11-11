@@ -6,8 +6,6 @@ import com.server.backend.entities.Auction;
 import com.server.backend.entities.Category;
 import com.server.backend.entities.Status;
 import com.server.backend.services.AuctionService;
-import com.server.backend.services.UserService;
-import com.server.backend.springsocket.SocketModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,13 +35,16 @@ public class AuctionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Auction>> getAuctionById(@PathVariable long id) {
-        Optional<Auction> auction = auctionService.getAuctionById(id);
-        if(auction.isPresent()) {
-            return ResponseEntity.ok(auction);
-        } else {
-            return ResponseEntity.noContent().build();
+    public ResponseEntity<Auction> getAuctionById(@PathVariable long id,
+                                                            @RequestParam(required = false) boolean sorted) {
+            var auctionOptional = auctionService.getAuctionById(id);
+
+            if(auctionOptional.isPresent()) {
+                Auction auction = auctionOptional.get();
+                return ResponseEntity.ok(sorted ? auctionService.getAuctionByIdOrderByBidsDesc(auction) :
+                        auction);
         }
+            return ResponseEntity.noContent().build();
     }
 
     @PostMapping
