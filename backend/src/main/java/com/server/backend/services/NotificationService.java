@@ -67,8 +67,13 @@ public class NotificationService {
     return notificationList;
   }
 
-  public List<Notification> updateIsRead(List<Notification> notifications, Map value) {
-    for(Notification notification : notifications){
+  public List<Notification> updateIsRead(Map value) {
+    List<Notification> notifications = getNotificationsByUser();
+    if (notifications == null) {
+      return null;
+    }
+
+    for (Notification notification : notifications) {
       Utilities.updatePrivateFields(notification, value);
       notificationRepository.save(notification);
     }
