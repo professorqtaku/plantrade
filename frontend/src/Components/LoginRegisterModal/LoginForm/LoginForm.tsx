@@ -23,6 +23,7 @@ const LoginForm = ({ toggleRegister }: Props) => {
   const { login, wrongPassword } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { addSnackbar } = useSnackBar();
 
   const handleLogin = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
@@ -38,7 +39,7 @@ const LoginForm = ({ toggleRegister }: Props) => {
   return (
     <StyledLoginContainer>
       <Styledh3>LOGGA IN</Styledh3>
-      <StyledForm onSubmit={(e) => handleLogin(e)}>
+      <StyledForm onSubmit={(e: BaseSyntheticEvent) => handleLogin(e)}>
         <StyledDiv>
           <StyledPorfileIcon />
           <InputField

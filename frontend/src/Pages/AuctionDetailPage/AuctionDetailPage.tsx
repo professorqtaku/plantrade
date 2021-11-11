@@ -16,6 +16,8 @@ import ImageCarousel from "../../Components/ImageCarousel/ImageCarousel";
 import ExpandableDescriptionBox from "../../Components/ExpandableDesc/ExpandableDescriptionBox";
 import ButtonComp from "../../Components/Button/ButtonComp";
 import AuctionDetailsPageCategories from "../../Components/AuctionDetailsPageCategories/AuctionDetailsPageCategories";
+import { useChat } from "../../Contexts/ChatContext";
+import { useDrawer } from "../../Contexts/DrawerContext";
 import {
   StyledWrapper,
   StyledPrice,
@@ -41,6 +43,8 @@ const AuctionDetailPage = () => {
   const history = useHistory();
 
   const { getAuctionById } = useAuction();
+  const { createChat } = useChat();
+  const { setShowDrawer } = useDrawer();
   const { createBid, getHighestBid, highestBid } = useBid();
   const { whoAmI } = useAuth();
 
@@ -105,7 +109,9 @@ const AuctionDetailPage = () => {
   };
 
   const handleChat = () => {
-    console.log("I want to chat with the seller");
+    if (createChat({ auctionId: auction?.id })) {
+      setShowDrawer(true);
+    };
   };
 
   const renderBidContent = (

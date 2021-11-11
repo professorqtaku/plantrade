@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/rest/auctions")
@@ -25,13 +24,16 @@ public class AuctionController {
     private AuctionService auctionService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Auction>> getAuctionById(@PathVariable long id) {
-        Optional<Auction> auction = auctionService.getAuctionById(id);
-        if(auction.isPresent()) {
-            return ResponseEntity.ok(auction);
-        } else {
-            return ResponseEntity.noContent().build();
+    public ResponseEntity<Auction> getAuctionById(@PathVariable long id,
+                                                            @RequestParam(required = false) boolean sorted) {
+            var auctionOptional = auctionService.getAuctionById(id);
+
+            if(auctionOptional.isPresent()) {
+                Auction auction = auctionOptional.get();
+                return ResponseEntity.ok(sorted ? auctionService.getAuctionByIdOrderByBidsDesc(auction) :
+                        auction);
         }
+            return ResponseEntity.noContent().build();
     }
 
     @PostMapping

@@ -3,6 +3,7 @@ import io from "socket.io-client";
 import { useAuction } from "./AuctionContext";
 import { useAuth } from './AuthContext';
 import { useSnackBar } from './SnackBarContext';
+import { useNotification } from "./NotificationContext";
 import { Notification } from "../Interfaces/Interfaces"
 
 type Props = {
@@ -13,12 +14,13 @@ const SocketContext = createContext<any>(null);
 
 export const useSocket = () => useContext(SocketContext);
 
-const SocketProvider = ({ children }: Props) => {
+const SocketContextProvider = ({ children }: Props) => {
   const endpoint = "http://localhost:9092";
   const socket = io(endpoint, { transports: ["websocket"] });
   const { getAllAuctions } = useAuction();
   const { whoAmI } = useAuth();
-  const { setText, setShowOpenSnackBar } = useSnackBar();
+  const { addSnackbar } = useSnackBar();
+  const { getNotifications } = useNotification();
 
   socket.on("connect", () => {
     console.log("conneted");
@@ -42,8 +44,8 @@ const SocketProvider = ({ children }: Props) => {
 
   socket.on("notification", (data: Notification) => {
     if (whoAmI?.id === data.user.id) {
-      setText(data.message);
-      setShowOpenSnackBar(true);
+      addSnackbar(data);
+      getNotifications();
     }
   });
 
@@ -56,4 +58,4 @@ const SocketProvider = ({ children }: Props) => {
   );
 };
 
-export default SocketProvider;
+export default SocketContextProvider;

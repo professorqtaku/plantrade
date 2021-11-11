@@ -1,35 +1,38 @@
-import Snackbar from "@mui/material/Snackbar";
-import MuiAlert, { AlertProps } from "@mui/material/Alert";
-import React from "react";
+import React, { forwardRef, useCallback } from "react";
+import { useSnackbar, SnackbarContent } from "notistack";
+import { Typography, IconButton } from '@mui/material'
+import CloseIcon from "@material-ui/icons/Close";
+import { StyledCard, StyledCardActions } from "./StyledSnackBar";
+import { Notification } from "../../Interfaces/Interfaces";
 
-interface Props {
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  isOpen: boolean;
-  text: string;
-}
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-  props,
-  ref
-) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+const SnackMessage = forwardRef<HTMLDivElement,{ id: string | number; message: string | Notification }>((props, ref) => {
+  const { closeSnackbar } = useSnackbar();
+  
+
+  const handleDismiss = useCallback(() => {
+    closeSnackbar(props.id);
+  }, [props.id, closeSnackbar]);
+
+  return (
+    <SnackbarContent ref={ref}>
+      <StyledCard>
+        <StyledCardActions>
+          <Typography variant="subtitle2">
+            {typeof props.message === "object"
+              ? props.message.message
+              : props.message
+            }
+          </Typography>
+          <div>
+            <IconButton onClick={handleDismiss}>
+              <CloseIcon />
+            </IconButton>
+          </div>
+        </StyledCardActions>
+      </StyledCard>
+    </SnackbarContent>
+  );
 });
 
-const SnackBar = ({ isOpen, setIsOpen, text }: Props) => {
-  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setIsOpen(false);
-  };
-  
-  return (
-    <Snackbar open={isOpen} autoHideDuration={3000} onClose={handleClose}>
-      <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-        {text}
-      </Alert>
-    </Snackbar>
-  );
-};
-export default SnackBar;
+export default SnackMessage;

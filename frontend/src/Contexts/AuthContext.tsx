@@ -9,11 +9,11 @@ interface Props {
 const AuthContext = createContext<any>(null);
 export const useAuth = () => useContext(AuthContext);
 
-export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
+export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
   const [whoAmI, setWhoAmI] = useState(null);
   const [wrongPassword, setWrongPassword] = useState(false);
   const [userExists, setUserExists] = useState(false);
-  const { setShowOpenSnackBar, setText } = useSnackBar();
+  const { addSnackbar } = useSnackBar();
 
   useEffect(() => {
     whoIsOnline();
@@ -34,8 +34,7 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
     if (res.status == 200) {
       setUserExists(false);
       console.log("user was registered");
-      setText("Regristrering lyckades!");
-      setShowOpenSnackBar(true);
+      addSnackbar("Regristrering lyckades!");
       return true;
     }
   };
@@ -56,22 +55,20 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
       setWhoAmI(resUser);
       whoIsOnline();
       setWrongPassword(false);
-      setText("Inloggnig lyckades!");
-      setShowOpenSnackBar(true);
+      addSnackbar("Inloggnig lyckades!");
       return true;
     }
   };
 
   const whoIsOnline = async () => {
-    let res = await fetch("/api/whoami")
+    let res = await fetch("/api/whoami");
     try {
       let data = await res.json();
       setWhoAmI(data);
       return data;
-    }
-    catch (e) {
-        setWhoAmI(null);
-        return null;
+    } catch (e) {
+      setWhoAmI(null);
+      return null;
     }
   };
 
@@ -83,8 +80,7 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
       },
     });
     setWhoAmI(null);
-    setText("Utloggning lyckades!");
-    setShowOpenSnackBar(true);
+    addSnackbar("Utloggning lyckades!");
   };
 
   const values = {
@@ -100,3 +96,6 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
 };
+
+export default AuthContextProvider;
+

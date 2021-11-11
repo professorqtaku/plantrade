@@ -11,21 +11,19 @@ const BidContext = createContext<any>(null);
 
 export const useBid = () => useContext(BidContext);
 
-const BidProvider: FC<Props> = ({ children }: Props) => {
+const BidContextProvider: FC<Props> = ({ children }: Props) => {
   const [highestBid, setHighestBid] = useState();
 
   // const { getAllAuctions } = useAuction();
 
-    const createBid = async (newBid: Bid) => {
-    let res: Response = await fetch('/api/bid', {
-      method: 'POST',
+  const createBid = async (newBid: Bid) => {
+    let res: Response = await fetch("/api/bid", {
+      method: "POST",
       body: JSON.stringify(newBid),
       headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      
-      console.log('what is res', res)
+        "Content-Type": "application/json",
+      },
+    });
 
     if (res.status == 200) {
       let bid = await res.json();
@@ -37,7 +35,7 @@ const BidProvider: FC<Props> = ({ children }: Props) => {
       console.log("Bad Request");
       return null;
     }
-  }
+  };
 
   const getHighestBid = async (id: Number) => {
     let res: Response = await fetch(`/api/${id}/highest-bid`);
@@ -46,23 +44,18 @@ const BidProvider: FC<Props> = ({ children }: Props) => {
       let data = await res.json();
       setHighestBid(data.price);
     } else {
-      console.log('opsi, something went wrong');
+      console.log("opsi, something went wrong");
       // add toaster saying something went wrong
     }
-  }
+  };
 
   const value = {
     createBid,
     getHighestBid,
-    highestBid
+    highestBid,
   };
 
+  return <BidContext.Provider value={value}>{children}</BidContext.Provider>;
+};
 
-  return (
-    <BidContext.Provider value={value}>
-      {children}
-    </BidContext.Provider>
-  )
-}
-
-export default BidProvider
+export default BidContextProvider;

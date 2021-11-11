@@ -15,8 +15,8 @@ type Props = {
 const SearchContext = createContext<any>(null);
 
 export const useSearch = () => useContext(SearchContext);
-
-const SearchProvider: FC<Props> = ({ children }: Props) => {
+  
+  const SearchContextProvider: FC<Props> = ({ children }: Props) => {
   const [auctions, setAuctions] = useState<Auction[]>([]);
   const [searchText, setSearchText] = useState<string>("");
   const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
@@ -129,4 +129,4 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
   );
 };
 
-export default SearchProvider;
+export default SearchContextProvider;
