@@ -1,4 +1,5 @@
 import { createContext, FC, useContext, useState } from "react";
+import { Message } from "../Interfaces/Interfaces";
 
 type Props = {
   children?: JSX.Element;
@@ -19,12 +20,16 @@ const MessageProvider: FC<Props> = ({ children }: Props) => {
     }
   };
 
-  const createMsg = async (chatId: number) => {
+  const createMsg = async (message: Message,chatId: number) => {
     let res: Response = await fetch(`/api/messages/${chatId}`, {
       method: "POST",
+      body: JSON.stringify(message),
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
-    const msgResponse = await res.json();
-    if (msgResponse.status === 200) {
+    if (res.status === 200) {
+      const msgResponse = await res.json();
       getAllChatMsg(chatId);
     }
   };

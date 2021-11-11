@@ -25,7 +25,7 @@ const Message = () => {
   }, []);
 
   const renderMessageContent = (message: MessageProps, index: number) => (
-    <StyledMessageWrapper key={Math.random() * 100}>
+    <StyledMessageWrapper key={message.id}>
       {message.writer.id !== whoAmI.id ? (
         renderAvatarContent(message)
       ) : (
