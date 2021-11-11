@@ -13,7 +13,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
   const [whoAmI, setWhoAmI] = useState(null);
   const [wrongPassword, setWrongPassword] = useState(false);
   const [userExists, setUserExists] = useState(false);
-  const { setShowOpenSnackBar, setText } = useSnackBar();
+  const { addSnackbar } = useSnackBar();
 
   useEffect(() => {
     whoIsOnline();
@@ -34,8 +34,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
     if (res.status == 200) {
       setUserExists(false);
       console.log("user was registered");
-      setText("Regristrering lyckades!");
-      setShowOpenSnackBar(true);
+      addSnackbar("Regristrering lyckades!");
       return true;
     }
   };
@@ -56,8 +55,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
       setWhoAmI(resUser);
       whoIsOnline();
       setWrongPassword(false);
-      setText("Inloggnig lyckades!");
-      setShowOpenSnackBar(true);
+      addSnackbar("Inloggnig lyckades!");
       return true;
     }
   };
@@ -82,8 +80,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
       },
     });
     setWhoAmI(null);
-    setText("Utloggning lyckades!");
-    setShowOpenSnackBar(true);
+    addSnackbar("Utloggning lyckades!");
   };
 
   const values = {

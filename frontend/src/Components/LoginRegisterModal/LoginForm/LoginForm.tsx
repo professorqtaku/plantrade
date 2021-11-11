@@ -33,16 +33,13 @@ const LoginForm = ({ toggleRegister }: Props) => {
       password: password,
     };
 
-    let isLogin = await login(userObj);
-    if (isLogin) {
-      addSnackbar("Vällkommen tillbaka! :D")
-    }
+    await login(userObj);
   };
 
   return (
     <StyledLoginContainer>
       <Styledh3>LOGGA IN</Styledh3>
-      <StyledForm onSubmit={(e) => handleLogin(e)}>
+      <StyledForm onSubmit={(e: BaseSyntheticEvent) => handleLogin(e)}>
         <StyledDiv>
           <StyledPorfileIcon />
           <InputField
