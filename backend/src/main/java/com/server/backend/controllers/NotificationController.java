@@ -33,10 +33,7 @@ public class NotificationController {
   @PutMapping("/update/is-read/all")
   public ResponseEntity<List<Notification>> updateIsRead() {
     try {
-      Map<String, Boolean> values = new HashMap<String, Boolean>();
-      values.put("isRead", true);
-
-      List<Notification> updatedNotifications = notificationService.updateIsRead(values);
+      List<Notification> updatedNotifications = notificationService.updateIsRead();
       if (updatedNotifications != null) {
         return ResponseEntity.ok(updatedNotifications);
       }
