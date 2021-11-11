@@ -1,5 +1,6 @@
 package com.server.backend.services;
 
+import com.server.backend.Utilities;
 import com.server.backend.entities.Auction;
 import com.server.backend.entities.Notification;
 import com.server.backend.entities.User;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class NotificationService {
@@ -63,5 +65,13 @@ public class NotificationService {
       notificationList.subList(30, notificationList.size()).clear();
     }
     return notificationList;
+  }
+
+  public List<Notification> updateIsRead(List<Notification> notifications, Map value) {
+    for(Notification notification : notifications){
+      Utilities.updatePrivateFields(notification, value);
+      notificationRepository.save(notification);
+    }
+    return notifications;
   }
 }
