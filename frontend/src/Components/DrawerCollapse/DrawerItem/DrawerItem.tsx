@@ -17,6 +17,7 @@ import {
   TrailingActions,
 } from "react-swipeable-list";
 import "react-swipeable-list/dist/styles.css";
+import { useDrawer } from "../../../Contexts/DrawerContext";
 
 interface Props {
   content: {
@@ -27,6 +28,8 @@ interface Props {
 }
 
 const DrawerItem = ({ content }: Props) => {
+  const { setShowChatRoom } = useDrawer();
+
   const trailingActions = () => (
     <TrailingActions>
       <SwipeAction
@@ -60,7 +63,7 @@ const DrawerItem = ({ content }: Props) => {
   return (
     <StyledSwipe>
       <SwipeableListItem trailingActions={trailingActions()}>
-        <StyledWrapper>
+        <StyledWrapper onClick={() => setShowChatRoom(true)}>
           {renderMsgContent}
           {renderBadge}
         </StyledWrapper>
