@@ -36,7 +36,7 @@ export const StyledText = styled.p<TextProps>`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 9rem;
+  width: 7rem;
   justify-self: ${(props) => (props.isright ? "end" : "start")};
   margin: 0;
   margin: ${(props) => (props.isright ? "0 0.5rem 0 0" : "0 0 0 0.5rem ")};
