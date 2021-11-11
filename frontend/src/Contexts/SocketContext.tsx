@@ -4,6 +4,7 @@ import { useAuction } from "./AuctionContext";
 import { useAuth } from './AuthContext';
 import { useSnackBar } from './SnackBarContext';
 import { Notification } from "../Interfaces/Interfaces"
+import { useNotification } from "./NotificationContext";
 
 type Props = {
   children?: JSX.Element;
@@ -19,6 +20,7 @@ const SocketProvider = ({ children }: Props) => {
   const { getAllAuctions } = useAuction();
   const { whoAmI } = useAuth();
   const { setText, setShowOpenSnackBar } = useSnackBar();
+  const { getNotifications } = useNotification();
 
   socket.on("connect", () => {
     console.log("conneted");
@@ -44,6 +46,7 @@ const SocketProvider = ({ children }: Props) => {
     if (whoAmI?.id === data.user.id) {
       setText(data.message);
       setShowOpenSnackBar(true);
+      getNotifications();
     }
   });
 

@@ -1,13 +1,9 @@
 import { createContext, FC, useContext, useEffect, useState } from "react";
+import { Category } from "../Interfaces/Interfaces";
 
 type Props = {
   children?: JSX.Element;
 };
-
-type Category = {
-  id: Number;
-  name: String;
-}
 
 const CategoryContext = createContext<any>(null);
 
