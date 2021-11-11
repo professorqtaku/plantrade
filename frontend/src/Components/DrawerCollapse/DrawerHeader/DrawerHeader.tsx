@@ -16,6 +16,11 @@ interface Props {
 const DrawerHeader = ({ toggle }: Props) => {
   const { showChatRoom, setShowChatRoom } = useDrawer();
 
+  const handleToggle = () => {
+    toggle();
+    setShowChatRoom(false);
+  }
+
   return (
     <StyledHeader>
       {!showChatRoom ? (
@@ -26,7 +31,7 @@ const DrawerHeader = ({ toggle }: Props) => {
           <StyledText isright={false}>Tillbaka</StyledText>
         </StyledTextWrapper>
       )}
-      <StyledExpandIcon onClick={() => toggle()} />
+      <StyledExpandIcon onClick={handleToggle} />
       {!showChatRoom ? (
         <StyledText isright={true}>
           Antal: <StyledAmountOfMsg>{3}</StyledAmountOfMsg>
