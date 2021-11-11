@@ -17,9 +17,7 @@ POST http://localhost:4000/api/login
 Content-Type: application/json
 
 {
-  "id": 3,
-  "username": "postila",
-  "email": "postila@haha.se",
+  "username": "johan",
   "password": 123
 }
 
@@ -86,15 +84,16 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:4000/api/messages/3
+POST http://localhost:4000/api/messages/156
 Content-Type: application/json
 
 {
-  "message": "hej hej"
+  "message": "svara snälllaaaaaa"
 }
 
 ### get messages in chat
-GET http://localhost:4000/api/messages/3
+GET http://localhost:4000/api/messages/156
+
 
 ### get notifications by userId
 GET http://localhost:4000/api/notifications
