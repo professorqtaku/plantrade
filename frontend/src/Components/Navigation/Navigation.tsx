@@ -11,10 +11,10 @@ import {
 } from "./StyledNavigation";
 import {useModal} from "../../Contexts/ModalContext"
 import { useAuth } from "../../Contexts/AuthContext";
-import { useState } from "react";
 import { useHistory } from "react-router";
 import {useNav} from '../../Contexts/NavigationContext'
 import { useDrawer } from "../../Contexts/DrawerContext";
+import { useSearch } from "../../Contexts/SearchContext";
 import { useChat } from "../../Contexts/ChatContext";
 
 const Navigation = () => {
@@ -24,6 +24,7 @@ const Navigation = () => {
   const { toggleLoginModal } = useModal();
   const { whoAmI } = useAuth();
   const { toggleDrawer } = useDrawer();
+  const { clearFilter } = useSearch();
    const { getChatsByCurrentUser } = useChat();
 
   const handleSelect = (
@@ -33,6 +34,7 @@ const Navigation = () => {
       toggleLoginModal();
     } else {
       url && history.push(url);
+      clearFilter();
     }
   };
 

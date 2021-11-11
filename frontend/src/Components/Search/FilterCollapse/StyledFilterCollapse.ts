@@ -13,7 +13,6 @@ export const StyledCollapse = styled(Collapse)`
   position: relative;
   z-index: 100;
   box-shadow: 0 10px 10px rgb(0 0 0 / 0.2);
-  /* box-shadow: 0px 10px 15px 5px var(--dark-grey); */
 `;
 export const StyledDiv = styled.div`
   background: white;
@@ -37,10 +36,11 @@ export const StyledHeader = styled.div`
   top: 0;
   right: 5%;
   z-index: 100;
-`;
+  `;
 
 export const StyledIconButton = styled(IconButton)`
   position: absolute;
   bottom: 5%;
   right: 5%;
+  z-index: 100;
 `;

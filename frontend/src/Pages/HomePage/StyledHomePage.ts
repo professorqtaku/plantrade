@@ -100,6 +100,7 @@ export const StyledAuctionitem = styled(Card)`
 `;
 
 export const StyledText = styled.p`
+  text-transform: uppercase;
   margin: 7px 0 0 0;
   font-size: 13px;
 `;
@@ -121,7 +122,6 @@ export const StyledImgText = styled.p`
 `;
 
 export const StyledImageListItem = styled(ImageListItem)<GridProps>`
-  margin-top: 10px;
   display: ${(props) => !props.gridignore ? 'grid' : 'block'};
   align-items: center;
   justify-items: center;
@@ -144,8 +144,7 @@ export const StyledNewsImg = styled.img`
 `;
 
 export const StyledAuctionImg = styled.img`
-  width: 100%;
-  height: 75%;
+  height: 7rem;
   border-radius: 0 0 3px 3px;
 `;
 

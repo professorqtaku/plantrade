@@ -30,3 +30,9 @@ export const StyledSearchFieldWrapper = styled.div`
   left: 10%;
   z-index: 50;
 `;
+
+export const StyledEndAuctions = styled.div`
+  margin-bottom: 100px;
+  text-align: center;
+  font-family: var(--font-text);
+`;
