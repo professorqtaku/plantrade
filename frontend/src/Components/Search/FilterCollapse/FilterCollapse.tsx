@@ -39,14 +39,11 @@ function FilterCollapse({
   setSelectedSortTime
 }: Props) {
   const { allCategories } = useCategory();
-  const { auctions, clearFilter, isRerender, getAuctionsByOptions } = useSearch();
+  const { auctions, clearFilter, isRerender } = useSearch();
 
   const handleClearFilter = () => {
     clearFilter();
   }
-
-  useEffect(() => { console.log("change",auctions);
-  },[auctions])
 
   return (
     <StyledCollapse in={isOpen} timeout="auto" unmountOnExit>

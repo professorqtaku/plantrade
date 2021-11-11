@@ -44,7 +44,6 @@ const AuctionPage = () => {
   }, [auctions])
 
   useEffect(() => {
-    console.log('what is last item', lastItem);
     if (lastItem) {
       setEndOfScroll('Inga fler auktioner');
     } else {
