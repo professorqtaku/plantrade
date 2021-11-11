@@ -30,7 +30,7 @@ public class NotificationController {
     return ResponseEntity.noContent().build();
   }
 
-  @PutMapping("/update-all-notifications")
+  @PutMapping("/update/is-read/all")
   public ResponseEntity<List<Notification>> updateIsRead() {
     try {
       Map<String, Boolean> values = new HashMap<String, Boolean>();
