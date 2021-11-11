@@ -5,6 +5,8 @@ import { useAuth } from './AuthContext';
 import { useSnackBar } from './SnackBarContext';
 import { useNotification } from "./NotificationContext";
 import { Notification } from "../Interfaces/Interfaces"
+import { useMessage } from "./MessageContext";
+import { useDrawer } from "./DrawerContext";
 
 type Props = {
   children?: JSX.Element;
@@ -21,6 +23,8 @@ const SocketContextProvider = ({ children }: Props) => {
   const { whoAmI } = useAuth();
   const { addSnackbar } = useSnackBar();
   const { getNotifications } = useNotification();
+  const { getAllChatMsg } = useMessage();
+  const { chatId } = useDrawer();
 
   socket.on("connect", () => {
     console.log("conneted");
@@ -38,8 +42,8 @@ const SocketContextProvider = ({ children }: Props) => {
     console.log("Connected to room", data);
   });
 
-  socket.on("auctionUpdate", (data: any) => {
-    console.log(data);
+  socket.on("recivedMsg", (data: any) => {
+    getAllChatMsg(chatId);
   });
 
   socket.on("notification", (data: Notification) => {
