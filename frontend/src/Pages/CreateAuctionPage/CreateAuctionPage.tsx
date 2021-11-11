@@ -19,6 +19,7 @@ import { useHistory } from "react-router";
 import { Category } from "../AuctionPage/AuctionPage";
 import { useSocket } from "../../Contexts/SocketContext";
 import Badge from '@mui/material/Badge';
+import Chip from '@mui/material/Chip';
 
 const Input = styled("input")({
   display: "none",
@@ -167,23 +168,24 @@ const CreateAuctionPage = () => {
   const renderImagePreview = () => (
   <>{preview.length > 0 && <p style={{textAlign: 'center'}}>Klicka på den bild du vill ha som huvudvy</p>}
   <Grid container>
-      <Grid item xs={12}>
         {preview.map((p: previewProps, index: number) => {
           const primary = index == 0 ? true : false;
           return (
-          <Badge badgeContent={'-'}
-              color="error"
-              key={p.src}
-              onClick={(e) => handleRemovePic(p, e.target)}
-            >
+          <Grid item xs={6} md={2}>
+            <Badge badgeContent={'-'}
+                color="error"
+                key={p.src}
+                onClick={(e) => handleRemovePic(p, e.target)}
+              >
                 <StyledImage src={p.src} key={p.src} />
-              {primary && <StyledTextPrimary>Huvudbild</StyledTextPrimary>}
+              {primary && <Chip label="Huvudbild" style={{position: 'absolute', margin: '5px'}} color="success" />}
               </Badge>
+            </Grid>
           )
         }
       )
     }
-    </Grid>
+    
   </Grid></>
   )
 

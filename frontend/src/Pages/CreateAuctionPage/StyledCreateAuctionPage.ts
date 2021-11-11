@@ -36,6 +36,7 @@ export const StyledButton = styled(Button)`
   &:hover {
     background: var(--light-green);
   }
+  margin-bottom: 70px;
 `;
 
 export const StyledText = styled.p`
