@@ -17,7 +17,9 @@ POST http://localhost:4000/api/login
 Content-Type: application/json
 
 {
-  "username": "johan",
+  "id": 3,
+  "username": "postila",
+  "email": "postila@haha.se",
   "password": 123
 }
 
@@ -30,7 +32,10 @@ DELETE http://localhost:4000/api/logout
 GET http://localhost:4000/rest/auctions
 
 ### Get auctions by id
-GET http://localhost:4000/rest/auctions/53
+GET http://localhost:4000/rest/auctions/6
+
+### Get auctions by id sorted by priece DESC
+GET http://localhost:4000/rest/auctions/6?sorted=true
 
 ### Get current users auctions
 GET http://localhost:4000/rest/auctions/user
@@ -84,19 +89,15 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:4000/api/messages/156
+POST http://localhost:4000/api/messages/3
 Content-Type: application/json
 
 {
-  "message": "how are you?"
+  "message": "hej hej"
 }
 
 ### get messages in chat
-GET http://localhost:4000/api/messages/156
-
+GET http://localhost:4000/api/messages/3
 
 ### get notifications by userId
 GET http://localhost:4000/api/notifications
-
-### update is-read on all notifications for a user
-PUT http://localhost:4000/api/notifications/update/is-read/all
