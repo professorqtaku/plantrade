@@ -31,19 +31,19 @@ public class NotificationController {
   }
 
   @PutMapping("/update-is-read")
-  public ResponseEntity<List<Notification>> updateIsRead(@RequestBody List<Notification> notifications) {
+  public ResponseEntity<List<Notification>> updateIsRead() {
     try {
-      var values = new HashMap<String, Boolean>();
+      Map<String, Boolean> values = new HashMap<String, Boolean>();
       values.put("isRead", true);
-      
-      List<Notification> updatedNotifications = notificationService.updateIsRead(notifications, values);
-      if(updatedNotifications != null){
+
+      List<Notification> updatedNotifications = notificationService.updateIsRead(values);
+      if (updatedNotifications != null) {
         return ResponseEntity.ok(updatedNotifications);
       }
     } catch (Exception e) {
       e.printStackTrace();
     }
-    return null;
+    return ResponseEntity.status(403).build();
   }
 
 }
