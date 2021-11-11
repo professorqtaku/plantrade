@@ -98,3 +98,6 @@ GET http://localhost:4000/api/messages/3
 
 ### get notifications by userId
 GET http://localhost:4000/api/notifications
+
+### update is-read on all notifications for a user
+PUT http://localhost:4000/api/notifications/update/is-read/all
