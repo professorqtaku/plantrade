@@ -1,4 +1,4 @@
-import { BaseSyntheticEvent, useState } from "react";
+import { BaseSyntheticEvent, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useAuction } from "../../../Contexts/AuctionContext";
 import { useSearch } from "../../../Contexts/SearchContext";
@@ -14,6 +14,7 @@ type Props = {
 
 const SearchForm = ({ searchWord }: Props) => {
   const {
+    auctions,
     setAuctions,
     getAuctionsByOptions,
     searchText,
@@ -35,6 +36,7 @@ const SearchForm = ({ searchWord }: Props) => {
     await setAuctions([]);
     await getAuctionsByOptions(0);
     setShowFilter(false);
+    toggleFilter();
     history.push("/auctions");
   };
 

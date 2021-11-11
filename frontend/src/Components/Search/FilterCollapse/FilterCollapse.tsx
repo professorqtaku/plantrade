@@ -41,9 +41,8 @@ function FilterCollapse({
   const { allCategories } = useCategory();
   const { auctions, clearFilter, isRerender, getAuctionsByOptions } = useSearch();
 
-  const handleClearFilter = async () => {
-    await clearFilter();
-    toggle();
+  const handleClearFilter = () => {
+    clearFilter();
   }
 
   useEffect(() => { console.log("change",auctions);
