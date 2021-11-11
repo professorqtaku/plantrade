@@ -43,8 +43,6 @@ const SnackBarStackProvider: FC<Props> = ({ children }: Props) => {
 
   const addSnackbar = (text: string | Notification, variant?: VariantType) => {
     let newVariant = variant ? variant : "default";
-    console.log("----TYPE OF TEXT----");
-    console.log(typeof text);
     
     enqueueSnackbar(text, {
       variant: newVariant

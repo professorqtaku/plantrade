@@ -18,10 +18,6 @@ public class NotificationController {
 
   @Autowired
   private NotificationService notificationService;
-  @Autowired
-  private AuctionService auctionService;
-  @Autowired
-  private UserService userService;
 
   @GetMapping
   public ResponseEntity<List<Notification>> getNotificationsByCurrentUser() {
@@ -30,19 +26,6 @@ public class NotificationController {
       if (notifications != null) {
         return ResponseEntity.ok(notifications);
       }
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return ResponseEntity.noContent().build();
-  }
-
-  @GetMapping("/test")
-  public ResponseEntity<Boolean> sendNotificationToMyself() {
-    try {
-      Auction auction = auctionService.getAuctionById(250).get();
-      User me = userService.getUserById(3).get();
-      notificationService.createNotificationForUser(me, auction);
-      return ResponseEntity.ok(true);
     } catch (Exception e) {
       e.printStackTrace();
     }
