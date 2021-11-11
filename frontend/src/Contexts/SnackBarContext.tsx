@@ -36,24 +36,18 @@ const SnackBarContextProvider = ({ children }: Props) => {
 };
 
 const SnackBarStackProvider: FC<Props> = ({ children }: Props) => {
-  const [showSnackBar, setShowOpenSnackBar] = useState(false);
-  const [text, setText] = useState("");
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const addSnackbar = (text: string | Notification, variant?: VariantType) => {
+  const addSnackbar = (content: string | Notification, variant?: VariantType) => {
     let newVariant = variant ? variant : "default";
     
-    enqueueSnackbar(text, {
+    enqueueSnackbar(content, {
       variant: newVariant
     });
   };
 
   const values = {
-    showSnackBar,
-    setShowOpenSnackBar,
-    text,
-    setText,
     addSnackbar,
   };
 
