@@ -99,7 +99,7 @@ const CreateAuctionPage = () => {
       <Button variant="contained" component="span" style={{width: '100%'}}>
         Ladda upp bilder (max 5 st)
       </Button>
-      {errorMsg && <div>Välj åtminstone 1 bild</div>}
+      {errorMsg && <p style={{textAlign: 'center'}}>Du måste välja minst en bild</p>}
     </label>
   );
 
