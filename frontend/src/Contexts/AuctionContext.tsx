@@ -41,7 +41,6 @@ const AuctionProvider: FC<Props> = ({ children }: Props) => {
       let auctions = await res.json();
       setUsersAuctions(auctions);
     }
-    // return auctions;
   }
 
   const getWonAuctionsByUser = async () => {

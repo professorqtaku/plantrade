@@ -25,6 +25,7 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
   );
   const [selectedStatus, setSelectedStatus] = useState<Status>(status[0]);
   const [isRerender, setIsRerender] = useState(false);
+  const [noContent, setNoContent] = useState(false);
 
   const clearFilter = () => {
     setSearchText("");
@@ -47,8 +48,6 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
       status: search?.status ? search?.status : selectedStatus,
       page,
     };
-    
-    console.log("what is options page", option.page);
 
     let categoryQuery: string = getCategoryQuery(option.categories);
     let statusQuery: string = getStatusQuery(option.status);
@@ -57,17 +56,18 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
     let res: Response = await fetch(
       `/api/auctions/search?title=${option.title}${categoryQuery}${statusQuery}&page=${option.page}${sortQuery}`
     );
-
     if (res.ok && res.status == 200) {
       let newAuctions: Array<Auction> = await res.json();
       let updateAuctionslist: Array<Auction> =
         option.page === 0 ? auctionResult : Object.assign([], auctions);
       setAuctions([...updateAuctionslist, ...newAuctions]);
+      setNoContent(false);
     }
-
-    else if (res.status === 204) {
-        if (option.page === 0)
-        setAuctions(auctionResult);
+      if (res.status === 204) {
+        if (option.page === 0) {
+          setNoContent(true);
+          setAuctions(auctionResult);
+        }
     }
   };
 
@@ -115,6 +115,7 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
     setSelectedStatus,
     getAuctionsByOptions,
     isRerender,
+    noContent
     // pageNumber,
     // setPageNumber
   };
