@@ -25,7 +25,12 @@ interface Props {
 }
 
 const DrawerItem = ({ chat }: Props) => {
-  const { setShowChatRoom } = useDrawer();
+  const { setShowChatRoom, setChatId } = useDrawer();
+
+  const handleShowMessageView = () => {
+    setChatId(chat.id)
+    setShowChatRoom(true);
+  }
 
   const trailingActions = () => (
     <TrailingActions>
@@ -64,7 +69,7 @@ const DrawerItem = ({ chat }: Props) => {
   return (
     <StyledSwipe>
       <SwipeableListItem trailingActions={trailingActions()}>
-        <StyledWrapper onClick={() => setShowChatRoom(true)}>
+        <StyledWrapper onClick={handleShowMessageView}>
           {renderMsgContent}
           {renderBadge}
         </StyledWrapper>

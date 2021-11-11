@@ -10,42 +10,56 @@ import {
   StyledCheckedIcon,
 } from "./StyledMessage";
 import { useMessage } from "../../../Contexts/MessageContext";
+import { useEffect } from "react";
+import { useDrawer } from "../../../Contexts/DrawerContext";
+import { Message as MessageProps } from "../../../Interfaces/Interfaces";
+import { useAuth } from "../../../Contexts/AuthContext";
 
 const Message = () => {
-  const { messages } = useMessage();
+  const { messages, getAllChatMsg } = useMessage();
+  const { chatId } = useDrawer();
+  const { whoAmI } = useAuth();
 
-  const renderMessageContent = (message: any, index: number) => (
+  useEffect(() => {
+    getAllChatMsg(chatId);
+  }, []);
+
+  const renderMessageContent = (message: MessageProps, index: number) => (
     <StyledMessageWrapper key={Math.random() * 100}>
-      {message.id !== "1" ? (
+      {message.writer.id !== whoAmI.id ? (
         renderAvatarContent(message)
       ) : (
-        <StyledMessage id={message.id}>
-          <StyledText>{message.text}</StyledText>
+        <StyledMessage sender={message.writer.id === whoAmI.id}>
+          <StyledText>{message.message}</StyledText>
         </StyledMessage>
       )}
-      {index === messages.length - 1 && message.id === "1" ? (
+      {index === messages.length - 1 && message.writer.id === whoAmI.id ? (
         renderDateAndRead(message)
       ) : (
-        <StyledDateOrRead id={message.id}>2020-10-12</StyledDateOrRead>
+        <StyledDateOrRead sender={message.writer.id === whoAmI.id}>
+          2020-10-12
+        </StyledDateOrRead>
       )}
     </StyledMessageWrapper>
   );
 
-  const renderAvatarContent = (message: any) => (
+  const renderAvatarContent = (message: MessageProps) => (
     <StyledAvatarWrapper>
-      {message.id != "1" && <StyledAvatar>A</StyledAvatar>}
-      <StyledMessage id={message.id}>
-        <StyledText>{message.text}</StyledText>
+      {message.writer.id !== whoAmI.id && (
+        <StyledAvatar>{message.writer.username.charAt(0)}</StyledAvatar>
+      )}
+      <StyledMessage sender={message.writer.id === whoAmI.id}>
+        <StyledText>{message.message}</StyledText>
       </StyledMessage>
     </StyledAvatarWrapper>
   );
 
-  const renderDateAndRead = (message: any) => (
+  const renderDateAndRead = (message: MessageProps) => (
     <StyledDateAndRead>
-      <StyledDateOrRead id={message.id} read={true}>
+      <StyledDateOrRead sender={message.writer.id === whoAmI.id} read={true}>
         2020-10-12
       </StyledDateOrRead>
-      <StyledDateOrRead id={message.id}>
+      <StyledDateOrRead sender={message.writer.id === whoAmI.id}>
         <StyledCheckedIcon />
         Läst
       </StyledDateOrRead>
@@ -54,9 +68,10 @@ const Message = () => {
 
   return (
     <StyledWrapper>
-      {messages.map((message: any, index: number) =>
-        renderMessageContent(message, index)
-      )}
+      {messages &&
+        messages.map((message: MessageProps, index: number) =>
+          renderMessageContent(message, index)
+        )}
     </StyledWrapper>
   );
 };

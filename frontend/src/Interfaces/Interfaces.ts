@@ -1,5 +1,5 @@
 export interface User {
-  id?: number;
+  id: number;
   username: string;
   email: string;
   password: string;
@@ -51,10 +51,10 @@ export interface Chat {
   auction: Auction;
   creator: User;
   receiver: User;
-  messages?: Messages[];
+  messages?: Message[];
 }
 
-export interface Messages {
+export interface Message {
   id: number;
   writer: User;
   message: string;

@@ -14,7 +14,7 @@ interface Props {
 }
 
 const DrawerHeader = ({ toggle }: Props) => {
-  const { showChatRoom, content, setShowChatRoom } = useDrawer();
+  const { showChatRoom, setShowChatRoom } = useDrawer();
 
   return (
     <StyledHeader>
@@ -29,7 +29,7 @@ const DrawerHeader = ({ toggle }: Props) => {
       <StyledExpandIcon onClick={() => toggle()} />
       {!showChatRoom ? (
         <StyledText isright={true}>
-          Antal: <StyledAmountOfMsg>{content.length}</StyledAmountOfMsg>
+          Antal: <StyledAmountOfMsg>{3}</StyledAmountOfMsg>
         </StyledText>
       ) : (
         <StyledText isright={true}>Name on auction</StyledText>
