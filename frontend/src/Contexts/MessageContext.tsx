@@ -7,7 +7,7 @@ type Props = {
 
 const MessageContext = createContext<any>(null);
 
-export const useMessage = () => useContext(MessageContext);
+export const MessageContextProvider = () => useContext(MessageContext);
 
 const MessageProvider: FC<Props> = ({ children }: Props) => {
   const [messages, setMessages] = useState([]);
@@ -47,4 +47,4 @@ const MessageProvider: FC<Props> = ({ children }: Props) => {
   );
 };
 
-export default MessageProvider;
+export default MessageContextProvider;

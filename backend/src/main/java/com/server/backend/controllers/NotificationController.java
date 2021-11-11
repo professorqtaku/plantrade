@@ -1,7 +1,11 @@
 package com.server.backend.controllers;
 
+import com.server.backend.entities.Auction;
 import com.server.backend.entities.Notification;
+import com.server.backend.entities.User;
+import com.server.backend.services.AuctionService;
 import com.server.backend.services.NotificationService;
+import com.server.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +31,7 @@ public class NotificationController {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    return ResponseEntity.noContent().build();
+    return ResponseEntity.status(403).build();
   }
 
   @PutMapping("/update/is-read/all")

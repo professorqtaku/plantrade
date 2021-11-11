@@ -7,7 +7,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AuctionService {
@@ -78,6 +80,11 @@ public class AuctionService {
 
     public Optional<Auction> getAuctionById(long id) {
         return auctionRepository.findById(id);
+    }
+
+    public Auction getAuctionByIdOrderByBidsDesc(Auction auction) {
+            auction.getBids().sort((Bid b1, Bid b2) -> (int) (b2.getPrice() - b1.getPrice()));
+            return auction;
     }
 
     public List<Auction> getAuctionsByCurrentUser() {
