@@ -12,17 +12,23 @@ export const useNotification = () => useContext(NotificationContext);
 const NotificationProvider: FC<Props> = ({ children }: Props) => {
   const [notifications, setNotifications] = useState<Array<Notification>>([]);
 
+  const clearNotifications = () => {
+    setNotifications([]);
+  }
+
   const getNotifications = async () => {
     let res: Response = await fetch("/api/notifications");
-    if (res.ok) {
+    if (res.ok && res.status == 200) {
       let newNotifications: Array<Notification> = await res.json();
       setNotifications(newNotifications);
     }
+    
   };
 
   const values = {
     notifications,
     getNotifications,
+    clearNotifications,
   };
 
   return (

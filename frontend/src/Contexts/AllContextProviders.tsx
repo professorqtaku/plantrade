@@ -26,13 +26,13 @@ const AllContextProviders: React.FC<Props> = ({ children }) => {
                 <NavigationProvider>
                   <DrawerProvider>
                     <BidProvider>
-                      <SocketProvider>
-                        <MessageProvider>
-                          <NotificationProvider>
+                      <NotificationProvider>
+                        <SocketProvider>
+                          <MessageProvider>
                             <SearchProvider>{children}</SearchProvider>
-                          </NotificationProvider>
-                        </MessageProvider>
-                      </SocketProvider>
+                          </MessageProvider>
+                        </SocketProvider>
+                      </NotificationProvider>
                     </BidProvider>
                   </DrawerProvider>
                 </NavigationProvider>

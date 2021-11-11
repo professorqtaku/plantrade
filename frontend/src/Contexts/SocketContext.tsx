@@ -3,8 +3,8 @@ import io from "socket.io-client";
 import { useAuction } from "./AuctionContext";
 import { useAuth } from './AuthContext';
 import { useSnackBar } from './SnackBarContext';
-import { Notification } from "../Interfaces/Interfaces"
 import { useNotification } from "./NotificationContext";
+import { Notification } from "../Interfaces/Interfaces"
 
 type Props = {
   children?: JSX.Element;
