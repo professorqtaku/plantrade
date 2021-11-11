@@ -14,6 +14,7 @@ import { useAuth } from "../../Contexts/AuthContext";
 import { useState } from "react";
 import { useHistory } from "react-router";
 import {useNav} from '../../Contexts/NavigationContext'
+import { useDrawer } from "../../Contexts/DrawerContext";
 
 const Navigation = () => {
 
@@ -21,6 +22,7 @@ const Navigation = () => {
   const { home, auction, notis, message, profile } = useNav();
   const { toggleLoginModal } = useModal();
   const { whoAmI } = useAuth();
+  const { toggleDrawer } = useDrawer();
 
   const handleSelect = (
     url?: string
@@ -50,7 +52,7 @@ const Navigation = () => {
       </StyledInnerWrapper>
 
       <StyledInnerWrapper selected={message}>
-        <StyledMsgIcon selected={message} />
+        <StyledMsgIcon selected={message} onClick={toggleDrawer} />
       </StyledInnerWrapper>
 
       <StyledInnerWrapper selected={profile}>

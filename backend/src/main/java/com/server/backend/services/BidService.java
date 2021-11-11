@@ -3,9 +3,8 @@ package com.server.backend.services;
 import com.server.backend.entities.Auction;
 import com.server.backend.entities.Bid;
 import com.server.backend.entities.User;
-import com.server.backend.repositories.AuctionRepository;
 import com.server.backend.repositories.BidRepository;
-import com.server.backend.repositories.UserRepository;
+import com.server.backend.springsocket.SocketModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -20,10 +19,16 @@ public class BidService {
   private BidRepository bidRepository;
 
   @Autowired
-  private UserRepository userRepository;
+  private UserService userService;
 
   @Autowired
-  private AuctionRepository auctionRepository;
+  private AuctionService auctionService;
+
+  @Autowired
+  private NotificationService notificationService;
+
+  @Autowired
+  private SocketModule socketModule;
 
   public Boolean validateUser(User user) {
     return user.getUsername().equals(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -39,26 +44,17 @@ public class BidService {
   }
 
   public Boolean validateBid(Auction auction, int bidPrice) {
-    int index = auction.getBids().size();
-    double latestPrice = 0;
-    try{
-      latestPrice = auction.getBids().get(index - 1).getPrice();
-    } catch (Exception e){
-      e.printStackTrace();
+    double currentPrice = auction.getStartPrice();
+
+    Bid highestBid = getHighestBid(auction.getId());
+    if (highestBid != null) {
+      currentPrice = highestBid.getPrice();
     }
 
-    if (auction.getStartPrice() < bidPrice && latestPrice < bidPrice){
-      // price placed by user must be higher than both startPrice and latestPrice
-      return true;
-    } else if (auction.getStartPrice() > bidPrice || latestPrice > bidPrice) {
-      // if startPrice or latestPrice is higher than bidPrice
-      return false;
-    } else {
-      // if list of bids is empty and bidPrice is higher than startPrice return true
-      // otherwise return false
-      return auction.getBids().isEmpty() && auction.getStartPrice() < bidPrice;
+    if (auction.getBids().isEmpty()) {
+      return bidPrice >= currentPrice;
     }
-
+    return bidPrice > currentPrice;
   }
 
   public Boolean validateTime(Auction auction, long time) {
@@ -67,27 +63,39 @@ public class BidService {
   }
 
   public Bid createBid(Map values) {
-    User user =  userRepository.findById((long) (int) values.get("userId")).get();
-    Auction auction = auctionRepository.findById((long) (int) values.get("auctionId")).get();
+    User user =  userService.getUserById((long) (int) values.get("userId")).get();
+    Auction auction = auctionService.getAuctionById((long) (int) values.get("auctionId")).get();
     // validate user, bid price and time before creating a new bid
 
     if (isOwner(user, auction)) {
       return null;
-    } else if (validateUser(user) && validateBid(auction, (int) values.get("price")) && validateTime(auction, (long) values.get("createdDate"))){
-      try{
-        Bid bid = Bid.builder()
-                .user(user)
-                .auction(auction)
-                .price((int) values.get("price"))
-                .createdDate(new Date((long) values.get("createdDate")))
-                .build();
+    } else if (validateUser(user)
+            && validateBid(auction, (int) values.get("price"))
+            && validateTime(auction, (long) values.get("createdDate"))) {
+      Bid bid = Bid.builder()
+              .user(user)
+              .auction(auction)
+              .price((int) values.get("price"))
+              .createdDate(new Date((long) values.get("createdDate")))
+              .build();
 
-        auction.addBid(bid);
-        return bidRepository.save(bid);
-      } catch(Exception e) {
-        e.printStackTrace();
+      User secondHighestAuctionUser = null;
+
+      if (auction.getBids().size() > 0){
+        User highestBidder = getHighestBid(auction.getId()).getUser();
+        if(highestBidder != user) {
+          secondHighestAuctionUser = highestBidder;
+        }
       }
+
+      notificationService.sendNotifications(auction, (int) values.get("price"), secondHighestAuctionUser);
+      auction.addBid(bid);
+      return bidRepository.save(bid);
     }
     return null;
+  }
+
+  public Bid getHighestBid(long id) {
+    return bidRepository.findTopByAuctionIdOrderByPriceDesc(id);
   }
 }

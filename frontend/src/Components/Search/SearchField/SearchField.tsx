@@ -5,7 +5,6 @@ import {
   StyledIconButton,
 } from "./StyledSearchField";
 import SearchIcon from "@mui/icons-material/Search";
-import FilterCollapse from "../FilterCollapse/FilterCollapse"
 
 
 interface Props {

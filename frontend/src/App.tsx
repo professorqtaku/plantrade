@@ -6,9 +6,10 @@ import FloatingAddBtn from "./Components/FloatingAddBtn/FloatingAddBtn";
 import SnackBar from "./Components/SnackBar/SnackBar";
 import { useSnackBar } from "./Contexts/SnackBarContext";
 import { useAuth } from "./Contexts/AuthContext";
+import Drawer from "./Components/DrawerCollapse/DrawerCollapse";
+import { useDrawer } from "./Contexts/DrawerContext";
 
 function App() {
-
   const { showSnackBar, setShowOpenSnackBar, text } = useSnackBar();
   const { whoAmI } = useAuth();
 
@@ -18,9 +19,14 @@ function App() {
         <>
           <Navigation />
           {whoAmI && <FloatingAddBtn />}
+          <Drawer />
         </>
       </AllRoutes>
-      <SnackBar isOpen={showSnackBar} setIsOpen={setShowOpenSnackBar} text={text} />
+      <SnackBar
+        isOpen={showSnackBar}
+        setIsOpen={setShowOpenSnackBar}
+        text={text}
+      />
       <LoginRegisterModal />
     </div>
   );

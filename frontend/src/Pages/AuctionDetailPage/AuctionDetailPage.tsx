@@ -5,17 +5,17 @@ import { useAuction } from "../../Contexts/AuctionContext";
 import { useBid } from "../../Contexts/BidContext";
 import { useAuth } from "../../Contexts/AuthContext";
 import { Auction } from "../../Interfaces/Interfaces";
-import Grid from '@mui/material/Grid';
-import SkeletonCard from '../../Components/SkeletonCard/SkeletonCard';
-import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
-import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import CommentIcon from '@mui/icons-material/Comment';
-import InputField from '../../Components/InputField/InputField';
-import ImageCarousel from '../../Components/ImageCarousel/ImageCarousel';
-import ExpandableDescriptionBox from '../../Components/ExpandableDesc/ExpandableDescriptionBox';
-import ButtonComp from "../../Components/Button/ButtonComp"
-import { images } from "./images";
+import Grid from "@mui/material/Grid";
+import SkeletonCard from "../../Components/SkeletonCard/SkeletonCard";
+import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
+import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import CommentIcon from "@mui/icons-material/Comment";
+import InputField from "../../Components/InputField/InputField";
+import ImageCarousel from "../../Components/ImageCarousel/ImageCarousel";
+import ExpandableDescriptionBox from "../../Components/ExpandableDesc/ExpandableDescriptionBox";
+import ButtonComp from "../../Components/Button/ButtonComp";
+import AuctionDetailsPageCategories from "../../Components/AuctionDetailsPageCategories/AuctionDetailsPageCategories";
 import {
   StyledWrapper,
   StyledPrice,
@@ -34,14 +34,17 @@ import {
   StyledImg,
   StyledCarousel,
 } from "./StyledAuctionDetailPage";
+import { useModal } from "../../Contexts/ModalContext";
 
 const AuctionDetailPage = () => {
   const { id }: any = useParams();
   const history = useHistory();
 
   const { getAuctionById } = useAuction();
-  const { createBid } = useBid();
+  const { createBid, getHighestBid, highestBid } = useBid();
   const { whoAmI } = useAuth();
+
+  const { toggleLoginModal } = useModal();
 
   const [auction, setAuction] = useState<Auction | undefined>();
   const [bid, setBid] = useState<string>("");
@@ -54,11 +57,17 @@ const AuctionDetailPage = () => {
 
   useEffect(() => {
     handleGetAuctionById();
-  }, []);
-  
+  }, [id, whoAmI]);
+
+  useEffect(() => {
+    setCurrentBid(highestBid);
+    setBidText("Högsta budet");
+  }, [highestBid]);
+
   const handleGetAuctionById = async () => {
     const res = await getAuctionById(id);
     setAuction(res);
+    getHighestBid(res.id);
     setEndDate(new Date(res.endDate).toLocaleDateString("sv-SV"));
     setEndTime(new Date(res.endDate).toLocaleTimeString("sv-SV"));
 
@@ -66,10 +75,7 @@ const AuctionDetailPage = () => {
       setIsHost(true);
     }
 
-    if (res.bids.length) {
-      setCurrentBid(res.bids.pop(res.bids.length - 1).price);
-      setBidText("Högsta budet");
-    } else {
+    if (!res.bids.length) {
       setCurrentBid(res.startPrice);
       setBidText("Startpris");
     }
@@ -91,7 +97,8 @@ const AuctionDetailPage = () => {
       createdDate: Date.now(),
     };
 
-    await createBid(newBid);
+    const createdBid = await createBid(newBid);
+    getHighestBid(auction?.id);
     //rerender the new currently highest bid
     handleGetAuctionById();
     setBid("");
@@ -124,19 +131,13 @@ const AuctionDetailPage = () => {
         <ButtonComp label="Ja" callback={handleBid} disabled={isHost} />
       )}
     </>
-  )  
-  const renderCarousel = (
-      <StyledCarousel
-        initialActiveIndex={0}
-        isRTL={false}
-        showArrows={true}
-        itemsToShow={1}
-        pagination={false}
-      >
-        {images.map((img) => (
-          <StyledImg key={img.path} src={img.path} />
-        ))}
-      </StyledCarousel>
+  );
+
+  const renderLoginToggle = (
+    <>
+      <p>Logga in för att placera ett bud.</p>
+      <ButtonComp label="Login" callback={() => toggleLoginModal()} />
+    </>
   );
 
   return (
@@ -150,9 +151,21 @@ const AuctionDetailPage = () => {
             Tillbaka
           </StyledBackBtn>
           <Grid container spacing={2}>
+            {/* images carousel */}
             <Grid item xs={12} md={12}>
-              {renderCarousel}
+              <StyledCarousel
+                initialActiveIndex={0}
+                isRTL={false}
+                showArrows={true}
+                itemsToShow={1}
+                pagination={false}
+              >
+                {auction.images.map((img) => (
+                  <StyledImg key={img.path} src={img.path} />
+                ))}
+              </StyledCarousel>
             </Grid>
+
             <Grid item xs={8} md={8}>
               <StyledTitle>{auction.title}</StyledTitle>
             </Grid>
@@ -188,9 +201,12 @@ const AuctionDetailPage = () => {
                 auctionDescription={auction.description}
               />
             </Grid>
-            <Grid item xs={12} md={12}>
-              #tags
-            </Grid>
+            {auction.categories && (
+              <AuctionDetailsPageCategories
+                categories={auction.categories}
+                auctionId={auction.id}
+              />
+            )}
             <Grid item xs={12} md={12}>
               {isOverPrice && (
                 <StyledWarning>
@@ -199,8 +215,8 @@ const AuctionDetailPage = () => {
                 </StyledWarning>
               )}
             </Grid>
-            <StyledForm warning={isOverPrice ? isOverPrice : false}>
-              {renderBidContent}
+            <StyledForm>
+              {whoAmI ? renderBidContent : renderLoginToggle}
             </StyledForm>
           </Grid>
         </>

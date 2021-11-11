@@ -1,5 +1,5 @@
 export interface User {
-  id: number;
+  id?: number;
   username: string;
   email: string;
   password: string;
@@ -15,7 +15,7 @@ export interface Auction {
   host?: User,
   bids?: Array<Bid> | undefined,
   categories?: [Category],
-  images?: [Image],
+  images: [Image],
   winner?: User
 }
 
@@ -36,4 +36,12 @@ export interface Image {
   id: number;
   path: string;
   auctionId: number;
+}
+
+export interface Notification {
+  id: Number,
+  auction: Auction,
+  user: User,
+  message: string,
+  isRead: boolean
 }

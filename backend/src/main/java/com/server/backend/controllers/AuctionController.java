@@ -6,24 +6,22 @@ import com.server.backend.entities.Auction;
 import com.server.backend.entities.Category;
 import com.server.backend.entities.Status;
 import com.server.backend.services.AuctionService;
-import com.server.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/rest/auctions")
 public class AuctionController {
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private AuctionService auctionService;
+
+    //@Autowired
+    //private SocketModule socketModule;
 
     @GetMapping
     public ResponseEntity<List<Auction>> getAllOpenAuctions() {
@@ -36,13 +34,16 @@ public class AuctionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Auction>> getAuctionById(@PathVariable long id) {
-        Optional<Auction> auction = auctionService.getAuctionById(id);
-        if(auction.isPresent()) {
-            return ResponseEntity.ok(auction);
-        } else {
-            return ResponseEntity.noContent().build();
+    public ResponseEntity<Auction> getAuctionById(@PathVariable long id,
+                                                            @RequestParam(required = false) boolean sorted) {
+            var auctionOptional = auctionService.getAuctionById(id);
+
+            if(auctionOptional.isPresent()) {
+                Auction auction = auctionOptional.get();
+                return ResponseEntity.ok(sorted ? auctionService.getAuctionByIdOrderByBidsDesc(auction) :
+                        auction);
         }
+            return ResponseEntity.noContent().build();
     }
 
     @PostMapping
@@ -51,18 +52,15 @@ public class AuctionController {
             @RequestParam(value = "categories") String _categories,
             @RequestParam(value = "files", required = false) List<MultipartFile> files
     ){
-        var user = userService.findCurrentUser();
-        var mapper = new ObjectMapper();
+        ObjectMapper mapper = new ObjectMapper();
         try {
-            var auction = mapper.readValue(_auction, Auction.class);
+            Auction auction = mapper.readValue(_auction, Auction.class);
             List<Category> categories = mapper.readValue(_categories, mapper.getTypeFactory().constructCollectionType(List.class, Category.class));
-            if(user != null) {
-                Auction savedAuction = auctionService.createAuction(auction, categories, files, user);
-                if(savedAuction != null) {
-                    return ResponseEntity.ok(savedAuction);
-                } else {
-                    return ResponseEntity.badRequest().build();
-                }
+            Auction savedAuction = auctionService.createAuction(auction, categories, files);
+
+            if(savedAuction != null) {
+                //socketModule.emitToRoom("Auction room", "join", savedAuction);
+                return ResponseEntity.ok(savedAuction);
             } else {
                 return ResponseEntity.badRequest().build();
             }
@@ -76,32 +74,29 @@ public class AuctionController {
     
     @GetMapping("/user")
     public ResponseEntity<List<Auction>> getAuctionsByCurrentUser() {
-        var user = userService.findCurrentUser();
-        if(user != null){
-            List<Auction> auctions = auctionService.getAuctionsByCurrentUser(user);
-            if(auctions.size() > 0){
+        try {
+            List<Auction> auctions = auctionService.getAuctionsByCurrentUser();
+            if (auctions != null && auctions.size() > 0) {
                 return ResponseEntity.ok(auctions);
             } else {
                 return ResponseEntity.noContent().build();
             }
-        } else {
-            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
         }
-
     }
 
     @GetMapping("/won")
     public ResponseEntity<List<Auction>> getWonAuctionsByCurrentUser() {
-        var user = userService.findCurrentUser();
-        if(user != null){
-            List<Auction> auctions = auctionService.getWonAuctionsByCurrentUser(user);
-            if(auctions.size() > 0) {
+        try {
+            List<Auction> auctions = auctionService.getWonAuctionsByCurrentUser();
+            if (auctions != null && auctions.size() > 0) {
                 return ResponseEntity.ok(auctions);
             } else {
                 return ResponseEntity.noContent().build();
             }
-        } else {
-            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
         }
     }
 

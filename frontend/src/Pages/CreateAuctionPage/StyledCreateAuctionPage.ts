@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import Button from "@mui/material/Button";
 
-export const StyledWrapper = styled.div``;
+export const StyledWrapper = styled.div`
+  padding: 0.5rem;
+`;
 
 export const StyledTitle = styled.p`
   font-size: 1.5rem;
@@ -30,5 +32,18 @@ export const StyledButton = styled(Button)`
   &:hover {
     background: var(--light-green);
   }
+`;
+
+export const StyledText = styled.p`
+  margin: 0;
+  color: darkgrey;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.9rem;
+`;
+
+export const StyledImage = styled.img`
+  max-width: 100px;
+  max-height: 100px;
+  margin-right: 5px;
 `;
 

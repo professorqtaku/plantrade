@@ -1,6 +1,6 @@
 package com.server.backend.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,6 +34,10 @@ public class Chat {
 
     // mappedBy="chat" is the variable in the Message class
     @OneToMany(mappedBy = "chat", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    @JsonIgnoreProperties({"chat"}) // prevent circular reference between relations
+    @JsonIgnore// prevent circular reference between relations
     private List<Message> messages;
+
+    public void addMessage(Message message) {
+        this.messages.add(message);
+    }
 }
