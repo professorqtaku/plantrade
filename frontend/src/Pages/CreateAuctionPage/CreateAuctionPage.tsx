@@ -17,6 +17,7 @@ import { useAuction } from "../../Contexts/AuctionContext";
 import { useHistory } from "react-router";
 import { Category } from "../AuctionPage/AuctionPage";
 import { useSocket } from "../../Contexts/SocketContext";
+import Badge from '@mui/material/Badge';
 
 const Input = styled("input")({
   display: "none",
@@ -30,6 +31,8 @@ const CreateAuctionPage = () => {
   const { socket } = useSocket();
 
   const [preview, setPreview] = useState<string[]>([]);
+  const [formDataPreview, setFormDataPreview] = useState<any[]>([]);
+  // const [placeHolderList, placeHolderList] = useState();
   // create a holder to store files
   const [title, setTitle] = useState<string>('');
   const [desc, setDesc] = useState<string>('');
@@ -45,6 +48,10 @@ const CreateAuctionPage = () => {
   const handleAddAuction = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrorMsg(formData.has('files') ? false : true)
+
+    for (let file of formDataPreview) {
+      formData.append('files', file, file.name);
+    }
 
     if(formData.has('files')){
       const auction = {
@@ -89,26 +96,42 @@ const CreateAuctionPage = () => {
   );
 
   async function onFileLoad(e: any) {
+    console.log('what is happening onFileLoad', e.target.files)
     const files = e.target.files;
-    let arr = [];
+    let previewArr = [];
+    let formDataArr = [];
 
     // add files to formData
     for (let file of files) {
-      formData.append('files', file, file.name);
       const src = URL.createObjectURL(file);
-      arr.push(src)
+      formDataArr.push(file);
+      previewArr.push(src)
     }
-    setPreview(arr);
+
+    console.log('what is formdata', formData)
+    
+    
+    if (preview.length < 5) {
+      if (preview.length + previewArr.length > 5) {
+        previewArr = previewArr.slice(0, 5 - preview.length);
+        formDataArr = formDataArr.slice(0, 5 - preview.length);
+      }
+      setPreview([...preview, ...previewArr]);
+      setFormDataPreview([...formDataPreview, ...formDataArr]);
+    }
     setErrorMsg(files.length ? false : true)
     e.target.value = '';
-    arr = [];
+    previewArr = [];
+    formDataArr = [];
 }
 
   const renderImagePreview = () => (
   <Grid container>
     <Grid item xs={12} md={12}>
-      {preview.map(img => (
-        <StyledImage key={img} src={img} alt="" />
+        {preview.map(img => (
+        <Badge badgeContent={'-'} sx={{color: 'var(--status-red)'}} key={img}>
+            <StyledImage key={img} src={img} alt="" />
+          </Badge>
       ))}
     </Grid>
   </Grid>
