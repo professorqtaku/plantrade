@@ -9,7 +9,7 @@ interface Props {
 const AuthContext = createContext<any>(null);
 export const useAuth = () => useContext(AuthContext);
 
-export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
+export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
   const [whoAmI, setWhoAmI] = useState(null);
   const [wrongPassword, setWrongPassword] = useState(false);
   const [userExists, setUserExists] = useState(false);
@@ -63,15 +63,14 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
   };
 
   const whoIsOnline = async () => {
-    let res = await fetch("/api/whoami")
+    let res = await fetch("/api/whoami");
     try {
       let data = await res.json();
       setWhoAmI(data);
       return data;
-    }
-    catch (e) {
-        setWhoAmI(null);
-        return null;
+    } catch (e) {
+      setWhoAmI(null);
+      return null;
     }
   };
 
@@ -100,3 +99,6 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
 };
+
+export default AuthContextProvider;
+

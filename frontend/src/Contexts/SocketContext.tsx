@@ -14,7 +14,7 @@ const SocketContext = createContext<any>(null);
 
 export const useSocket = () => useContext(SocketContext);
 
-const SocketProvider = ({ children }: Props) => {
+const SocketContextProvider = ({ children }: Props) => {
   const endpoint = "http://localhost:9092";
   const socket = io(endpoint, { transports: ["websocket"] });
   const { getAllAuctions } = useAuction();
@@ -59,4 +59,4 @@ const SocketProvider = ({ children }: Props) => {
   );
 };
 
-export default SocketProvider;
+export default SocketContextProvider;

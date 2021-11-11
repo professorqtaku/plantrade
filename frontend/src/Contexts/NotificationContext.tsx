@@ -9,12 +9,12 @@ const NotificationContext = createContext<any>(null);
 
 export const useNotification = () => useContext(NotificationContext);
 
-const NotificationProvider: FC<Props> = ({ children }: Props) => {
+const NotificationContextProvider: FC<Props> = ({ children }: Props) => {
   const [notifications, setNotifications] = useState<Array<Notification>>([]);
 
   const clearNotifications = () => {
     setNotifications([]);
-  }
+  };
 
   const getNotifications = async () => {
     let res: Response = await fetch("/api/notifications");
@@ -22,7 +22,6 @@ const NotificationProvider: FC<Props> = ({ children }: Props) => {
       let newNotifications: Array<Notification> = await res.json();
       setNotifications(newNotifications);
     }
-    
   };
 
   const values = {
@@ -38,4 +37,4 @@ const NotificationProvider: FC<Props> = ({ children }: Props) => {
   );
 };
 
-export default NotificationProvider;
+export default NotificationContextProvider;

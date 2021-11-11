@@ -9,7 +9,7 @@ const MessageContext = createContext<any>(null);
 
 export const useMessage = () => useContext(MessageContext);
 
-const MessageProvider: FC<Props> = ({ children }: Props) => {
+const MessageContextProvider: FC<Props> = ({ children }: Props) => {
   const [messages, setMessages] = useState([
     {
       id: "1",
@@ -59,4 +59,4 @@ const MessageProvider: FC<Props> = ({ children }: Props) => {
   );
 };
 
-export default MessageProvider;
+export default MessageContextProvider;

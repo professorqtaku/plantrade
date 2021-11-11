@@ -8,15 +8,20 @@ const SnackBarContext = createContext<any>(null);
 
 export const useSnackBar = () => useContext(SnackBarContext);
 
-const SnackBarProvider: FC<Props> = ({ children }: Props) => {
+const SnackBarContextProvider: FC<Props> = ({ children }: Props) => {
   const [showSnackBar, setShowOpenSnackBar] = useState(false);
   const [text, setText] = useState("");
+
+  const addSnackbar = (text: string) => {
+    console.log("snackbar trigger ", text);
+  };
 
   const values = {
     showSnackBar,
     setShowOpenSnackBar,
     text,
     setText,
+    addSnackbar,
   };
 
   return (
@@ -26,4 +31,4 @@ const SnackBarProvider: FC<Props> = ({ children }: Props) => {
   );
 };
 
-export default SnackBarProvider;
+export default SnackBarContextProvider;
