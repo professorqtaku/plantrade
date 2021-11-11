@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import Button from "@mui/material/Button";
 
-interface Props {
-  isPrimary: boolean
-}
+// interface Props {
+//   isPrimary: boolean,
+// }
 
 export const StyledWrapper = styled.div`
   padding: 0.5rem;
@@ -41,14 +41,26 @@ export const StyledButton = styled(Button)`
 export const StyledText = styled.p`
   margin: 0;
   color: darkgrey;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-normal-text);
   font-size: 0.9rem;
 `;
 
-export const StyledImage = styled.img<Props>`
-  max-width: 100px;
-  max-height: 100px;
-  margin: 0.5rem;
-  border: ´${(props) => (props.isPrimary ? '5px solid #555' : 'none')}´;
+export const StyledImage = styled.img`
+  max-width: 150px;
+  max-height: 150px;
+  margin: 0.3rem;
+  cursor: pointer;
 `;
+
+export const StyledTextPrimary = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--status-green);
+  font-family: var(--font-normal-text);
+  padding: 5px;
+`;
+
+
 
