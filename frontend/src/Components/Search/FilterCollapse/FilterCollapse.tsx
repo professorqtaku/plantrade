@@ -15,12 +15,11 @@ import { Category } from "../../../Interfaces/Interfaces";
 import ClearButton from "../../ClearButton/ClearButton";
 import { useSearch } from "../../../Contexts/SearchContext";
 import { useAuction } from "../../../Contexts/AuctionContext";
+import { useEffect } from "react";
 
 interface Props {
   isOpen: boolean;
   toggle: Function;
-  // hours: number;
-  // setHours: Function;
   selectedStatus: Status;
   selectedCategories: Category[];
   setSelectedStatus: Function;
@@ -40,12 +39,15 @@ function FilterCollapse({
   setSelectedSortTime
 }: Props) {
   const { allCategories } = useCategory();
-  const { clearFilter, isRerender } = useSearch();
+  const { auctions, clearFilter, isRerender, getAuctionsByOptions } = useSearch();
 
-  const handleClearFilter = () => {
-    clearFilter();
+  const handleClearFilter = async () => {
+    await clearFilter();
     toggle();
   }
+
+  useEffect(() => { console.log("change",auctions);
+  },[auctions])
 
   return (
     <StyledCollapse in={isOpen} timeout="auto" unmountOnExit>

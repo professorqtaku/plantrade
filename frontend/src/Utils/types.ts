@@ -1,7 +1,7 @@
 import { Category } from "../Interfaces/Interfaces"
 
 export type SearchObject = {
-  title: string,
+  title?: string,
   sort?: SortByTimes,
   categories?: Category[],
   status?: Status,

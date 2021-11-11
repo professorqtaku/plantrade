@@ -100,6 +100,7 @@ export const StyledAuctionitem = styled(Card)`
 `;
 
 export const StyledText = styled.p`
+  text-transform: uppercase;
   margin: 7px 0 0 0;
   font-size: 13px;
 `;

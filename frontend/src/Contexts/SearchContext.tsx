@@ -31,19 +31,21 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
     setSearchText("");
     setSelectedCategories([]);
     setSelectedStatus(status[0]);
+    setSelectedSortTime(sortByTimes[2]);
     setIsRerender(!isRerender);
     setSelectedSortTime(sortByTimes[2]);
     setAuctions([]);
     getAuctionsByOptions(0);
   };
 
-  const getAuctionsByOptions = async (page: number) => {
+  const getAuctionsByOptions = async (page: number, search?: SearchObject) => {
     let auctionResult: Array<Auction> = [];
+    
     const option: SearchObject = {
-      title: searchText,
-      sort: selectedSortTime,
-      categories: selectedCategories,
-      status: selectedStatus,
+      title: search?.title ? search?.title : searchText,
+      sort: search?.sort ? search?.sort : selectedSortTime,
+      categories: search?.categories ? search.categories : selectedCategories,
+      status: search?.status ? search?.status : selectedStatus,
       page,
     };
 
@@ -100,6 +102,8 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
   };
 
   const value = {
+    auctions,
+    setAuctions,
     clearFilter,
     searchText,
     setSearchText,
@@ -110,8 +114,6 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
     selectedStatus,
     setSelectedStatus,
     getAuctionsByOptions,
-    auctions,
-    setAuctions,
     isRerender,
     noContent
     // pageNumber,
