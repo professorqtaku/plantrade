@@ -8,11 +8,16 @@ import com.server.backend.springsocket.SocketModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class NotificationService {
 
   @Autowired
   private NotificationRepository notificationRepository;
+
+  @Autowired
+  private UserService userService;
 
   @Autowired
   private SocketModule socketModule;
@@ -46,5 +51,13 @@ public class NotificationService {
 
       notificationRepository.save(notification);
       socketModule.emit("notification", notification);
+  }
+
+  public List<Notification> getNotificationsByUser() {
+    User currentUser = userService.findCurrentUser();
+    if (currentUser == null){
+      return null;
+    }
+    return notificationRepository.findNotificationsByUserId(currentUser.getId());
   }
 }
