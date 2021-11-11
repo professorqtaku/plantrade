@@ -7,11 +7,10 @@ type Props = {
 
 const MessageContext = createContext<any>(null);
 
-export const MessageContextProvider = () => useContext(MessageContext);
+export const useMessage = () => useContext(MessageContext);
 
-const MessageProvider: FC<Props> = ({ children }: Props) => {
+const MessageContextProvider: FC<Props> = ({ children }: Props) => {
   const [messages, setMessages] = useState([]);
-  
 
   const getAllChatMsg = async (chatId: number) => {
     let res: Response = await fetch(`/api/messages/${chatId}`);
@@ -23,7 +22,7 @@ const MessageProvider: FC<Props> = ({ children }: Props) => {
     }
   };
 
-  const createMsg = async (message: Message,chatId: number) => {
+  const createMsg = async (message: Message, chatId: number) => {
     let res: Response = await fetch(`/api/messages/${chatId}`, {
       method: "POST",
       body: JSON.stringify(message),
