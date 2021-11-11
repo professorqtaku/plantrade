@@ -41,13 +41,9 @@ public class MessageService {
             if (message.getIsRead() == null) {
                 message.setIsRead(false);
             }
-            return saveMessage(message);
+            return messageRepository.save(message);
         }
         return null;
-    }
-
-    public Message saveMessage(Message message) {
-        return messageRepository.save(message);
     }
 
     public List<Message> getAllByChatId(long chatId) {
@@ -61,8 +57,17 @@ public class MessageService {
             return null;
         }
         Chat chat = chatOptional.get();
-        if (chat.getCreator() == currentUser || chat.getReceiver() == currentUser) {
-            return messageRepository.findAllByChatIdOrderByCreatedDateAsc(chatId);
+
+        var messages = messageRepository.findAllByChatIdOrderByCreatedDateAsc(chatId);
+
+        if(chat.getCreator() == currentUser || chat.getReceiver() == currentUser){
+            for(var message : messages){
+                if(message.getWriter() != currentUser){
+                    message.setIsRead(true);
+                    messageRepository.save(message);
+                }
+            }
+        return messages;
         }
         return null;
     }
