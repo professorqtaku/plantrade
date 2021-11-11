@@ -96,7 +96,6 @@ const CreateAuctionPage = () => {
   );
 
   async function onFileLoad(e: any) {
-    console.log('what is happening onFileLoad', e.target.files)
     const files = e.target.files;
     let previewArr = [];
     let formDataArr = [];
@@ -107,10 +106,6 @@ const CreateAuctionPage = () => {
       formDataArr.push(file);
       previewArr.push(src)
     }
-
-    console.log('what is formdata', formData)
-    
-    
     if (preview.length < 5) {
       if (preview.length + previewArr.length > 5) {
         previewArr = previewArr.slice(0, 5 - preview.length);
@@ -123,13 +118,27 @@ const CreateAuctionPage = () => {
     e.target.value = '';
     previewArr = [];
     formDataArr = [];
-}
+  }
+  
+  const handleRemovePic = (img: string) => {
+    let copyOfPreview = Object.assign([], preview);
+    let copyOfFormData = Object.assign([], formDataPreview);
+    let index = copyOfPreview.indexOf(img);
+    copyOfPreview.splice(index, 1);
+    copyOfFormData.splice(index, 1);
+    setPreview([...copyOfPreview]);
+    setFormDataPreview([...copyOfFormData]);
+  }
 
   const renderImagePreview = () => (
   <Grid container>
-    <Grid item xs={12} md={12}>
+    <Grid item>
         {preview.map(img => (
-        <Badge badgeContent={'-'} sx={{color: 'var(--status-red)'}} key={img}>
+          <Badge badgeContent={'-'}
+            color="error"
+            key={img}
+            onClick={() => handleRemovePic(img)}
+          >
             <StyledImage key={img} src={img} alt="" />
           </Badge>
       ))}

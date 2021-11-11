@@ -44,6 +44,6 @@ export const StyledText = styled.p`
 export const StyledImage = styled.img`
   max-width: 100px;
   max-height: 100px;
-  margin-right: 5px;
+  margin: 0.5rem;
 `;
 
