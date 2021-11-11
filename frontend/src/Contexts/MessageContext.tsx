@@ -1,5 +1,5 @@
-import { createContext, FC, useContext, useState, useEffect } from "react";
-import { useAuth } from "./AuthContext";
+import { createContext, FC, useContext, useState } from "react";
+import { Message } from "../Interfaces/Interfaces";
 
 type Props = {
   children?: JSX.Element;
@@ -9,49 +9,36 @@ const MessageContext = createContext<any>(null);
 
 export const useMessage = () => useContext(MessageContext);
 
-const MessageProvider: FC<Props> = ({ children }: Props) => {
-  const [messages, setMessages] = useState([
-    {
-      id: "1",
-      text: "Tjena hur är läget? Ska du partaja i helgen elloor? Om jag köper din blomma kan jag följa med då? snälle.. ",
-    },
-    {
-      id: "2",
-      text: "Halloj! Betala 10 krön mer så får du komme..",
-    },
-    {
-      id: "1",
-      text: "Snygg blomma",
-    },
-    {
-      id: "2",
-      text: "Jag vet, köp den då?",
-    },
-    {
-      id: "1",
-      text: "Nej inte idäg, behöver social.",
-    },
-    {
-      id: "2",
-      text: "Halloj! Betala 10 krön mer så får du komme..",
-    },
-    {
-      id: "1",
-      text: "Snygg blomma",
-    },
-    {
-      id: "2",
-      text: "Jag vet, köp den då?",
-    },
-    {
-      id: "1",
-      text: "Nej inte idäg, behöver social.",
-    },
-  ]);
+const MessageContextProvider: FC<Props> = ({ children }: Props) => {
+  const [messages, setMessages] = useState([]);
+
+  const getAllChatMsg = async (chatId: number) => {
+    let res: Response = await fetch(`/api/messages/${chatId}`);
+    if (res.status === 200) {
+      let messages = await res.json();
+      setMessages(messages);
+    } else {
+      setMessages([]);
+    }
+  };
+
+  const createMsg = async (message: Message, chatId: number) => {
+    let res: Response = await fetch(`/api/messages/${chatId}`, {
+      method: "POST",
+      body: JSON.stringify(message),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (res.status === 200) {
+      getAllChatMsg(chatId);
+    }
+  };
 
   const values = {
     messages,
-    setMessages,
+    getAllChatMsg,
+    createMsg,
   };
 
   return (
@@ -59,4 +46,4 @@ const MessageProvider: FC<Props> = ({ children }: Props) => {
   );
 };
 
-export default MessageProvider;
+export default MessageContextProvider;

@@ -10,16 +10,18 @@ const ModalContext = createContext<any>(null);
 export const useModal = () => useContext(ModalContext);
 
 
-const ModalProvider: FC<Props> = ({ children }: Props) => {
+const ModalContextProvider: FC<Props> = ({ children }: Props) => {
   const [showLoginModal, setShowLoginModal] = useState<Boolean>(false);
   const { whoAmI } = useAuth();
-  const toggleLoginModal = () => { setShowLoginModal(!showLoginModal); }
-  
+  const toggleLoginModal = () => {
+    setShowLoginModal(!showLoginModal);
+  };
+
   // closing the login-modal if a user logs in
   useEffect(() => {
     setShowLoginModal(false);
   }, [whoAmI]);
-  
+
   const values = {
     showLoginModal,
     toggleLoginModal,
@@ -30,4 +32,4 @@ const ModalProvider: FC<Props> = ({ children }: Props) => {
   );
 };
 
-export default ModalProvider;
+export default ModalContextProvider;

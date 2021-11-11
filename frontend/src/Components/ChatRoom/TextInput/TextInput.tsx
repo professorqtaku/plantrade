@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useDrawer } from "../../../Contexts/DrawerContext";
+import { useMessage } from "../../../Contexts/MessageContext";
 import {
   StyledForm,
   StyledInput,
@@ -8,15 +10,15 @@ import {
 
 const TextInput = () => {
   const [message, setMessage] = useState("");
+  const { createMsg } = useMessage();
+   const { chatId } = useDrawer();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newMessage = {
       message: message,
     };
-    console.log(newMessage);
-
-    // Logic to send obj to backend
+    createMsg(newMessage, chatId);
     setMessage("");
   };
 

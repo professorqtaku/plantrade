@@ -1,14 +1,16 @@
-import AuctionProvider from "./AuctionContext";
-import { AuthProvider } from "./AuthContext";
-import ModalProvider from "./ModalContext";
-import SearchProvider from "./SearchContext";
-import CategoryProvider from "./CategoryContext";
-import BidProvider from "./BidContext";
-import NavigationProvider from "./NavigationContext";
-import SnackBarProvider from "./SnackBarContext";
-import SocketProvider from "./SocketContext";
-import DrawerProvider from "./DrawerContext";
-import MessageProvider from "./MessageContext";
+import AuctionContextProvider from "./AuctionContext";
+import AuthContextProvider from "./AuthContext";
+import ModalContextProvider from "./ModalContext";
+import SearchContextProvider from "./SearchContext";
+import CategoryContextProvider from "./CategoryContext";
+import BidContextProvider from "./BidContext";
+import NavigationContextProvider from "./NavigationContext";
+import SnackBarContextProvider from "./SnackBarContext";
+import SocketContextProvider from "./SocketContext";
+import DrawerContextProvider from "./DrawerContext";
+import MessageContextProvider from "./MessageContext";
+import NotificationContextProvider from "./NotificationContext";
+import ChatContextProvider from "./ChatContext";
 
 interface Props {
   children: JSX.Element;
@@ -17,27 +19,33 @@ interface Props {
 const AllContextProviders: React.FC<Props> = ({ children }) => {
   return (
     <>
-      <SnackBarProvider>
-        <CategoryProvider>
-          <AuthProvider>
-            <AuctionProvider>
-              <ModalProvider>
-                <NavigationProvider>
-                  <DrawerProvider>
-                    <BidProvider>
-                      <SocketProvider>
-                        <MessageProvider>
-                          <SearchProvider>{children}</SearchProvider>
-                        </MessageProvider>
-                      </SocketProvider>
-                    </BidProvider>
-                  </DrawerProvider>
-                </NavigationProvider>
-              </ModalProvider>
-            </AuctionProvider>
-          </AuthProvider>
-        </CategoryProvider>
-      </SnackBarProvider>
+      <SnackBarContextProvider>
+        <CategoryContextProvider>
+          <AuthContextProvider>
+            <AuctionContextProvider>
+              <ModalContextProvider>
+                <NavigationContextProvider>
+                  <DrawerContextProvider>
+                    <BidContextProvider>
+                      <NotificationContextProvider>
+                        <SocketContextProvider>
+                          <ChatContextProvider>
+                            <MessageContextProvider>
+                              <SearchContextProvider>
+                                {children}
+                              </SearchContextProvider>
+                            </MessageContextProvider>
+                          </ChatContextProvider>
+                        </SocketContextProvider>
+                      </NotificationContextProvider>
+                    </BidContextProvider>
+                  </DrawerContextProvider>
+                </NavigationContextProvider>
+              </ModalContextProvider>
+            </AuctionContextProvider>
+          </AuthContextProvider>
+        </CategoryContextProvider>
+      </SnackBarContextProvider>
     </>
   );
 };

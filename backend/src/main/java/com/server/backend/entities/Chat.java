@@ -22,7 +22,7 @@ public class Chat {
     private long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JsonIncludeProperties({"id"})
+    @JsonIncludeProperties({"id", "title"})
     private Auction auction;
 
     // connection to User.chats (one user has many chats, one chat = one creator || one receiver)

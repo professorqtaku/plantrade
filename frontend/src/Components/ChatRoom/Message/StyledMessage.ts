@@ -3,7 +3,7 @@ import Avatar from "@mui/material/Avatar";
 import CheckIcon from "@mui/icons-material/Check";
 
 interface MessageProps {
-  id: string;
+  sender: boolean;
   read?: boolean
 }
 
@@ -23,13 +23,13 @@ export const StyledMessageWrapper = styled.div`
 
 export const StyledMessage = styled.div<MessageProps>`
   background: ${(props) =>
-    props.id === "1" ? "var(--dark-green)" : "var(--chat-green)"};
+    props.sender ? "var(--dark-green)" : "var(--light-green)"};
   width: fit-content;
   max-width: 70%;
   padding: 1rem;
   border-radius: 1.5rem;
-  justify-self: ${(props) => (props.id === "1" ? "end" : "start")};
-  margin: ${(props) => (props.id === "1" ? "0 1rem 0 0" : "0 0 0 1rem")};
+  justify-self: ${(props) => (props.sender ? "end" : "start")};
+  margin: ${(props) => (props.sender ? "0 1rem 0 0" : "0 0 0 1rem")};
   align-self: center;
 `;
 
@@ -45,9 +45,9 @@ export const StyledDateOrRead = styled.p<MessageProps>`
   color: black;
   font-style: italic;
   width: fit-content;
-  height: ${props => props.read ? 'auto' : '2rem' };
-  justify-self: ${(props) => (props.id === "1" ? "end" : "start")};
-  margin: ${(props) => (props.id === "1" ? "0 2rem 0 0" : "0 0 0 5rem")};
+  height: ${(props) => (props.read ? "auto" : "2rem")};
+  justify-self: ${(props) => (props.sender ? "end" : "start")};
+  margin: ${(props) => (props.sender ? "0 2rem 0 0" : "0 0 0 5rem")};
 `;
 
 export const StyledAvatarWrapper = styled.div`

@@ -11,7 +11,7 @@ const SearchContext = createContext<any>(null);
 
 export const useSearch = () => useContext(SearchContext);
 
-const SearchProvider: FC<Props> = ({ children }: Props) => {
+const SearchContextProvider: FC<Props> = ({ children }: Props) => {
   const [searchText, setSearchText] = useState<string>("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedHours, setSelectedHours] = useState<number>(HOUR_IN_DAY);
@@ -24,7 +24,7 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
     setSelectedHours(HOUR_IN_DAY);
     setSelectedStatus(status[0]);
     setIsRerender(!isRerender);
-  }
+  };
 
   const getAuctionsByOptions = async (option: SearchObject) => {
     if (option.title.trim().length <= 0) {
@@ -66,8 +66,6 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
     return query;
   };
 
-
-
   const value = {
     clearFilter,
     searchText,
@@ -87,4 +85,4 @@ const SearchProvider: FC<Props> = ({ children }: Props) => {
   );
 };
 
-export default SearchProvider;
+export default SearchContextProvider;
