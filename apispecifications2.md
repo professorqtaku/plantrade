@@ -193,45 +193,35 @@
 
 ## CHAT
 
-### /add-endpoint-create-chat
+### /api/chats
 #### **Method**: POST
 #### **Body**
 ```json
 {
-  //send creator from frontend if extra validation of user is done
-  //if only findCurrentUser is used, no need to send creator from frontend
-  "creator": {
-      "id": "Number"
-    },
-  "receiver": {
-      "id": "Number"
-    },
-  "auction": {
-      "id": "Number"
-    }
+  "auctionId": "Number"
 }
 ```
 
 #### **Response**
 ```json 
 {
-"id": "Number",
-"creator": {
+  "id": "Number",
+  "creator": {
     "id": "Number",
     "username": "string"
   },
-"receiver": {
+  "receiver": {
     "id": "Number",
     "username": "string"
   },
-"auction": {
+  "auction": {
     "id": "Number",
     "title": "string"
   }
 }
 ```
 
-### /add-endpoint-get-chat-by-{id}
+### /api/chats
 #### **Method**: GET
 #### **Response**
 ```json 
@@ -241,11 +231,11 @@
     "id": "Number",
     "username": "string"
   },
-"receiver": {
+  "receiver": {
     "id": "Number",
     "username": "string"
   },
-"auction": {
+  "auction": {
     "id": "Number",
     "title": "string"
   }
@@ -277,17 +267,13 @@
 <hr>
 
 ## MESSEGE
-### /add-endpoint/{chatId}/create-message
+### /api/messages/{chatId}
 #### **Method**: POST
 
 **Body**
 ```json
 {
-  "writer": {
-      "id": "Number",
-    },
   "message": "string",
-  "createdDate": "Date"
 }
 ```
 #### **Response**
@@ -303,9 +289,8 @@
 }
 ```
 
-### /add-endpoint-get-messages-by-chat-id
+### /api/messages/{chatId}
 #### **Method**: GET
-
 #### **Response**
 ```json 
 [
