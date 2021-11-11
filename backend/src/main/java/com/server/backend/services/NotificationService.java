@@ -60,11 +60,7 @@ public class NotificationService {
     if (currentUser == null){
       return null;
     }
-    List<Notification> notificationList = notificationRepository.findNotificationsByUserId(currentUser.getId());
-    if (notificationList.size() > 30){
-      notificationList.subList(30, notificationList.size()).clear();
-    }
-    return notificationList;
+    return notificationRepository.findNotificationsByUserId(currentUser.getId());
   }
 
   public List<Notification> updateIsRead(Map value) {
