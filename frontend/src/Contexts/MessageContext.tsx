@@ -18,6 +18,8 @@ const MessageProvider: FC<Props> = ({ children }: Props) => {
     if (res.status === 200) {
       let messages = await res.json();
       setMessages(messages);
+    } else {
+      setMessages([]);
     }
   };
 
