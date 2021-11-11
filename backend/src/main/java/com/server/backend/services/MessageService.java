@@ -58,10 +58,10 @@ public class MessageService {
         }
         Chat chat = chatOptional.get();
 
-        var messages = messageRepository.findAllByChatIdOrderByCreatedDateAsc(chatId);
+        List<Message> messages = messageRepository.findAllByChatIdOrderByCreatedDateAsc(chatId);
 
         if(chat.getCreator() == currentUser || chat.getReceiver() == currentUser){
-            for(var message : messages){
+            for(Message message : messages){
                 if(message.getWriter() != currentUser){
                     message.setIsRead(true);
                     messageRepository.save(message);
