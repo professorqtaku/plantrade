@@ -80,6 +80,11 @@ public class AuctionService {
         return auctionRepository.findById(id);
     }
 
+    public Auction getAuctionByIdOrderByBidsDesc(Auction auction) {
+            auction.getBids().sort((Bid b1, Bid b2) -> (int) (b2.getPrice() - b1.getPrice()));
+            return auction;
+    }
+
     public List<Auction> getAuctionsByCurrentUser() {
         User user = userService.findCurrentUser();
         if(user == null) {
