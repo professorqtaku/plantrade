@@ -11,6 +11,7 @@ export const useMessage = () => useContext(MessageContext);
 
 const MessageProvider: FC<Props> = ({ children }: Props) => {
   const [messages, setMessages] = useState([]);
+  
 
   const getAllChatMsg = async (chatId: number) => {
     let res: Response = await fetch(`/api/messages/${chatId}`);

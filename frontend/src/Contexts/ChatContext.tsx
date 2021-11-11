@@ -10,6 +10,7 @@ export const useChat = () => useContext(ChatContext);
 
 const ChatProvider = ({ children }: Props) => {
   const [chats, setChats] = useState([]);
+  const [chatTitle, setChatTitle] = useState('');
 
   useEffect(() => {
     getChatsByCurrentUser();
@@ -41,6 +42,8 @@ const ChatProvider = ({ children }: Props) => {
     chats,
     getChatsByCurrentUser,
     createChat,
+    setChatTitle,
+    chatTitle,
   };
 
   return <ChatContext.Provider value={values}>{children}</ChatContext.Provider>;

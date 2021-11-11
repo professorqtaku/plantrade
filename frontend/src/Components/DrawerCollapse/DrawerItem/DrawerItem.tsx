@@ -19,6 +19,7 @@ import {
 import "react-swipeable-list/dist/styles.css";
 import { useDrawer } from "../../../Contexts/DrawerContext";
 import { Chat } from "../../../Interfaces/Interfaces";
+import { useChat } from "../../../Contexts/ChatContext";
 
 interface Props {
   chat: Chat;
@@ -26,10 +27,12 @@ interface Props {
 
 const DrawerItem = ({ chat }: Props) => {
   const { setShowChatRoom, setChatId } = useDrawer();
+  const { setChatTitle } = useChat();
 
   const handleShowMessageView = () => {
     setChatId(chat.id)
     setShowChatRoom(true);
+    setChatTitle(chat.auction.title);
   }
 
   const trailingActions = () => (

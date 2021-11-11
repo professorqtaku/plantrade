@@ -8,6 +8,7 @@ import {
 } from "./StyledDrawerHeader";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useDrawer } from "../../../Contexts/DrawerContext";
+import { useChat } from "../../../Contexts/ChatContext";
 
 interface Props {
   toggle: Function;
@@ -15,6 +16,7 @@ interface Props {
 
 const DrawerHeader = ({ toggle }: Props) => {
   const { showChatRoom, setShowChatRoom } = useDrawer();
+  const { chats, chatTitle } = useChat();
 
   const handleToggle = () => {
     toggle();
@@ -34,10 +36,10 @@ const DrawerHeader = ({ toggle }: Props) => {
       <StyledExpandIcon onClick={handleToggle} />
       {!showChatRoom ? (
         <StyledText isright={true}>
-          Antal: <StyledAmountOfMsg>{3}</StyledAmountOfMsg>
+          Antal: <StyledAmountOfMsg>{chats.length}</StyledAmountOfMsg>
         </StyledText>
       ) : (
-        <StyledText isright={true}>Name on auction</StyledText>
+        <StyledText isright={true}>{chatTitle}</StyledText>
       )}
     </StyledHeader>
   );
