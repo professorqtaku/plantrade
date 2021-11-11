@@ -10,7 +10,6 @@ import SocketContextProvider from "./SocketContext";
 import DrawerContextProvider from "./DrawerContext";
 import MessageContextProvider from "./MessageContext";
 import NotificationContextProvider from "./NotificationContext";
-import { SnackbarProvider } from "notistack";
 
 interface Props {
   children: JSX.Element;
@@ -19,33 +18,31 @@ interface Props {
 const AllContextProviders: React.FC<Props> = ({ children }) => {
   return (
     <>
-      <SnackbarProvider preventDuplicate>
-        <SnackBarContextProvider>
-          <CategoryContextProvider>
-            <AuthContextProvider>
-              <AuctionContextProvider>
-                <ModalContextProvider>
-                  <NavigationContextProvider>
-                    <DrawerContextProvider>
-                      <BidContextProvider>
-                        <NotificationContextProvider>
-                          <SocketContextProvider>
-                            <MessageContextProvider>
-                              <SearchContextProvider>
-                                {children}
-                              </SearchContextProvider>
-                            </MessageContextProvider>
-                          </SocketContextProvider>
-                        </NotificationContextProvider>
-                      </BidContextProvider>
-                    </DrawerContextProvider>
-                  </NavigationContextProvider>
-                </ModalContextProvider>
-              </AuctionContextProvider>
-            </AuthContextProvider>
-          </CategoryContextProvider>
-        </SnackBarContextProvider>
-      </SnackbarProvider>
+      <SnackBarContextProvider>
+        <CategoryContextProvider>
+          <AuthContextProvider>
+            <AuctionContextProvider>
+              <ModalContextProvider>
+                <NavigationContextProvider>
+                  <DrawerContextProvider>
+                    <BidContextProvider>
+                      <NotificationContextProvider>
+                        <SocketContextProvider>
+                          <MessageContextProvider>
+                            <SearchContextProvider>
+                              {children}
+                            </SearchContextProvider>
+                          </MessageContextProvider>
+                        </SocketContextProvider>
+                      </NotificationContextProvider>
+                    </BidContextProvider>
+                  </DrawerContextProvider>
+                </NavigationContextProvider>
+              </ModalContextProvider>
+            </AuctionContextProvider>
+          </AuthContextProvider>
+        </CategoryContextProvider>
+      </SnackBarContextProvider>
     </>
   );
 };
