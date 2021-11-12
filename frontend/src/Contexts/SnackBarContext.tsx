@@ -28,7 +28,7 @@ const SnackBarContextProvider = ({ children }: Props) => {
         vertical: "top",
         horizontal: "right",
       }}
-      content={(key, message) => <SnackBar id={key} message={message} />}
+      content={(key, message: string | Notification) => <SnackBar id={key} message={message} />}
     >
       <SnackBarStackProvider>{children}</SnackBarStackProvider>
     </SnackbarProvider>
@@ -39,12 +39,9 @@ const SnackBarStackProvider: FC<Props> = ({ children }: Props) => {
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const addSnackbar = (content: string | Notification, variant?: VariantType) => {
-    let newVariant = variant ? variant : "default";
-    
-    enqueueSnackbar(content, {
-      variant: newVariant
-    });
+  // add status in Notification object to change snackbar colour
+  const addSnackbar = (content: string | Notification) => {  
+    enqueueSnackbar(content);
   };
 
   const values = {
