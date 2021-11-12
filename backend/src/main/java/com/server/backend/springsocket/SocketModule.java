@@ -7,6 +7,7 @@ import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.ConnectListener;
 import com.corundumstudio.socketio.listener.DataListener;
 import com.corundumstudio.socketio.listener.DisconnectListener;
+import com.server.backend.entities.Bid;
 import lombok.val;
 import org.springframework.stereotype.Component;
 
