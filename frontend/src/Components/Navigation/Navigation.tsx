@@ -20,14 +20,14 @@ import { useChat } from "../../Contexts/ChatContext";
 const Navigation = () => {
 
   const history = useHistory();
-  const { home, auction, notis, message, profile, handleSelect } = useNav();
+  const { home, auction, notis, message, profile, handleSelect, setNotis, setMessage } = useNav();
   const { toggleLoginModal } = useModal();
   const { whoAmI } = useAuth();
-  const { toggleDrawer } = useDrawer();
+  const { setShowDrawer } = useDrawer();
   const { clearFilter } = useSearch();
    const { getChatsByCurrentUser } = useChat();
 
-  const handleSelected = (
+  const handleSelectedIcon = (
     url?: string
   ) => {
     if (whoAmI == null && url == "/my-page") {
@@ -38,44 +38,58 @@ const Navigation = () => {
     }
   };
 
-  const handleDrawer = () => {
-    if (whoAmI == null) {
-      console.log(notis);
-      console.log(message);
+  const handleDrawer = (value: string, setter: Function) => {
+
+    if (whoAmI != null) {
+      handleSelect(setter);
+      setShowDrawer(false);
+      if (value == "message") {
+        getChatsByCurrentUser();
+        setShowDrawer(true);
+      }
+      else if (value == "notis") {
+        setShowDrawer(true);    
+      }
     }
     else {
-      toggleDrawer();
-      getChatsByCurrentUser();
-      
-      // toggleLoginModal()
+      toggleLoginModal();
     }
   }
 
   const renderIcons = () => (
     <StyledIconWrapper>
       <StyledInnerWrapper selected={home}>
-        <StyledHomeIcon selected={home} onClick={() => handleSelect("/")} />
+        <StyledHomeIcon
+          selected={home}
+          onClick={() => handleSelectedIcon("/")}
+        />
       </StyledInnerWrapper>
 
       <StyledInnerWrapper selected={auction}>
         <StyledHammerIcon
           selected={auction}
-          onClick={() => handleSelect("/auctions")}
+          onClick={() => handleSelectedIcon("/auctions")}
         />
       </StyledInnerWrapper>
 
       <StyledInnerWrapper selected={notis}>
-        <StyledNotisIcon selected={notis} onClick={() => handleDrawer("notis")} />
+        <StyledNotisIcon
+          selected={notis}
+          onClick={() => handleDrawer("notis", setNotis)}
+        />
       </StyledInnerWrapper>
 
       <StyledInnerWrapper selected={message}>
-        <StyledMsgIcon selected={message} onClick={() => handleDrawer("message")} />
+        <StyledMsgIcon
+          selected={message}
+          onClick={() => handleDrawer("message", setMessage)}
+        />
       </StyledInnerWrapper>
 
       <StyledInnerWrapper selected={profile}>
         <StyledAccountIcon
           selected={profile}
-          onClick={() => handleSelect("/my-page")}
+          onClick={() => handleSelectedIcon("/my-page")}
         />
       </StyledInnerWrapper>
     </StyledIconWrapper>
