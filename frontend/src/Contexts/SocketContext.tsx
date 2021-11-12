@@ -1,12 +1,13 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 import io from "socket.io-client";
 import { useAuction } from "./AuctionContext";
-import { useAuth } from './AuthContext';
-import { useSnackBar } from './SnackBarContext';
+import { useAuth } from "./AuthContext";
+import { useSnackBar } from "./SnackBarContext";
 import { useNotification } from "./NotificationContext";
-import { Notification } from "../Interfaces/Interfaces"
+import { Notification, BidUpdateSocket } from "../Interfaces/Interfaces";
+import { useMessage } from "./MessageContext";
+import { useDrawer } from "./DrawerContext";
 import { useBid } from "./BidContext";
-import { BidUpdateSocket } from "../Interfaces/Interfaces";
 
 
 type Props = {
@@ -21,34 +22,38 @@ export const useSocket = () => useContext(SocketContext);
 
 const SocketContextProvider = ({ children }: Props) => {
   const endpoint = "http://localhost:9092";
-  const socket = io(endpoint, { transports: ["websocket"] });
+  const socket = io(endpoint, { upgrade: false, transports: ["websocket"] });
+  const [isConnected, setIsConnected] = useState(false);
   const { getAllAuctions } = useAuction();
+  const { getHighestBid } = useBid();
   const { whoAmI } = useAuth();
   const { addSnackbar } = useSnackBar();
   const { getNotifications } = useNotification();
+  const { getAllChatMsg } = useMessage();
+  const { chatId } = useDrawer();
 
-  const { getHighestBid } = useBid();
-
-
-  socket.on("connect", () => {
-    console.log("conneted");
-  });
+  if (!isConnected) {
+    socket.on("connect", () => {
+      console.log("conneted to ws");
+      setIsConnected(true);
+    });
+  }
+  // socket.on("bid", async function () {
+  //   await getAllAuctions();
+  // });
 
   socket.on("bid", async function (data: BidUpdateSocket) {
     console.log('Received bid', data);
-    getHighestBid(data.auction.id);
+    await getHighestBid(data.auction.id);
   });
 
-  socket.on("reconnect_attempt", () => {
-    console.log("Reconnecting");
-  });
-
-  socket.on("join", (data: any) => {
-    console.log("Connected to room", data);
-  });
-
-  socket.on("auctionUpdate", (data: any) => {
+  socket.on("join", (data: string) => {
     console.log(data);
+  });
+
+  socket.on("message", async (data: any) => {
+    if (data.id === whoAmI.id) { return; }
+    await getAllChatMsg(chatId);
   });
 
   socket.on("notification", (data: Notification) => {

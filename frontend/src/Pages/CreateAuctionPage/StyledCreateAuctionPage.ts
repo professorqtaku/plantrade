@@ -32,18 +32,33 @@ export const StyledButton = styled(Button)`
   &:hover {
     background: var(--light-green);
   }
+  margin-bottom: 70px;
+  width: 100%;
 `;
 
 export const StyledText = styled.p`
   margin: 0;
   color: darkgrey;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-normal-text);
   font-size: 0.9rem;
 `;
 
 export const StyledImage = styled.img`
-  max-width: 100px;
-  max-height: 100px;
-  margin-right: 5px;
+  max-width: 150px;
+  max-height: 150px;
+  margin: 0.3rem;
+  cursor: pointer;
 `;
+
+export const StyledTextPrimary = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--status-green);
+  font-family: var(--font-normal-text);
+  padding: 5px;
+`;
+
+
 
