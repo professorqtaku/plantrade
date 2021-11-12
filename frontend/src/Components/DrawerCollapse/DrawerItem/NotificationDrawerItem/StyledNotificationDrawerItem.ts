@@ -18,7 +18,7 @@ export const StyledWrapper = styled.div`
 
 export const StyledInnerWrapper = styled.div`
   display: grid;
-  grid-template-columns: 7fr 3fr;
+  grid-template-columns: 7fr 2fr;
 `;
 
 export const StyledTitle = styled(Typography)`
@@ -32,6 +32,7 @@ export const StyledAuctionTitle = styled(Typography)`
   font-weight: bold;
   color: var(--blue);
   text-decoration: underline;
+  width: 100px;
 `;
 
 export const StyledBadge = styled(Badge)`

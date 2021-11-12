@@ -21,7 +21,20 @@ interface Props {
 }
 
 const NotificationDrawerItem = ({ notice }: Props) => {
+  const maxTitleLength = 8;
+
   const handleToAuction = () => {};
+
+  const getTime = () => {
+    return "3 sek sen";
+  };
+
+  const truncateString = (str: string, num: number) => {
+    if (str.length <= num) {
+      return str;
+    }
+    return str.slice(0, num) + "...";
+  }
 
   const trailingActions = () => (
     <TrailingActions>
@@ -40,13 +53,21 @@ const NotificationDrawerItem = ({ notice }: Props) => {
   const renderMsgContent = (
     <StyledInnerWrapper>
       <span>
-        <StyledAuctionTitle noWrap={true} display="inline">
-          {notice.auction.title}
-        </StyledAuctionTitle>{" "}
+          <StyledAuctionTitle noWrap={true} display="inline">
+            {truncateString(notice.auction.title, maxTitleLength)}
+          </StyledAuctionTitle>{" "}
         <StyledTitle noWrap={false} display="inline">
           {notice.message}
         </StyledTitle>
       </span>
+      <StyledTitle
+        sx={{ fontStyle: "italic" }}
+        noWrap={true}
+        display="inline"
+        align="right"
+      >
+        {getTime()}
+      </StyledTitle>
     </StyledInnerWrapper>
   );
 
