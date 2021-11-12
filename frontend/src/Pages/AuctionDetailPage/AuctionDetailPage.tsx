@@ -223,10 +223,10 @@ const AuctionDetailPage = () => {
               )}
             </Grid>
             <StyledForm>
-              {whoAmI ? renderBidContent : renderLoginToggle}
+                {whoAmI ? renderBidContent : renderLoginToggle}
               </StyledForm>
-            <Grid item>
-              <BidHistory />
+            <Grid item xs={12}>
+              <BidHistory auction={auction} whoAmI={whoAmI} />
             </Grid>
           </Grid>
         </>
