@@ -39,7 +39,7 @@ public class SocketModule {
         // add room support (the data is the room name)
         server.addEventListener("join", String.class, onJoinRoom());
         server.addEventListener("leave", String.class, onLeaveRoom());
-        server.addEventListener("auctionUpdate", String.class, onAuctionReceived());
+//        server.addEventListener("auctionUpdate", String.class, onAuctionReceived());
         server.addEventListener("bid", Bid.class, onBidReceived());
         server.addEventListener("message", String.class, onMessage());
 
