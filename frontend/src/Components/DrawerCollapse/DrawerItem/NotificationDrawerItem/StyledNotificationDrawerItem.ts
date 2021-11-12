@@ -10,7 +10,7 @@ export const StyledWrapper = styled.div`
   grid-template-columns: 1fr auto;
   background: white;
   margin-bottom: 0.1rem;
-  padding: 0.5rem 1rem;
+  padding: 1.5rem 1rem;
   &:first-child {
     margin-top: 0.3rem;
   }
@@ -24,9 +24,9 @@ export const StyledInnerWrapper = styled.div`
 export const StyledTitle = styled(Typography)`
   font-family: var(--font-small-text);
   font-size: small;
-  `;
+`;
 
-export const StyledAuctionSpan = styled.span`
+export const StyledAuctionTitle = styled(Typography)`
   font-family: var(--font-small-text);
   font-size: small;
   font-weight: bold;

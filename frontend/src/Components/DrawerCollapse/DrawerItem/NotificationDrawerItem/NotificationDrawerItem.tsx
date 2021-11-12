@@ -6,7 +6,7 @@ import {
   StyledDelete,
   StyledTrashCan,
   StyledDeleteText,
-  StyledAuctionSpan,
+  StyledAuctionTitle,
 } from "./StyledNotificationDrawerItem";
 import {
   SwipeableListItem,
@@ -39,10 +39,14 @@ const NotificationDrawerItem = ({ notice }: Props) => {
 
   const renderMsgContent = (
     <StyledInnerWrapper>
-      <StyledTitle noWrap={true}>
-        <StyledAuctionSpan>{notice.auction.title}</StyledAuctionSpan>{" "}
-        {notice.message}
-      </StyledTitle>
+      <span>
+        <StyledAuctionTitle noWrap={true} display="inline">
+          {notice.auction.title}
+        </StyledAuctionTitle>{" "}
+        <StyledTitle noWrap={false} display="inline">
+          {notice.message}
+        </StyledTitle>
+      </span>
     </StyledInnerWrapper>
   );
 
