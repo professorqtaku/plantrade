@@ -14,14 +14,21 @@ import { useEffect } from "react";
 import { useDrawer } from "../../../Contexts/DrawerContext";
 import { Message as MessageProps } from "../../../Interfaces/Interfaces";
 import { useAuth } from "../../../Contexts/AuthContext";
+import { useSocket } from "../../../Contexts/SocketContext";
 
 const Message = () => {
   const { messages, getAllChatMsg } = useMessage();
   const { chatId } = useDrawer();
   const { whoAmI } = useAuth();
+  const { socket } = useSocket();
+
 
   useEffect(() => {
     getAllChatMsg(chatId);
+    socket.emit("join", chatId);
+    return () => {
+      socket.emit("leave", chatId);
+    }
   }, []);
 
   const renderMessageContent = (message: MessageProps, index: number) => (
