@@ -3,32 +3,19 @@ import {
   StyledForm,
   StyledTitle,
   StyledButton,
-  StyledText,
-  StyledImage
+  StyledText
 } from "./StyledCreateAuctionPage";
 import Grid from '@mui/material/Grid';
 import AuctionDatePicker from "../../Components/AuctionDatePicker/AuctionDatePicker";
 import SelectBar from "../../Components/SelectBar/SelectBar";
 import InputField from "../../Components/InputField/InputField";
 import { useState } from "react";
-import { styled } from "@mui/material/styles";
-import Button from "@mui/material/Button";
 import { useAuction } from "../../Contexts/AuctionContext";
 import { useHistory } from "react-router";
 import { Category } from "../AuctionPage/AuctionPage";
 import { useSocket } from "../../Contexts/SocketContext";
-import Badge from '@mui/material/Badge';
-import Chip from '@mui/material/Chip';
 import TextField from '@mui/material/TextField';
-
-const Input = styled("input")({
-  display: "none",
-});
-
-interface previewProps {
-  name: string,
-  src: string
-}
+import FileUpload from '../../Components/FileUpload/FileUpload';
 
 const formData = new FormData();
 
@@ -37,7 +24,7 @@ const CreateAuctionPage = () => {
   const history = useHistory();
   const { socket } = useSocket();
 
-  const [preview, setPreview] = useState<previewProps[]>([]);
+ 
   const [formDataPreview, setFormDataPreview] = useState<any[]>([]);
   // const [placeHolderList, placeHolderList] = useState();
   // create a holder to store files
@@ -87,108 +74,7 @@ const CreateAuctionPage = () => {
   }
 }
 
-  const renderUploadFiles = () => (
-    <label htmlFor="contained-button-file">
-      <Input
-        accept="image/*"
-        onChange={onFileLoad}
-        id="contained-button-file"
-        multiple
-        type="file"
-      />
-      <Button variant="contained" component="span" style={{width: '100%'}}>
-        Ladda upp bilder (max 5 st)
-      </Button>
-      {errorMsg && <p style={{textAlign: 'center'}}>Du måste välja minst en bild</p>}
-    </label>
-  );
-
-  async function onFileLoad(e: any) {
-    const files = e.target.files;
-    let previewArr: previewProps[] = [];
-    let formDataArr: any[] = [];
-
-    // add files to formData
-    for (let file of files) {
-      const src = URL.createObjectURL(file);
-      formDataArr.push(file);
-      previewArr.push({name: file.name, src}) 
-    }
-
-    // check if pic is unique, dont push dublicates
-    for (let i = previewArr.length - 1; i >= 0; i--){
-      preview.map((p: previewProps) => {
-        if (p.name === previewArr[i].name) {
-          previewArr.splice(i, 1);
-          formDataArr.splice(i, 1);
-        }
-      });
-    }
-
-    // only add total of five pictures
-    if (preview.length < 5) {
-      if (preview.length + previewArr.length > 5) {
-        previewArr = previewArr.slice(0, 5 - preview.length);
-        formDataArr = formDataArr.slice(0, 5 - preview.length);
-      }
-      setPreview([...preview, ...previewArr]);
-      setFormDataPreview([...formDataPreview, ...formDataArr]);
-    } else {
-      setPreview(previewArr.slice(0, 6));
-      setFormDataPreview(formDataArr.slice(0, 6));
-    }
-    setErrorMsg(files.length ? false : true)
-    e.target.value = '';
-    previewArr = [];
-    formDataArr = [];
-  }
-  
-  const handleRemovePic = (previewObject: previewProps, e: any) => {
-    let copyOfPreview = Object.assign([], preview);
-    let copyOfFormData = Object.assign([], formDataPreview);
-    let index = copyOfPreview.indexOf(previewObject);
-    if(e.tagName === 'IMG'){
-      handlePrimaryPic(copyOfPreview, copyOfFormData, index);
-      return;
-    }
-    copyOfPreview.splice(index, 1);
-    copyOfFormData.splice(index, 1);
-    setPreview([...copyOfPreview]);
-    setFormDataPreview([...copyOfFormData]);
-  }
-
-  const handlePrimaryPic = (copyOfPreview: previewProps[], copyOfFormData: any[], index: number) => {
-    let primaryImg = copyOfPreview.splice(index, 1);
-    let primaryFormData = copyOfFormData.splice(index, 1);
-    copyOfPreview.unshift(primaryImg[0]);
-    copyOfFormData.unshift(primaryFormData[0]);
-    setPreview([...copyOfPreview]);
-    setFormDataPreview([...copyOfFormData]);
-  }
-
-  const renderImagePreview = () => (
-  <>{preview.length > 0 && <p style={{textAlign: 'center'}}>Klicka på den bild du vill ha som huvudvy</p>}
-  <Grid container>
-        {preview.map((p: previewProps, index: number) => {
-          const primary = index == 0 ? true : false;
-          return (
-          <Grid item xs={6} md={2}>
-            <Badge badgeContent={'-'}
-                color="error"
-                key={p.src}
-                onClick={(e) => handleRemovePic(p, e.target)}
-              >
-                <StyledImage src={p.src} key={p.src} />
-              {primary && <Chip label="Huvudbild" style={{position: 'absolute', margin: '5px'}} color="success" />}
-              </Badge>
-            </Grid>
-          )
-        }
-      )
-    }
-    
-  </Grid></>
-  )
+ 
 
   return (
     <StyledWrapper>
@@ -231,8 +117,12 @@ const CreateAuctionPage = () => {
             <SelectBar setCategoriesToUse={setCategoriesToUse} />
           </Grid>
           <Grid item>  
-        {renderUploadFiles()}
-        {renderImagePreview()}
+            <FileUpload
+              formDataPreview={formDataPreview}
+              setFormDataPreview={setFormDataPreview}
+              errorMsg={errorMsg}
+              setErrorMsg={setErrorMsg}
+            />
           </Grid>
           <Grid item> 
         <StyledButton type="submit" variant="contained">
