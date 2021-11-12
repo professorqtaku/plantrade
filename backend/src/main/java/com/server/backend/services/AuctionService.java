@@ -58,7 +58,9 @@ public class AuctionService {
                 if(auction.getBids().size() > 0){
                     auction.setStatus(Status.SOLD);
                     Bid highestBid = bidService.getHighestBid(auction.getId());
-                    auction.setWinner(highestBid.getUser());
+                    if (auction.getWinner() == null) {
+                        auction.setWinner(highestBid.getUser());
+                    }
                 } else {
                     auction.setStatus(Status.NOT_SOLD);
                 }
