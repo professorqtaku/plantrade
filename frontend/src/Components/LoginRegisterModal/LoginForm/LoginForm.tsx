@@ -23,7 +23,6 @@ const LoginForm = ({ toggleRegister }: Props) => {
   const { login, wrongPassword } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { addSnackbar } = useSnackBar();
 
   const handleLogin = async (e: BaseSyntheticEvent) => {
     e.preventDefault();

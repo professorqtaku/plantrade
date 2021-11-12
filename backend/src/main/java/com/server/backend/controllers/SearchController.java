@@ -25,15 +25,18 @@ public class SearchController {
     public ResponseEntity<List<Auction>> getAuctionsByTitle(
             @RequestParam String title,
             @RequestParam(required = false) Status status,
-            @RequestParam(required = false) String category
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false, value = "page") Integer page,
+            @RequestParam(required = false, value = "sort") String sort
     ) {
         try {
-            List<Auction> auctions = searchService.getAuctionByTitleAndStatusAndCategory(title, status, category);
-            if (auctions.size() > 0) {
-                return ResponseEntity.ok(auctions);
-            } else {
+            List<Auction> auctions = searchService.getAuctionByTitleAndStatusAndCategory(title, status, category, page, sort);
+            if(auctions == null || auctions.size() <= 0){
                 return ResponseEntity.noContent().build();
             }
+
+            return ResponseEntity.ok(auctions);
+
         } catch (Exception e) {
             System.out.println(e);
             return ResponseEntity.badRequest().build();
