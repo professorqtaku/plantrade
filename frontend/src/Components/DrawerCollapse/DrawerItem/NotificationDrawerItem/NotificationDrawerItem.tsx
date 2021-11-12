@@ -53,9 +53,13 @@ const NotificationDrawerItem = ({ notice }: Props) => {
   const renderMsgContent = (
     <StyledInnerWrapper>
       <span>
-          <StyledAuctionTitle noWrap={true} display="inline">
-            {truncateString(notice.auction.title, maxTitleLength)}
-          </StyledAuctionTitle>{" "}
+        <StyledAuctionTitle noWrap={true} display="inline">
+          {notice.auction.title
+            && truncateString(
+            notice.auction.title,
+            maxTitleLength
+          )}
+        </StyledAuctionTitle>{" "}
         <StyledTitle noWrap={false} display="inline">
           {notice.message}
         </StyledTitle>

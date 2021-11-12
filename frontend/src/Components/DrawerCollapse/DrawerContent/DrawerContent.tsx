@@ -17,7 +17,7 @@ const DrawerContent = () => {
         ? chats.map((chat: Chat) => (
             <DrawerItem key={`chat-item-${chat.id}`} chat={chat} />
           ))
-        : notifications &&
+        : notifications && notifications.length > 0 &&
           notifications.map((notice: Notification) => (
             <NotificationDrawerItem
               key={`notification-item-${notice.id}`}
