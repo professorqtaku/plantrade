@@ -32,25 +32,25 @@ const SocketContextProvider = ({ children }: Props) => {
       console.log("conneted to ws");
       setIsConnected(true);
     });
-    socket.on("bid", async function () {
-      await getAllAuctions();
-    });
-
-    socket.on("join", (data: any) => {
-      console.log("Connected to room", data);
-    });
-
-    socket.on("recivedMsg", (data: any) => {
-      getAllChatMsg(chatId);
-    });
-
-    socket.on("notification", (data: Notification) => {
-      if (whoAmI?.id === data.user.id) {
-        addSnackbar(data);
-        getNotifications();
-      }
-    });
   }
+  socket.on("bid", async function () {
+    await getAllAuctions();
+  });
+
+  socket.on("join", (data: string) => {
+    console.log(data);
+  });
+
+  socket.on("message", () => {
+    getAllChatMsg(chatId);
+  });
+
+  socket.on("notification", (data: Notification) => {
+    if (whoAmI?.id === data.user.id) {
+      addSnackbar(data);
+      getNotifications();
+    }
+  });
 
   const values = {
     socket,
