@@ -14,6 +14,7 @@ const TextInput = () => {
   const { createMsg } = useMessage();
   const { chatId } = useDrawer();
   const { socket } = useSocket();
+  
 
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -22,7 +23,6 @@ const TextInput = () => {
       message: message,
     };
     await createMsg(newMessage, chatId);
-    socket.emit("recivedMsg", "chat");
     setMessage("");
   };
 

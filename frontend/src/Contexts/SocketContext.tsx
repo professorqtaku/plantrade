@@ -41,8 +41,10 @@ const SocketContextProvider = ({ children }: Props) => {
     console.log(data);
   });
 
-  socket.on("message", () => {
-    getAllChatMsg(chatId);
+  socket.on("message", async (data: any) => {
+    if (data.id === whoAmI.id) { return; }
+    console.log('efter check')
+    await getAllChatMsg(chatId);
   });
 
   socket.on("notification", (data: Notification) => {

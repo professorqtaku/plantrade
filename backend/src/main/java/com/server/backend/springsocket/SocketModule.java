@@ -2,12 +2,17 @@ package com.server.backend.springsocket;
 
 import com.corundumstudio.socketio.Configuration;
 import com.corundumstudio.socketio.SocketConfig;
+import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.ConnectListener;
 import com.corundumstudio.socketio.listener.DataListener;
 import com.corundumstudio.socketio.listener.DisconnectListener;
 import lombok.val;
 import org.springframework.stereotype.Component;
+
+import java.util.Collection;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class SocketModule {
@@ -49,7 +54,7 @@ public class SocketModule {
 
     private DataListener<String> onMessage() {
         return (client, room, ackSender) -> {
-            emitToRoom(room,"message", "");
+            emitToRoom(room,"message", "messageUpdate");
         };
     }
 
