@@ -9,87 +9,95 @@ import {
   StyledMsgIcon,
   StyledAccountIcon,
 } from "./StyledNavigation";
-import {useModal} from "../../Contexts/ModalContext"
+import { useModal } from "../../Contexts/ModalContext";
 import { useAuth } from "../../Contexts/AuthContext";
 import { useHistory } from "react-router";
-import {useNav} from '../../Contexts/NavigationContext'
+import { useNav } from "../../Contexts/NavigationContext";
 import { useDrawer } from "../../Contexts/DrawerContext";
 import { useSearch } from "../../Contexts/SearchContext";
 import { useChat } from "../../Contexts/ChatContext";
 
 const Navigation = () => {
-
   const history = useHistory();
-  const { home, auction, notis, message, profile, handleSelect, setNotis, setMessage } = useNav();
+  const {
+    home,
+    auction,
+    notis,
+    message,
+    profile,
+    handleSelect,
+    setHome,
+    setAuction,
+    setProfile,
+    setNotis,
+    setMessage,
+  } = useNav();
   const { toggleLoginModal } = useModal();
   const { whoAmI } = useAuth();
   const { setShowDrawer } = useDrawer();
   const { clearFilter } = useSearch();
-   const { getChatsByCurrentUser } = useChat();
+  const { getChatsByCurrentUser } = useChat();
 
-  const handleSelectedIcon = (
-    url?: string
-  ) => {
+  const handleSelectedIcon = (setter: Function, url?: string) => {
     if (whoAmI == null && url == "/my-page") {
       toggleLoginModal();
     } else {
       url && history.push(url);
+      handleSelect(setter);
       clearFilter();
+      setShowDrawer(false);
     }
   };
 
-  const handleDrawer = (value: string, setter: Function) => {
-
+  const handleDrawer = (setter: Function, value: string) => {
     if (whoAmI != null) {
       handleSelect(setter);
       setShowDrawer(false);
       if (value == "message") {
         getChatsByCurrentUser();
         setShowDrawer(true);
+      } else if (value == "notis") {
+        setShowDrawer(true);
       }
-      else if (value == "notis") {
-        setShowDrawer(true);    
-      }
-    }
-    else {
+    } else {
       toggleLoginModal();
     }
-  }
+  };
 
   const renderIcons = () => (
     <StyledIconWrapper>
       <StyledInnerWrapper selected={home}>
         <StyledHomeIcon
           selected={home}
-          onClick={() => handleSelectedIcon("/")}
+          onClick={() => handleSelectedIcon(setHome, "/")}
         />
       </StyledInnerWrapper>
 
       <StyledInnerWrapper selected={auction}>
         <StyledHammerIcon
           selected={auction}
-          onClick={() => handleSelectedIcon("/auctions")}
+          onClick={() => handleSelectedIcon(setAuction, "/auctions")}
         />
       </StyledInnerWrapper>
 
       <StyledInnerWrapper selected={notis}>
         <StyledNotisIcon
           selected={notis}
-          onClick={() => handleDrawer("notis", setNotis)}
+          onClick={() => handleDrawer(setNotis, "notis")}
         />
       </StyledInnerWrapper>
 
       <StyledInnerWrapper selected={message}>
         <StyledMsgIcon
           selected={message}
-          onClick={() => handleDrawer("message", setMessage)}
+          onClick={() => handleDrawer(setMessage, "message")}
         />
       </StyledInnerWrapper>
 
       <StyledInnerWrapper selected={profile}>
         <StyledAccountIcon
           selected={profile}
-          onClick={() => handleSelectedIcon("/my-page")}
+          onClick={() => handleSelectedIcon(setProfile, "/my-page")}
         />
       </StyledInnerWrapper>
     </StyledIconWrapper>
