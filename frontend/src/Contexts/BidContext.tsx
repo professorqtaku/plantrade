@@ -15,8 +15,6 @@ export const useBid = () => useContext(BidContext);
 const BidContextProvider: FC<Props> = ({ children }: Props) => {
   const [highestBid, setHighestBid] = useState();
 
-  const { getAllAuctions } = useAuction();
-
   const { addSnackbar } = useSnackBar();
 
   const createBid = async (newBid: Bid) => {
@@ -30,7 +28,6 @@ const BidContextProvider: FC<Props> = ({ children }: Props) => {
 
     if (res.status == 200) {
       let bid = await res.json();
-      getAllAuctions();
       addSnackbar("Giltigt bud!");
       return bid;
     } else {
