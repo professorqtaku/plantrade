@@ -6,10 +6,6 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import { styled } from "@mui/material/styles";
 
-const Input = styled("input")({
-  display: "none"
-});
-
 interface Props {
   formDataPreview: any[],
   setFormDataPreview: Dispatch<SetStateAction<any[]>>,
@@ -22,25 +18,13 @@ interface PreviewProps {
   src: string
 }
 
+const Input = styled("input")({
+  display: "none"
+});
 
 function FileUpload({formDataPreview, setFormDataPreview, errorMsg, setErrorMsg}: Props) {
   const [preview, setPreview] = useState<PreviewProps[]>([]);
-
- const renderUploadFiles = () => (
-    <label htmlFor="contained-button-file">
-      <Input
-        accept="image/*"
-        onChange={onFileLoad}
-        id="contained-button-file"
-        multiple
-       type="file"
-      />
-      <Button variant="contained" component="span" style={{width: '100%'}}>
-        Ladda upp bilder (max 5 st)
-      </Button>
-      {errorMsg && <p style={{textAlign: 'center'}}>Du måste välja minst en bild</p>}
-    </label>
-  );
+  const maxPics = 5;
 
   async function onFileLoad(e: any) {
     const files = e.target.files;
@@ -54,32 +38,38 @@ function FileUpload({formDataPreview, setFormDataPreview, errorMsg, setErrorMsg}
       previewArr.push({name: file.name, src}) 
     }
 
-    // check if pic is unique, dont push dublicates
-    for (let i = previewArr.length - 1; i >= 0; i--){
+    const { previewArrCheck, formDataArrCheck } = checkUniquePics(previewArr, formDataArr);
+    addMaxAmountPics(previewArrCheck, formDataArrCheck);
+    setErrorMsg(!files.length)
+    e.target.value = '';
+    previewArr = [];
+    formDataArr = [];
+  }
+  
+  const checkUniquePics = (previewArrCheck: PreviewProps[], formDataArrCheck: any[]) => {
+    for (let i = previewArrCheck.length - 1; i >= 0; i--){
       preview.map((p: PreviewProps) => {
-        if (p.name === previewArr[i].name) {
-          previewArr.splice(i, 1);
-          formDataArr.splice(i, 1);
+        if (p && p.name === previewArrCheck[i].name) {
+          previewArrCheck.splice(i, 1);
+          formDataArrCheck.splice(i, 1);
         }
       });
     }
+    return { previewArrCheck, formDataArrCheck }
+  }
 
-    // only add total of five pictures
-    if (preview.length < 5) {
-      if (preview.length + previewArr.length > 5) {
-        previewArr = previewArr.slice(0, 5 - preview.length);
-        formDataArr = formDataArr.slice(0, 5 - preview.length);
+  const addMaxAmountPics = (previewArr: PreviewProps[], formDataArr: any[]) => {
+    if (preview.length < maxPics) {
+      if (preview.length + previewArr.length > maxPics) {
+        previewArr = previewArr.slice(0, maxPics - preview.length);
+        formDataArr = formDataArr.slice(0, maxPics - preview.length);
       }
       setPreview([...preview, ...previewArr]);
       setFormDataPreview([...formDataPreview, ...formDataArr]);
     } else {
-      setPreview(previewArr.slice(0, 6));
-      setFormDataPreview(formDataArr.slice(0, 6));
+      setPreview(previewArr.slice(0, maxPics + 1));
+      setFormDataPreview(formDataArr.slice(0, maxPics + 1));
     }
-    setErrorMsg(files.length ? false : true)
-    e.target.value = '';
-    previewArr = [];
-    formDataArr = [];
   }
   
   const handleRemovePic = (previewObject: PreviewProps, e: any) => {
@@ -105,9 +95,23 @@ function FileUpload({formDataPreview, setFormDataPreview, errorMsg, setErrorMsg}
     setFormDataPreview([...copyOfFormData]);
   }
 
-  const renderImagePreview = () => (
-  <>{preview.length > 0 && <p style={{textAlign: 'center'}}>Klicka på den bild du vill ha som huvudvy</p>}
-  <Grid container>
+  return (
+    <>
+      <label htmlFor="contained-button-file">
+        <Input
+          accept="image/*"
+          onChange={onFileLoad}
+          id="contained-button-file"
+          multiple
+        type="file"
+        />
+        <Button variant="contained" component="span" style={{width: '100%'}}>
+          Ladda upp bilder (max {maxPics} st)
+        </Button>
+        {errorMsg && <p style={{textAlign: 'center'}}>Du måste välja minst en bild</p>}
+      </label>
+      {preview.length > 0 && <p style={{textAlign: 'center'}}>Klicka på den bild du vill ha som huvudvy</p>}
+      <Grid container>
         {preview.map((p: PreviewProps, index: number) => {
           const primary = index == 0 ? true : false;
           return (
@@ -121,18 +125,8 @@ function FileUpload({formDataPreview, setFormDataPreview, errorMsg, setErrorMsg}
               {primary && <Chip label="Huvudbild" style={{position: 'absolute', margin: '5px'}} color="success" key={p.name} />}
               </Badge>
             </Grid>
-          )
-        }
-      )
-    }
-    
-  </Grid></>
-  )
-
-  return (
-    <>
-      {renderUploadFiles()}
-      {renderImagePreview()}
+          )})}
+      </Grid>
     </>
   )
 }
