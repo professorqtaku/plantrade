@@ -22,6 +22,7 @@ const Message = () => {
   const { whoAmI } = useAuth();
   const { socket } = useSocket();
 
+
   useEffect(() => {
     getAllChatMsg(chatId);
     socket.emit("join", chatId);

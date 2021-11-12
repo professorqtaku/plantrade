@@ -17,7 +17,8 @@ const SocketContext = createContext<any>(null);
 export const useSocket = () => useContext(SocketContext);
 
 const SocketContextProvider = ({ children }: Props) => {
-  let socket;
+  const endpoint = "http://localhost:9092";
+  const socket = io(endpoint, { upgrade: false, transports: ["websocket"] });
   const [isConnected, setIsConnected] = useState(false);
   const { getAllAuctions } = useAuction();
   const { whoAmI } = useAuth();
@@ -27,9 +28,6 @@ const SocketContextProvider = ({ children }: Props) => {
   const { chatId } = useDrawer();
 
   if (!isConnected) {
-    const endpoint = "http://localhost:9092";
-    socket = io(endpoint, { upgrade: false, transports: ["websocket"] });
-
     socket.on("connect", () => {
       console.log("conneted to ws");
       setIsConnected(true);
