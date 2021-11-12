@@ -40,7 +40,7 @@ const SelectRadio = ({
         aria-label="gender"
         name="row-radio-buttons-group"
         onChange={handleChange}
-        defaultValue={
+        value={
           typeof defaultValue == "object" && typeof optionKey == "string"
             ? (defaultValue as any)[optionKey]
             : defaultValue ?? " "
