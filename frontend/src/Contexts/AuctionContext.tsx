@@ -14,16 +14,16 @@ const AuctionContextProvider: FC<Props> = ({ children }: Props) => {
   const [usersAuctions, setUsersAuctions] = useState<Array<Auction>>();
   const [usersWonAuctions, setUsersWonAuctions] = useState<Array<Auction>>();
 
-  useEffect(() => {
-    getAllAuctions();
-  }, []);
+  // useEffect(() => {
+  //   getAllAuctions();
+  // }, []);
 
-  const getAllAuctions = async () => {
-    let res: Response = await fetch("/rest/auctions");
-    let newAuctions: Array<Auction> = await res.json();
-    setAuctions(newAuctions);
-    return newAuctions;
-  };
+  // const getAllAuctions = async () => {
+  //   let res: Response = await fetch("/rest/auctions");
+  //   let newAuctions: Array<Auction> = await res.json();
+  //   setAuctions(newAuctions);
+  //   return newAuctions;
+  // };
 
   const getAuctionById = async (id: Number) => {
     let res: Response = await fetch("/rest/auctions/" + id);
