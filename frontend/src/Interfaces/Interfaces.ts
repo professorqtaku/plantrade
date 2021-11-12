@@ -43,7 +43,8 @@ export interface Notification {
   auction: Auction,
   user: User,
   message: string,
-  isRead: boolean
+  isRead: boolean,
+  status?: "success" | "error" | "warning" | "info";
 }
 
 export interface Chat {
