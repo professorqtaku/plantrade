@@ -17,9 +17,13 @@ import { useDrawer } from "../../Contexts/DrawerContext";
 import { useSearch } from "../../Contexts/SearchContext";
 import { useChat } from "../../Contexts/ChatContext";
 import { useNotification } from "../../Contexts/NotificationContext";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
+
 
 const Navigation = () => {
   const history = useHistory();
+  const location = useLocation();
   const {
     home,
     auction,
@@ -35,10 +39,25 @@ const Navigation = () => {
   } = useNav();
   const { toggleLoginModal } = useModal();
   const { whoAmI } = useAuth();
-  const { setShowDrawer } = useDrawer();
+  const { showDrawer, setShowDrawer } = useDrawer();
   const { clearFilter } = useSearch();
   const { getChatsByCurrentUser } = useChat();
   const { getNotificationsByCurrentUser } = useNotification();
+
+  const paths: Record<string, Function> = {
+    "/": setHome,
+    "/auctions": setAuction,
+    "/my-page": setProfile
+  }
+
+  useEffect(() => {
+    if (!showDrawer) {
+      const setter = paths[location.pathname];
+      if (setter) {
+        handleSelect(setter);
+      }
+    }
+  },[showDrawer])
 
   const handleSelectedIcon = (setter: Function, url?: string) => {
     if (whoAmI == null && url == "/my-page") {
