@@ -11,9 +11,9 @@ import {
 } from "./StyledMessage";
 import { useMessage } from "../../../Contexts/MessageContext";
 import { useEffect } from "react";
-import { useDrawer } from "../../../Contexts/DrawerContext";
 import { Message as MessageProps } from "../../../Interfaces/Interfaces";
 import { useAuth } from "../../../Contexts/AuthContext";
+import { useChat } from "../../../Contexts/ChatContext";
 import { useSocket } from "../../../Contexts/SocketContext";
 
 const msgWrapper = document.getElementsByClassName("msgWrapper");
@@ -23,7 +23,7 @@ const scrollToBottom = (node: HTMLCollectionOf<Element>) => {
 
 const Message = () => {
   const { messages, getAllChatMsg } = useMessage();
-  const { chatId } = useDrawer();
+  const { chatId } = useChat();
   const { whoAmI } = useAuth();
   const { socket } = useSocket();
 
