@@ -52,7 +52,12 @@ const Navigation = () => {
 
   useEffect(() => {
     if (!showDrawer) {
-      const setter = paths[location.pathname];
+      let pathname = location.pathname;
+      for (let key of Object.keys(paths)) {
+        if (key != "/" && pathname.includes(key))
+          pathname = key
+      }
+      const setter = paths[pathname];
       if (setter) {
         handleSelect(setter);
       }
