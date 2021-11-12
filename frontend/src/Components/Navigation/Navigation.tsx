@@ -16,6 +16,7 @@ import { useNav } from "../../Contexts/NavigationContext";
 import { useDrawer } from "../../Contexts/DrawerContext";
 import { useSearch } from "../../Contexts/SearchContext";
 import { useChat } from "../../Contexts/ChatContext";
+import { useNotification } from "../../Contexts/NotificationContext";
 
 const Navigation = () => {
   const history = useHistory();
@@ -37,6 +38,7 @@ const Navigation = () => {
   const { setShowDrawer } = useDrawer();
   const { clearFilter } = useSearch();
   const { getChatsByCurrentUser } = useChat();
+  const { getNotificationsByCurrentUser } = useNotification();
 
   const handleSelectedIcon = (setter: Function, url?: string) => {
     if (whoAmI == null && url == "/my-page") {
@@ -57,6 +59,7 @@ const Navigation = () => {
         getChatsByCurrentUser();
         setShowDrawer(true);
       } else if (value == "notis") {
+        getNotificationsByCurrentUser();
         setShowDrawer(true);
       }
     } else {

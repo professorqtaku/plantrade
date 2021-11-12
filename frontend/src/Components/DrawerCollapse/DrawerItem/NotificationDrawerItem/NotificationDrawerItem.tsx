@@ -1,32 +1,27 @@
 import {
   StyledWrapper,
   StyledTitle,
-  StyledLastMsg,
-  StyledName,
-  StyledAvatar,
   StyledInnerWrapper,
-  StyledBadge,
   StyledSwipe,
   StyledDelete,
   StyledTrashCan,
   StyledDeleteText,
-} from "../StyledDrawerItem";
+  StyledAuctionSpan,
+} from "./StyledNotificationDrawerItem";
 import {
   SwipeableListItem,
   SwipeAction,
   TrailingActions,
 } from "react-swipeable-list";
 import "react-swipeable-list/dist/styles.css";
-import {Notification } from '../../../../Interfaces/Interfaces'
+import { Notification } from "../../../../Interfaces/Interfaces";
 
 interface Props {
   notice: Notification;
 }
 
 const NotificationDrawerItem = ({ notice }: Props) => {
-
-  const handleToAuction = () => {
-  };
+  const handleToAuction = () => {};
 
   const trailingActions = () => (
     <TrailingActions>
@@ -44,7 +39,10 @@ const NotificationDrawerItem = ({ notice }: Props) => {
 
   const renderMsgContent = (
     <StyledInnerWrapper>
-      <StyledTitle>{notice.message}</StyledTitle>
+      <StyledTitle noWrap={true}>
+        <StyledAuctionSpan>{notice.auction.title}</StyledAuctionSpan>{" "}
+        {notice.message}
+      </StyledTitle>
     </StyledInnerWrapper>
   );
 

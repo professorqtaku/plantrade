@@ -20,7 +20,7 @@ const SocketContextProvider = ({ children }: Props) => {
   const { getAllAuctions } = useAuction();
   const { whoAmI } = useAuth();
   const { addSnackbar } = useSnackBar();
-  const { getNotifications } = useNotification();
+  const { getNotificationsByCurrentUser } = useNotification();
 
   socket.on("connect", () => {
     console.log("conneted");
@@ -45,7 +45,7 @@ const SocketContextProvider = ({ children }: Props) => {
   socket.on("notification", (data: Notification) => {
     if (whoAmI?.id === data.user.id) {
       addSnackbar(data);
-      getNotifications();
+      getNotificationsByCurrentUser();
     }
   });
 
