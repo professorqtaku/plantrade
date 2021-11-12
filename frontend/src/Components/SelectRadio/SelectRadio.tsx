@@ -43,7 +43,7 @@ const SelectRadio = ({
         defaultValue={
           typeof defaultValue == "object" && typeof optionKey == "string"
             ? (defaultValue as any)[optionKey]
-            : defaultValue
+            : defaultValue ?? " "
         }
       >
         {options.map((option, index) => (
@@ -52,7 +52,7 @@ const SelectRadio = ({
               value={
                 typeof optionKey == "string" && typeof options == "object"
                   ? (option as any)[optionKey]
-                  : option
+                  : option ?? " "
               }
               control={<StyledRadio />}
               label={
