@@ -22,10 +22,10 @@ public class NotificationService {
   @Autowired
   private SocketModule socketModule;
 
-  public void sendNotifications(Auction auction, int price, User user) {
+  public void sendNotifications(Auction auction, User user, int price) {
     createNotificationForHost(auction, price);
     if (user != null) {
-      createNotificationForUser(user, auction);
+      createNotificationForUser(auction, user);
     }
   }
 
@@ -41,7 +41,7 @@ public class NotificationService {
     socketModule.emit("notification", notification);
   }
 
-  public void createNotificationForUser(User user, Auction auction) {
+  public void createNotificationForUser(Auction auction, User user) {
       Notification notification = Notification.builder()
               .auction(auction)
               .user(user)
@@ -51,6 +51,18 @@ public class NotificationService {
 
       notificationRepository.save(notification);
       socketModule.emit("notification", notification);
+  }
+
+  public void createNotificationForWinner(Auction auction, User user) {
+    Notification notification = Notification.builder()
+            .auction(auction)
+            .user(user)
+            .message("Grattis du vann auktionen: ")
+            .isRead(false)
+            .build();
+
+    notificationRepository.save(notification);
+    socketModule.emit("notification", notification);
   }
 
   public List<Notification> getNotificationsByUser() {

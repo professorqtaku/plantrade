@@ -30,6 +30,9 @@ public class AuctionService {
     @Autowired
     private BidService bidService;
 
+    @Autowired
+    private NotificationService notificationService;
+
     public Pageable getPageable(Integer page, String sort, Specification specification){
         // How page and size works in Pageable:
         // at page 0 (first page), size should be the number of items you want to show
@@ -60,6 +63,7 @@ public class AuctionService {
                     Bid highestBid = bidService.getHighestBid(auction.getId());
                     if (auction.getWinner() == null) {
                         auction.setWinner(highestBid.getUser());
+                        notificationService.createNotificationForWinner(auction, highestBid.getUser());
                     }
                 } else {
                     auction.setStatus(Status.NOT_SOLD);
