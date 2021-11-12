@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDrawer } from "../../../Contexts/DrawerContext";
+import { useChat } from "../../../Contexts/ChatContext";
 import { useMessage } from "../../../Contexts/MessageContext";
 import {
   StyledForm,
@@ -11,7 +11,7 @@ import {
 const TextInput = () => {
   const [message, setMessage] = useState("");
   const { createMsg } = useMessage();
-   const { chatId } = useDrawer();
+   const { chatId } = useChat();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

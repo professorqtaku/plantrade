@@ -25,20 +25,22 @@ const DrawerHeader = ({ toggle }: Props) => {
 
   return (
     <StyledHeader>
-      {!showChatRoom ? (
-        <StyledText isright={false}>Meddelanden</StyledText>
-      ) : (
+      {!showChatRoom
+        ? <StyledText isright={false}>Meddelanden</StyledText>
+        : (
         <StyledTextWrapper onClick={() => setShowChatRoom(false)}>
           <StyledGoBackIcon />
           <StyledText isright={false}>Tillbaka</StyledText>
         </StyledTextWrapper>
       )}
       <StyledExpandIcon onClick={handleToggle} />
-      {!showChatRoom ? (
+      {!showChatRoom
+        ? (
         <StyledText isright={true}>
           Antal: <StyledAmountOfMsg>{chats.length}</StyledAmountOfMsg>
         </StyledText>
-      ) : (
+        )
+        : (
         <StyledText isright={true}>{chatTitle}</StyledText>
       )}
     </StyledHeader>

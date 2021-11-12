@@ -11,13 +11,13 @@ import {
 } from "./StyledMessage";
 import { useMessage } from "../../../Contexts/MessageContext";
 import { useEffect } from "react";
-import { useDrawer } from "../../../Contexts/DrawerContext";
 import { Message as MessageProps } from "../../../Interfaces/Interfaces";
 import { useAuth } from "../../../Contexts/AuthContext";
+import { useChat } from "../../../Contexts/ChatContext";
 
 const Message = () => {
   const { messages, getAllChatMsg } = useMessage();
-  const { chatId } = useDrawer();
+  const { chatId } = useChat();
   const { whoAmI } = useAuth();
 
   useEffect(() => {
