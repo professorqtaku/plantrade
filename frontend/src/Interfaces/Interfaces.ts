@@ -63,3 +63,11 @@ export interface Message {
   isRead: boolean;
   chat: Chat;
 }
+
+export interface BidUpdateSocket {
+  id: number;
+  user: User;
+  auction: Auction;
+  price: number;
+  createdDate: number;
+}

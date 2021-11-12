@@ -5,10 +5,15 @@ import { useAuth } from './AuthContext';
 import { useSnackBar } from './SnackBarContext';
 import { useNotification } from "./NotificationContext";
 import { Notification } from "../Interfaces/Interfaces"
+import { useBid } from "./BidContext";
+import { BidUpdateSocket } from "../Interfaces/Interfaces";
+
 
 type Props = {
   children?: JSX.Element;
 };
+
+
 
 const SocketContext = createContext<any>(null);
 
@@ -22,13 +27,17 @@ const SocketContextProvider = ({ children }: Props) => {
   const { addSnackbar } = useSnackBar();
   const { getNotifications } = useNotification();
 
+  const { getHighestBid } = useBid();
+
+
   socket.on("connect", () => {
     console.log("conneted");
   });
 
-  // socket.on("bid", async function () {
-  //   await getAllAuctions();
-  // });
+  socket.on("bid", async function (data: BidUpdateSocket) {
+    console.log('Received bid', data);
+    getHighestBid(data.auction.id);
+  });
 
   socket.on("reconnect_attempt", () => {
     console.log("Reconnecting");
