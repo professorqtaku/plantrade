@@ -1,23 +1,9 @@
 import { createContext, FC, useContext, useState, useEffect } from "react";
+import { Auction, Category } from '../Interfaces/Interfaces';
 
 type Props = {
   children?: JSX.Element;
 };
-
-type Auction = {
-  id: Number;
-  host: { id: Number, username: String };
-  title: String;
-  description: String;
-  startPrice: Number;
-  endDate: Date;
-  status: String;
-}
-
-interface Category {
-  id: number;
-  name: String;
-}
 
 export const AuctionContext = createContext<any>(null);
 
@@ -71,8 +57,7 @@ const AuctionContextProvider: FC<Props> = ({ children }: Props) => {
       let auctions = await res.json();
       setUsersAuctions(auctions);
     }
-    // return auctions;
-  };
+  }
 
   const getWonAuctionsByUser = async () => {
     let res: Response = await fetch("/rest/auctions/won");
@@ -83,9 +68,6 @@ const AuctionContextProvider: FC<Props> = ({ children }: Props) => {
   };
 
   const values = {
-    auctions,
-    setAuctions,
-    getAllAuctions,
     getAuctionById,
     createAuction,
     usersAuctions,

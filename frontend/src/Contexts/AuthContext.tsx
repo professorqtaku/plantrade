@@ -28,12 +28,10 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
     });
     if (res.status == 400) {
       setUserExists(true);
-      console.log("user exists");
       return false;
     }
     if (res.status == 200) {
       setUserExists(false);
-      console.log("user was registered");
       addSnackbar("Regristrering lyckades!");
       return true;
     }

@@ -7,45 +7,42 @@ import {
   StyledIconButton,
 } from "./StyledFilterCollapse";
 import SelectCheckbox from "../../SelectCheckbox/SelectCheckbox";
-import InputField from "../../InputField/InputField";
 import SelectRadio from "../../SelectRadio/SelectRadio";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import { Status, status } from "../../../Utils/types";
+import { Status, status, SortByTimes, sortByTimes } from "../../../Utils/types";
 import { useCategory } from "../../../Contexts/CategoryContext";
 import { Category } from "../../../Interfaces/Interfaces";
 import ClearButton from "../../ClearButton/ClearButton";
 import { useSearch } from "../../../Contexts/SearchContext";
 import { useAuction } from "../../../Contexts/AuctionContext";
+import { useEffect } from "react";
 
 interface Props {
   isOpen: boolean;
   toggle: Function;
-  hours: number;
-  setHours: Function;
   selectedStatus: Status;
   selectedCategories: Category[];
   setSelectedStatus: Function;
   setSelectedCategories: Function;
+  setSelectedSortTime: Function;
+  selectedSortTime: SortByTimes;
 }
 
 function FilterCollapse({
   isOpen,
   toggle,
-  hours,
-  setHours,
   selectedStatus,
   setSelectedStatus,
   selectedCategories,
   setSelectedCategories,
+  selectedSortTime,
+  setSelectedSortTime
 }: Props) {
   const { allCategories } = useCategory();
-  const { clearFilter, isRerender } = useSearch();
-  const { getAllAuctions } = useAuction();
+  const { auctions, clearFilter, isRerender } = useSearch();
 
   const handleClearFilter = () => {
     clearFilter();
-    toggle();
-    getAllAuctions();
   }
 
   return (
@@ -69,17 +66,12 @@ function FilterCollapse({
         </Box>
         <Box>
           <StyledTitle>ANNONSER SOM AVSLUTAS INOM</StyledTitle>
-          <InputField
-            type="number"
-            value={hours}
-            updateState={setHours}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            InputProps={{
-              endAdornment: <p>TIMMAR</p>,
-              inputProps: { min: 1 },
-            }}
+          <SelectRadio
+            isRerender={isRerender}
+            options={sortByTimes}
+            updateState={setSelectedSortTime}
+            optionKey={"title"}
+            defaultValue={selectedSortTime}
           />
         </Box>
         <Box>

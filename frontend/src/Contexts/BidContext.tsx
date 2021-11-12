@@ -1,6 +1,7 @@
 import React, { createContext, FC, useContext, useState } from 'react'
 import { useAuction } from "./AuctionContext"
 import { Bid } from "../Interfaces/Interfaces"
+import { useSnackBar } from './SnackBarContext';
 
 
 type Props = {
@@ -14,7 +15,7 @@ export const useBid = () => useContext(BidContext);
 const BidContextProvider: FC<Props> = ({ children }: Props) => {
   const [highestBid, setHighestBid] = useState();
 
-  const { getAllAuctions } = useAuction();
+  const { addSnackbar } = useSnackBar();
 
   const createBid = async (newBid: Bid) => {
     let res: Response = await fetch("/api/bid", {
@@ -27,12 +28,10 @@ const BidContextProvider: FC<Props> = ({ children }: Props) => {
 
     if (res.status == 200) {
       let bid = await res.json();
-      getAllAuctions();
-      console.log(bid);
+      addSnackbar("Giltigt bud!");
       return bid;
     } else {
-      console.log(res);
-      console.log("Bad Request");
+      addSnackbar({ message:"Ogiltigt bud", status: "error" })
       return null;
     }
   };
