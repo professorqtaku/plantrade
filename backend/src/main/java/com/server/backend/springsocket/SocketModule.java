@@ -35,6 +35,7 @@ public class SocketModule {
         server.addEventListener("join", String.class, onJoinRoom());
         server.addEventListener("leave", String.class, onLeaveRoom());
         server.addEventListener("auctionUpdate", String.class, onAuctionReceived());
+        server.addEventListener("bid", Bid.class, onBidReceived());
 
         // start socket.io server
         server.start();
@@ -51,6 +52,15 @@ public class SocketModule {
     private DataListener<String> onAuctionReceived() {
         return (client, room, ackSender) -> {
             emitToRoom(room,"auctionUpdate", "auction updated");
+        };
+    }
+
+    private DataListener<Bid> onBidReceived() {
+        return (client, data, ackSender) -> {
+            System.out.printf("Client[%s] - Received bid '%s'\n", client.getSessionId().toString(), data);
+
+            // send message to all connected clients
+            emit("bid", data);
         };
     }
 
