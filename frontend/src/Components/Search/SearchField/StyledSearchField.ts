@@ -14,6 +14,8 @@ export const StyledTextField = styled(TextField)<Props>`
     props.isfilteropen === "true" ? "25px 25px 0 0" : "100px"};
   padding: 2% 5%;
   width: 90%;
+  box-shadow: ${(props) =>
+    props.isfilteropen === "true" ? null : "0 0 3px var(--dark-grey)"};
   transition: ${(props) =>
     props.isfilteropen === "true" ? "100ms" : "1200ms"};
 `;
