@@ -60,10 +60,11 @@ public class AuctionService {
             if(auction.getEndDate().getTime() < date.getTime()){
                 if(auction.getBids().size() > 0){
                     auction.setStatus(Status.SOLD);
-                    Bid highestBid = bidService.getHighestBid(auction.getId());
                     if (auction.getWinner() == null) {
+                        Bid highestBid = bidService.getHighestBid(auction.getId());
                         auction.setWinner(highestBid.getUser());
                         notificationService.createNotificationForWinner(auction, highestBid.getUser());
+                        notificationService.createNotificationForBidders(auction.getBids(), highestBid.getPrice());
                     }
                 } else {
                     auction.setStatus(Status.NOT_SOLD);
