@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useChat } from "../../../Contexts/ChatContext";
 import { useMessage } from "../../../Contexts/MessageContext";
+import { useSocket } from "../../../Contexts/SocketContext";
 import {
   StyledForm,
   StyledInput,
@@ -11,14 +12,17 @@ import {
 const TextInput = () => {
   const [message, setMessage] = useState("");
   const { createMsg } = useMessage();
-   const { chatId } = useChat();
+  const { chatId } = useChat();
+  const { socket } = useSocket();
+  
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newMessage = {
       message: message,
     };
-    createMsg(newMessage, chatId);
+    await createMsg(newMessage, chatId);
     setMessage("");
   };
 

@@ -7,7 +7,6 @@ import Drawer from "./Components/DrawerCollapse/DrawerCollapse";
 
 function App() {
   const { whoAmI } = useAuth();
-
   return (
       <div className="App">
         <AllRoutes>
