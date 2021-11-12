@@ -1,13 +1,12 @@
 import { createContext, useContext, useState } from "react";
 import io from "socket.io-client";
-import { useAuction } from "./AuctionContext";
 import { useAuth } from "./AuthContext";
 import { useSnackBar } from "./SnackBarContext";
 import { useNotification } from "./NotificationContext";
 import { Notification } from "../Interfaces/Interfaces";
 import { useMessage } from "./MessageContext";
-import { useDrawer } from "./DrawerContext";
 import { useSearch } from "./SearchContext";
+import { useChat } from "./ChatContext";
 
 type Props = {
   children?: JSX.Element;
@@ -24,9 +23,9 @@ const SocketContextProvider = ({ children }: Props) => {
   const { getAuctionsByOptions } = useSearch();
   const { whoAmI } = useAuth();
   const { addSnackbar } = useSnackBar();
-  const { getNotifications } = useNotification();
+  const { getNotificationsByCurrentUser } = useNotification();
   const { getAllChatMsg } = useMessage();
-  const { chatId } = useDrawer();
+  const { chatId } = useChat();
 
   if (!isConnected) {
     socket.on("connect", () => {
@@ -50,7 +49,7 @@ const SocketContextProvider = ({ children }: Props) => {
   socket.on("notification", (data: Notification) => {
     if (whoAmI?.id === data.user.id) {
       addSnackbar(data);
-      getNotifications();
+      getNotificationsByCurrentUser();
     }
   });
 
