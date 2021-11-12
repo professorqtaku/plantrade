@@ -1,19 +1,14 @@
 import styled from 'styled-components';
 
-interface Props {
-  index: number
-}
-
 interface PropsHost {
   me: boolean
 }
 
-export const StyledRow = styled.div<Props>`
-  &:nth-child(odd) {
-    background-color: lightgrey;
-  }
-`;
-
 export const StyledCell = styled.div<PropsHost>`
   font-weight: ${(props) => props.me ? `bolder` : `normal`};
+`;
+
+export const StyledNoBid = styled.p`
+  text-align: center;
+  padding-left: 10px;
 `;

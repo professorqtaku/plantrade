@@ -5,7 +5,7 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { Auction, Bid, User } from '../../Interfaces/Interfaces';
-import { StyledCell } from './StyledBidHistory';
+import { StyledCell, StyledNoBid } from './StyledBidHistory';
 
 interface Props {
   auction: Auction,
@@ -44,10 +44,10 @@ function BidHistory({ auction, whoAmI }: Props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {bids && bids.map((bid: Bid, index: number) => {
+          {!!bids?.length ? bids?.map((bid: Bid, index: number) => {
             const isMe = me === bid.user.username;
             return (
-              <TableRow hover role="checkbox" tabIndex={-1} key={bid.id} sx={{backgroundColor: index % 2 ? 'lightgrey' : 'white'}}>
+              <TableRow role="checkbox" tabIndex={-1} key={bid.id} sx={{backgroundColor: index % 2 ? 'lightgrey' : 'white'}}>
                     <TableCell>
                       <StyledCell me={isMe}>{bid.user.username}</StyledCell>
                     </TableCell>
@@ -59,7 +59,10 @@ function BidHistory({ auction, whoAmI }: Props) {
                     </TableCell>
               </TableRow>
             )
-          }).reverse()}
+          }).reverse() : 
+            <TableRow role="checkbox" tabIndex={-1}>
+              <StyledNoBid>Det finns inga bud än...</StyledNoBid>
+            </TableRow>}
           </TableBody>
       </Table>
     </TableContainer>

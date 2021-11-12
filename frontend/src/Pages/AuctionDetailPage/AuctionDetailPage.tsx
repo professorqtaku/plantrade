@@ -37,7 +37,7 @@ import {
   StyledCarousel,
 } from "./StyledAuctionDetailPage";
 import { useModal } from "../../Contexts/ModalContext";
-import BidHistory from '../../Components/BidHistory/BidHistory';
+import BidHistoryContainer from '../../Components/BidHistory/BidHistoryContainer';
 
 const AuctionDetailPage = () => {
   const { id }: any = useParams();
@@ -226,7 +226,7 @@ const AuctionDetailPage = () => {
                 {whoAmI ? renderBidContent : renderLoginToggle}
               </StyledForm>
             <Grid item xs={12}>
-              <BidHistory auction={auction} whoAmI={whoAmI} />
+              <BidHistoryContainer auction={auction} whoAmI={whoAmI} />
             </Grid>
           </Grid>
         </>
