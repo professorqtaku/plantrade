@@ -1,6 +1,7 @@
 package com.server.backend.services;
 
 import com.server.backend.entities.Auction;
+import com.server.backend.entities.Bid;
 import com.server.backend.entities.Notification;
 import com.server.backend.entities.User;
 import com.server.backend.repositories.NotificationRepository;
@@ -8,6 +9,7 @@ import com.server.backend.springsocket.SocketModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -63,6 +65,25 @@ public class NotificationService {
 
     notificationRepository.save(notification);
     socketModule.emit("notification", notification);
+  }
+
+  public void createNotificationForBidders(List<Bid> bids, double price) {
+    List<Long> ids = new ArrayList<>();
+
+    for(Bid bid : bids) {
+      if (!ids.contains(bid.getUser().getId())) {
+        Notification notification = Notification.builder()
+               .auction(bid.getAuction())
+               .user(bid.getUser())
+               .message(" avslutades på " + price + " SEK")
+               .isRead(false)
+               .build();
+        notificationRepository.save(notification);
+        socketModule.emit("notification", notification);
+
+        ids.add(bid.getUser().getId());
+      }
+    }
   }
 
   public List<Notification> getNotificationsByUser() {
