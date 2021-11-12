@@ -7,6 +7,7 @@ import { useNotification } from "./NotificationContext";
 import { Notification } from "../Interfaces/Interfaces";
 import { useMessage } from "./MessageContext";
 import { useDrawer } from "./DrawerContext";
+import { useSearch } from "./SearchContext";
 
 type Props = {
   children?: JSX.Element;
@@ -20,7 +21,7 @@ const SocketContextProvider = ({ children }: Props) => {
   const endpoint = "http://localhost:9092";
   const socket = io(endpoint, { upgrade: false, transports: ["websocket"] });
   const [isConnected, setIsConnected] = useState(false);
-  const { getAllAuctions } = useAuction();
+  const { getAuctionsByOptions } = useSearch();
   const { whoAmI } = useAuth();
   const { addSnackbar } = useSnackBar();
   const { getNotifications } = useNotification();
@@ -34,7 +35,7 @@ const SocketContextProvider = ({ children }: Props) => {
     });
   }
   socket.on("bid", async function () {
-    await getAllAuctions();
+    await getAuctionsByOptions();
   });
 
   socket.on("join", (data: string) => {

@@ -30,11 +30,11 @@ const AllContextProviders: React.FC<Props> = ({ children }) => {
                       <NotificationContextProvider>
                         <ChatContextProvider>
                           <MessageContextProvider>
-                            <SocketContextProvider>
-                              <SearchContextProvider>
+                            <SearchContextProvider>
+                              <SocketContextProvider>
                                 {children}
-                              </SearchContextProvider>
-                            </SocketContextProvider>
+                              </SocketContextProvider>
+                            </SearchContextProvider>
                           </MessageContextProvider>
                         </ChatContextProvider>
                       </NotificationContextProvider>
