@@ -20,14 +20,14 @@ import { useChat } from "../../Contexts/ChatContext";
 const Navigation = () => {
 
   const history = useHistory();
-  const { home, auction, notis, message, profile } = useNav();
+  const { home, auction, notis, message, profile, handleSelect } = useNav();
   const { toggleLoginModal } = useModal();
   const { whoAmI } = useAuth();
   const { toggleDrawer } = useDrawer();
   const { clearFilter } = useSearch();
    const { getChatsByCurrentUser } = useChat();
 
-  const handleSelect = (
+  const handleSelected = (
     url?: string
   ) => {
     if (whoAmI == null && url == "/my-page") {
@@ -38,9 +38,17 @@ const Navigation = () => {
     }
   };
 
-  const handleMsg = () => {
-    toggleDrawer();
-    getChatsByCurrentUser();
+  const handleDrawer = () => {
+    if (whoAmI == null) {
+      console.log(notis);
+      console.log(message);
+    }
+    else {
+      toggleDrawer();
+      getChatsByCurrentUser();
+      
+      // toggleLoginModal()
+    }
   }
 
   const renderIcons = () => (
@@ -57,11 +65,11 @@ const Navigation = () => {
       </StyledInnerWrapper>
 
       <StyledInnerWrapper selected={notis}>
-        <StyledNotisIcon selected={notis} />
+        <StyledNotisIcon selected={notis} onClick={() => handleDrawer("notis")} />
       </StyledInnerWrapper>
 
       <StyledInnerWrapper selected={message}>
-        <StyledMsgIcon selected={message} onClick={handleMsg} />
+        <StyledMsgIcon selected={message} onClick={() => handleDrawer("message")} />
       </StyledInnerWrapper>
 
       <StyledInnerWrapper selected={profile}>
