@@ -25,7 +25,7 @@ const Message = () => {
   const { messages, getAllChatMsg } = useMessage();
   const { chatId } = useDrawer();
   const { whoAmI } = useAuth();
-  const { socket } = useSocket();
+  const { socket, isRead } = useSocket();
 
   useEffect(() => {
     getAllChatMsg(chatId);
@@ -49,7 +49,9 @@ const Message = () => {
           <StyledText>{message.message}</StyledText>
         </StyledMessage>
       )}
-      {index === messages.length - 1 && message.writer.id === whoAmI.id ? (
+      {index === messages.length - 1 &&
+      message.writer.id === whoAmI.id &&
+      isRead ? (
         renderDateAndRead(message)
       ) : (
         <StyledDateOrRead sender={message.writer.id === whoAmI.id}>
