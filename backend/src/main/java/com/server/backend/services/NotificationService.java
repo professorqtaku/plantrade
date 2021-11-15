@@ -80,7 +80,7 @@ public class NotificationService {
           Notification notification = Notification.builder()
                 .auction(bid.getAuction())
                 .user(bid.getUser())
-                .message(" avslutades på " + price + " SEK")
+                .message("avslutades på " + price + " SEK")
                 .isRead(false)
                 .createdDate(new Date())
                 .build();
@@ -97,7 +97,7 @@ public class NotificationService {
     Notification notification = Notification.builder()
             .auction(auction)
             .user(auction.getHost())
-            .message(" avslutades på " + price + " SEK")
+            .message("avslutades på " + price + " SEK")
             .isRead(false)
             .createdDate(new Date())
             .build();
