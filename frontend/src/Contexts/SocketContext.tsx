@@ -31,7 +31,7 @@ const SocketContextProvider = ({ children }: Props) => {
   const { addSnackbar } = useSnackBar();
   const { getNotificationsByCurrentUser } = useNotification();
   const { getAllChatMsg } = useMessage();
-  const { chatId } = useDrawer();
+  const { chatId } = useChat();
   const [isRead, setIsRead] = useState(false)
 
   if (!isConnected) {
