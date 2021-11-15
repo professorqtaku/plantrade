@@ -12,6 +12,11 @@ export const StyledCard = styled(Card)`
   &:last-child {
     margin-bottom: 5rem;
   }
+
+  @media (min-width: 769px) {
+    width: auto;
+    height: auto;
+  }
 `;
 
 export const StyledCardContent = styled(CardContent)`
@@ -24,6 +29,10 @@ export const StyledImg = styled.img`
   height: 100%;
   &:hover {
     cursor: pointer;
+  }
+  @media (min-width: 769px) {
+    width: 150px;
+    height: auto;
   }
 `;
 

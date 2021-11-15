@@ -4,6 +4,10 @@ export const StyledWrapper = styled.div`
   max-height: 80vh;
   display: grid;
   grid-template-rows: 25vh 1fr;
+  
+  @media (min-width: 769px) {
+  max-height: 100%;
+  }
 `;
 
 export const StyledContentWrapper = styled.div`
