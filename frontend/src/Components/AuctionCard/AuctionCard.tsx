@@ -15,6 +15,7 @@ import {
   StyledSpan,
   StyledDiv,
 } from "./StyledAuctionCard";
+import { useModal } from "../../Contexts/ModalContext";
 
 interface Props {
   auction: Auction;
@@ -34,6 +35,7 @@ const AuctionCard = ({ auction, fetchAuctions, forwardRef}: Props) => {
   const history = useHistory();
   const { createBid } = useBid();
   const { whoAmI } = useAuth();
+  const { toggleLoginModal } = useModal();
   const isHost =
     whoAmI && auction.host && auction.host.id && whoAmI.id == auction.host.id;
   
@@ -97,7 +99,10 @@ const AuctionCard = ({ auction, fetchAuctions, forwardRef}: Props) => {
   };
 
   const handleBid = async () => {
-    if (whoAmI == null) return;
+    if (whoAmI == null) {
+      toggleLoginModal();
+      return
+    }
     
     const newBid = {
       userId: whoAmI.id,
