@@ -2,6 +2,7 @@ package com.server.backend.springsocket;
 
 import com.corundumstudio.socketio.Configuration;
 import com.corundumstudio.socketio.SocketConfig;
+import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.ConnectListener;
 import com.corundumstudio.socketio.listener.DataListener;
@@ -9,6 +10,10 @@ import com.corundumstudio.socketio.listener.DisconnectListener;
 import com.server.backend.entities.Bid;
 import lombok.val;
 import org.springframework.stereotype.Component;
+
+import java.util.Collection;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class SocketModule {
@@ -34,7 +39,9 @@ public class SocketModule {
         // add room support (the data is the room name)
         server.addEventListener("join", String.class, onJoinRoom());
         server.addEventListener("leave", String.class, onLeaveRoom());
-        server.addEventListener("auctionUpdate", String.class, onAuctionReceived());
+//        server.addEventListener("auctionUpdate", String.class, onAuctionReceived());
+        server.addEventListener("bid", Bid.class, onBidReceived());
+        server.addEventListener("message", String.class, onMessage());
 
         // start socket.io server
         server.start();
@@ -48,9 +55,18 @@ public class SocketModule {
         server.getRoomOperations(room).sendEvent(event, data);
     }
 
-    private DataListener<String> onAuctionReceived() {
+    private DataListener<String> onMessage() {
         return (client, room, ackSender) -> {
-            emitToRoom(room,"auctionUpdate", "auction updated");
+            emitToRoom(room,"message", "messageUpdate");
+        };
+    }
+
+    private DataListener<Bid> onBidReceived() {
+        return (client, data, ackSender) -> {
+            System.out.printf("Client[%s] - Received bid '%s'\n", client.getSessionId().toString(), data);
+
+            // send message to all connected clients
+            emit("bid", data);
         };
     }
 

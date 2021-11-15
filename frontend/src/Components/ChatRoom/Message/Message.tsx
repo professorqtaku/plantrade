@@ -11,18 +11,34 @@ import {
 } from "./StyledMessage";
 import { useMessage } from "../../../Contexts/MessageContext";
 import { useEffect } from "react";
-import { useDrawer } from "../../../Contexts/DrawerContext";
 import { Message as MessageProps } from "../../../Interfaces/Interfaces";
 import { useAuth } from "../../../Contexts/AuthContext";
+import { useChat } from "../../../Contexts/ChatContext";
+import { useSocket } from "../../../Contexts/SocketContext";
+
+const msgWrapper = document.getElementsByClassName("msgWrapper");
+const scrollToBottom = (node: HTMLCollectionOf<Element>) => {
+  node[0].scrollTop = node[0].scrollHeight;
+};
 
 const Message = () => {
   const { messages, getAllChatMsg } = useMessage();
-  const { chatId } = useDrawer();
+  const { chatId } = useChat();
   const { whoAmI } = useAuth();
+  const { socket } = useSocket();
 
   useEffect(() => {
     getAllChatMsg(chatId);
+    socket.emit("join", chatId);
+    scrollToBottom(msgWrapper);
+    return () => {
+      socket.emit("leave", chatId);
+    };
   }, []);
+
+  useEffect(() => {
+    scrollToBottom(msgWrapper);
+  }, [messages]);
 
   const renderMessageContent = (message: MessageProps, index: number) => (
     <StyledMessageWrapper key={message.id}>
@@ -67,7 +83,7 @@ const Message = () => {
   );
 
   return (
-    <StyledWrapper>
+    <StyledWrapper className="msgWrapper">
       {messages &&
         messages.map((message: MessageProps, index: number) =>
           renderMessageContent(message, index)

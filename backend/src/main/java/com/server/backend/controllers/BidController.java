@@ -1,8 +1,6 @@
 package com.server.backend.controllers;
 
-import com.server.backend.entities.Auction;
 import com.server.backend.entities.Bid;
-import com.server.backend.services.AuctionService;
 import com.server.backend.services.BidService;
 import com.server.backend.springsocket.SocketModule;
 import org.springframework.beans.factory.annotation.Autowired;

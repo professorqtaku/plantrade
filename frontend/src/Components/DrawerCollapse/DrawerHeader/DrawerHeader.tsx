@@ -1,47 +1,21 @@
-import {
-  StyledHeader,
-  StyledExpandIcon,
-  StyledText,
-  StyledGoBackIcon,
-  StyledTextWrapper,
-  StyledAmountOfMsg,
-} from "./StyledDrawerHeader";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { useDrawer } from "../../../Contexts/DrawerContext";
-import { useChat } from "../../../Contexts/ChatContext";
+import { useNav } from "../../../Contexts/NavigationContext";
+import ChatDrawerHeader from './ChatDrawerHeader/ChatDrawerHeader'
+import NoticeDrawerHeader from "./NoticeDrawerHeader/NoticeDrawerHeader";
 
 interface Props {
   toggle: Function;
 }
 
-const DrawerHeader = ({ toggle }: Props) => {
-  const { showChatRoom, setShowChatRoom } = useDrawer();
-  const { chats, chatTitle } = useChat();
-
-  const handleToggle = () => {
-    toggle();
-    setShowChatRoom(false);
-  }
+const DrawerHeader = () => {
+  const { message } = useNav();
 
   return (
-    <StyledHeader>
-      {!showChatRoom ? (
-        <StyledText isright={false}>Meddelanden</StyledText>
-      ) : (
-        <StyledTextWrapper onClick={() => setShowChatRoom(false)}>
-          <StyledGoBackIcon />
-          <StyledText isright={false}>Tillbaka</StyledText>
-        </StyledTextWrapper>
-      )}
-      <StyledExpandIcon onClick={handleToggle} />
-      {!showChatRoom ? (
-        <StyledText isright={true}>
-          Antal: <StyledAmountOfMsg>{chats.length}</StyledAmountOfMsg>
-        </StyledText>
-      ) : (
-        <StyledText isright={true}>{chatTitle}</StyledText>
-      )}
-    </StyledHeader>
+    <>
+      {message
+        ? <ChatDrawerHeader />
+        : <NoticeDrawerHeader />
+      }
+    </>
   );
 };
 
