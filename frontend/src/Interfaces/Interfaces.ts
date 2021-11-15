@@ -1,8 +1,8 @@
 export interface User {
   id: number;
   username: string;
-  email: string;
-  password: string;
+  email?: string;
+  password?: string;
 }
 
 export interface Auction {
@@ -24,7 +24,7 @@ export interface Bid {
   createdDate: Date;
   price: number;
   auctionId: number;
-  userId: number;
+  user: User;
 }
 
 export interface Category {
