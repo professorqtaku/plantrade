@@ -3,6 +3,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Badge, Typography, Grid } from "@mui/material";
 import { SwipeableList } from "react-swipeable-list";
 
+interface Props {
+  color?: string;
+}
+
 export const StyledWrapper = styled.div`
   width: 100%;
   margin: 0 auto;
@@ -75,6 +79,7 @@ export const StyledGridContainer = styled(Grid)`
 `;
 
 
-export const StyledColoredText = styled.span`
-  color: var(--green);
+export const StyledColoredText = styled.span<Props>`
+  color: ${props => props.color};
+  font-weight: bold;
 `;

@@ -34,7 +34,7 @@ const MsgContent = ({ message, auctionTitle }: Props) => {
   const getOrder = () => {
     let order: number[] = [1, 2];
     for (let key of Object.keys(notificationTypes)) {
-      if (message.includes(key)) {
+      if (message.toLocaleLowerCase().includes(key)) {
         return notificationTypes[key];
       }
     }
@@ -51,7 +51,8 @@ const MsgContent = ({ message, auctionTitle }: Props) => {
   };
 
   let order: number[] = getOrder();
-  const coloredWord: string = getColoredWord();
+  const coloredWord: string = getColoredWord()!;
+  //                                         ^ the exclamation mark (non-null assertion operator)
   const removeFirstWord = (str: string) => {
     return " " + str.substr(str.indexOf(" ") + 1);
   };
@@ -60,25 +61,26 @@ const MsgContent = ({ message, auctionTitle }: Props) => {
     <StyledInnerWrapper>
       <StyledGridContainer container>
         <StyledAuctionGrid item order={order[0]} xs={4} sm={3} md={2} lg={1}>
-          {auctionTitle && 
+          {auctionTitle && (
             <StyledAuctionTitle noWrap={true} display="inline">
               {auctionTitle}
             </StyledAuctionTitle>
-          }
+          )}
         </StyledAuctionGrid>
         <Grid item order={order[1]}>
           <StyledTitle noWrap={false} display="inline">
-            {coloredWord.length > 0
-              ? (
-                <>
-                  <StyledColoredText>{coloredWord}</StyledColoredText>
-                  {removeFirstWord(message)}
-                </>
-              )
-              : (
+            {coloredWord.length > 0 ? (
+              <>
+                <StyledColoredText
+                  color={coloredWords[coloredWord.toLocaleLowerCase()]}
+                >
+                  {coloredWord}
+                </StyledColoredText>
+                {removeFirstWord(message)}
+              </>
+            ) : (
               <>{message}</>
-              )
-            }
+            )}
           </StyledTitle>
         </Grid>
       </StyledGridContainer>
