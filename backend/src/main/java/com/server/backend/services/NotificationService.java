@@ -71,7 +71,7 @@ public class NotificationService {
     socketModule.emit("notification", notification);
   }
 
-  public void createNotificationForBidders(List<Bid> bids, double price, Bid highestBidder) {
+  public void createNotificationForBidders(List<Bid> bids, int price, Bid highestBidder) {
     List<Long> ids = new ArrayList<>();
 
     for(Bid bid : bids) {
@@ -93,7 +93,7 @@ public class NotificationService {
     }
   }
 
-  public void createEndNotificationForHost(Auction auction, double price) {
+  public void createEndNotificationForHost(Auction auction, int price) {
     Notification notification = Notification.builder()
             .auction(auction)
             .user(auction.getHost())
