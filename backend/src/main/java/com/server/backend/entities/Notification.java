@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name="notifications")
@@ -33,4 +34,6 @@ public class Notification {
 
     @Column(name="is_read", columnDefinition = "BOOLEAN", nullable=false)
     private Boolean isRead;
+
+    private Date createdDate;
 }

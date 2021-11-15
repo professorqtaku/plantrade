@@ -1,6 +1,7 @@
 package com.server.backend.services;
 
 import com.server.backend.entities.Auction;
+import com.server.backend.entities.Bid;
 import com.server.backend.entities.Notification;
 import com.server.backend.entities.User;
 import com.server.backend.repositories.NotificationRepository;
@@ -8,6 +9,8 @@ import com.server.backend.springsocket.SocketModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -22,10 +25,10 @@ public class NotificationService {
   @Autowired
   private SocketModule socketModule;
 
-  public void sendNotifications(Auction auction, int price, User user) {
+  public void sendNotifications(Auction auction, User user, int price) {
     createNotificationForHost(auction, price);
     if (user != null) {
-      createNotificationForUser(user, auction);
+      createNotificationForUser(auction, user);
     }
   }
 
@@ -35,22 +38,71 @@ public class NotificationService {
             .user(auction.getHost())
             .message("har fått ett nytt bud: " + price + " SEK")
             .isRead(false)
+            .createdDate(new Date())
             .build();
 
     notificationRepository.save(notification);
     socketModule.emit("notification", notification);
   }
 
-  public void createNotificationForUser(User user, Auction auction) {
+  public void createNotificationForUser(Auction auction, User user) {
       Notification notification = Notification.builder()
               .auction(auction)
               .user(user)
               .message("Någon har lagt ett högre bud på: ")
               .isRead(false)
+              .createdDate(new Date())
               .build();
 
       notificationRepository.save(notification);
       socketModule.emit("notification", notification);
+  }
+
+  public void createNotificationForWinner(Auction auction, User user) {
+    Notification notification = Notification.builder()
+            .auction(auction)
+            .user(user)
+            .message("Grattis du vann auktionen: ")
+            .isRead(false)
+            .createdDate(new Date())
+            .build();
+
+    notificationRepository.save(notification);
+    socketModule.emit("notification", notification);
+  }
+
+  public void createNotificationForBidders(List<Bid> bids, double price, Bid highestBidder) {
+    List<Long> ids = new ArrayList<>();
+
+    for(Bid bid : bids) {
+      if (bid.getUser() != highestBidder.getUser()) {
+        if (!ids.contains(bid.getUser().getId())) {
+          Notification notification = Notification.builder()
+                .auction(bid.getAuction())
+                .user(bid.getUser())
+                .message("avslutades på " + price + " SEK")
+                .isRead(false)
+                .createdDate(new Date())
+                .build();
+          notificationRepository.save(notification);
+          socketModule.emit("notification", notification);
+
+          ids.add(bid.getUser().getId());
+        }
+      }
+    }
+  }
+
+  public void createEndNotificationForHost(Auction auction, double price) {
+    Notification notification = Notification.builder()
+            .auction(auction)
+            .user(auction.getHost())
+            .message("avslutades på " + price + " SEK")
+            .isRead(false)
+            .createdDate(new Date())
+            .build();
+    notificationRepository.save(notification);
+    socketModule.emit("notification", notification);
   }
 
   public List<Notification> getNotificationsByUser() {
