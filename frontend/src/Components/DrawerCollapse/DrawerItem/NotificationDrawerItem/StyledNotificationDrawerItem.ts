@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Badge, Typography } from "@mui/material";
+import { Badge, Typography, Grid } from "@mui/material";
 import { SwipeableList } from "react-swipeable-list";
 
 export const StyledWrapper = styled.div`
@@ -18,12 +18,18 @@ export const StyledWrapper = styled.div`
 
 export const StyledInnerWrapper = styled.div`
   display: grid;
-  grid-template-columns: 7fr 2fr;
+  grid-template-columns: 9fr 2fr;
 `;
 
 export const StyledTitle = styled(Typography)`
   font-family: var(--font-small-text);
   font-size: small;
+`;
+
+export const StyledAuctionGrid = styled(Grid)`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const StyledAuctionTitle = styled(Typography)`
@@ -32,7 +38,6 @@ export const StyledAuctionTitle = styled(Typography)`
   font-weight: bold;
   color: var(--blue);
   text-decoration: underline;
-  width: 100px;
 `;
 
 export const StyledBadge = styled(Badge)`
@@ -63,4 +68,7 @@ export const StyledDeleteText = styled.p`
   color: white;
   margin: 0;
   margin-left: 0.5rem;
+`;
+
+export const StyledGridContainer = styled(Grid)`
 `;

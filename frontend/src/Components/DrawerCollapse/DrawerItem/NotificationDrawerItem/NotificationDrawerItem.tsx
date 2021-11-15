@@ -7,6 +7,8 @@ import {
   StyledTrashCan,
   StyledDeleteText,
   StyledAuctionTitle,
+  StyledGridContainer,
+  StyledAuctionGrid,
 } from "./StyledNotificationDrawerItem";
 import {
   SwipeableListItem,
@@ -15,15 +17,25 @@ import {
 } from "react-swipeable-list";
 import "react-swipeable-list/dist/styles.css";
 import { Notification } from "../../../../Interfaces/Interfaces";
+import { Grid } from "@mui/material";
 
 interface Props {
   notice: Notification;
 }
 
-const NotificationDrawerItem = ({ notice }: Props) => {
-  const maxTitleLength = 8;
+const notificationTypes: Record<string, number[]> = {
+  "ett högre bud": [1, 2],
+  "grattis": []
+}
 
-  const handleToAuction = () => {};
+const NotificationDrawerItem = ({ notice }: Props) => {
+  const maxTitleLength = 100;
+  let order: number[] = [1, 2];
+  if (notice.message.includes("ett högre bud")) {
+    order = [2, 1];
+  }
+
+  const handleOnClick = () => {};
 
   const getTime = () => {
     return "3 sek sen";
@@ -34,7 +46,7 @@ const NotificationDrawerItem = ({ notice }: Props) => {
       return str;
     }
     return str.slice(0, num) + "...";
-  }
+  };
 
   const trailingActions = () => (
     <TrailingActions>
@@ -52,18 +64,19 @@ const NotificationDrawerItem = ({ notice }: Props) => {
 
   const renderMsgContent = (
     <StyledInnerWrapper>
-      <span>
-        <StyledAuctionTitle noWrap={true} display="inline">
-          {notice.auction.title
-            && truncateString(
-            notice.auction.title,
-            maxTitleLength
-          )}
-        </StyledAuctionTitle>{" "}
-        <StyledTitle noWrap={false} display="inline">
-          {notice.message}
-        </StyledTitle>
-      </span>
+      <StyledGridContainer container>
+        <StyledAuctionGrid item order={order[0]} xs={4} sm={3} md={2} lg={1}>
+          <StyledAuctionTitle noWrap={true} display="inline">
+            {notice.auction.title &&
+              truncateString(notice.auction.title, maxTitleLength)}
+          </StyledAuctionTitle>
+        </StyledAuctionGrid>
+        <Grid item order={order[1]}>
+          <StyledTitle noWrap={false} display="inline">
+            {notice.message}
+          </StyledTitle>
+        </Grid>
+      </StyledGridContainer>
       <StyledTitle
         sx={{ fontStyle: "italic" }}
         noWrap={true}
@@ -78,7 +91,7 @@ const NotificationDrawerItem = ({ notice }: Props) => {
   return (
     <StyledSwipe>
       <SwipeableListItem trailingActions={trailingActions()}>
-        <StyledWrapper onClick={handleToAuction}>
+        <StyledWrapper onClick={handleOnClick}>
           {renderMsgContent}
         </StyledWrapper>
       </SwipeableListItem>
