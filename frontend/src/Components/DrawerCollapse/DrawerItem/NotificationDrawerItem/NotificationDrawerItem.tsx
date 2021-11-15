@@ -1,14 +1,9 @@
 import {
   StyledWrapper,
-  StyledTitle,
-  StyledInnerWrapper,
   StyledSwipe,
   StyledDelete,
   StyledTrashCan,
   StyledDeleteText,
-  StyledAuctionTitle,
-  StyledGridContainer,
-  StyledAuctionGrid,
 } from "./StyledNotificationDrawerItem";
 import {
   SwipeableListItem,
@@ -17,29 +12,15 @@ import {
 } from "react-swipeable-list";
 import "react-swipeable-list/dist/styles.css";
 import { Notification } from "../../../../Interfaces/Interfaces";
-import { Grid } from "@mui/material";
+import MsgContent from "./MsgContent";
 
 interface Props {
-  notice: Notification;
+  notification: Notification;
 }
 
-const notificationTypes: Record<string, number[]> = {
-  "ett högre bud": [1, 2],
-  "grattis": []
-}
-
-const NotificationDrawerItem = ({ notice }: Props) => {
-  const maxTitleLength = 100;
-  let order: number[] = [1, 2];
-  if (notice.message.includes("ett högre bud")) {
-    order = [2, 1];
-  }
-
+const NotificationDrawerItem = ({ notification }: Props) => {
+  
   const handleOnClick = () => {};
-
-  const getTime = () => {
-    return "3 sek sen";
-  };
 
   const truncateString = (str: string, num: number) => {
     if (str.length <= num) {
@@ -62,37 +43,11 @@ const NotificationDrawerItem = ({ notice }: Props) => {
     </TrailingActions>
   );
 
-  const renderMsgContent = (
-    <StyledInnerWrapper>
-      <StyledGridContainer container>
-        <StyledAuctionGrid item order={order[0]} xs={4} sm={3} md={2} lg={1}>
-          <StyledAuctionTitle noWrap={true} display="inline">
-            {notice.auction.title &&
-              truncateString(notice.auction.title, maxTitleLength)}
-          </StyledAuctionTitle>
-        </StyledAuctionGrid>
-        <Grid item order={order[1]}>
-          <StyledTitle noWrap={false} display="inline">
-            {notice.message}
-          </StyledTitle>
-        </Grid>
-      </StyledGridContainer>
-      <StyledTitle
-        sx={{ fontStyle: "italic" }}
-        noWrap={true}
-        display="inline"
-        align="right"
-      >
-        {getTime()}
-      </StyledTitle>
-    </StyledInnerWrapper>
-  );
-
   return (
     <StyledSwipe>
       <SwipeableListItem trailingActions={trailingActions()}>
         <StyledWrapper onClick={handleOnClick}>
-          {renderMsgContent}
+          <MsgContent auctionTitle={notification.auction.title} message={notification.message} />
         </StyledWrapper>
       </SwipeableListItem>
     </StyledSwipe>

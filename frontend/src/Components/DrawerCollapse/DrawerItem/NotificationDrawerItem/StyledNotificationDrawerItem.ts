@@ -11,6 +11,7 @@ export const StyledWrapper = styled.div`
   background: white;
   margin-bottom: 0.1rem;
   padding: 1.5rem 1rem;
+  box-shadow: 0 5px 20px var(--shadow-color);
   &:first-child {
     margin-top: 0.3rem;
   }
@@ -71,4 +72,9 @@ export const StyledDeleteText = styled.p`
 `;
 
 export const StyledGridContainer = styled(Grid)`
+`;
+
+
+export const StyledColoredText = styled.span`
+  color: var(--green);
 `;
