@@ -4,18 +4,16 @@ import Avatar from "@mui/material/Avatar";
 import CardContent from "@mui/material/CardContent";
 
 export const StyledCard = styled(Card)`
-  max-width: 90%;
-  height: 25vh;
-  margin: 1rem auto;
+  height: 100%;
+  margin: 1rem 0;
   display: grid;
   grid-template-columns: 35% 1fr;
-  &:last-child {
-    margin-bottom: 5rem;
-  }
+
 
   @media (min-width: 769px) {
     width: auto;
-    height: auto;
+    height: 100%;
+    max-height: 202.5px;
   }
 `;
 
@@ -31,7 +29,7 @@ export const StyledImg = styled.img`
     cursor: pointer;
   }
   @media (min-width: 769px) {
-    width: 150px;
+    width: 135px;
     height: auto;
   }
 `;
