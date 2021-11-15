@@ -29,6 +29,7 @@ export const StyledInnerWrapper = styled.div`
 export const StyledTitle = styled(Typography)`
   font-family: var(--font-small-text);
   font-size: small;
+  padding-right: 3px;
 `;
 
 export const StyledAuctionGrid = styled(Grid)`

@@ -44,7 +44,7 @@ const MsgContent = ({ message, auctionTitle }: Props) => {
   const getColoredWord = () => {
     for (let word of Object.keys(coloredWords)) {
       if (message.toLocaleLowerCase().includes(word)) {
-        return message.split(" ").shift();
+        return message.trim().split(" ").shift();
       }
     }
     return "";
@@ -54,13 +54,13 @@ const MsgContent = ({ message, auctionTitle }: Props) => {
   const coloredWord: string = getColoredWord()!;
   //                                         ^ the exclamation mark (non-null assertion operator)
   const removeFirstWord = (str: string) => {
-    return " " + str.substr(str.indexOf(" ") + 1);
+    return " " + str.substr(str.trim().indexOf(" ") + 1);
   };
 
   return (
     <StyledInnerWrapper>
       <StyledGridContainer container>
-        <StyledAuctionGrid item order={order[0]} xs={4} sm={3} md={2} lg={1}>
+        <StyledAuctionGrid item order={order[0]} xs={3} md={2} lg={1}>
           {auctionTitle && (
             <StyledAuctionTitle noWrap={true} display="inline">
               {auctionTitle}
@@ -79,7 +79,7 @@ const MsgContent = ({ message, auctionTitle }: Props) => {
                 {removeFirstWord(message)}
               </>
             ) : (
-              <>{message}</>
+              <>{message + " "}</>
             )}
           </StyledTitle>
         </Grid>
