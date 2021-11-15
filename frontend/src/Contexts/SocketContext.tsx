@@ -39,9 +39,6 @@ const SocketContextProvider = ({ children }: Props) => {
       setIsConnected(true);
     });
   }
-  // socket.on("bid", async function () {
-  //   await getAllAuctions();
-  // });
 
   socket.on("bid", async function (data: BidUpdateSocket) {
     await getHighestBid(data.auction.id);
