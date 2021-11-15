@@ -10,7 +10,6 @@ export const useDrawer = () => useContext(DrawerContext);
 
 const DrawerContextProvider: FC<Props> = ({ children }: Props) => {
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
-  const [chatId, setChatId] = useState();
   const [showChatRoom, setShowChatRoom] = useState(false);
   const toggleDrawer = () => setShowDrawer(!showDrawer);
 
@@ -18,8 +17,6 @@ const DrawerContextProvider: FC<Props> = ({ children }: Props) => {
     showDrawer,
     setShowDrawer,
     toggleDrawer,
-    chatId,
-    setChatId,
     showChatRoom,
     setShowChatRoom,
   };

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDrawer } from "../../../Contexts/DrawerContext";
+import { useChat } from "../../../Contexts/ChatContext";
 import { useMessage } from "../../../Contexts/MessageContext";
 import { useSocket } from "../../../Contexts/SocketContext";
 import {
@@ -12,7 +12,7 @@ import {
 const TextInput = () => {
   const [message, setMessage] = useState("");
   const { createMsg } = useMessage();
-  const { chatId } = useDrawer();
+  const { chatId } = useChat();
   const { socket } = useSocket();
   
 

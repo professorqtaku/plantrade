@@ -26,8 +26,8 @@ interface Props {
 }
 
 const DrawerItem = ({ chat }: Props) => {
-  const { setShowChatRoom, setChatId } = useDrawer();
-  const { setChatTitle } = useChat();
+  const { setShowChatRoom } = useDrawer();
+  const { setChatTitle, setChatId } = useChat();
 
 
   const handleShowMessageView = () => {

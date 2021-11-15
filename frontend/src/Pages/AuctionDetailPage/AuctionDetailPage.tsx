@@ -12,7 +12,6 @@ import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import CommentIcon from "@mui/icons-material/Comment";
 import InputField from "../../Components/InputField/InputField";
-import ImageCarousel from "../../Components/ImageCarousel/ImageCarousel";
 import ExpandableDescriptionBox from "../../Components/ExpandableDesc/ExpandableDescriptionBox";
 import ButtonComp from "../../Components/Button/ButtonComp";
 import AuctionDetailsPageCategories from "../../Components/AuctionDetailsPageCategories/AuctionDetailsPageCategories";
@@ -37,6 +36,7 @@ import {
   StyledCarousel,
 } from "./StyledAuctionDetailPage";
 import { useModal } from "../../Contexts/ModalContext";
+import BidHistoryContainer from '../../Components/BidHistory/BidHistoryContainer';
 
 const AuctionDetailPage = () => {
   const { id }: any = useParams();
@@ -101,10 +101,10 @@ const AuctionDetailPage = () => {
       createdDate: Date.now(),
     };
 
-    const createdBid = await createBid(newBid);
+    await createBid(newBid);
     getHighestBid(auction?.id);
     //rerender the new currently highest bid
-    handleGetAuctionById();
+    // handleGetAuctionById();
     setBid("");
   };
 
@@ -222,8 +222,11 @@ const AuctionDetailPage = () => {
               )}
             </Grid>
             <StyledForm>
-              {whoAmI ? renderBidContent : renderLoginToggle}
-            </StyledForm>
+                {whoAmI ? renderBidContent : renderLoginToggle}
+              </StyledForm>
+            <Grid item xs={12}>
+              <BidHistoryContainer auction={auction} whoAmI={whoAmI} />
+            </Grid>
           </Grid>
         </>
       )}

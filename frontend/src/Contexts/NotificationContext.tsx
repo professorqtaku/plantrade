@@ -16,7 +16,7 @@ const NotificationContextProvider: FC<Props> = ({ children }: Props) => {
     setNotifications([]);
   };
 
-  const getNotifications = async () => {
+  const getNotificationsByCurrentUser = async () => {
     let res: Response = await fetch("/api/notifications");
     if (res.ok && res.status == 200) {
       let newNotifications: Array<Notification> = await res.json();
@@ -26,7 +26,7 @@ const NotificationContextProvider: FC<Props> = ({ children }: Props) => {
 
   const values = {
     notifications,
-    getNotifications,
+    getNotificationsByCurrentUser,
     clearNotifications,
   };
 
