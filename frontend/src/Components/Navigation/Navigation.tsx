@@ -8,6 +8,7 @@ import {
   StyledNotisIcon,
   StyledMsgIcon,
   StyledAccountIcon,
+  StyledBadge,
 } from "./StyledNavigation";
 import { useModal } from "../../Contexts/ModalContext";
 import { useAuth } from "../../Contexts/AuthContext";
@@ -19,6 +20,7 @@ import { useChat } from "../../Contexts/ChatContext";
 import { useNotification } from "../../Contexts/NotificationContext";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import Badge from "@mui/material/Badge";
 
 
 const Navigation = () => {
@@ -115,10 +117,12 @@ const Navigation = () => {
       </StyledInnerWrapper>
 
       <StyledInnerWrapper selected={message}>
-        <StyledMsgIcon
-          selected={message}
-          onClick={() => handleDrawer(setMessage, "message")}
-        />
+        <Badge color="error" variant="dot" invisible={false}>
+          <StyledMsgIcon
+            selected={message}
+            onClick={() => handleDrawer(setMessage, "message")}
+          />
+        </Badge>
       </StyledInnerWrapper>
 
       <StyledInnerWrapper selected={profile}>
