@@ -111,6 +111,17 @@ export const StyledTitle = styled.p`
   margin: 0 0 0 1rem;
 `;
 
+export const StyledCategoriesTitle = styled.p`
+@media (min-width: 700px) {
+  padding-top: 20px;
+}
+
+  font-size: 20px;
+  letter-spacing: 1.5px;
+  margin: 0 0 0 1rem;
+`;
+
+
 export const StyledIconImg = styled.img`
   width: 25px;
 `;

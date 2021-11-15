@@ -15,6 +15,7 @@ import {
   StyledAuctionitem,
   StyledText,
   StyledTitle,
+  StyledCategoriesTitle,
   StyledCarouselWrapper,
   StyledPageWrapper,
   StyledAvatar,
@@ -171,7 +172,7 @@ const HomePage = () => {
       </StyledSearchWrapper>
 
       <StyledPageWrapper>
-        <StyledTitle>Kategorier</StyledTitle>
+        <StyledCategoriesTitle>Kategorier</StyledCategoriesTitle>
         {renderCategories()}
 
         <StyledTitle>Nyheter</StyledTitle>
