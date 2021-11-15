@@ -13,20 +13,22 @@ import {
 import "react-swipeable-list/dist/styles.css";
 import { Notification } from "../../../../Interfaces/Interfaces";
 import MsgContent from "./MsgContent";
+import { useHistory } from "react-router";
+import { useDrawer } from "../../../../Contexts/DrawerContext";
 
 interface Props {
   notification: Notification;
 }
 
 const NotificationDrawerItem = ({ notification }: Props) => {
+  const history = useHistory();
+  const { toggleDrawer } = useDrawer()
   
-  const handleOnClick = () => {};
-
-  const truncateString = (str: string, num: number) => {
-    if (str.length <= num) {
-      return str;
+  const handleOnClick = () => {
+    if (notification.auction && notification.auction.id) {
+      history.push("/auctions/" + notification.auction.id)
+      toggleDrawer();
     }
-    return str.slice(0, num) + "...";
   };
 
   const trailingActions = () => (
