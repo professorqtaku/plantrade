@@ -38,10 +38,9 @@ const Navigation = () => {
     setProfile,
     setNotis,
     setMessage,
-    invisibleMsgBadge,
   } = useNav();
   const { toggleLoginModal } = useModal();
-  const { whoAmI } = useAuth();
+  const { whoAmI, invisibleMsgBadge } = useAuth();
   const { showDrawer, setShowDrawer } = useDrawer();
   const { clearFilter } = useSearch();
   const { getChatsByCurrentUser } = useChat();

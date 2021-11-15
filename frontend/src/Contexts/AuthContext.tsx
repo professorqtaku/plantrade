@@ -1,7 +1,8 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { useSnackBar } from "./SnackBarContext";
-import {User} from '../Interfaces/Interfaces'
+import { User } from "../Interfaces/Interfaces";
 import { useChat } from "./ChatContext";
+import { useNav } from "./NavigationContext";
 
 interface Props {
   children?: JSX.Element;
@@ -15,7 +16,8 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
   const [wrongPassword, setWrongPassword] = useState(false);
   const [userExists, setUserExists] = useState(false);
   const { addSnackbar } = useSnackBar();
-  const { checkReadMsg } = useChat();
+  const { checkReadMsg, unReadMsg } = useChat();
+  const [invisibleMsgBadge, setInvisibleMsgBadge] = useState(true);
 
   useEffect(() => {
     whoIsOnline();
@@ -56,7 +58,10 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
       whoIsOnline();
       setWrongPassword(false);
       addSnackbar("Inloggnig lyckades!");
-      checkReadMsg();
+      const readMsg = await checkReadMsg();
+      if (readMsg === 0) {
+        setInvisibleMsgBadge(false);
+      }
       return true;
     }
   };
@@ -93,10 +98,11 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
     userExists,
     whoIsOnline,
     whoAmI,
+    invisibleMsgBadge,
+    setInvisibleMsgBadge,
   };
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
 };
 
 export default AuthContextProvider;
-

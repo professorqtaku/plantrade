@@ -1,5 +1,4 @@
 import { createContext, useContext, useState } from "react";
-import { useNav } from "./NavigationContext";
 
 type Props = {
   children?: JSX.Element;
@@ -12,9 +11,8 @@ export const useChat = () => useContext(ChatContext);
 const ChatContextProvider = ({ children }: Props) => {
   const [chatId, setChatId] = useState();
   const [chats, setChats] = useState([]);
-  const [chatTitle, setChatTitle] = useState('');
+  const [chatTitle, setChatTitle] = useState("");
   const [unReadMsg, setUnReadMsg] = useState();
-  const { setInvisibleMsgBadge } = useNav();
 
   const getChatsByCurrentUser = async () => {
     let res: Response = await fetch(`/api/chats`);
@@ -41,14 +39,12 @@ const ChatContextProvider = ({ children }: Props) => {
   };
 
   const checkReadMsg = async () => {
-    console.log('inne')
-    await fetch("/api/chats/checkReadMessages")
-      .then((res) => res.json())
-      .then((data) => {
-        setUnReadMsg(data)
-        data === 0 && setInvisibleMsgBadge(false);
-      });
-  }
+    console.log("inne");
+    let res: Response = await fetch("/api/chats/checkReadMessages");
+    const readMsg = await res.json();
+    setUnReadMsg(readMsg);
+    return readMsg;
+  };
 
   const values = {
     chatId,

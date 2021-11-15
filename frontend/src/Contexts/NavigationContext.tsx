@@ -14,7 +14,6 @@ const NavigationContextProvider: FC<Props> = ({ children }: Props) => {
   const [notis, setNotis] = useState<boolean>(false);
   const [message, setMessage] = useState<boolean>(false);
   const [profile, setProfile] = useState<boolean>(false);
-  const [invisibleMsgBadge, setInvisibleMsgBadge] = useState(true);
 
   const handleSelect = (
     select: React.Dispatch<React.SetStateAction<boolean>>
@@ -39,8 +38,6 @@ const NavigationContextProvider: FC<Props> = ({ children }: Props) => {
     setNotis,
     setMessage,
     setProfile,
-    setInvisibleMsgBadge,
-    invisibleMsgBadge,
   };
 
   return (
