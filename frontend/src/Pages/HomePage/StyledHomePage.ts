@@ -96,7 +96,7 @@ export const StyledIconImageItem = styled(Card)`
 
 export const StyledAuctionitem = styled(Card)`
   background: #FFF;
-  margin: 25px 5px 0 5px;
+  /* margin: 25px 5px 0 5px; */
 `;
 
 export const StyledText = styled.p`
@@ -155,7 +155,8 @@ export const StyledNewsImg = styled.img`
 `;
 
 export const StyledAuctionImg = styled.img`
-  height: 7rem;
+  height: 100px;
+  width: auto;
   border-radius: 0 0 3px 3px;
 `;
 
@@ -167,7 +168,7 @@ export const StyledNewsWrapper = styled.div`
 `; 
 
 export const StyledSoonEndingWrapper = styled.div`
-  padding: 0 10px;
+  margin: 20px;
   display: grid;
   align-items: center;
   justify-items: center;

@@ -120,10 +120,10 @@ const HomePage = () => {
     <StyledSoonEndingWrapper>
       <Carousel
         isRTL={true}
-        itemsToShow={3}
+        itemsToShow={4}
         outerSpacing={0}
         pagination={false}
-        initialFirstItem={3}
+        initialFirstItem={0}
       >
         {auctions &&
           auctions.map((auction: Auction) => {
