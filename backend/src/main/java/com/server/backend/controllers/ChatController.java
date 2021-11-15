@@ -1,6 +1,7 @@
 package com.server.backend.controllers;
 
 import com.server.backend.entities.Chat;
+import com.server.backend.entities.Message;
 import com.server.backend.services.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -40,5 +41,10 @@ public class ChatController {
         catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @GetMapping("/checkReadMessages")
+    public int checkReadMessages() {
+        return chatService.checkReadMessages();
     }
 }
