@@ -11,6 +11,7 @@ export const StyledWrapper = styled.div`
 `;
 
 export const StyledContentWrapper = styled.div`
+  padding: 20px;
   margin: 0 auto;
   `;
 

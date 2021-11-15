@@ -93,13 +93,13 @@ const AuctionPage = () => {
         </StyledSearchFieldWrapper>
       </StyledSearchWrapper>
       <StyledContentWrapper>
-      <Grid container spacing={2} rowSpacing={2}>
+      <Grid container spacing={1} rowSpacing={1}>
         {auctions && auctions.length > 0 ? (
           auctions.map((auction: Auction, i: number) => {
             const isLastElement = auctions.length === i + 1;
             {
               return isLastElement ? (
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} sm={6} md={4}>
                 <AuctionCard
                   key={auction.id}
                   auction={auction}
@@ -108,7 +108,7 @@ const AuctionPage = () => {
                 />
                 </Grid>
               ) : (
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} sm={6} md={4}>
                 <AuctionCard
                   key={auction.id}
                   auction={auction}

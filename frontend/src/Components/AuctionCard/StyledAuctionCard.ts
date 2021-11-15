@@ -19,7 +19,7 @@ export const StyledCard = styled(Card)`
 
 export const StyledCardContent = styled(CardContent)`
   display: grid;
-  grid-template-rows: 30% 1fr 20%;
+  grid-template-rows: 35% 1fr auto;
 `;
 
 export const StyledImg = styled.img`
@@ -39,6 +39,7 @@ export const StyledTitle = styled.p`
   text-transform: uppercase;
   letter-spacing: 1.5px;
   margin-top: 0.3rem;
+  padding-bottom: 10px;
   &:hover {
     cursor: pointer;
   }
