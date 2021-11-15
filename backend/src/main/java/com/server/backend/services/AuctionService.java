@@ -64,7 +64,8 @@ public class AuctionService {
                         Bid highestBid = bidService.getHighestBid(auction.getId());
                         auction.setWinner(highestBid.getUser());
                         notificationService.createNotificationForWinner(auction, highestBid.getUser());
-                        notificationService.createNotificationForBidders(auction.getBids(), highestBid.getPrice());
+                        notificationService.createNotificationForBidders(auction.getBids(), highestBid.getPrice(), highestBid);
+                        notificationService.createEndNotificationForHost(auction, highestBid.getPrice());
                     }
                 } else {
                     auction.setStatus(Status.NOT_SOLD);

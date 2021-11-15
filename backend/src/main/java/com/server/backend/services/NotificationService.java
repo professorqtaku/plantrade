@@ -71,24 +71,38 @@ public class NotificationService {
     socketModule.emit("notification", notification);
   }
 
-  public void createNotificationForBidders(List<Bid> bids, double price) {
+  public void createNotificationForBidders(List<Bid> bids, double price, Bid highestBidder) {
     List<Long> ids = new ArrayList<>();
 
     for(Bid bid : bids) {
-      if (!ids.contains(bid.getUser().getId())) {
-        Notification notification = Notification.builder()
+      if (bid.getUser() != highestBidder.getUser()) {
+        if (!ids.contains(bid.getUser().getId())) {
+          Notification notification = Notification.builder()
                 .auction(bid.getAuction())
                 .user(bid.getUser())
                 .message(" avslutades på " + price + " SEK")
                 .isRead(false)
                 .createdDate(new Date())
                 .build();
-        notificationRepository.save(notification);
-        socketModule.emit("notification", notification);
+          notificationRepository.save(notification);
+          socketModule.emit("notification", notification);
 
-        ids.add(bid.getUser().getId());
+          ids.add(bid.getUser().getId());
+        }
       }
     }
+  }
+
+  public void createEndNotificationForHost(Auction auction, double price) {
+    Notification notification = Notification.builder()
+            .auction(auction)
+            .user(auction.getHost())
+            .message(" avslutades på " + price + " SEK")
+            .isRead(false)
+            .createdDate(new Date())
+            .build();
+    notificationRepository.save(notification);
+    socketModule.emit("notification", notification);
   }
 
   public List<Notification> getNotificationsByUser() {
