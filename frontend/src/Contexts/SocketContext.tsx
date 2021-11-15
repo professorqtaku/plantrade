@@ -47,7 +47,6 @@ const SocketContextProvider = ({ children }: Props) => {
 
   socket.on("leave", (data: string) => {
     console.log("Client left room");
-    setIsRead(false);
     });
 
   socket.on("message", async (data: any) => {
