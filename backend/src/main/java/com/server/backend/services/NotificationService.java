@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -37,6 +38,7 @@ public class NotificationService {
             .user(auction.getHost())
             .message("har fått ett nytt bud: " + price + " SEK")
             .isRead(false)
+            .createdDate(new Date())
             .build();
 
     notificationRepository.save(notification);
@@ -49,6 +51,7 @@ public class NotificationService {
               .user(user)
               .message("Någon har lagt ett högre bud på: ")
               .isRead(false)
+              .createdDate(new Date())
               .build();
 
       notificationRepository.save(notification);
@@ -61,6 +64,7 @@ public class NotificationService {
             .user(user)
             .message("Grattis du vann auktionen: ")
             .isRead(false)
+            .createdDate(new Date())
             .build();
 
     notificationRepository.save(notification);
@@ -73,11 +77,12 @@ public class NotificationService {
     for(Bid bid : bids) {
       if (!ids.contains(bid.getUser().getId())) {
         Notification notification = Notification.builder()
-               .auction(bid.getAuction())
-               .user(bid.getUser())
-               .message(" avslutades på " + price + " SEK")
-               .isRead(false)
-               .build();
+                .auction(bid.getAuction())
+                .user(bid.getUser())
+                .message(" avslutades på " + price + " SEK")
+                .isRead(false)
+                .createdDate(new Date())
+                .build();
         notificationRepository.save(notification);
         socketModule.emit("notification", notification);
 
