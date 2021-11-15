@@ -38,6 +38,7 @@ const Navigation = () => {
     setProfile,
     setNotis,
     setMessage,
+    invisibleMsgBadge,
   } = useNav();
   const { toggleLoginModal } = useModal();
   const { whoAmI } = useAuth();
@@ -117,7 +118,7 @@ const Navigation = () => {
       </StyledInnerWrapper>
 
       <StyledInnerWrapper selected={message}>
-        <Badge color="error" variant="dot" invisible={false}>
+        <Badge color="error" variant="dot" invisible={invisibleMsgBadge}>
           <StyledMsgIcon
             selected={message}
             onClick={() => handleDrawer(setMessage, "message")}
