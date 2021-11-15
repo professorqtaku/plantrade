@@ -36,11 +36,12 @@ export const useSearch = () => useContext(SearchContext);
     setIsRerender(!isRerender);
     setSelectedSortTime(sortByTimes[2]);
     setAuctions([]);
-    getAuctionsByOptions(0);
+    getAuctionsByOptions();
   };
 
-  const getAuctionsByOptions = async (page: number, search?: SearchObject) => {
-    let auctionResult: Array<Auction> = [];
+    const getAuctionsByOptions = async (pageNumber?: number, search?: SearchObject) => {
+      const page = pageNumber ?? 0;
+      let auctionResult: Array<Auction> = [];
     
     const option: SearchObject = {
       title: search?.title ? search?.title : searchText,

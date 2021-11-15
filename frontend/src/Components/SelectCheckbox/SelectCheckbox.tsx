@@ -28,6 +28,7 @@ const SelectCheckbox = ({
   const handleChange = (event: BaseSyntheticEvent, value: Category[]) => {
     setSelected(value);
   };
+  
 
   return (
     <Autocomplete
@@ -37,7 +38,7 @@ const SelectCheckbox = ({
       options={options}
       onChange={(event, value) => handleChange(event, value)}
       disableCloseOnSelect
-      defaultValue={selected}
+      value={selected || " "}
       getOptionLabel={(option) => option.name}
       renderTags={
         (tagValue, getTagProps) => {

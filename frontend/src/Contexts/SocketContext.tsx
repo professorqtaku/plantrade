@@ -1,6 +1,5 @@
 import { createContext, useContext, useState } from "react";
 import io from "socket.io-client";
-import { useAuction } from "./AuctionContext";
 import { useAuth } from "./AuthContext";
 import { useSnackBar } from "./SnackBarContext";
 import { useNotification } from "./NotificationContext";
@@ -9,6 +8,8 @@ import { useMessage } from "./MessageContext";
 import { useDrawer } from "./DrawerContext";
 import { useBid } from "./BidContext";
 
+import { useSearch } from "./SearchContext";
+import { useChat } from "./ChatContext";
 
 type Props = {
   children?: JSX.Element;
@@ -24,13 +25,13 @@ const SocketContextProvider = ({ children }: Props) => {
   const endpoint = "http://localhost:9092";
   const socket = io(endpoint, { upgrade: false, transports: ["websocket"] });
   const [isConnected, setIsConnected] = useState(false);
-  const { getAllAuctions } = useAuction();
   const { getHighestBid } = useBid();
+  const { getAuctionsByOptions } = useSearch();
   const { whoAmI } = useAuth();
   const { addSnackbar } = useSnackBar();
-  const { getNotifications } = useNotification();
+  const { getNotificationsByCurrentUser } = useNotification();
   const { getAllChatMsg } = useMessage();
-  const { chatId } = useDrawer();
+  const { chatId } = useChat();
 
   if (!isConnected) {
     socket.on("connect", () => {
@@ -43,8 +44,8 @@ const SocketContextProvider = ({ children }: Props) => {
   // });
 
   socket.on("bid", async function (data: BidUpdateSocket) {
-    console.log('Received bid', data);
     await getHighestBid(data.auction.id);
+    await getAuctionsByOptions();
   });
 
   socket.on("join", (data: string) => {
@@ -59,7 +60,7 @@ const SocketContextProvider = ({ children }: Props) => {
   socket.on("notification", (data: Notification) => {
     if (whoAmI?.id === data.user.id) {
       addSnackbar(data);
-      getNotifications();
+      getNotificationsByCurrentUser();
     }
   });
 
