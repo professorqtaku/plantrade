@@ -100,10 +100,10 @@ const AuctionDetailPage = () => {
       createdDate: Date.now(),
     };
 
-    const createdBid = await createBid(newBid);
+    await createBid(newBid);
     getHighestBid(auction?.id);
     //rerender the new currently highest bid
-    handleGetAuctionById();
+    // handleGetAuctionById();
     setBid("");
   };
 
