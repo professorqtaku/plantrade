@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { useSnackBar } from "./SnackBarContext";
 import {User} from '../Interfaces/Interfaces'
+import { useChat } from "./ChatContext";
 
 interface Props {
   children?: JSX.Element;
@@ -14,6 +15,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
   const [wrongPassword, setWrongPassword] = useState(false);
   const [userExists, setUserExists] = useState(false);
   const { addSnackbar } = useSnackBar();
+  const { checkReadMsg } = useChat();
 
   useEffect(() => {
     whoIsOnline();
@@ -54,6 +56,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
       whoIsOnline();
       setWrongPassword(false);
       addSnackbar("Inloggnig lyckades!");
+      checkReadMsg();
       return true;
     }
   };
