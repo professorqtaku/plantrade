@@ -54,6 +54,12 @@ const SocketContextProvider = ({ children }: Props) => {
     await getAllChatMsg(chatId);
   });
 
+    socket.on("newMsg", async (data: any) => {
+      if (data == whoAmI.id) {
+        console.log('works')
+      }
+    });
+
   socket.on("notification", (data: Notification) => {
     if (whoAmI?.id === data.user.id) {
       addSnackbar(data);

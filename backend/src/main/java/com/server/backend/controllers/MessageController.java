@@ -25,6 +25,8 @@ public class MessageController {
             Message saved = messageService.sendMessage(message, chatId);
             if (saved != null) {
                 socketModule.emitToRoom(chatId + "", "message", message.getWriter());
+                var reciver = message.getWriter().getId() == message.getChat().getCreator().getId() ? message.getChat().getReceiver().getId() : message.getChat().getCreator().getId();
+                socketModule.emit("newMsg", reciver + "");
                 return ResponseEntity.ok(saved);
             }
         } catch (Exception e) {

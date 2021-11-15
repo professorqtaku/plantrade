@@ -13,7 +13,6 @@ const TextInput = () => {
   const [message, setMessage] = useState("");
   const { createMsg } = useMessage();
   const { chatId } = useChat();
-  const { socket } = useSocket();
   
 
 
