@@ -45,8 +45,12 @@ const SocketContextProvider = ({ children }: Props) => {
     }
   });
 
-  socket.on("leave", (data: string) => {
+  socket.on("leave", async (data: number) => {
     console.log("Client left room");
+      if (data === 1) {
+        await getAllChatMsg(chatId);
+      }
+    setIsRead(false);
     });
 
   socket.on("message", async (data: any) => {

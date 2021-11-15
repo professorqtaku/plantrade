@@ -57,7 +57,7 @@ const Message = () => {
       )}
       {index === messages.length - 1 &&
       message.writer.id === whoAmI.id &&
-      (isRead || message.isRead) ? (
+      (message.isRead || isRead) ? (
         renderDateAndRead(message)
       ) : (
         <StyledDateOrRead sender={message.writer.id === whoAmI.id}>
