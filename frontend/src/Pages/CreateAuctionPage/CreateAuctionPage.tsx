@@ -1,11 +1,11 @@
 import {
   StyledWrapper,
   StyledForm,
+  StyledEndDate,
   StyledTitle,
   StyledButton,
   StyledText
 } from "./StyledCreateAuctionPage";
-import Grid from '@mui/material/Grid';
 import AuctionDatePicker from "../../Components/AuctionDatePicker/AuctionDatePicker";
 import SelectBar from "../../Components/SelectBar/SelectBar";
 import InputField from "../../Components/InputField/InputField";
@@ -78,18 +78,16 @@ const CreateAuctionPage = () => {
   return (
     <StyledWrapper>
       <StyledTitle>Skapa auktion</StyledTitle>
-      <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
       <StyledForm onSubmit={handleAddAuction}>
-        <Grid item>
         <InputField
           required
           label="Titel"
           value={title}
           updateState={setTitle}
           inputProps={{ maxLength: 20 }}
-            /></Grid>
-        <Grid item>  
+            />
             <TextField
+              margin="dense"
               required
               label="Beskrivning"
               multiline
@@ -97,40 +95,31 @@ const CreateAuctionPage = () => {
               value={desc}
               onChange={(e) => setDesc(e.target.value)}
               style={{width: '100%'}}
-            /></Grid>
-          <Grid item>  
+            />
         <InputField
+          margintop={5}
           required
           label="Start pris"
           type="number"
           value={price}
           updateState={setPrice}
-            /></Grid>
-          <Grid item xs={12}>  
-        <label>
+            />
+        <StyledEndDate>
           <StyledText>Välj ett slutdatum</StyledText>
           <AuctionDatePicker endDate={setEndDate} />
-        </label>
-          </Grid>
-          <Grid item>  
+        </StyledEndDate>
             <SelectBar setCategoriesToUse={setCategoriesToUse} />
-          </Grid>
-          <Grid item>  
             <FileUpload
               formDataPreview={formDataPreview}
               setFormDataPreview={setFormDataPreview}
               errorMsg={errorMsg}
               setErrorMsg={setErrorMsg}
             />
-          </Grid>
-          <Grid item> 
         <StyledButton type="submit" variant="contained">
           {" "}
           Skapa auktion{" "}
         </StyledButton>
-        </Grid>
       </StyledForm>
-      </Grid>
     </StyledWrapper>
   );
 };
