@@ -122,10 +122,12 @@ const AuctionCard = ({ auction, fetchAuctions, forwardRef}: Props) => {
 
   return (
     <StyledCard ref={forwardRef}>
+      <div style={{overflow: 'hidden'}}>
       <StyledImg
-        src="https://i.pinimg.com/564x/9e/8b/dc/9e8bdc74df3cb2f87fae194a18ba569a.jpg"
+        src={auction.images.length ? auction.images[0].path : `https://i.pinimg.com/564x/9e/8b/dc/9e8bdc74df3cb2f87fae194a18ba569a.jpg`}
         onClick={toDetailPage}
       />
+      </div>
       <StyledCardContent>
         <div>
           <StyledAvatar>{auction.title.charAt(0)}</StyledAvatar>
