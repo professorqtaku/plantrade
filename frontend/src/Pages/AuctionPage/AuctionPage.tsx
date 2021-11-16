@@ -4,9 +4,9 @@ import {
   StyledContentWrapper,
   StyledSearchWrapper,
   StyledSearchFieldWrapper,
-  StyledEndAuctions
+  StyledEndAuctions,
 } from "./StyledAuctionPage";
-import Grid from '@mui/material/Grid';
+import Grid from "@mui/material/Grid";
 import AuctionCard from "../../Components/AuctionCard/AuctionCard";
 import { useEffect, useRef, useCallback, useState } from "react";
 import SearchForm from "../../Components/Search/SearchForm/SearchForm";
@@ -27,8 +27,8 @@ const AuctionPage = () => {
   const { setAuction, handleSelect } = useNav();
   const observer = useRef<IntersectionObserver>();
   const [pageNumber, setPageNumber] = useState<number>(0);
-  const [endOfScroll, setEndOfScroll] = useState('');
-  
+  const [endOfScroll, setEndOfScroll] = useState("");
+
   useEffect(() => {
     handleGetAuctions();
     handleSelect(setAuction);
@@ -39,18 +39,18 @@ const AuctionPage = () => {
   }, []);
 
   useEffect(() => {
-    if(!auctions.length){
+    if (!auctions.length) {
       setPageNumber(0);
     }
-  }, [auctions])
+  }, [auctions]);
 
   useEffect(() => {
     if (lastItem) {
-      setEndOfScroll('Inga fler auktioner');
+      setEndOfScroll("Inga fler auktioner");
     } else {
-      setEndOfScroll('');
+      setEndOfScroll("");
     }
-  }, [lastItem])
+  }, [lastItem]);
 
   const handleGetAuctions = async () => {
     if (auctions.length <= 0) {
@@ -74,7 +74,6 @@ const AuctionPage = () => {
         if (entries[0].isIntersecting) {
           setPageNumber(pageNumber + 1);
           handleScroll();
-          
         }
       });
       if (node) {
@@ -93,41 +92,55 @@ const AuctionPage = () => {
         </StyledSearchFieldWrapper>
       </StyledSearchWrapper>
       <StyledContentWrapper>
-      <Grid container spacing={1} rowSpacing={1}>
-        {auctions && auctions.length > 0 ? (
-          auctions.map((auction: Auction, i: number) => {
-            const isLastElement = auctions.length === i + 1;
-            {
-              return isLastElement ? (
-            <Grid item xs={12} sm={6} md={4}>
-                <AuctionCard
-                  key={auction.id}
-                  auction={auction}
-                  fetchAuctions={handleGetAuctions}
-                  forwardRef={handleLastAuction}
-                />
-                </Grid>
-              ) : (
-            <Grid item xs={12} sm={6} md={4}>
-                <AuctionCard
-                  key={auction.id}
-                  auction={auction}
-                  fetchAuctions={handleGetAuctions}
-                />
-                </Grid>
-              );
-            }
-          })
-        ) : noContent ? (
-          <p>Inga resultat av din sökning :/</p>
-        ) : (
-          <Box sx={{ display: "flex" }}>
-            <CircularProgress sx={{ color: "var(--light-green)" }} />
-          </Box>
-        )}
-            <Grid item xs={12} md={12}>
-        {endOfScroll && <StyledEndAuctions>{endOfScroll}</StyledEndAuctions>}
-        </Grid>
+        <Grid container spacing={1} rowSpacing={1}>
+          {auctions && auctions.length > 0 ? (
+            auctions.map((auction: Auction, i: number) => {
+              const isLastElement = auctions.length === i + 1;
+              {
+                return isLastElement ? (
+                  <Grid
+                    item
+                    xs={12}
+                    sm={6}
+                    md={4}
+                    key={`auction-card-${auction.id}`}
+                  >
+                    <AuctionCard
+                      key={`auction-card-${auction.id}`}
+                      auction={auction}
+                      fetchAuctions={handleGetAuctions}
+                      forwardRef={handleLastAuction}
+                    />
+                  </Grid>
+                ) : (
+                  <Grid
+                    item
+                    xs={12}
+                    sm={6}
+                    md={4}
+                    key={`auction-card-${auction.id}`}
+                  >
+                    <AuctionCard
+                      key={`auction-card-${auction.id}`}
+                      auction={auction}
+                      fetchAuctions={handleGetAuctions}
+                    />
+                  </Grid>
+                );
+              }
+            })
+          ) : noContent ? (
+            <p>Inga resultat av din sökning :/</p>
+          ) : (
+            <Box sx={{ display: "flex" }}>
+              <CircularProgress sx={{ color: "var(--light-green)" }} />
+            </Box>
+          )}
+          <Grid item xs={12} md={12}>
+            {endOfScroll && (
+              <StyledEndAuctions>{endOfScroll}</StyledEndAuctions>
+            )}
+          </Grid>
         </Grid>
       </StyledContentWrapper>
     </StyledWrapper>
