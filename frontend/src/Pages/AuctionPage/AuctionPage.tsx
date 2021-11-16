@@ -6,6 +6,7 @@ import {
   StyledSearchFieldWrapper,
   StyledEndAuctions
 } from "./StyledAuctionPage";
+import Grid from '@mui/material/Grid';
 import AuctionCard from "../../Components/AuctionCard/AuctionCard";
 import { useEffect, useRef, useCallback, useState } from "react";
 import SearchForm from "../../Components/Search/SearchForm/SearchForm";
@@ -92,23 +93,28 @@ const AuctionPage = () => {
         </StyledSearchFieldWrapper>
       </StyledSearchWrapper>
       <StyledContentWrapper>
+      <Grid container spacing={1} rowSpacing={1}>
         {auctions && auctions.length > 0 ? (
           auctions.map((auction: Auction, i: number) => {
             const isLastElement = auctions.length === i + 1;
             {
               return isLastElement ? (
+            <Grid item xs={12} sm={6} md={4}>
                 <AuctionCard
                   key={auction.id}
                   auction={auction}
                   fetchAuctions={handleGetAuctions}
                   forwardRef={handleLastAuction}
                 />
+                </Grid>
               ) : (
+            <Grid item xs={12} sm={6} md={4}>
                 <AuctionCard
                   key={auction.id}
                   auction={auction}
                   fetchAuctions={handleGetAuctions}
                 />
+                </Grid>
               );
             }
           })
@@ -119,7 +125,10 @@ const AuctionPage = () => {
             <CircularProgress sx={{ color: "var(--light-green)" }} />
           </Box>
         )}
+            <Grid item xs={12} md={12}>
         {endOfScroll && <StyledEndAuctions>{endOfScroll}</StyledEndAuctions>}
+        </Grid>
+        </Grid>
       </StyledContentWrapper>
     </StyledWrapper>
   );

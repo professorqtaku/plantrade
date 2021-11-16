@@ -105,7 +105,7 @@ function FileUpload({formDataPreview, setFormDataPreview, errorMsg, setErrorMsg}
           multiple
         type="file"
         />
-        <Button variant="contained" component="span" style={{width: '100%'}}>
+        <Button variant="contained" component="span" style={{width: '100%', marginTop: '10px'}}>
           Ladda upp bilder (max {maxPics} st)
         </Button>
         {errorMsg && <p style={{textAlign: 'center'}}>Du måste välja minst en bild</p>}

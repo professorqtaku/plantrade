@@ -1,23 +1,31 @@
 :root {
-  --font-text: 'Abhaya Libre', serif;
-  --font-title: 'Abel', sans-serif;
-  --font-normal-text: 'ABeeZee', sans-serif;
-  --font-small-text: 'Inter', sans-serif;
-  --yellow: #FFE500;
-  --blue: #4C8FEE;
-  --red: #D38389;
+  --font-text: "Abhaya Libre", serif;
+  --font-title: "Abel", sans-serif;
+  --font-normal-text: "ABeeZee", sans-serif;
+  --font-small-text: "Inter", sans-serif;
+  --yellow: #ffe500;
+  --blue: #4c8fee;
+  --red: #d38389;
   --green: #619463;
-  --light-yellow: #FFF6AA;
-  --light-green: #8EA08E;
+  --light-yellow: #fff6aa;
+  --light-green: #8ea08e;
   --dark-green: #122522;
-  --dark-grey: #36455A;
-  --background-color: #F8F8F8;
+  --dark-grey: #36455a;
+  --background-color: #f8f8f8;
   --grey: #868686;
   --status-green: #619463;
-  --status-yellow: #FFE500;
-  --status-red: #E44929;
+  --status-yellow: #ffe500;
+  --status-red: #e44929;
+  --status-yellow: #ffe500;
+  --status-red: #e44929;
   --shadow-color: rgb(0 0 0 / 0.2);
   --box-shadow: 0 10px 10px rgb(0 0 0 / 0.2);
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
 }
 
 p {
@@ -48,17 +56,18 @@ code {
   margin: 0;
 }
 
-.cNNJIt, .jRFJkP{
-  width: 15px!important;
-  min-width: 15px!important;
+.cNNJIt,
+.jRFJkP {
+  width: 15px !important;
+  min-width: 15px !important;
 }
 
-.rec.rec-arrow:focus{
+.rec.rec-arrow:focus {
   outline: none;
 }
 
 .rec.rec-arrow:focus:enabled,
-.rec.rec-arrow:hover:enabled  {
+.rec.rec-arrow:hover:enabled {
   background-color: transparent;
   color: black;
   box-shadow: none;

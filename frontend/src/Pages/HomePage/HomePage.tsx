@@ -15,6 +15,7 @@ import {
   StyledAuctionitem,
   StyledText,
   StyledTitle,
+  StyledCategoriesTitle,
   StyledCarouselWrapper,
   StyledPageWrapper,
   StyledAvatar,
@@ -119,10 +120,10 @@ const HomePage = () => {
     <StyledSoonEndingWrapper>
       <Carousel
         isRTL={true}
-        itemsToShow={3}
+        itemsToShow={4}
         outerSpacing={0}
         pagination={false}
-        initialFirstItem={3}
+        initialFirstItem={0}
       >
         {auctions &&
           auctions.map((auction: Auction) => {
@@ -171,7 +172,7 @@ const HomePage = () => {
       </StyledSearchWrapper>
 
       <StyledPageWrapper>
-        <StyledTitle>Kategorier</StyledTitle>
+        <StyledCategoriesTitle>Kategorier</StyledCategoriesTitle>
         {renderCategories()}
 
         <StyledTitle>Nyheter</StyledTitle>

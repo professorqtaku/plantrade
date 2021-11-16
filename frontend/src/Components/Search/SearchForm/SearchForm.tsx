@@ -42,7 +42,6 @@ const SearchForm = ({ searchWord }: Props) => {
 
   return (
     <StyledForm autoComplete="off" onSubmit={search}>
-      <div>
         <SearchField
           searchText={searchText}
           setSearchText={setSearchText}
@@ -59,7 +58,6 @@ const SearchForm = ({ searchWord }: Props) => {
           selectedCategories={selectedCategories}
           setSelectedCategories={setSelectedCategories}
         />
-      </div>
     </StyledForm>
   );
 };
