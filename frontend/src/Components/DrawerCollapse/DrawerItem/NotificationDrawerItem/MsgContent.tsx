@@ -7,11 +7,20 @@ import {
   StyledAuctionGrid,
   StyledColoredText,
 } from "./StyledNotificationDrawerItem";
+import * as moment from 'moment';
 import { Grid } from "@mui/material";
+import {
+  ONE_DAY_IN_MILLIS,
+  ONE_HOUR_IN_MILLIS,
+  ONE_MINUTE_IN_MILLIS,
+  ONE_SECOND_IN_MILLIS,
+} from "../../../AuctionCard/auctionUtils";
 
 interface Props {
   message: string;
   auctionTitle?: string;
+  time?: Date;
+  now: Date;
 }
 // order = [order of title, order of message]
 const notificationTypes: Record<string, number[]> = {
@@ -26,9 +35,35 @@ const coloredWords: Record<string, string> = {
   "avslutades": "var(--red)"
 }
 
-const MsgContent = ({ message, auctionTitle }: Props) => {
+const MsgContent = ({ message, auctionTitle, time, now }: Props) => {
   const getTime = () => {
-    return "3 sek sen";
+    if (time) {
+      const createdDate = new Date(time);
+      const difference = now.getTime() - createdDate.getTime();
+      const days = Math.floor(difference / ONE_DAY_IN_MILLIS);
+
+      if (days > 30) {
+        const formattedDate = moment(createdDate).format("DD/MM/YYYY");
+        return `${formattedDate}`;
+      }
+      if (days > 0) {
+        return `${days} d sen`;
+      }
+
+      const hours = Math.floor(difference / ONE_HOUR_IN_MILLIS);
+      if (hours > 0) {
+        return `${hours} h sen`;
+      }
+
+      const minutes = Math.floor(difference / ONE_MINUTE_IN_MILLIS);
+      if (minutes > 0) {
+        return `${minutes} m sen`;
+      }
+
+      const seconds = Math.floor(difference / ONE_SECOND_IN_MILLIS);
+      return `${seconds} s sen`;
+    }
+    return "";
   };
 
   const getOrder = () => {
