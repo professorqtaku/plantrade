@@ -59,7 +59,7 @@ export interface Message {
   id: number;
   writer: User;
   message: string;
-  createdDate: Date;
+  createdDate: string;
   isRead: boolean;
   chat: Chat;
 }

@@ -17,11 +17,12 @@ const DrawerContent = () => {
         ? chats.map((chat: Chat) => (
             <DrawerItem key={`chat-item-${chat.id}`} chat={chat} />
           ))
-        : notifications && notifications.length > 0 &&
-          notifications.map((notice: Notification) => (
+        : notifications &&
+          notifications.length > 0 &&
+          notifications.map((notification: Notification) => (
             <NotificationDrawerItem
-              key={`notification-item-${notice.id}`}
-              notice={notice}
+              key={`notification-item-${notification.id}`}
+              notification={notification}
             />
           ))}
     </StyledContentWrapper>

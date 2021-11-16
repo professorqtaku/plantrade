@@ -51,6 +51,7 @@ public class SocketModule {
     }
 
     public void emitToRoom(String room, String event, Object data) {
+        System.out.println("Room: " + room + "event: " + event);
         server.getRoomOperations(room).sendEvent(event, data);
     }
 
@@ -74,20 +75,20 @@ public class SocketModule {
             System.out.printf("Client[%s] - Joined room '%s'\n", client.getSessionId().toString(), roomName);
             // add client to room
             client.joinRoom(roomName);
-
+            var amountOfClients = server.getRoomOperations(roomName).getClients().size();
             // message room that client connected
-            emitToRoom(roomName, "join", "Client joined room: " + roomName);
+            emitToRoom(roomName, "join", amountOfClients);
         };
     }
 
     private DataListener<String> onLeaveRoom() {
         return (client, roomName, ackSender) -> {
             System.out.printf("Client[%s] - Left room '%s'\n", client.getSessionId().toString(), roomName);
+            var amountOfClients = server.getRoomOperations(roomName).getClients().size() -1;
+            // message room that client disconnected
+            emitToRoom(roomName, "leave", amountOfClients);
             // remove client to room
             client.leaveRoom(roomName);
-
-            // message room that client disconnected
-            emitToRoom(roomName, "leave", "Client left room: " + roomName);
         };
     }
 
