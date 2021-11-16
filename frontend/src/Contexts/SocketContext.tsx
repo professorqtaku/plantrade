@@ -15,8 +15,6 @@ type Props = {
   children?: JSX.Element;
 };
 
-
-
 const SocketContext = createContext<any>(null);
 
 export const useSocket = () => useContext(SocketContext);
@@ -27,12 +25,12 @@ const SocketContextProvider = ({ children }: Props) => {
   const [isConnected, setIsConnected] = useState(false);
   const { getHighestBid } = useBid();
   const { getAuctionsByOptions } = useSearch();
-  const { whoAmI } = useAuth();
+  const { whoAmI, setInvisibleMsgBadge } = useAuth();
   const { addSnackbar } = useSnackBar();
   const { getNotificationsByCurrentUser } = useNotification();
   const { getAllChatMsg } = useMessage();
-  const { chatId } = useChat();
-  const [isRead, setIsRead] = useState(false)
+  const { chatId, checkReadMsg } = useChat();
+  const [isRead, setIsRead] = useState(false);
 
   if (!isConnected) {
     socket.on("connect", () => {
@@ -47,19 +45,19 @@ const SocketContextProvider = ({ children }: Props) => {
   });
 
   socket.on("join", (data: number) => {
-    console.log('Client joined the room');
+    console.log("Client joined the room");
     if (data === 2) {
-      setIsRead(true)
+      setIsRead(true);
     }
   });
 
   socket.on("leave", async (data: number) => {
     console.log("Client left room");
-      if (data === 1) {
-        await getAllChatMsg(chatId);
-      }
+    if (data === 1) {
+      await getAllChatMsg(chatId);
+    }
     setIsRead(false);
-    });
+  });
 
   socket.on("message", async (data: any) => {
     if (data.id === whoAmI.id) {
@@ -68,11 +66,14 @@ const SocketContextProvider = ({ children }: Props) => {
     await getAllChatMsg(chatId);
   });
 
-    socket.on("newMsg", async (data: any) => {
-      if (data == whoAmI?.id) {
-        console.log('works')
+  socket.on("newMsg", async (data: any) => {
+    if (data == whoAmI?.id) {
+      const readMsg = await checkReadMsg();
+      if (readMsg === 0) {
+        setInvisibleMsgBadge(false);
       }
-    });
+    }
+  });
 
   socket.on("notification", (data: Notification) => {
     if (whoAmI?.id === data.user.id) {

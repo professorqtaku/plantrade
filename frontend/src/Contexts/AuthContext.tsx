@@ -16,7 +16,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
   const [wrongPassword, setWrongPassword] = useState(false);
   const [userExists, setUserExists] = useState(false);
   const { addSnackbar } = useSnackBar();
-  const { checkReadMsg, unReadMsg } = useChat();
+  const { checkReadMsg } = useChat();
   const [invisibleMsgBadge, setInvisibleMsgBadge] = useState(true);
 
   useEffect(() => {
@@ -59,7 +59,6 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
       setWrongPassword(false);
       addSnackbar("Inloggnig lyckades!");
       const readMsg = await checkReadMsg();
-      console.log("hallåja", readMsg);
       if (readMsg === 0) {
         setInvisibleMsgBadge(false);
       }
