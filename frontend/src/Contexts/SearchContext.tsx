@@ -1,4 +1,4 @@
-import React, { createContext, FC, useContext, useState } from "react";
+import { createContext, FC, useContext, useState } from "react";
 import {
   SearchObject,
   Status,
@@ -15,8 +15,8 @@ type Props = {
 const SearchContext = createContext<any>(null);
 
 export const useSearch = () => useContext(SearchContext);
-  
-  const SearchContextProvider: FC<Props> = ({ children }: Props) => {
+
+const SearchContextProvider: FC<Props> = ({ children }: Props) => {
   const [auctions, setAuctions] = useState<Auction[]>([]);
   const [searchText, setSearchText] = useState<string>("");
   const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
@@ -39,10 +39,13 @@ export const useSearch = () => useContext(SearchContext);
     getAuctionsByOptions();
   };
 
-    const getAuctionsByOptions = async (pageNumber?: number, search?: SearchObject) => {
-      const page = pageNumber ?? 0;
-      let auctionResult: Array<Auction> = [];
-    
+  const getAuctionsByOptions = async (
+    pageNumber?: number,
+    search?: SearchObject
+  ) => {
+    const page = pageNumber ?? 0;
+    let auctionResult: Array<Auction> = [];
+
     const option: SearchObject = {
       title: search?.title ? search?.title : searchText,
       sort: search?.sort ? search?.sort : selectedSortTime,
@@ -66,14 +69,14 @@ export const useSearch = () => useContext(SearchContext);
       setNoContent(false);
       setLastItem(false);
     }
-      if (res.status === 204) {
-        if (option.page === 0) {
-          setNoContent(true);
-          setAuctions(auctionResult);
-          setLastItem(false);
-        } else if (auctions.length > 0) {
-          setLastItem(true);
-        }
+    if (res.status === 204) {
+      if (option.page === 0) {
+        setNoContent(true);
+        setAuctions(auctionResult);
+        setLastItem(false);
+      } else if (auctions.length > 0) {
+        setLastItem(true);
+      }
     }
   };
 
@@ -122,7 +125,7 @@ export const useSearch = () => useContext(SearchContext);
     getAuctionsByOptions,
     isRerender,
     noContent,
-    lastItem
+    lastItem,
   };
 
   return (

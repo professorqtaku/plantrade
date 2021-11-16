@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useAuth } from "../../../Contexts/AuthContext";
 import InputField from "../../InputField/InputField";
 import { useSnackBar } from "../../../Contexts/SnackBarContext";
-import {User} from '../../../Interfaces/Interfaces'
+import { User } from "../../../Interfaces/Interfaces";
 import {
   StyledWrapper,
   StyledForm,
@@ -14,7 +14,11 @@ import {
   StyledTitle,
   StyledWarningText,
 } from "./StyledRegisterForm";
-import { StyledDivider, StyledSpan, StyledText } from "../LoginForm/StyledLoginForm";
+import {
+  StyledDivider,
+  StyledSpan,
+  StyledText,
+} from "../LoginForm/StyledLoginForm";
 
 interface Props {
   toggleRegister: Function;
@@ -22,6 +26,7 @@ interface Props {
 
 const RegisterForm = ({ toggleRegister }: Props) => {
   const { register, userExists } = useAuth();
+  const { addSnackbar } = useSnackBar();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -29,7 +34,7 @@ const RegisterForm = ({ toggleRegister }: Props) => {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const userObject: User = {
+    const userObject = {
       username: username,
       email: email,
       password: password,
@@ -37,6 +42,9 @@ const RegisterForm = ({ toggleRegister }: Props) => {
     let isRegSucceed = await register(userObject);
     if (isRegSucceed) {
       toggleRegister();
+      addSnackbar("Regristrering lyckades!");
+    } else {
+      addSnackbar({ message: "Inloggning misslyckad!", status: "error" });
     }
   };
 
@@ -48,7 +56,7 @@ const RegisterForm = ({ toggleRegister }: Props) => {
           <StyledPorfileIcon />
           <InputField
             value={username}
-            label="username"
+            label="Användarnamn"
             updateState={(e) => setUsername(e)}
             required
           />
@@ -56,7 +64,7 @@ const RegisterForm = ({ toggleRegister }: Props) => {
           <InputField
             value={email}
             type="email"
-            label="email"
+            label="Lösenord"
             updateState={(e) => setEmail(e)}
             required
           />
@@ -69,14 +77,14 @@ const RegisterForm = ({ toggleRegister }: Props) => {
             required
           />
         </StyledInputDiv>
-        {userExists && <StyledWarningText>The user already exists.</StyledWarningText>}
+        {userExists && (
+          <StyledWarningText>The user already exists.</StyledWarningText>
+        )}
         <StyledBtn>Skapa Konto</StyledBtn>
         <StyledDivider />
         <StyledText>
           Har du redan ett konto?{" "}
-          <StyledSpan onClick={() => toggleRegister()}>
-            Logga in här
-          </StyledSpan>
+          <StyledSpan onClick={() => toggleRegister()}>Logga in här</StyledSpan>
         </StyledText>
       </StyledForm>
     </StyledWrapper>
