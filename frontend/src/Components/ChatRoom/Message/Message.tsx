@@ -37,7 +37,9 @@ const Message = () => {
   }, []);
 
   useEffect(() => {
-    setInvisibleMsgBadge(true);
+    if (whoAmI) {
+      setInvisibleMsgBadge(true);
+    }
   }, [invisibleMsgBadge]);
 
   useEffect(() => {

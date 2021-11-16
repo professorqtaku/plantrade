@@ -25,7 +25,7 @@ const SocketContextProvider = ({ children }: Props) => {
   const [isConnected, setIsConnected] = useState(false);
   const { getHighestBid } = useBid();
   const { getAuctionsByOptions } = useSearch();
-  const { whoAmI, setInvisibleMsgBadge } = useAuth();
+  const { whoAmI, setInvisibleMsgBadge, whoIsOnline } = useAuth();
   const { addSnackbar } = useSnackBar();
   const { getNotificationsByCurrentUser } = useNotification();
   const { getAllChatMsg } = useMessage();

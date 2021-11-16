@@ -88,6 +88,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
     setInvisibleMsgBadge(true);
     setWhoAmI(null);
     addSnackbar("Utloggning lyckades!");
+    window.location.reload();
   };
 
   const values = {
