@@ -3,6 +3,7 @@ import CommentIcon from "@mui/icons-material/Comment";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import Carousel from "react-elastic-carousel";
+import { Button } from "@mui/material"
 
 
 export const StyledWrapper = styled.div`
@@ -71,15 +72,22 @@ export const StyledBackBtn = styled(StyledUnderTitle)`
   cursor: pointer;
 `;
 
-export const StyledChat = styled.div`
+export const StyledChatWrapper = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: row-reverse;
+  max-width: 500px;
+`;
+
+export const StyledChat = styled(Button)`
   z-index: 1;
   background-color: var(--background-color);
   border-radius: 50%;
   padding: 20px;
   margin: -50px 0 0 0;
-  position: relative;
+  right: 0;
+  :hover {
+    background-color: white;
+  }
 `;
 
 export const StyledChatIcon = styled(CommentIcon)`

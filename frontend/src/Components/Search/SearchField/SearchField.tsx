@@ -22,6 +22,7 @@ const SearchField = ({ searchText, setSearchText, showFilter, setShowFilter }: P
         id="search-input-field"
         variant="standard"
         type="text"
+        placeholder="Vad letar du efter?"
         value={searchText}
         isfilteropen={showFilter.toString()}
         onChange={(e: BaseSyntheticEvent) => setSearchText(e.target.value)}

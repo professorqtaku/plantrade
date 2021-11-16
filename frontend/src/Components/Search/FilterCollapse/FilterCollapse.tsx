@@ -26,6 +26,7 @@ interface Props {
   setSelectedCategories: Function;
   setSelectedSortTime: Function;
   selectedSortTime: SortByTimes;
+  setShowFilter: Function;
 }
 
 function FilterCollapse({
@@ -36,14 +37,16 @@ function FilterCollapse({
   selectedCategories,
   setSelectedCategories,
   selectedSortTime,
-  setSelectedSortTime
+  setSelectedSortTime,
+  setShowFilter,
 }: Props) {
   const { allCategories } = useCategory();
   const { auctions, clearFilter, isRerender } = useSearch();
 
   const handleClearFilter = () => {
     clearFilter();
-  }
+    setShowFilter(false);
+  };
 
   return (
     <StyledCollapse in={isOpen} timeout="auto" unmountOnExit>
@@ -52,7 +55,11 @@ function FilterCollapse({
           <ExpandLessIcon />
         </StyledIconButton>
         <StyledHeader>
-          <ClearButton label="Rensa" type="button" callback={handleClearFilter} />
+          <ClearButton
+            label="Rensa"
+            type="button"
+            callback={handleClearFilter}
+          />
         </StyledHeader>
         <Box>
           <StyledTitle paddingtop="0">KATEGORIER</StyledTitle>

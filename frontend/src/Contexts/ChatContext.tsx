@@ -35,6 +35,7 @@ const ChatContextProvider = ({ children }: Props) => {
       getChatsByCurrentUser();
       return true;
     }
+    return false;
   };
 
   const values = {
