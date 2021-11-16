@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useChat } from "../../../Contexts/ChatContext";
 import { useMessage } from "../../../Contexts/MessageContext";
-import { useSocket } from "../../../Contexts/SocketContext";
 import {
   StyledForm,
   StyledInput,
@@ -13,7 +12,6 @@ const TextInput = () => {
   const [message, setMessage] = useState("");
   const { createMsg } = useMessage();
   const { chatId } = useChat();
-  const { socket } = useSocket();
   
 
 

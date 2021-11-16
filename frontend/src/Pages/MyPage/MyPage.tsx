@@ -1,4 +1,5 @@
 import { useAuth } from "../../Contexts/AuthContext";
+import { useSnackBar } from "../../Contexts/SnackBarContext";
 import {
   StyledWrapper,
   StyledAvatar,
@@ -34,6 +35,7 @@ const MyPage = () => {
   const { setProfile, handleSelect } = useNav();
   const history = useHistory();
   const { logout, whoAmI } = useAuth();
+  const { addSnackbar } = useSnackBar();
 
   useEffect(() => {
     handleSelect(setProfile);
@@ -106,6 +108,7 @@ const MyPage = () => {
     e.preventDefault();
     logout();
     history.push("/");
+    addSnackbar("Utloggning lyckades!");
   };
 
   return (

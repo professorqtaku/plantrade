@@ -28,19 +28,10 @@ interface Props {
 }
 
 const SelectBar = ({ setCategoriesToUse }: Props) => {
-  const { getAllCategories, allCategories} = useCategory();
+  const { allCategories} = useCategory();
 
   const [categories, setCategories] = React.useState<Category[]>([]);
 
-  React.useEffect(() => {
-    handleGetCategories();
-  }, [])
-
-  const handleGetCategories = async () => {
-    if (allCategories.length == 0) {
-      await getAllCategories();
-    }
-  };
   const handleChange = (event: any) => {
     const category = event.target.value
     setCategories(category);

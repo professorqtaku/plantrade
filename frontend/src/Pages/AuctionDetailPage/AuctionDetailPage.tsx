@@ -5,6 +5,9 @@ import { useAuction } from "../../Contexts/AuctionContext";
 import { useBid } from "../../Contexts/BidContext";
 import { useAuth } from "../../Contexts/AuthContext";
 import { Auction } from "../../Interfaces/Interfaces";
+import { useChat } from "../../Contexts/ChatContext";
+import { useDrawer } from "../../Contexts/DrawerContext";
+import { useSnackBar } from "../../Contexts/SnackBarContext";
 import Grid from "@mui/material/Grid";
 import SkeletonCard from "../../Components/SkeletonCard/SkeletonCard";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
@@ -15,8 +18,6 @@ import InputField from "../../Components/InputField/InputField";
 import ExpandableDescriptionBox from "../../Components/ExpandableDesc/ExpandableDescriptionBox";
 import ButtonComp from "../../Components/Button/ButtonComp";
 import AuctionDetailsPageCategories from "../../Components/AuctionDetailsPageCategories/AuctionDetailsPageCategories";
-import { useChat } from "../../Contexts/ChatContext";
-import { useDrawer } from "../../Contexts/DrawerContext";
 import {
   StyledWrapper,
   StyledPrice,
@@ -37,13 +38,14 @@ import {
   StyledChatWrapper,
 } from "./StyledAuctionDetailPage";
 import { useModal } from "../../Contexts/ModalContext";
-import BidHistoryContainer from '../../Components/BidHistory/BidHistoryContainer';
+import BidHistoryContainer from "../../Components/BidHistory/BidHistoryContainer";
 import { useNav } from "../../Contexts/NavigationContext";
 
 const AuctionDetailPage = () => {
   const { id }: any = useParams();
   const history = useHistory();
 
+  const { addSnackbar } = useSnackBar();
   const { getAuctionById } = useAuction();
   const { createChat } = useChat();
   const { setShowDrawer } = useDrawer();
@@ -104,8 +106,14 @@ const AuctionDetailPage = () => {
       createdDate: Date.now(),
     };
 
-    await createBid(newBid);
-    getHighestBid(auction?.id);
+    const createdBid = await createBid(newBid);
+    if (createdBid != null) {
+      addSnackbar("Giltigt bud!");
+      //rerender the new currently highest bid
+      getHighestBid(auction?.id);
+    } else {
+      addSnackbar({ message: "Ogiltigt bud", status: "error" });
+    }
     //rerender the new currently highest bid
     // handleGetAuctionById();
     setBid("");
@@ -115,8 +123,7 @@ const AuctionDetailPage = () => {
     if (whoAmI && createChat({ auctionId: auction?.id })) {
       handleSelect(setMessage);
       setShowDrawer(true);
-    }
-    else {
+    } else {
       toggleLoginModal();
     }
   };
@@ -182,14 +189,14 @@ const AuctionDetailPage = () => {
             <Grid item xs={8} md={8}>
               <StyledTitle>{auction.title}</StyledTitle>
             </Grid>
-              <Grid item xs={4} md={4}>
-                <StyledChatWrapper>
-                  <StyledChat disabled={isHost} onClick={handleChat}>
+            <Grid item xs={4} md={4}>
+              <StyledChatWrapper>
+                <StyledChat disabled={isHost} onClick={handleChat}>
                   <StyledChatIcon>
                     <CommentIcon />
                   </StyledChatIcon>
-                  </StyledChat>
-                </StyledChatWrapper>
+                </StyledChat>
+              </StyledChatWrapper>
             </Grid>
             <Grid item xs={8} md={8}>
               <StyledUnderTitle>Sluttid</StyledUnderTitle>
@@ -231,8 +238,8 @@ const AuctionDetailPage = () => {
               )}
             </Grid>
             <StyledForm>
-                {whoAmI ? renderBidContent : renderLoginToggle}
-              </StyledForm>
+              {whoAmI ? renderBidContent : renderLoginToggle}
+            </StyledForm>
             <Grid item xs={12}>
               <BidHistoryContainer auction={auction} whoAmI={whoAmI} />
             </Grid>

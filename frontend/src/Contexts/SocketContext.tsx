@@ -15,8 +15,6 @@ type Props = {
   children?: JSX.Element;
 };
 
-
-
 const SocketContext = createContext<any>(null);
 
 export const useSocket = () => useContext(SocketContext);
@@ -32,7 +30,7 @@ const SocketContextProvider = ({ children }: Props) => {
   const { getNotificationsByCurrentUser } = useNotification();
   const { getAllChatMsg } = useMessage();
   const { chatId } = useChat();
-  const [isRead, setIsRead] = useState(false)
+  const [isRead, setIsRead] = useState(false);
 
   if (!isConnected) {
     socket.on("connect", () => {
@@ -42,24 +40,31 @@ const SocketContextProvider = ({ children }: Props) => {
   }
 
   socket.on("bid", async function (data: BidUpdateSocket) {
-    await getHighestBid(data.auction.id);
-    await getAuctionsByOptions();
+    const isInDetailView = window.location.href.includes(
+      `auctions/${data.auction.id}`
+    );
+    const isInListView = window.location.href.includes("auctions");
+    if (isInDetailView) {
+      await getHighestBid(data.auction.id);
+    } else if (isInListView) {
+      await getAuctionsByOptions();
+    }
   });
 
   socket.on("join", (data: number) => {
-    console.log('Client joined the room');
+    console.log("Client joined the room");
     if (data === 2) {
-      setIsRead(true)
+      setIsRead(true);
     }
   });
 
   socket.on("leave", async (data: number) => {
     console.log("Client left room");
-      if (data === 1) {
-        await getAllChatMsg(chatId);
-      }
+    if (data === 1) {
+      await getAllChatMsg(chatId);
+    }
     setIsRead(false);
-    });
+  });
 
   socket.on("message", async (data: any) => {
     if (data.id === whoAmI.id) {
