@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Button from "@mui/material/Button";
 
 export const StyledWrapper = styled.div`
-  padding: 0.5rem;
+  margin: 0 auto;
 `;
 
 export const StyledTitle = styled.p`
@@ -13,18 +13,16 @@ export const StyledTitle = styled.p`
 `;
 
 export const StyledForm = styled.form`
-  width: 90%;
-  margin: 1rem auto;
-  display: grid;
+  width: 70%;
+  margin: 0 auto;
+  /* display: grid;
   grid-gap: 1rem;
-`;
+  grid-template-columns: 1fr; */
 
-export const StyledInput = styled.input`
-  padding: 0.5rem;
-  outline: none;
 `;
 
 export const StyledButton = styled(Button)`
+  margin: 10px 0;
   background: var(--light-green);
   text-transform: uppercase;
   font-size:  "1rem";
@@ -58,6 +56,10 @@ export const StyledTextPrimary = styled.div`
   background-color: var(--status-green);
   font-family: var(--font-normal-text);
   padding: 5px;
+`;
+
+export const StyledEndDate = styled.div`
+  margin: 5px 0 10px 0;
 `;
 
 
