@@ -22,12 +22,6 @@
   --box-shadow: 0 10px 10px rgb(0 0 0 / 0.2);
 }
 
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-}
-
 p {
   font-family: var(--font-text);
 }
