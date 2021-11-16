@@ -34,7 +34,6 @@ export const StyledImg = styled.img`
 export const StyledImgWrapper = styled.div`
   width: 100%;
   height: 100%;
-  background-color: pink;
 `;
 
 export const StyledTitle = styled.p`
