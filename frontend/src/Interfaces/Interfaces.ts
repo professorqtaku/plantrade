@@ -9,7 +9,7 @@ export interface Auction {
   id: number,
   title: string,
   description: string,
-  startPrice?: number,
+  startPrice: number,
   status?: string,
   endDate?: Date | undefined,
   host?: User,

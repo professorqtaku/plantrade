@@ -28,8 +28,10 @@ const AuctionCard = ({ auction, fetchAuctions, forwardRef}: Props) => {
   const [differenceInMillis, setDifferenceInMillis] = useState(0);
   const [counter, setCounter] = useState<number | null>(null);
   const [remainingTime, setRemainingTime] = useState("Dagar kvar:");
-  const [bid, setBid] = useState<number | undefined>(0);
+  const [bid, setBid] = useState<number>(0);
   const [quickBid, setQuickBid] = useState<number>();
+  console.log("----card -----");
+  
   
 
   const history = useHistory();
@@ -40,6 +42,8 @@ const AuctionCard = ({ auction, fetchAuctions, forwardRef}: Props) => {
     whoAmI && auction.host && auction.host.id && whoAmI.id == auction.host.id;
   
   useEffect(() => {
+    console.log("USEEFFECT auction.bids");
+    
     if (auction.bids?.length) {
       setBid(auction.bids[auction.bids?.length - 1].price);
     } else {
@@ -48,14 +52,19 @@ const AuctionCard = ({ auction, fetchAuctions, forwardRef}: Props) => {
   }, [auction.bids])
   
   useEffect(() => {
-    handleQuickBid();
-  }, [!!bid, bid]);
+    console.log("USEEFFECT bid");
+
+    if (!!bid)
+      handleQuickBid();
+  }, [bid]);
 
   useEffect(() => {
+    console.log("USEEFFECT daysLeft");
     handleTime();
   }, [daysLeft]);
 
   useEffect(() => {
+    console.log("USEEFFECT counter");
     handleCounter();
   }, [counter]);
 
