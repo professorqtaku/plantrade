@@ -40,6 +40,8 @@ const AuctionCard = ({ auction, fetchAuctions, forwardRef}: Props) => {
     whoAmI && auction.host && auction.host.id && whoAmI.id == auction.host.id;
   
   useEffect(() => {
+    console.log("---*useEffect* AUCTION CARD ---");
+    
     if (auction.bids?.length) {
       setBid(auction.bids[auction.bids?.length - 1].price);
     } else {

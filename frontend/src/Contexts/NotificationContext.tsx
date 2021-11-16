@@ -11,6 +11,7 @@ export const useNotification = () => useContext(NotificationContext);
 
 const NotificationContextProvider: FC<Props> = ({ children }: Props) => {
   const [notifications, setNotifications] = useState<Array<Notification>>([]);
+  console.log("---11. NOTIFICATION CONTEXT----");
 
   const clearNotifications = () => {
     setNotifications([]);

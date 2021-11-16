@@ -10,6 +10,7 @@ import { useBid } from "./BidContext";
 import { useSearch } from "./SearchContext";
 import { useChat } from "./ChatContext";
 import { useDrawer } from "./DrawerContext";
+import { useAuction } from "./AuctionContext";
 
 const endpoint = "http://localhost:9092";
 const socket = io(endpoint, { upgrade: false, transports: ["websocket"] });
@@ -41,8 +42,18 @@ const SocketContextProvider = ({ children }: Props) => {
   }, []);
 
   socket.on("bid", async function (data: BidUpdateSocket) {
-    await getHighestBid(data.auction.id);
-    await getAuctionsByOptions();
+    console.log("---10 Socket trigger bid update", data.auction.id);
+    const isInDetailView = window.location.href.includes(
+      `auctions/${data.auction.id}`
+    );
+    const isInListView = window.location.href.includes("auctions");
+    if (isInDetailView) {
+      await getHighestBid(data.auction.id);
+    }
+    else if (isInListView) {
+      console.log("---10 GET ALL AUCTIONS", data.auction.id);
+      await getAuctionsByOptions();
+    }
   });
 
   socket.on("join", (data: number) => {

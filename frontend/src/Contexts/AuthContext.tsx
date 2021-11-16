@@ -83,7 +83,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
     });
     setInvisibleMsgBadge(true);
     setWhoAmI(null);
-    window.location.reload();
+    // window.location.reload();
   };
 
   const values = {

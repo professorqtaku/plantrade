@@ -24,7 +24,7 @@ const SnackBarContextProvider = ({ children }: Props) => {
   
   return (
     <SnackbarProvider
-      // preventDuplicate
+      preventDuplicate
       anchorOrigin={{
         vertical: "top",
         horizontal: "right",

@@ -38,7 +38,7 @@ const LoginForm = ({ toggleRegister }: Props) => {
     const isSucceed = await login(userObj);
     if (isSucceed) {
       toggleLoginModal();
-      addSnackbar("Inloggnig lyckades!");
+      addSnackbar("Inloggning lyckades!");
     }
     else {
       addSnackbar({ message: "Inloggning misslyckad!", status: "error" });
