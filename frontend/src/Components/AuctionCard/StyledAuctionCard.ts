@@ -25,13 +25,16 @@ export const StyledCardContent = styled(CardContent)`
 export const StyledImg = styled.img`
   width: 100%;
   height: 100%;
+  object-fit: cover;
   &:hover {
     cursor: pointer;
   }
-  @media (min-width: 769px) {
-    width: 135px;
-    height: auto;
-  }
+`;
+
+export const StyledImgWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: pink;
 `;
 
 export const StyledTitle = styled.p`
