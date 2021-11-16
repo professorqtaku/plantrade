@@ -110,8 +110,6 @@ const AuctionDetailPage = () => {
 
     await createBid(newBid);
     getHighestBid(auction?.id);
-    //rerender the new currently highest bid
-    // handleGetAuctionById();
     setBid("");
   };
 

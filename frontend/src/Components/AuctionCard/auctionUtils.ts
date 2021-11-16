@@ -10,25 +10,44 @@ export const handleCount = (
   setDaysLeft: React.Dispatch<React.SetStateAction<number | null>>,
   setRemainingTime: React.Dispatch<React.SetStateAction<string>>,
   setCounter: React.Dispatch<React.SetStateAction<number | null>>,
-  handleTime: () => Promise<void>
+  handleTime: () => Promise<void>,
+  first: number
 ) => {
-  if (counter > ONE_HOUR_IN_MILLIS) {
+
+  let seconds = ONE_SECOND_IN_MILLIS;
+  let minutes = ONE_MINUTE_IN_MILLIS;
+  let hours = ONE_HOUR_IN_MILLIS;
+  
+  if (first == 0) {
+    seconds = Math.floor((counter / 1000) % 60)
+    minutes = Math.floor((counter / (1000 * 60)) % 60)
+    hours = Math.floor((counter / (1000 * 60 * 60)) % 24);
+  }
+
+  const secondsInMillis = Math.floor(seconds * 1000);
+  const minutesInMillis = Math.floor(minutes * 1000 * 60);
+
+  console.log(counter, 'counter');
+  
+  if (hours) {
     setDaysLeft(Math.floor((differenceInMillis / (1000 * 60 * 60)) % 24));
     setRemainingTime("Timmar kvar:");
     setTimeout(async () => {
       await handleTime();
-      setCounter(counter - 1);
-    }, ONE_HOUR_IN_MILLIS);
+      // setCounter(counter - 1);
+    }, (minutes));
   }
-
+  
   // Minutes
-  if (counter >= ONE_MINUTE_IN_MILLIS && counter < ONE_HOUR_IN_MILLIS) {
+  if (hours == 0 && minutesInMillis >= ONE_MINUTE_IN_MILLIS) {
+    console.log('minutes');
+    
     setDaysLeft(Math.floor((differenceInMillis / (1000 * 60)) % 60));
     setRemainingTime("Minuter kvar:");
     setTimeout(async () => {
       await handleTime();
-      setCounter(counter - 1);
-    }, ONE_MINUTE_IN_MILLIS);
+      // setCounter(counter - 1);
+    }, secondsInMillis);
   }
 
   // Seconds
@@ -37,7 +56,7 @@ export const handleCount = (
     setRemainingTime("Sekunder kvar:");
     setTimeout(async () => {
       await handleTime();
-      setCounter(counter - 1);
+      // setCounter(counter - 1);
     }, ONE_SECOND_IN_MILLIS);
   }
 };

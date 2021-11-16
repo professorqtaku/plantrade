@@ -15,29 +15,30 @@ function Countdown({ auction, fetchAuction }: Props) {
   const [daysLeft, setDaysLeft] = useState<number | null>(null);
   const [remainingTime, setRemainingTime] = useState("Dagar kvar:");
   const [lessThan24, setLessThan24] = useState(false);
+  const [isFetched, setIsFetched] = useState(false);
+  const [first, setFirst] = useState(0);
 
   useEffect(() => {
     handleTime();
   }, [daysLeft])
 
   useEffect(() => {
-    // if(counter && counter <= 0){
-    //   console.log('Times up: should be fetching new auction');
-    //   fetchAuction();
-    // } else {
-    //   handleCounter();
-    // }
-    handleCounter();
-    // if (remainingTime.slice(0, 3) !== 'Dag') {
-    //   setLessThan24(true);
-    // }
+    if(counter && counter <= 0 && !isFetched){
+      console.log('Times up: should be fetching new auction');
+      fetchAuction();
+      setIsFetched(true)
+    } else {
+      handleCounter();
+    }
+    if (remainingTime.slice(0, 3) !== 'Dag') {
+      setLessThan24(true);
+    }
   }, [counter]);
-   
+
   const handleTime = async () => {
     const endDateInMillis = new Date(`${auction.endDate}`).getTime();
     const todayInMillis = new Date().getTime();
     setDifferenceInMillis(endDateInMillis - todayInMillis);
-    // differenceInMillis <= 0 && fetchAuction();
     differenceInMillis <= ONE_DAY_IN_MILLIS && setCounter(differenceInMillis);
     setDaysLeft(Math.round(differenceInMillis / (60 * 60 * 24 * 1000)));
   }
@@ -50,8 +51,10 @@ function Countdown({ auction, fetchAuction }: Props) {
         setDaysLeft,
         setRemainingTime,
         setCounter,
-        handleTime
+        handleTime,
+        first
       );
+      setFirst(1);
     }
   };
 
