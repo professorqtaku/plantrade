@@ -39,7 +39,6 @@ const ChatContextProvider = ({ children }: Props) => {
   };
 
   const checkReadMsg = async () => {
-    console.log("inne");
     let res: Response = await fetch("/api/chats/checkReadMessages");
     const readMsg = await res.json();
     setUnReadMsg(readMsg);
