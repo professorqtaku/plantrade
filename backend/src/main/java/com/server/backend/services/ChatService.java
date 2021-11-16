@@ -73,12 +73,10 @@ public class ChatService {
             return 0;
         }
         for(var chat : chats){
-            // && msg.getWriter().getId() == currentUser.getId()
+           var sender = chat.getCreator().getId() == currentUser.getId() ? chat.getReceiver().getId() : chat.getCreator().getId();
             for(var msg : chat.getMessages()) {
-                if(msg.getIsRead() == false){
-                    if(msg.getWriter().getId() != currentUser.getId()) {
-                        return 0;
-                    }
+                if(msg.getIsRead() == false && msg.getWriter().getId() == sender){
+                    return 0;
                 }
             }
         }

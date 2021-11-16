@@ -24,7 +24,7 @@ const scrollToBottom = (node: HTMLCollectionOf<Element>) => {
 const Message = () => {
   const { messages, getAllChatMsg } = useMessage();
   const { chatId } = useChat();
-  const { whoAmI } = useAuth();
+  const { whoAmI, setInvisibleMsgBadge, invisibleMsgBadge } = useAuth();
   const { socket, isRead } = useSocket();
 
   useEffect(() => {
@@ -37,13 +37,17 @@ const Message = () => {
   }, []);
 
   useEffect(() => {
+    setInvisibleMsgBadge(true);
+  }, [invisibleMsgBadge]);
+
+  useEffect(() => {
     scrollToBottom(msgWrapper);
   }, [messages]);
 
   const getDate = (message: MessageProps) => {
     const date = message.createdDate.substring(0, 10);
     const time = message.createdDate.substring(11, 16);
-    return `${date} ${time}`
+    return `${date} ${time}`;
   };
 
   const renderMessageContent = (message: MessageProps, index: number) => (

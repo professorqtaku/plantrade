@@ -59,7 +59,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
       setWrongPassword(false);
       addSnackbar("Inloggnig lyckades!");
       const readMsg = await checkReadMsg();
-      if (readMsg === 0) {
+      if (readMsg === 0 && resUser.id) {
         setInvisibleMsgBadge(false);
       }
       return true;
@@ -85,6 +85,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
         "content-type": "application/json",
       },
     });
+    setInvisibleMsgBadge(true);
     setWhoAmI(null);
     addSnackbar("Utloggning lyckades!");
   };

@@ -56,7 +56,7 @@ public class SocketModule {
 
     private DataListener<String> onMessage() {
         return (client, data, ackSender) -> {
-           
+
         };
     }
 
