@@ -51,7 +51,6 @@ public class SocketModule {
     }
 
     public void emitToRoom(String room, String event, Object data) {
-        System.out.println("Room: " + room + "event: " + event);
         server.getRoomOperations(room).sendEvent(event, data);
     }
 

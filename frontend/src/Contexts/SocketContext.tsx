@@ -69,7 +69,7 @@ const SocketContextProvider = ({ children }: Props) => {
   });
 
     socket.on("newMsg", async (data: any) => {
-      if (data == whoAmI.id) {
+      if (data == whoAmI?.id) {
         console.log('works')
       }
     });

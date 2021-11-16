@@ -59,6 +59,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
       setWrongPassword(false);
       addSnackbar("Inloggnig lyckades!");
       const readMsg = await checkReadMsg();
+      console.log("hallåja", readMsg);
       if (readMsg === 0) {
         setInvisibleMsgBadge(false);
       }
