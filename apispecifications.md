@@ -1,5 +1,6 @@
-# API Specifications
-## Prefix the endpoints below with localhost:4000
+# API Specifications Plantrade
+## *Prefix for the following endpoints*: ***localhost:4000***
+<br>
 
 ## AUTH
 ### /api/login
