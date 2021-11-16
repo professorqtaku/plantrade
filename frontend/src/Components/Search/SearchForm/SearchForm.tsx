@@ -42,22 +42,23 @@ const SearchForm = ({ searchWord }: Props) => {
 
   return (
     <StyledForm autoComplete="off" onSubmit={search}>
-        <SearchField
-          searchText={searchText}
-          setSearchText={setSearchText}
-          showFilter={showFilter}
-          setShowFilter={setShowFilter}
-        />
-        <FilterCollapse
-          isOpen={showFilter}
-          toggle={toggleFilter}
-          selectedSortTime={selectedSortTime}
-          setSelectedSortTime={setSelectedSortTime}
-          selectedStatus={selectedStatus}
-          setSelectedStatus={setSelectedStatus}
-          selectedCategories={selectedCategories}
-          setSelectedCategories={setSelectedCategories}
-        />
+      <SearchField
+        searchText={searchText}
+        setSearchText={setSearchText}
+        showFilter={showFilter}
+        setShowFilter={setShowFilter}
+      />
+      <FilterCollapse
+        isOpen={showFilter}
+        toggle={toggleFilter}
+        selectedSortTime={selectedSortTime}
+        setSelectedSortTime={setSelectedSortTime}
+        selectedStatus={selectedStatus}
+        setSelectedStatus={setSelectedStatus}
+        selectedCategories={selectedCategories}
+        setSelectedCategories={setSelectedCategories}
+        setShowFilter={setShowFilter}
+      />
     </StyledForm>
   );
 };
