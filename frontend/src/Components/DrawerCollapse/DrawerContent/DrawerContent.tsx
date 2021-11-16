@@ -10,7 +10,8 @@ const DrawerContent = () => {
   const { message, notis } = useNav();
   const { chats } = useChat();
   const { notifications } = useNotification();
-
+  const now = new Date();
+  
   return (
     <StyledContentWrapper>
       {message && chats
@@ -24,6 +25,7 @@ const DrawerContent = () => {
             <NotificationDrawerItem
               key={`notification-item-${notification.id}`}
               notification={notification}
+              now={now}
             />
           ))}
     </StyledContentWrapper>

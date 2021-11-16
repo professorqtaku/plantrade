@@ -18,15 +18,16 @@ import { useDrawer } from "../../../../Contexts/DrawerContext";
 
 interface Props {
   notification: Notification;
+  now: Date;
 }
 
-const NotificationDrawerItem = ({ notification }: Props) => {
+const NotificationDrawerItem = ({ notification, now }: Props) => {
   const history = useHistory();
-  const { toggleDrawer } = useDrawer()
-  
+  const { toggleDrawer } = useDrawer();
+
   const handleOnClick = () => {
     if (notification.auction && notification.auction.id) {
-      history.push("/auctions/" + notification.auction.id)
+      history.push("/auctions/" + notification.auction.id);
       toggleDrawer();
     }
   };
@@ -49,7 +50,12 @@ const NotificationDrawerItem = ({ notification }: Props) => {
     <StyledSwipe>
       <SwipeableListItem trailingActions={trailingActions()}>
         <StyledWrapper onClick={handleOnClick}>
-          <MsgContent auctionTitle={notification.auction.title} message={notification.message} />
+          <MsgContent
+            auctionTitle={notification.auction.title}
+            message={notification.message}
+            time={notification.createdDate}
+            now={now}
+          />
         </StyledWrapper>
       </SwipeableListItem>
     </StyledSwipe>
