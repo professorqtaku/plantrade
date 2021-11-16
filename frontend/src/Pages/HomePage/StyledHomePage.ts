@@ -96,10 +96,11 @@ export const StyledIconImageItem = styled(Card)`
 
 export const StyledAuctionitem = styled(Card)`
   background: #FFF;
-  margin: 25px 5px 0 5px;
+  /* margin: 25px 5px 0 5px; */
 `;
 
 export const StyledText = styled.p`
+  text-transform: uppercase;
   margin: 7px 0 0 0;
   font-size: 13px;
 `;
@@ -109,6 +110,17 @@ export const StyledTitle = styled.p`
   letter-spacing: 1.5px;
   margin: 0 0 0 1rem;
 `;
+
+export const StyledCategoriesTitle = styled.p`
+@media (min-width: 700px) {
+  padding-top: 20px;
+}
+
+  font-size: 20px;
+  letter-spacing: 1.5px;
+  margin: 0 0 0 1rem;
+`;
+
 
 export const StyledIconImg = styled.img`
   width: 25px;
@@ -121,7 +133,6 @@ export const StyledImgText = styled.p`
 `;
 
 export const StyledImageListItem = styled(ImageListItem)<GridProps>`
-  margin-top: 10px;
   display: ${(props) => !props.gridignore ? 'grid' : 'block'};
   align-items: center;
   justify-items: center;
@@ -144,8 +155,8 @@ export const StyledNewsImg = styled.img`
 `;
 
 export const StyledAuctionImg = styled.img`
-  width: 100%;
-  height: 75%;
+  height: 100px;
+  width: auto;
   border-radius: 0 0 3px 3px;
 `;
 
@@ -157,7 +168,7 @@ export const StyledNewsWrapper = styled.div`
 `; 
 
 export const StyledSoonEndingWrapper = styled.div`
-  padding: 0 10px;
+  margin: 20px;
   display: grid;
   align-items: center;
   justify-items: center;

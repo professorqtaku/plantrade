@@ -8,15 +8,15 @@ const NavigationContext = createContext<any>(null);
 
 export const useNav = () => useContext(NavigationContext);
 
-const NavigationProvider: FC<Props> = ({ children }: Props) => {
-  const [home, setHome] = useState(false);
-  const [auction, setAuction] = useState(false);
-  const [notis, setNotis] = useState(false);
-  const [message, setMessage] = useState(false);
-  const [profile, setProfile] = useState(false);
+const NavigationContextProvider: FC<Props> = ({ children }: Props) => {
+  const [home, setHome] = useState<boolean>(false);
+  const [auction, setAuction] = useState<boolean>(false);
+  const [notis, setNotis] = useState<boolean>(false);
+  const [message, setMessage] = useState<boolean>(false);
+  const [profile, setProfile] = useState<boolean>(false);
 
   const handleSelect = (
-    select: React.Dispatch<React.SetStateAction<boolean>>,
+    select: React.Dispatch<React.SetStateAction<boolean>>
   ) => {
     setHome(false);
     setAuction(false);
@@ -37,7 +37,7 @@ const NavigationProvider: FC<Props> = ({ children }: Props) => {
     setAuction,
     setNotis,
     setMessage,
-    setProfile
+    setProfile,
   };
 
   return (
@@ -47,4 +47,4 @@ const NavigationProvider: FC<Props> = ({ children }: Props) => {
   );
 };
 
-export default NavigationProvider;
+export default NavigationContextProvider;

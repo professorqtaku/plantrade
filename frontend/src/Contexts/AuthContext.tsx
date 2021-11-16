@@ -1,5 +1,4 @@
 import { createContext, useState, useEffect, useContext } from "react";
-import { useSnackBar } from "./SnackBarContext";
 import {User} from '../Interfaces/Interfaces'
 
 interface Props {
@@ -9,11 +8,10 @@ interface Props {
 const AuthContext = createContext<any>(null);
 export const useAuth = () => useContext(AuthContext);
 
-export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
+export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
   const [whoAmI, setWhoAmI] = useState(null);
   const [wrongPassword, setWrongPassword] = useState(false);
   const [userExists, setUserExists] = useState(false);
-  const { setShowOpenSnackBar, setText } = useSnackBar();
 
   useEffect(() => {
     whoIsOnline();
@@ -26,17 +24,12 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
 
       body: JSON.stringify(user),
     });
-    if (res.status == 400) {
-      setUserExists(true);
-      console.log("user exists");
-      return false;
-    }
-    if (res.status == 200) {
+    if (res.ok && res.status == 200) {
       setUserExists(false);
-      console.log("user was registered");
-      setText("Regristrering lyckades!");
-      setShowOpenSnackBar(true);
       return true;
+    } else {
+      setUserExists(true);
+      return false;
     }
   };
 
@@ -48,30 +41,26 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
       },
       body: JSON.stringify(user),
     });
-    if (res.status == 404) {
-      setWrongPassword(true);
-      return false;
-    } else {
+    if (res.ok && res.status == 200) {
       let resUser = await res.json();
       setWhoAmI(resUser);
-      whoIsOnline();
       setWrongPassword(false);
-      setText("Inloggnig lyckades!");
-      setShowOpenSnackBar(true);
       return true;
+    } else {
+      setWrongPassword(true);
+      return false;
     }
   };
 
   const whoIsOnline = async () => {
-    let res = await fetch("/api/whoami")
+    let res = await fetch("/api/whoami");
     try {
       let data = await res.json();
       setWhoAmI(data);
       return data;
-    }
-    catch (e) {
-        setWhoAmI(null);
-        return null;
+    } catch (e) {
+      setWhoAmI(null);
+      return null;
     }
   };
 
@@ -83,8 +72,6 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
       },
     });
     setWhoAmI(null);
-    setText("Utloggning lyckades!");
-    setShowOpenSnackBar(true);
   };
 
   const values = {
@@ -100,3 +87,6 @@ export const AuthProvider: React.FC<Props> = ({ children }: Props) => {
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
 };
+
+export default AuthContextProvider;
+

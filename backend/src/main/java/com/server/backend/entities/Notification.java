@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name="notifications")
@@ -28,9 +29,11 @@ public class Notification {
     private User user;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JsonIncludeProperties({"id"})
+    @JsonIncludeProperties({"id", "title"})
     private Auction auction;
 
     @Column(name="is_read", columnDefinition = "BOOLEAN", nullable=false)
     private Boolean isRead;
+
+    private Date createdDate;
 }

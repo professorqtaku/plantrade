@@ -1,35 +1,53 @@
-import Snackbar from "@mui/material/Snackbar";
-import MuiAlert, { AlertProps } from "@mui/material/Alert";
-import React from "react";
+import React, { forwardRef, useCallback } from "react";
+import { useSnackbar, SnackbarContent, SnackbarMessage } from "notistack";
+import { Typography, IconButton } from "@mui/material";
+import CloseIcon from "@material-ui/icons/Close";
+import { StyledCard, StyledCardActions } from "./StyledSnackBar";
+import { Notification } from "../../Interfaces/Interfaces";
 
-interface Props {
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  isOpen: boolean;
-  text: string;
-}
+const SnackMessage = forwardRef<
+  HTMLDivElement,
+  {
+    id: string | number;
+    message: string | Notification;
+  }
+>((props, ref) => {
+  const { closeSnackbar } = useSnackbar();
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-  props,
-  ref
-) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  const variants: Record<string, string> = {
+      success: "var(--status-green)",
+      error: "var(--status-red)",
+      warning: "var(--status-yellow)",
+      info: "var(--dark-grey)",
+  }
+
+  const variant =
+    typeof props.message === "object" && props.message.status
+      ? variants[props.message.status]
+      : variants["success"];
+
+  const handleDismiss = useCallback(() => {
+    closeSnackbar(props.id);
+  }, [props.id, closeSnackbar]);
+
+  return (
+    <SnackbarContent ref={ref}>
+      <StyledCard background={variant}>
+        <StyledCardActions>
+          <Typography variant="subtitle2">
+            {typeof props.message === "object"
+              ? props.message.message
+              : props.message}
+          </Typography>
+          <div>
+            <IconButton onClick={handleDismiss}>
+              <CloseIcon />
+            </IconButton>
+          </div>
+        </StyledCardActions>
+      </StyledCard>
+    </SnackbarContent>
+  );
 });
 
-const SnackBar = ({ isOpen, setIsOpen, text }: Props) => {
-  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setIsOpen(false);
-  };
-  
-  return (
-    <Snackbar open={isOpen} autoHideDuration={3000} onClose={handleClose}>
-      <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-        {text}
-      </Alert>
-    </Snackbar>
-  );
-};
-export default SnackBar;
+export default SnackMessage;

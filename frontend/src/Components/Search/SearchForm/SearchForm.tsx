@@ -1,4 +1,4 @@
-import { BaseSyntheticEvent, useState } from "react";
+import { BaseSyntheticEvent, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useAuction } from "../../../Contexts/AuctionContext";
 import { useSearch } from "../../../Contexts/SearchContext";
@@ -14,17 +14,18 @@ type Props = {
 
 const SearchForm = ({ searchWord }: Props) => {
   const {
+    auctions,
+    setAuctions,
     getAuctionsByOptions,
     searchText,
     setSearchText,
     selectedCategories,
     setSelectedCategories,
-    selectedHours,
-    setSelectedHours,
+    setSelectedSortTime,
+    selectedSortTime,
     selectedStatus,
     setSelectedStatus,
   } = useSearch();
-  const { setAuctions, getAllAuctions } = useAuction();
   const history = useHistory();
   const [showFilter, setShowFilter] = useState<boolean>(false);
 
@@ -32,46 +33,32 @@ const SearchForm = ({ searchWord }: Props) => {
 
   const search = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
-    await history.push("/auctions");
-    if (searchText.trim().length > 0) {
-      let option: SearchObject = {
-        title: searchText ? searchText : searchWord,
-        categories: selectedCategories,
-        hours: selectedHours,
-        status: selectedStatus,
-      };
-
-      if (searchText.trim().length > 0) {
-        let auctions: Array<Auction> = await getAuctionsByOptions(option);
-
-        setAuctions(auctions);
-      } else {
-        await getAllAuctions();
-      }
-      setShowFilter(false);
-    }
+    await setAuctions([]);
+    await getAuctionsByOptions(0);
+    setShowFilter(false);
+    toggleFilter();
+    history.push("/auctions");
   };
 
   return (
     <StyledForm autoComplete="off" onSubmit={search}>
-      <div>
-        <SearchField
-          searchText={searchText}
-          setSearchText={setSearchText}
-          showFilter={showFilter}
-          setShowFilter={setShowFilter}
-        />
-        <FilterCollapse
-          isOpen={showFilter}
-          toggle={toggleFilter}
-          hours={selectedHours}
-          setHours={setSelectedHours}
-          selectedStatus={selectedStatus}
-          setSelectedStatus={setSelectedStatus}
-          selectedCategories={selectedCategories}
-          setSelectedCategories={setSelectedCategories}
-        />
-      </div>
+      <SearchField
+        searchText={searchText}
+        setSearchText={setSearchText}
+        showFilter={showFilter}
+        setShowFilter={setShowFilter}
+      />
+      <FilterCollapse
+        isOpen={showFilter}
+        toggle={toggleFilter}
+        selectedSortTime={selectedSortTime}
+        setSelectedSortTime={setSelectedSortTime}
+        selectedStatus={selectedStatus}
+        setSelectedStatus={setSelectedStatus}
+        selectedCategories={selectedCategories}
+        setSelectedCategories={setSelectedCategories}
+        setShowFilter={setShowFilter}
+      />
     </StyledForm>
   );
 };

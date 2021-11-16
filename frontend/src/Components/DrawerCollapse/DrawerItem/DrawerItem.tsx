@@ -18,17 +18,24 @@ import {
 } from "react-swipeable-list";
 import "react-swipeable-list/dist/styles.css";
 import { useDrawer } from "../../../Contexts/DrawerContext";
+import { Chat } from "../../../Interfaces/Interfaces";
+import { useChat } from "../../../Contexts/ChatContext";
 
 interface Props {
-  content: {
-    title: string;
-    username: string;
-    lastSender: string;
-  };
+  chat: Chat;
 }
 
-const DrawerItem = ({ content }: Props) => {
+const DrawerItem = ({ chat }: Props) => {
   const { setShowChatRoom } = useDrawer();
+  const { setChatTitle, setChatId } = useChat();
+
+
+  const handleShowMessageView = () => {
+    setChatId(chat.id)
+    setShowChatRoom(true);
+    setChatTitle(chat.auction.title);
+  }
+
 
   const trailingActions = () => (
     <TrailingActions>
@@ -46,24 +53,28 @@ const DrawerItem = ({ content }: Props) => {
 
   const renderMsgContent = (
     <StyledInnerWrapper>
-      <StyledTitle>{content.title}</StyledTitle>
-      <StyledLastMsg>
-        <StyledName>{content.lastSender}: </StyledName>
-        Tjena gubben, kan du sälja blomman svart?
-      </StyledLastMsg>
+      <StyledTitle>{chat.auction.title}</StyledTitle>
+      {chat.messages && (
+        <StyledLastMsg>
+          <StyledName>
+            {chat.messages[chat.messages.length - 1].writer.username}:{" "}
+          </StyledName>
+          {chat.messages[chat.messages.length - 1].message}
+        </StyledLastMsg>
+      )}
     </StyledInnerWrapper>
   );
 
   const renderBadge = (
     <StyledBadge badgeContent={100}>
-      <StyledAvatar>{content.username.charAt(0)}</StyledAvatar>
+      <StyledAvatar>{chat.receiver.username.charAt(0)}</StyledAvatar>
     </StyledBadge>
   );
 
   return (
     <StyledSwipe>
       <SwipeableListItem trailingActions={trailingActions()}>
-        <StyledWrapper onClick={() => setShowChatRoom(true)}>
+        <StyledWrapper onClick={handleShowMessageView}>
           {renderMsgContent}
           {renderBadge}
         </StyledWrapper>

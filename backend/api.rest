@@ -17,9 +17,7 @@ POST http://localhost:4000/api/login
 Content-Type: application/json
 
 {
-  "id": 3,
   "username": "postila",
-  "email": "postila@haha.se",
   "password": 123
 }
 
@@ -29,7 +27,7 @@ DELETE http://localhost:4000/api/logout
 
 ### AUCTIONS
 ### Get all OPEN auctions
-GET http://localhost:4000/rest/auctions
+GET http://localhost:4000/rest/auctions?page=1
 
 ### Get auctions by id
 GET http://localhost:4000/rest/auctions/6
@@ -40,15 +38,15 @@ GET http://localhost:4000/rest/auctions/6?sorted=true
 ### Get current users auctions
 GET http://localhost:4000/rest/auctions/user
 
-###
+### Create auction
 POST http://localhost:4000/rest/auctions
 Content-Type: application/json
 
 {
-  "title": "Chocolate Coverd Cherry",
+  "title": "Stickling 1",
   "description": "Orotad stickling av plattblads sorten Chocolate Coverd Cherry",
   "startPrice": 1,
-  "endDate": 	1636106700
+  "endDate": 	1637672365
 }
 
 ### Create Bid on an auction
@@ -66,7 +64,7 @@ Content-Type: application/json
 GET http://localhost:4000/rest/auctions/search?title=test
 
 ### get auctions by title and category
-GET http://localhost:4000/rest/auctions/search?title=blomma&category=Blomma%20Träd
+GET http://localhost:4000/api/auctions/search?title=china&status=SOLD&page=0&sort=asc
 
 ### get won auctions by current user
 GET http://localhost:4000/rest/auctions/won

@@ -2,7 +2,7 @@ import { useSearch } from "../../Contexts/SearchContext";
 import { useAuth } from "../../Contexts/AuthContext";
 import SearchForm from "../../Components/Search/SearchForm/SearchForm";
 import { imageIcons } from "./ImageIcons";
-import { Auction } from "../../Interfaces/Interfaces";
+import { Auction, Category } from "../../Interfaces/Interfaces";
 import { IconImage } from "../../Utils/types";
 import Carousel from "react-elastic-carousel";
 import {
@@ -15,6 +15,7 @@ import {
   StyledAuctionitem,
   StyledText,
   StyledTitle,
+  StyledCategoriesTitle,
   StyledCarouselWrapper,
   StyledPageWrapper,
   StyledAvatar,
@@ -26,34 +27,72 @@ import {
   StyledAuctionImg,
   StyledSoonEndingWrapper,
 } from "./StyledHomePage";
-import { useAuction } from "../../Contexts/AuctionContext";
 import { useEffect } from "react";
 import { useNav } from "../../Contexts/NavigationContext";
 import { useHistory } from "react-router-dom";
+import { useCategory } from "../../Contexts/CategoryContext";
+import { sortByTimes } from "../../Utils/types";
 
 const HomePage = () => {
   const history = useHistory();
-  const { searchText } = useSearch();
+  const {
+    searchText,
+    clearFilter,
+    setSelectedCategories,
+    getAuctionsByOptions,
+    auctions,
+    setSelectedSortTime,
+  } = useSearch();
+
   const { whoAmI } = useAuth();
-  const { auctions } = useAuction();
+  const { allCategories } = useCategory();
+
+  useEffect(() => {
+    handleGetDescAuctions();
+  }, []);
+
+  const handleGetDescAuctions = async () => {
+    setSelectedSortTime(sortByTimes[0]);
+    await getAuctionsByOptions(0)
+  };
+
+  const getCategoryIcon = (name: string) => {
+    let icon: IconImage = imageIcons[name.toLocaleLowerCase()];
+    
+    if (icon == null) {
+      icon = imageIcons["stickling"]; // default icon
+    }
+    return icon.imgFile;
+  }
+  const handleSearchByCategory = async (category: Category) => {
+    await clearFilter();
+    await setSelectedCategories([category]);
+    await getAuctionsByOptions(0, { categories: [category] });
+    history.push("/auctions")
+  };
+
+  const handleGoToDetailPage = (auctionId: number) => {
+    clearFilter();
+    history.push("/auctions/" + auctionId)
+  };
 
   const renderCategories = () => (
     <StyledCarouselWrapper>
-      <Carousel
+        <Carousel
         isRTL={true}
         itemsToShow={3}
         outerSpacing={0}
         pagination={false}
         initialFirstItem={3}
-      >
-        {imageIcons.map((icon: IconImage) => {
+        >
+        {allCategories && allCategories.map((category: Category) => {
           return (
-            <StyledIconImageItem key={icon.text}>
+            <StyledIconImageItem key={category.name}>
               <StyledIconImg
-                src={icon.imgFile}
-                onClick={() => console.log("klicka på karusell item")}
+                src={getCategoryIcon(category.name)}
+                onClick={() => handleSearchByCategory(category)}
               />
-              <StyledText>{icon.text}</StyledText>
+              <StyledText>{category.name}</StyledText>
             </StyledIconImageItem>
           );
         })}
@@ -81,21 +120,21 @@ const HomePage = () => {
     <StyledSoonEndingWrapper>
       <Carousel
         isRTL={true}
-        itemsToShow={3}
+        itemsToShow={4}
         outerSpacing={0}
         pagination={false}
-        initialFirstItem={3}
+        initialFirstItem={0}
       >
         {auctions &&
           auctions.map((auction: Auction) => {
             return (
               <StyledAuctionitem
                 key={auction.id}
-                onClick={() => history.push("/auctions/" + auction.id)}
+                onClick={() => handleGoToDetailPage(auction.id)}
               >
                 <StyledImageListItem gridignore="true">
                   <StyledAuctionImg
-                    src="https://i.pinimg.com/564x/9e/8b/dc/9e8bdc74df3cb2f87fae194a18ba569a.jpg"
+                    src={!auction.images.length ? `https://i.pinimg.com/564x/9e/8b/dc/9e8bdc74df3cb2f87fae194a18ba569a.jpg` : auction.images[0].path}
                     alt="Auction"
                     loading="lazy"
                   />
@@ -133,13 +172,13 @@ const HomePage = () => {
       </StyledSearchWrapper>
 
       <StyledPageWrapper>
-        <StyledTitle>Kategorier</StyledTitle>
+        <StyledCategoriesTitle>Kategorier</StyledCategoriesTitle>
         {renderCategories()}
 
         <StyledTitle>Nyheter</StyledTitle>
         {renderNews()}
 
-        <StyledTitle>Snart avslutade auctioner</StyledTitle>
+        <StyledTitle>Snart avslutade auktioner</StyledTitle>
         {renderSoonEndingAuction()}
       </StyledPageWrapper>
     </StyledWrapper>

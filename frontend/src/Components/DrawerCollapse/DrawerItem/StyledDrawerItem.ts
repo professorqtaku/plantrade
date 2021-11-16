@@ -10,7 +10,7 @@ export const StyledWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr auto;
   background: white;
-  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  box-shadow: 0 3px 10px var(--shadow-color);
   margin-bottom: 1rem;
   padding: 0.5rem;
   &:first-child {
@@ -41,7 +41,7 @@ export const StyledName = styled.span`
 `;
 
 export const StyledAvatar = styled(Avatar)`
-  background: var(--chat-green);
+  background: var(--light-green);
 `;
 
 export const StyledBadge = styled(Badge)`

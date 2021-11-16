@@ -13,6 +13,7 @@ import {
 } from "./StyledLoginForm";
 import InputField from "../../InputField/InputField";
 import { useAuth } from "../../../Contexts/AuthContext";
+import { useModal } from "../../../Contexts/ModalContext";
 import { useSnackBar } from "../../../Contexts/SnackBarContext";
 
 interface Props {
@@ -23,6 +24,8 @@ const LoginForm = ({ toggleRegister }: Props) => {
   const { login, wrongPassword } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { toggleLoginModal } = useModal();
+  const { addSnackbar } = useSnackBar();
 
   const handleLogin = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
@@ -32,24 +35,30 @@ const LoginForm = ({ toggleRegister }: Props) => {
       password: password,
     };
 
-    await login(userObj);
+    const isSucceed = await login(userObj);
+    if (isSucceed) {
+      toggleLoginModal();
+      addSnackbar("Inloggning lyckades!");
+    } else {
+      addSnackbar({ message: "Inloggning misslyckad!", status: "error" });
+    }
   };
 
   return (
     <StyledLoginContainer>
       <Styledh3>LOGGA IN</Styledh3>
-      <StyledForm onSubmit={(e) => handleLogin(e)}>
+      <StyledForm onSubmit={(e: BaseSyntheticEvent) => handleLogin(e)}>
         <StyledDiv>
           <StyledPorfileIcon />
           <InputField
-            label="username"
+            label="Användarnamn"
             updateState={(e) => setUsername(e)}
             value={username}
             required
           />
           <StyledPwIcon />
           <InputField
-            label="password"
+            label="Lösenord"
             margintop={10}
             type="password"
             updateState={(e) => setPassword(e)}

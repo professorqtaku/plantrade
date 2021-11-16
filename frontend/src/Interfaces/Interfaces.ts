@@ -1,8 +1,8 @@
 export interface User {
-  id?: number;
+  id: number;
   username: string;
-  email: string;
-  password: string;
+  email?: string;
+  password?: string;
 }
 
 export interface Auction {
@@ -24,7 +24,7 @@ export interface Bid {
   createdDate: Date;
   price: number;
   auctionId: number;
-  userId: number;
+  user: User;
 }
 
 export interface Category {
@@ -39,9 +39,36 @@ export interface Image {
 }
 
 export interface Notification {
-  id: Number,
-  auction: Auction,
-  user: User,
-  message: string,
-  isRead: boolean
+  id: Number;
+  auction: Auction;
+  user: User;
+  message: string;
+  isRead: boolean;
+  status?: "success" | "error" | "warning" | "info";
+  createdDate: Date;
+}
+
+export interface Chat {
+  id: number;
+  auction: Auction;
+  creator: User;
+  receiver: User;
+  messages?: Message[];
+}
+
+export interface Message {
+  id: number;
+  writer: User;
+  message: string;
+  createdDate: string;
+  isRead: boolean;
+  chat: Chat;
+}
+
+export interface BidUpdateSocket {
+  id: number;
+  user: User;
+  auction: Auction;
+  price: number;
+  createdDate: number;
 }

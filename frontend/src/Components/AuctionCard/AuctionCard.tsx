@@ -14,14 +14,17 @@ import {
   StyledCardContent,
   StyledSpan,
   StyledDiv,
+  StyledImgWrapper,
 } from "./StyledAuctionCard";
+import { useModal } from "../../Contexts/ModalContext";
 
 interface Props {
   auction: Auction;
   fetchAuctions: () => Promise<void>;
+  forwardRef?: any;
 }
 
-const AuctionCard = ({ auction, fetchAuctions }: Props) => {
+const AuctionCard = ({ auction, fetchAuctions, forwardRef}: Props) => {
   const [daysLeft, setDaysLeft] = useState<number | null>(null);
   const [differenceInMillis, setDifferenceInMillis] = useState(0);
   const [counter, setCounter] = useState<number | null>(null);
@@ -29,10 +32,11 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
   const [bid, setBid] = useState<number | undefined>(0);
   const [quickBid, setQuickBid] = useState<number>();
   
-  
+
   const history = useHistory();
   const { createBid } = useBid();
   const { whoAmI } = useAuth();
+  const { toggleLoginModal } = useModal();
   const isHost =
     whoAmI && auction.host && auction.host.id && whoAmI.id == auction.host.id;
   
@@ -96,7 +100,10 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
   };
 
   const handleBid = async () => {
-    if (whoAmI == null) return;
+    if (whoAmI == null) {
+      toggleLoginModal();
+      return
+    }
     
     const newBid = {
       userId: whoAmI.id,
@@ -113,11 +120,17 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
   };
 
   return (
-    <StyledCard>
-      <StyledImg
-        src="https://i.pinimg.com/564x/9e/8b/dc/9e8bdc74df3cb2f87fae194a18ba569a.jpg"
-        onClick={toDetailPage}
-      />
+    <StyledCard ref={forwardRef}>
+      <StyledImgWrapper>
+        <StyledImg
+          src={
+            auction.images.length
+              ? auction.images[0].path
+              : `https://i.pinimg.com/564x/9e/8b/dc/9e8bdc74df3cb2f87fae194a18ba569a.jpg`
+          }
+          onClick={toDetailPage}
+        />
+      </StyledImgWrapper>
       <StyledCardContent>
         <div>
           <StyledAvatar>{auction.title.charAt(0)}</StyledAvatar>
@@ -128,7 +141,8 @@ const AuctionCard = ({ auction, fetchAuctions }: Props) => {
             <StyledSpan>Pris:</StyledSpan> {auction.startPrice} SEK
           </StyledDesc>
           <StyledDesc>
-            <StyledSpan>Högsta bud:</StyledSpan> {bid == auction.startPrice ? "Inga bud" : bid + " SEK"} 
+            <StyledSpan>Högsta bud:</StyledSpan>{" "}
+            {bid == auction.startPrice ? "Inga bud" : bid + " SEK"}
           </StyledDesc>
           <StyledDesc>
             <StyledSpan>{remainingTime}</StyledSpan> {daysLeft}

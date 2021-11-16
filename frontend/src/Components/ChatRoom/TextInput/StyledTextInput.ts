@@ -20,7 +20,7 @@ export const StyledInput = styled.input`
   align-self: start;
   margin-left: 0.7rem;
   margin-top: 0.5rem;
-  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  box-shadow: 0 3px 10px var(--shadow-color);
   @media (min-width: 768px) {
     margin-top: 2rem;
   }

@@ -1,4 +1,7 @@
-import { createContext, FC, useContext, useState } from "react";
+import { createContext, FC, useContext } from "react";
+import { SnackbarProvider, useSnackbar } from 'notistack'
+import SnackBar from '../Components/SnackBar/SnackBar'
+import { Notification } from "../Interfaces/Interfaces";
 
 type Props = {
   children?: JSX.Element;
@@ -8,15 +11,35 @@ const SnackBarContext = createContext<any>(null);
 
 export const useSnackBar = () => useContext(SnackBarContext);
 
-const SnackBarProvider: FC<Props> = ({ children }: Props) => {
-  const [showSnackBar, setShowOpenSnackBar] = useState(false);
-  const [text, setText] = useState("");
+// wrap the contextprovider so we can use useSnackbar from notistack
+// in the context
+const SnackBarContextProvider = ({ children }: Props) => {
+  
+  return (
+    <SnackbarProvider
+      preventDuplicate
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      content={(key, message: string | Notification) => <SnackBar id={key} message={message} />}
+    >
+      <SnackBarStackProvider>{children}</SnackBarStackProvider>
+    </SnackbarProvider>
+  );
+};
+
+const SnackBarStackProvider: FC<Props> = ({ children }: Props) => {
+
+  const { enqueueSnackbar } = useSnackbar();
+
+  // add status in Notification object to change snackbar colour
+  const addSnackbar = (content: string | Notification) => {  
+    enqueueSnackbar(content);
+  };
 
   const values = {
-    showSnackBar,
-    setShowOpenSnackBar,
-    text,
-    setText,
+    addSnackbar,
   };
 
   return (
@@ -26,4 +49,4 @@ const SnackBarProvider: FC<Props> = ({ children }: Props) => {
   );
 };
 
-export default SnackBarProvider;
+export default SnackBarContextProvider;
