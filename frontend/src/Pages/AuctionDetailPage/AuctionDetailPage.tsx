@@ -34,6 +34,7 @@ import {
   StyledWarningPrice,
   StyledImg,
   StyledCarousel,
+  StyledChatWrapper,
 } from "./StyledAuctionDetailPage";
 import { useModal } from "../../Contexts/ModalContext";
 import BidHistoryContainer from '../../Components/BidHistory/BidHistoryContainer';
@@ -46,9 +47,9 @@ const AuctionDetailPage = () => {
   const { getAuctionById } = useAuction();
   const { createChat } = useChat();
   const { setShowDrawer } = useDrawer();
+  const { setMessage, handleSelect } = useNav();
   const { createBid, getHighestBid, highestBid } = useBid();
   const { whoAmI } = useAuth();
-  const { setMessage } = useNav();
 
   const { toggleLoginModal } = useModal();
 
@@ -111,10 +112,13 @@ const AuctionDetailPage = () => {
   };
 
   const handleChat = () => {
-    if (createChat({ auctionId: auction?.id })) {
-      setMessage(true);
+    if (whoAmI && createChat({ auctionId: auction?.id })) {
+      handleSelect(setMessage);
       setShowDrawer(true);
-    };
+    }
+    else {
+      toggleLoginModal();
+    }
   };
 
   const renderBidContent = (
@@ -178,12 +182,14 @@ const AuctionDetailPage = () => {
             <Grid item xs={8} md={8}>
               <StyledTitle>{auction.title}</StyledTitle>
             </Grid>
-            <Grid item xs={4} md={4}>
-              <StyledChat onClick={handleChat}>
-                <StyledChatIcon>
-                  <CommentIcon />
-                </StyledChatIcon>
-              </StyledChat>
+              <Grid item xs={4} md={4}>
+                <StyledChatWrapper>
+                  <StyledChat disabled={isHost} onClick={handleChat}>
+                  <StyledChatIcon>
+                    <CommentIcon />
+                  </StyledChatIcon>
+                  </StyledChat>
+                </StyledChatWrapper>
             </Grid>
             <Grid item xs={8} md={8}>
               <StyledUnderTitle>Sluttid</StyledUnderTitle>
