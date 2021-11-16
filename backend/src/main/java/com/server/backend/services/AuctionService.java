@@ -10,10 +10,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.lang.reflect.Array;
+import java.util.*;
 
 @Service
 public class AuctionService {
@@ -115,6 +113,8 @@ public class AuctionService {
     }
 
     public Optional<Auction> getAuctionById(long id) {
+        Optional<Auction> auction = auctionRepository.findById(id);
+        auction.ifPresent(auction1 -> changeStatusOnAuctions(Collections.singletonList(auction1)));
         return auctionRepository.findById(id);
     }
 
