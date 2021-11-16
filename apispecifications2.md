@@ -1,12 +1,359 @@
-## API Specifications
+# API Specifications
+## Prefix the endpoints below with localhost:4000
+
+## AUTH
+### /api/login
+#### **Method**: POST
+**Body**: application/json
+```json
+{
+  "username": "string",
+  "password": "string"
+}
+```
+#### **Response**:
+```json
+{
+  "id": "Number",
+  "username": "string",
+  "email": "string"
+}
+```
+
+<hr>
+
+### /api/register
+#### **Method**: POST
+**Body**: application/json
+
+```json
+{
+  "id": "Number",
+  "username": "string",
+  "email": "string"
+}
+```
+
+#### **Response**:
+```json
+{
+  "id": "Number",
+  "username": "string",
+  "email": "string"
+}
+```
+
+<hr>
+
+### /api/whoami
+#### **Method**: GET
+**Response**:
+```json
+{
+  "id": "Number",
+  "username": "string",
+  "email": "string"
+}
+```
+
+<hr>
+
+### /api/logout
+#### **Method**: DELETE
+#### **Response**: void
+
+<hr>
+
+## USER
+### /rest/users
+*send in one to many fields to update on current user*
+#### **Method**: POST
+**Body**: application/json
+```json
+{
+  "username": "string",
+  "email": "string",
+  "password": "string"
+}
+```
+
+#### **Response**
+```json
+{
+  "id": "Number",
+  "username": "string",
+  "email": "string",
+}
+```
+<hr>
+
+## AUCTION
+
+### /rest/auctions
+*get all auctions*
+#### **Method**: GET
+**Response**:
+```json
+[
+  {
+    "id": "Number",
+    "title": "string",
+    "description": "string",
+    "startPrice": "Number",
+    "status": "OPEN/NOT_SOLD/SOLD",
+    "endDate": "Date",
+    "host": {
+      "id": "Number",
+      "username": "string"
+    },
+    "winner": {
+      "id": "Number",
+      "username": "string"
+    },
+    "categories": [
+      {
+        "id": "Number",
+        "name": "string"
+      }
+    ],
+    "bids": [
+      {
+        "id": "Number",
+        "user": {
+          "id": "Number",
+          "username": "string"
+        }
+      }
+    ],
+    "images": [
+      {
+        "id": "Number",
+        "path": "string",
+        "auction": {
+          "id": "Number"
+        }
+      }
+    ]
+  }
+]
+```
+
+<hr>
+
+
+### /rest/auctions/{id}
+*get specific auction by id*
+#### **Method**: GET
+**Response**:
+```json
+{
+  "id": "Number",
+  "title": "string",
+  "description": "string",
+  "startPrice": "Number",
+  "status": "OPEN/NOT_SOLD/SOLD",
+  "endDate": "Date",
+  "host": {
+    "id": "Number",
+    "username": "string"
+  },
+  "winner": {
+        "id": "Number",
+        "username": "string"
+      },
+  "categories": [
+    {
+      "id": "Number",
+      "name": "string"
+    }
+  ],
+  "bids": [
+    {
+      "id": "Number",
+      "user": {
+        "id": "Number",
+        "username": "string"
+      }
+    }
+  ],
+  "images": [
+    {
+      "id": "Number",
+      "path": "string",
+      "auction": {
+        "id": "Number"
+      }
+    }
+  ]
+}
+```
+
+<hr>
+
+### /rest/auctions
+#### **Method**: POST
+**Body**: formdata
+
+```json
+auction:
+    {
+        "title": "string",
+        "description": "string",
+        "startPrice": "Number",
+        "endDate": "Date",
+    }
+),
+categories:
+    [
+        {
+            "id": "Number",
+            "name": "string"
+        }
+    ]
+    ),
+files: List<MultipartFile> files
+```
+**Response**:
+```json
+{
+  "id": "Number",
+  "title": "string",
+  "description": "string",
+  "startPrice": "Number",
+  "status": "OPEN",
+  "endDate": "Date",
+  "host": {
+    "id": "Number",
+    "username": "string"
+  },
+  "winner": {
+        "id": "Number",
+        "username": "string"
+      },
+  "categories": [
+    {
+      "id": "Number",
+      "name": "string"
+    }
+  ],
+  "bids": [],
+  "images": []
+}
+```
+
+<hr>
+
+
+### /rest/auctions/user
+*get all auctions for current user*
+#### **Method**: GET
+**Response**:
+```json
+[
+  {
+    "id": "Number",
+    "title": "string",
+    "description": "string",
+    "startPrice": "Number",
+    "status": "string",
+    "endDate": "Date",
+    "host": {
+      "id": "Number",
+      "username": "string"
+    },
+    "winner": {
+        "id": "Number",
+        "username": "string"
+      },
+    "categories": [
+      {
+        "id": "Number",
+        "name": "string"
+      }
+    ],
+    "bids": [
+      {
+        "id": "Number",
+        "user": {
+          "id": "Number",
+          "username": "string"
+        }
+      }
+    ],
+    "images": [
+      {
+        "id": "Number",
+        "path": "string",
+        "auction": {
+          "id": "Number"
+        }
+      }
+    ]
+  }
+]
+```
+
+<hr>
+
+### /rest/auctions/won
+*get won auctions for current user*
+#### **Method**: GET
+**Response**:
+
+```json
+[
+  {
+    "id": "Number",
+    "title": "string",
+    "description": "string",
+    "startPrice": "Number",
+    "status": "OPEN/NOT_SOLD/SOLD",
+    "endDate": "Date",
+    "host": {
+      "id": "Number",
+      "username": "string"
+    },
+    "winner": {
+      "id": "Number",
+      "username": "string"
+    },
+    "categories": [
+      {
+        "id": "Number",
+        "name": "string"
+      }
+    ],
+    "bids": [
+      {
+        "id": "Number",
+        "user": {
+          "id": "Number",
+          "username": "string"
+        }
+      }
+    ],
+    "images": [
+      {
+        "id": "Number",
+        "path": "string",
+        "auction": {
+          "id": "Number"
+        }
+      }
+    ]
+  }
+]
+```
 
 <hr>
 
 ## BID
 
 ### /api/bid
+*create a bid*
 #### **Method**: POST
-#### **Body**
+**Body**: application/json
+
 ```json
 {
   "userId": "Number",
@@ -60,9 +407,10 @@
 }
 ```
 ### /api/{id}/highest-bid
+*get highest bid of a specific auction*
 #### **Method**: GET
 
-#### **Response**
+**Response**
 ```json
 {
   "id": "Number",
@@ -194,8 +542,9 @@
 ## CHAT
 
 ### /api/chats
+*create a chat regarding an auction*
 #### **Method**: POST
-#### **Body**
+ **Body**: application/json
 ```json
 {
   "auctionId": "Number"
@@ -222,27 +571,7 @@
 ```
 
 ### /api/chats
-#### **Method**: GET
-#### **Response**
-```json 
-{
-  "id": "Number",
-  "creator": {
-    "id": "Number",
-    "username": "string"
-  },
-  "receiver": {
-    "id": "Number",
-    "username": "string"
-  },
-  "auction": {
-    "id": "Number",
-    "title": "string"
-  }
-}
-```
-
-### /add-endpoint-get-chats-by-currentUser
+*get chats for current user*
 #### **Method**: GET
 #### **Response**
 ```json 
@@ -268,9 +597,10 @@
 
 ## MESSEGE
 ### /api/messages/{chatId}
+*post a new message*
 #### **Method**: POST
 
-**Body**
+**Body**: application/json
 ```json
 {
   "message": "string",
@@ -290,6 +620,7 @@
 ```
 
 ### /api/messages/{chatId}
+*get all messages from a chat*
 #### **Method**: GET
 #### **Response**
 ```json 
@@ -312,6 +643,7 @@
 #### **Method**: GET
 #### **Response**
 ```json
+[
   {
     "id": "Number",
     "message": "string",
@@ -323,8 +655,9 @@
     },
     "isRead": "boolean"
   }
+]
 ```
-### /api/notifications/update/all
+### /api/notifications/update/is-read/all
 #### **Method**: PUT
 #### **Response**
 ```json
@@ -340,5 +673,19 @@
     },
     "isRead": "boolean"
   }
+]
+```
+
+<hr>
+
+## IMAGE
+
+### /api/upload
+*upload images*
+#### **Method**: POST
+**Response**
+```json
+[
+
 ]
 ```

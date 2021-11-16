@@ -2,8 +2,7 @@
 
 ## /api/login
 
-#### Method: POST
-
+#### **Method**: POST
 #### Body: application/json
 
 ```json
