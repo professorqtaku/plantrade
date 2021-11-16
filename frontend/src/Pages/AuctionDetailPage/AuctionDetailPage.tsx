@@ -39,6 +39,7 @@ import {
 import { useModal } from "../../Contexts/ModalContext";
 import BidHistoryContainer from '../../Components/BidHistory/BidHistoryContainer';
 import { useNav } from "../../Contexts/NavigationContext";
+import { useSnackBar } from "../../Contexts/SnackBarContext";
 
 const AuctionDetailPage = () => {
   const { id }: any = useParams();
@@ -50,6 +51,7 @@ const AuctionDetailPage = () => {
   const { setMessage, handleSelect } = useNav();
   const { createBid, getHighestBid, highestBid } = useBid();
   const { whoAmI } = useAuth();
+  const { addSnackbar } = useSnackBar();
 
   const { toggleLoginModal } = useModal();
 
@@ -104,9 +106,14 @@ const AuctionDetailPage = () => {
       createdDate: Date.now(),
     };
 
-    await createBid(newBid);
-    getHighestBid(auction?.id);
-    //rerender the new currently highest bid
+    const createdBid = await createBid(newBid);
+    if (createdBid != null) {
+      addSnackbar("Giltigt bud!");
+      //rerender the new currently highest bid
+      getHighestBid(auction?.id);
+    } else {
+      addSnackbar({ message: "Ogiltigt bud", status: "error" });
+    }
     // handleGetAuctionById();
     setBid("");
   };

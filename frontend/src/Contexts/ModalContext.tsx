@@ -1,5 +1,4 @@
-import { createContext, FC, useContext, useState, useEffect } from "react";
-import { useAuth } from "./AuthContext";
+import { createContext, FC, useContext, useState } from "react";
 
 type Props = {
   children?: JSX.Element;
@@ -11,6 +10,8 @@ export const useModal = () => useContext(ModalContext);
 
 
 const ModalContextProvider: FC<Props> = ({ children }: Props) => {
+  console.log("---7. MODAL CONTEXT----");
+
   const [showLoginModal, setShowLoginModal] = useState<Boolean>(false);
   const toggleLoginModal = () => {
     setShowLoginModal(!showLoginModal);

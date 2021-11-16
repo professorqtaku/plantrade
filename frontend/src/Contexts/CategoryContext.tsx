@@ -21,8 +21,10 @@ const CategoryContextProvider: FC<Props> = ({ children }: Props) => {
 
   const getAllCategories = async () => {
     let res: Response = await fetch("/rest/categories");
-    let newCategories: Array<Category> = await res.json();
-    setAllCategories(newCategories);
+    if (res.ok && res.status === 200) {    
+      let newCategories: Array<Category> = await res.json();
+      setAllCategories(newCategories);
+    }
   };
 
   const values = {

@@ -10,7 +10,7 @@ const AuthContext = createContext<any>(null);
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
-  console.log("---4. AUTH CONTEXT----");
+  console.log("---5. AUTH CONTEXT----");
   const [whoAmI, setWhoAmI] = useState(null);
   const [wrongPassword, setWrongPassword] = useState(false);
   const [userExists, setUserExists] = useState(false);
@@ -18,8 +18,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
   const [invisibleMsgBadge, setInvisibleMsgBadge] = useState(true);
 
   useEffect(() => {
-    console.log("---4.1 AUTH USEEFFECT----har user:", whoAmI != null);
-
+    console.log("---5.1 AUTH USEEFFECT----har user:", whoAmI != null);
     whoIsOnline();
   }, [!whoAmI]);
 
