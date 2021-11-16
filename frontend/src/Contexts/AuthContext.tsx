@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { User } from "../Interfaces/Interfaces";
+import { useChat } from "./ChatContext";
 
 interface Props {
   children?: JSX.Element;
@@ -13,6 +14,8 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
   const [whoAmI, setWhoAmI] = useState(null);
   const [wrongPassword, setWrongPassword] = useState(false);
   const [userExists, setUserExists] = useState(false);
+  const { checkReadMsg } = useChat();
+  const [invisibleMsgBadge, setInvisibleMsgBadge] = useState(true);
 
   useEffect(() => {
     console.log("---4.1 AUTH USEEFFECT----har user:", whoAmI != null);
@@ -46,8 +49,13 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
       body: JSON.stringify(user),
     });
     if (res.ok && res.status == 200) {
+      let resUser = await res.json();
       whoIsOnline();
       setWrongPassword(false);
+      const readMsg = await checkReadMsg();
+      if (readMsg === 0 && resUser.id) {
+        setInvisibleMsgBadge(false);
+      }
       return true;
     } else {
       setWrongPassword(true);
@@ -74,7 +82,9 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
         "content-type": "application/json",
       },
     });
+    setInvisibleMsgBadge(true);
     setWhoAmI(null);
+    window.location.reload();
   };
 
   const values = {
@@ -86,6 +96,8 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
     userExists,
     whoIsOnline,
     whoAmI,
+    invisibleMsgBadge,
+    setInvisibleMsgBadge,
   };
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;

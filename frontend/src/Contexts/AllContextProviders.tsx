@@ -23,14 +23,14 @@ const AllContextProviders: React.FC<Props> = ({ children }) => {
     <>
       <SnackBarContextProvider>
         <CategoryContextProvider>
-          <AuthContextProvider>
-            <AuctionContextProvider>
-              <ModalContextProvider>
-                <NavigationContextProvider>
-                  <DrawerContextProvider>
-                    <BidContextProvider>
-                      <NotificationContextProvider>
-                        <ChatContextProvider>
+          <ChatContextProvider>
+            <AuthContextProvider>
+              <AuctionContextProvider>
+                <ModalContextProvider>
+                  <NavigationContextProvider>
+                    <DrawerContextProvider>
+                      <BidContextProvider>
+                        <NotificationContextProvider>
                           <MessageContextProvider>
                             <SearchContextProvider>
                               <SocketContextProvider>
@@ -38,14 +38,14 @@ const AllContextProviders: React.FC<Props> = ({ children }) => {
                               </SocketContextProvider>
                             </SearchContextProvider>
                           </MessageContextProvider>
-                        </ChatContextProvider>
-                      </NotificationContextProvider>
-                    </BidContextProvider>
-                  </DrawerContextProvider>
-                </NavigationContextProvider>
-              </ModalContextProvider>
-            </AuctionContextProvider>
-          </AuthContextProvider>
+                        </NotificationContextProvider>
+                      </BidContextProvider>
+                    </DrawerContextProvider>
+                  </NavigationContextProvider>
+                </ModalContextProvider>
+              </AuctionContextProvider>
+            </AuthContextProvider>
+          </ChatContextProvider>
         </CategoryContextProvider>
       </SnackBarContextProvider>
     </>

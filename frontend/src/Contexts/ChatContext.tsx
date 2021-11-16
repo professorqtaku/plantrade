@@ -11,7 +11,8 @@ export const useChat = () => useContext(ChatContext);
 const ChatContextProvider = ({ children }: Props) => {
   const [chatId, setChatId] = useState();
   const [chats, setChats] = useState([]);
-  const [chatTitle, setChatTitle] = useState('');
+  const [chatTitle, setChatTitle] = useState("");
+  const [unReadMsg, setUnReadMsg] = useState();
 
   const getChatsByCurrentUser = async () => {
     let res: Response = await fetch(`/api/chats`);
@@ -38,6 +39,13 @@ const ChatContextProvider = ({ children }: Props) => {
     return false;
   };
 
+  const checkReadMsg = async () => {
+    let res: Response = await fetch("/api/chats/checkReadMessages");
+    const readMsg = await res.json();
+    setUnReadMsg(readMsg);
+    return readMsg;
+  };
+
   const values = {
     chatId,
     setChatId,
@@ -46,6 +54,8 @@ const ChatContextProvider = ({ children }: Props) => {
     createChat,
     setChatTitle,
     chatTitle,
+    checkReadMsg,
+    unReadMsg,
   };
 
   return <ChatContext.Provider value={values}>{children}</ChatContext.Provider>;

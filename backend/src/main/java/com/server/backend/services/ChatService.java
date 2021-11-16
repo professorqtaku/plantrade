@@ -2,6 +2,7 @@ package com.server.backend.services;
 
 import com.server.backend.entities.Auction;
 import com.server.backend.entities.Chat;
+import com.server.backend.entities.Message;
 import com.server.backend.entities.User;
 import com.server.backend.repositories.ChatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,5 +64,22 @@ public class ChatService {
             return null;
         }
         return chatRepository.customFindByCreatorIdOrReceiverId((currentUser.getId()));
+    }
+
+    public int checkReadMessages() {
+        User currentUser = userService.findCurrentUser();
+        var chats = getChatsByCurrentUser();
+        if (currentUser == null) {
+            return 0;
+        }
+        for(var chat : chats){
+           var sender = chat.getCreator().getId() == currentUser.getId() ? chat.getReceiver().getId() : chat.getCreator().getId();
+            for(var msg : chat.getMessages()) {
+                if(msg.getIsRead() == false && msg.getWriter().getId() == sender){
+                    return 0;
+                }
+            }
+        }
+        return 1;
     }
 }

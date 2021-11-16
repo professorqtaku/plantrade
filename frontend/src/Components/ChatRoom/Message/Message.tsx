@@ -24,10 +24,11 @@ const scrollToBottom = (node: HTMLCollectionOf<Element>) => {
 const Message = () => {
   const { messages, getAllChatMsg } = useMessage();
   const { chatId } = useChat();
-  const { whoAmI } = useAuth();
+  const { whoAmI, setInvisibleMsgBadge, invisibleMsgBadge } = useAuth();
   const { socket, isRead } = useSocket();
 
   useEffect(() => {
+    console.log("times????",socket);
     getAllChatMsg(chatId);
     socket.emit("join", chatId);
     scrollToBottom(msgWrapper);
@@ -37,13 +38,19 @@ const Message = () => {
   }, []);
 
   useEffect(() => {
+    if (whoAmI) {
+      setInvisibleMsgBadge(true);
+    }
+  }, [invisibleMsgBadge]);
+
+  useEffect(() => {
     scrollToBottom(msgWrapper);
   }, [messages]);
 
   const getDate = (message: MessageProps) => {
     const date = message.createdDate.substring(0, 10);
     const time = message.createdDate.substring(11, 16);
-    return `${date} ${time}`
+    return `${date} ${time}`;
   };
 
   const renderMessageContent = (message: MessageProps, index: number) => (
@@ -57,7 +64,7 @@ const Message = () => {
       )}
       {index === messages.length - 1 &&
       message.writer.id === whoAmI.id &&
-      (message.isRead || isRead) ? (
+      (message.isRead || isRead === true) ? (
         renderDateAndRead(message)
       ) : (
         <StyledDateOrRead sender={message.writer.id === whoAmI.id}>

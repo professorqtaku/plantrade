@@ -41,8 +41,7 @@ public class SocketModule {
         server.addEventListener("leave", String.class, onLeaveRoom());
 //        server.addEventListener("auctionUpdate", String.class, onAuctionReceived());
         server.addEventListener("bid", Bid.class, onBidReceived());
-        server.addEventListener("message", String.class, onMessage());
-
+        server.addEventListener("newMsg", String.class, onMessage());
         // start socket.io server
         server.start();
     }
@@ -52,13 +51,12 @@ public class SocketModule {
     }
 
     public void emitToRoom(String room, String event, Object data) {
-        System.out.println("Room: " + room + "event: " + event);
         server.getRoomOperations(room).sendEvent(event, data);
     }
 
     private DataListener<String> onMessage() {
-        return (client, room, ackSender) -> {
-            emitToRoom(room,"message", "messageUpdate");
+        return (client, data, ackSender) -> {
+
         };
     }
 

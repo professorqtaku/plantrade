@@ -13,7 +13,6 @@ import { useState } from "react";
 import { useAuction } from "../../Contexts/AuctionContext";
 import { useHistory } from "react-router";
 import { Category } from "../AuctionPage/AuctionPage";
-import { useSocket } from "../../Contexts/SocketContext";
 import TextField from '@mui/material/TextField';
 import FileUpload from '../../Components/FileUpload/FileUpload';
 
@@ -22,7 +21,6 @@ const formData = new FormData();
 const CreateAuctionPage = () => {
   const { createAuction } = useAuction();
   const history = useHistory();
-  const { socket } = useSocket();
 
  
   const [formDataPreview, setFormDataPreview] = useState<any[]>([]);
