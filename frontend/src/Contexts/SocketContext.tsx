@@ -34,6 +34,8 @@ const SocketContextProvider = ({ children }: Props) => {
   const { chatId } = useChat();
   const [isRead, setIsRead] = useState(false)
 
+  // console.log("----WS CONNECTION ----", isConnected);
+  
   if (!isConnected) {
     socket.on("connect", () => {
       console.log("conneted to ws");

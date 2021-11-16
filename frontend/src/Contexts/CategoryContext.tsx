@@ -10,22 +10,23 @@ const CategoryContext = createContext<any>(null);
 export const useCategory = () => useContext(CategoryContext);
 
 const CategoryContextProvider: FC<Props> = ({ children }: Props) => {
+  console.log("---3. CATEGORY CONTEXT----");
   const [allCategories, setAllCategories] = useState<Array<Category>>([]);
 
   useEffect(() => {
-    getAllCategories();
+    if (allCategories.length <= 0) {
+      getAllCategories();
+    }
   }, []);
 
   const getAllCategories = async () => {
     let res: Response = await fetch("/rest/categories");
     let newCategories: Array<Category> = await res.json();
     setAllCategories(newCategories);
-    return newCategories;
   };
 
   const values = {
-    allCategories,
-    getAllCategories,
+    allCategories
   };
 
   return (

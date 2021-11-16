@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { useSnackBar } from "./SnackBarContext";
-import {User} from '../Interfaces/Interfaces'
+import { User } from "../Interfaces/Interfaces";
 
 interface Props {
   children?: JSX.Element;
@@ -10,12 +10,14 @@ const AuthContext = createContext<any>(null);
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
+  console.log("---4. AUTH CONTEXT----");
   const [whoAmI, setWhoAmI] = useState(null);
   const [wrongPassword, setWrongPassword] = useState(false);
   const [userExists, setUserExists] = useState(false);
-  const { addSnackbar } = useSnackBar();
 
   useEffect(() => {
+    console.log("---4.1 AUTH USEEFFECT----har user:", whoAmI != null);
+
     whoIsOnline();
   }, [!whoAmI]);
 
@@ -45,16 +47,13 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
       },
       body: JSON.stringify(user),
     });
-    if (res.status == 404) {
-      setWrongPassword(true);
-      return false;
-    } else {
-      let resUser = await res.json();
-      setWhoAmI(resUser);
+    if (res.ok && res.status == 200) {
       whoIsOnline();
       setWrongPassword(false);
-      addSnackbar("Inloggnig lyckades!");
       return true;
+    } else {
+      setWrongPassword(true);
+      return false;
     }
   };
 
@@ -78,7 +77,6 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
       },
     });
     setWhoAmI(null);
-    addSnackbar("Utloggning lyckades!");
   };
 
   const values = {
@@ -96,4 +94,3 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
 };
 
 export default AuthContextProvider;
-

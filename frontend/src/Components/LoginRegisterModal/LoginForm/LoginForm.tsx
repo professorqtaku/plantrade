@@ -14,6 +14,7 @@ import {
 import InputField from "../../InputField/InputField";
 import { useAuth } from "../../../Contexts/AuthContext";
 import { useSnackBar } from "../../../Contexts/SnackBarContext";
+import { useModal } from "../../../Contexts/ModalContext";
 
 interface Props {
   toggleRegister: Function;
@@ -23,6 +24,8 @@ const LoginForm = ({ toggleRegister }: Props) => {
   const { login, wrongPassword } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { toggleLoginModal } = useModal();
+  const { addSnackbar } = useSnackBar();
 
   const handleLogin = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
@@ -32,7 +35,14 @@ const LoginForm = ({ toggleRegister }: Props) => {
       password: password,
     };
 
-    await login(userObj);
+    const isSucceed = await login(userObj);
+    if (isSucceed) {
+      toggleLoginModal();
+      addSnackbar("Inloggnig lyckades!");
+    }
+    else {
+      addSnackbar({ message: "Inloggning misslyckad!", status: "error" });
+    }
   };
 
   return (

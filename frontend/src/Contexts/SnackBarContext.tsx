@@ -14,6 +14,7 @@ export const useSnackBar = () => useContext(SnackBarContext);
 // wrap the contextprovider so we can use useSnackbar from notistack
 // in the context
 const SnackBarContextProvider = ({ children }: Props) => {
+  console.log("---2. SNACKBAR ----");
   const styles = {
     success: { backgroundColor: 'purple' },
     error: { backgroundColor: 'blue' },
