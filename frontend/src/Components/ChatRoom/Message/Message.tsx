@@ -28,6 +28,7 @@ const Message = () => {
   const { socket, isRead } = useSocket();
 
   useEffect(() => {
+    console.log("times????",socket);
     getAllChatMsg(chatId);
     socket.emit("join", chatId);
     scrollToBottom(msgWrapper);
@@ -63,7 +64,7 @@ const Message = () => {
       )}
       {index === messages.length - 1 &&
       message.writer.id === whoAmI.id &&
-      (message.isRead || isRead) ? (
+      (message.isRead || isRead === true) ? (
         renderDateAndRead(message)
       ) : (
         <StyledDateOrRead sender={message.writer.id === whoAmI.id}>

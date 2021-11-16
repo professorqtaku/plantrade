@@ -5,11 +5,14 @@ import { useSnackBar } from "./SnackBarContext";
 import { useNotification } from "./NotificationContext";
 import { Notification, BidUpdateSocket } from "../Interfaces/Interfaces";
 import { useMessage } from "./MessageContext";
-import { useDrawer } from "./DrawerContext";
 import { useBid } from "./BidContext";
 
 import { useSearch } from "./SearchContext";
 import { useChat } from "./ChatContext";
+import { useDrawer } from "./DrawerContext";
+
+const endpoint = "http://localhost:9092";
+const socket = io(endpoint, { upgrade: false, transports: ["websocket"] });
 
 type Props = {
   children?: JSX.Element;
@@ -20,9 +23,6 @@ const SocketContext = createContext<any>(null);
 export const useSocket = () => useContext(SocketContext);
 
 const SocketContextProvider = ({ children }: Props) => {
-  const endpoint = "http://localhost:9092";
-  const socket = io(endpoint, { upgrade: false, transports: ["websocket"] });
-  const [isConnected, setIsConnected] = useState(false);
   const { getHighestBid } = useBid();
   const { getAuctionsByOptions } = useSearch();
   const { whoAmI, setInvisibleMsgBadge, whoIsOnline } = useAuth();
@@ -30,14 +30,14 @@ const SocketContextProvider = ({ children }: Props) => {
   const { getNotificationsByCurrentUser } = useNotification();
   const { getAllChatMsg } = useMessage();
   const { chatId, checkReadMsg } = useChat();
+  const { showChatRoom } = useDrawer();
   const [isRead, setIsRead] = useState(false);
 
-  if (!isConnected) {
+  useEffect(() => {
     socket.on("connect", () => {
       console.log("conneted to ws");
-      setIsConnected(true);
     });
-  }
+  }, []);
 
   socket.on("bid", async function (data: BidUpdateSocket) {
     await getHighestBid(data.auction.id);
@@ -60,17 +60,20 @@ const SocketContextProvider = ({ children }: Props) => {
   });
 
   socket.on("message", async (data: any) => {
-    if (data.id === whoAmI.id) {
+    if (data.id === whoAmI?.id) {
       return;
     }
     await getAllChatMsg(chatId);
   });
 
   socket.on("newMsg", async (data: any) => {
-    if (data == whoAmI?.id) {
-      const readMsg = await checkReadMsg();
-      if (readMsg === 0) {
-        setInvisibleMsgBadge(false);
+    if (whoAmI) {
+      if (data === whoAmI.id + "" && !showChatRoom) {
+        console.log("Snälla...");
+        const readMsg = await checkReadMsg();
+        if (readMsg === 0) {
+          setInvisibleMsgBadge(false);
+        }
       }
     }
   });
