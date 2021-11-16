@@ -37,6 +37,7 @@ import {
 } from "./StyledAuctionDetailPage";
 import { useModal } from "../../Contexts/ModalContext";
 import BidHistoryContainer from '../../Components/BidHistory/BidHistoryContainer';
+import { useNav } from "../../Contexts/NavigationContext";
 
 const AuctionDetailPage = () => {
   const { id }: any = useParams();
@@ -47,6 +48,7 @@ const AuctionDetailPage = () => {
   const { setShowDrawer } = useDrawer();
   const { createBid, getHighestBid, highestBid } = useBid();
   const { whoAmI } = useAuth();
+  const { setMessage } = useNav();
 
   const { toggleLoginModal } = useModal();
 
@@ -110,6 +112,7 @@ const AuctionDetailPage = () => {
 
   const handleChat = () => {
     if (createChat({ auctionId: auction?.id })) {
+      setMessage(true);
       setShowDrawer(true);
     };
   };
