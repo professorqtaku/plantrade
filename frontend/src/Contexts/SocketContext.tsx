@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import io from "socket.io-client";
 import { useAuth } from "./AuthContext";
 import { useSnackBar } from "./SnackBarContext";
@@ -32,6 +32,7 @@ const SocketContextProvider = ({ children }: Props) => {
   const { getNotificationsByCurrentUser } = useNotification();
   const { getAllChatMsg } = useMessage();
   const { chatId } = useChat();
+  const [isRead, setIsRead] = useState(false)
 
   if (!isConnected) {
     socket.on("connect", () => {
@@ -45,12 +46,25 @@ const SocketContextProvider = ({ children }: Props) => {
     await getAuctionsByOptions();
   });
 
-  socket.on("join", (data: string) => {
-    console.log(data);
+  socket.on("join", (data: number) => {
+    console.log('Client joined the room');
+    if (data === 2) {
+      setIsRead(true)
+    }
   });
 
+  socket.on("leave", async (data: number) => {
+    console.log("Client left room");
+      if (data === 1) {
+        await getAllChatMsg(chatId);
+      }
+    setIsRead(false);
+    });
+
   socket.on("message", async (data: any) => {
-    if (data.id === whoAmI.id) { return; }
+    if (data.id === whoAmI.id) {
+      return;
+    }
     await getAllChatMsg(chatId);
   });
 
@@ -63,6 +77,7 @@ const SocketContextProvider = ({ children }: Props) => {
 
   const values = {
     socket,
+    isRead,
   };
 
   return (
