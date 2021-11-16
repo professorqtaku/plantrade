@@ -37,6 +37,7 @@ import {
 } from "./StyledAuctionDetailPage";
 import { useModal } from "../../Contexts/ModalContext";
 import BidHistoryContainer from '../../Components/BidHistory/BidHistoryContainer';
+import Countdown from '../../Components/Countdown/Countdown';
 
 const AuctionDetailPage = () => {
   const { id }: any = useParams();
@@ -68,8 +69,14 @@ const AuctionDetailPage = () => {
     setBidText("Högsta budet");
   }, [highestBid]);
 
+  useEffect(() => {
+    console.log('AUCTION has changed from PAGE', auction);
+  }, [auction])
+
   const handleGetAuctionById = async () => {
     const res = await getAuctionById(id);
+    console.log('Fetching auction by id')
+    // console.log('the new auctiton is', res)
     setAuction(res);
     getHighestBid(res.id);
     setEndDate(new Date(res.endDate).toLocaleDateString("sv-SV"));
@@ -196,11 +203,18 @@ const AuctionDetailPage = () => {
                 </StyledAccessTimeOutlinedIcon>
                 {endTime}
               </StyledDate>
-            </Grid>
+              </Grid>
             <Grid item xs={4} md={4}>
               <StyledPrice>SEK {currentBid}</StyledPrice>
               <StyledPriceTitle>{bidText}</StyledPriceTitle>
-            </Grid>
+              </Grid>
+
+
+              <Grid item xs={12} md={12}>
+                <Countdown auction={auction} fetchAuction={handleGetAuctionById} />
+              </Grid>
+
+
             <Grid item xs={12} md={6}>
               <StyledUnderTitle>Beskrivning</StyledUnderTitle>
               <ExpandableDescriptionBox
@@ -222,7 +236,7 @@ const AuctionDetailPage = () => {
               )}
             </Grid>
             <StyledForm>
-                {whoAmI ? renderBidContent : renderLoginToggle}
+                {auction && auction.status !== 'OPEN' ? <p>AUKTIONEN ÄR AVSLUTAD</p> : whoAmI ? renderBidContent : renderLoginToggle}
               </StyledForm>
             <Grid item xs={12}>
               <BidHistoryContainer auction={auction} whoAmI={whoAmI} />
