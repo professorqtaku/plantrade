@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useAuth } from "../../../Contexts/AuthContext";
 import InputField from "../../InputField/InputField";
 import { useSnackBar } from "../../../Contexts/SnackBarContext";
-import {User} from '../../../Interfaces/Interfaces'
+import { User } from "../../../Interfaces/Interfaces";
 import {
   StyledWrapper,
   StyledForm,
@@ -14,7 +14,11 @@ import {
   StyledTitle,
   StyledWarningText,
 } from "./StyledRegisterForm";
-import { StyledDivider, StyledSpan, StyledText } from "../LoginForm/StyledLoginForm";
+import {
+  StyledDivider,
+  StyledSpan,
+  StyledText,
+} from "../LoginForm/StyledLoginForm";
 
 interface Props {
   toggleRegister: Function;
@@ -25,18 +29,23 @@ const RegisterForm = ({ toggleRegister }: Props) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { addSnackbar } = useSnackBar();
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const userObject: User = {
+    const userObject = {
       username: username,
       email: email,
       password: password,
     };
+    
     let isRegSucceed = await register(userObject);
     if (isRegSucceed) {
       toggleRegister();
+      addSnackbar("Regristrering lyckades!");
+    } else {
+      addSnackbar({ message: "Inloggning misslyckad!", status: "error" });
     }
   };
 
@@ -69,14 +78,14 @@ const RegisterForm = ({ toggleRegister }: Props) => {
             required
           />
         </StyledInputDiv>
-        {userExists && <StyledWarningText>The user already exists.</StyledWarningText>}
+        {userExists && (
+          <StyledWarningText>The user already exists.</StyledWarningText>
+        )}
         <StyledBtn>Skapa Konto</StyledBtn>
         <StyledDivider />
         <StyledText>
           Har du redan ett konto?{" "}
-          <StyledSpan onClick={() => toggleRegister()}>
-            Logga in här
-          </StyledSpan>
+          <StyledSpan onClick={() => toggleRegister()}>Logga in här</StyledSpan>
         </StyledText>
       </StyledForm>
     </StyledWrapper>

@@ -1,5 +1,4 @@
 import { createContext, useState, useEffect, useContext } from "react";
-import { useSnackBar } from "./SnackBarContext";
 import { User } from "../Interfaces/Interfaces";
 
 interface Props {
@@ -28,14 +27,13 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
 
       body: JSON.stringify(user),
     });
-    if (res.status == 400) {
+    if (res.ok && res.status == 200) {
+      setUserExists(false);
+      return true;
+    }
+    else {
       setUserExists(true);
       return false;
-    }
-    if (res.status == 200) {
-      setUserExists(false);
-      addSnackbar("Regristrering lyckades!");
-      return true;
     }
   };
 
