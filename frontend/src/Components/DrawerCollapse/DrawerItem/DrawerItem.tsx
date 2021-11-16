@@ -29,11 +29,13 @@ const DrawerItem = ({ chat }: Props) => {
   const { setShowChatRoom } = useDrawer();
   const { setChatTitle, setChatId } = useChat();
 
+
   const handleShowMessageView = () => {
     setChatId(chat.id)
     setShowChatRoom(true);
     setChatTitle(chat.auction.title);
   }
+
 
   const trailingActions = () => (
     <TrailingActions>

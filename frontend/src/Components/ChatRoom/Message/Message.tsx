@@ -25,7 +25,7 @@ const Message = () => {
   const { messages, getAllChatMsg } = useMessage();
   const { chatId } = useChat();
   const { whoAmI } = useAuth();
-  const { socket } = useSocket();
+  const { socket, isRead } = useSocket();
 
   useEffect(() => {
     getAllChatMsg(chatId);
@@ -40,6 +40,12 @@ const Message = () => {
     scrollToBottom(msgWrapper);
   }, [messages]);
 
+  const getDate = (message: MessageProps) => {
+    const date = message.createdDate.substring(0, 10);
+    const time = message.createdDate.substring(11, 16);
+    return `${date} ${time}`
+  };
+
   const renderMessageContent = (message: MessageProps, index: number) => (
     <StyledMessageWrapper key={message.id}>
       {message.writer.id !== whoAmI.id ? (
@@ -49,11 +55,13 @@ const Message = () => {
           <StyledText>{message.message}</StyledText>
         </StyledMessage>
       )}
-      {index === messages.length - 1 && message.writer.id === whoAmI.id ? (
+      {index === messages.length - 1 &&
+      message.writer.id === whoAmI.id &&
+      (message.isRead || isRead) ? (
         renderDateAndRead(message)
       ) : (
         <StyledDateOrRead sender={message.writer.id === whoAmI.id}>
-          2020-10-12
+          {getDate(message)}
         </StyledDateOrRead>
       )}
     </StyledMessageWrapper>
@@ -73,7 +81,7 @@ const Message = () => {
   const renderDateAndRead = (message: MessageProps) => (
     <StyledDateAndRead>
       <StyledDateOrRead sender={message.writer.id === whoAmI.id} read={true}>
-        2020-10-12
+        {getDate(message)}
       </StyledDateOrRead>
       <StyledDateOrRead sender={message.writer.id === whoAmI.id}>
         <StyledCheckedIcon />

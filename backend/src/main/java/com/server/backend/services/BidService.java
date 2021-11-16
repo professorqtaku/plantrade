@@ -88,7 +88,7 @@ public class BidService {
         }
       }
 
-      notificationService.sendNotifications(auction, (int) values.get("price"), secondHighestAuctionUser);
+      notificationService.sendNotifications(auction, secondHighestAuctionUser, (int) values.get("price"));
       auction.addBid(bid);
       return bidRepository.save(bid);
     }
