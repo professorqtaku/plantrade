@@ -1,12 +1,17 @@
 import styled from "styled-components";
 
 export const StyledWrapper = styled.div`
-  max-height: 80vh;
+  max-height: 100vh;
   display: grid;
   grid-template-rows: 25vh 1fr;
+  
+  @media (min-width: 769px) {
+  max-height: 100%;
+  }
 `;
 
 export const StyledContentWrapper = styled.div`
+  padding: 20px;
   margin: 0 auto;
   `;
 
@@ -32,7 +37,7 @@ export const StyledSearchFieldWrapper = styled.div`
 `;
 
 export const StyledEndAuctions = styled.div`
-  margin-bottom: 100px;
+  margin: 20px 0 100px 0;
   text-align: center;
   font-family: var(--font-text);
 `;
