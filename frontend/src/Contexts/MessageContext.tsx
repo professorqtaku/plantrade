@@ -10,7 +10,6 @@ const MessageContext = createContext<any>(null);
 export const useMessage = () => useContext(MessageContext);
 
 const MessageContextProvider: FC<Props> = ({ children }: Props) => {
-  console.log("---12. MESSAGE CONTEXT----");
 
   const [messages, setMessages] = useState <Message[] | undefined>([]);
 

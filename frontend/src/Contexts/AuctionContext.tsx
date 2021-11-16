@@ -10,7 +10,6 @@ export const AuctionContext = createContext<any>(null);
 export const useAuction = () => useContext(AuctionContext);
 
 const AuctionContextProvider: FC<Props> = ({ children }: Props) => {
-  console.log("---6. AUCTION CONTEXT----");
   const [usersAuctions, setUsersAuctions] = useState<Array<Auction>>();
   const [usersWonAuctions, setUsersWonAuctions] = useState<Array<Auction>>();
 
@@ -38,7 +37,7 @@ const AuctionContextProvider: FC<Props> = ({ children }: Props) => {
       body: formData,
     });
     const auctionResponse = await res.json();
-    console.log(auctionResponse, "what is here");
+    // console.log(auctionResponse, "what is here");
     return auctionResponse;
   };
   

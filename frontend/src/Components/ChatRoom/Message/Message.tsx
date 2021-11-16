@@ -28,7 +28,7 @@ const Message = () => {
   const { socket, isRead } = useSocket();
 
   useEffect(() => {
-    console.log("times????",socket);
+    // console.log("times????",socket);
     getAllChatMsg(chatId);
     socket.emit("join", chatId);
     scrollToBottom(msgWrapper);

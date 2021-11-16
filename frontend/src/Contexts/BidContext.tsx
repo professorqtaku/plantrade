@@ -11,12 +11,10 @@ const BidContext = createContext<any>(null);
 export const useBid = () => useContext(BidContext);
 
 const BidContextProvider: FC<Props> = ({ children }: Props) => {
-  console.log("---10. BID CONTEXT----");
   
   const [highestBid, setHighestBid] = useState();
   
   const createBid = async (newBid: Bid) => {
-    console.log("---10.1 CREATE BID----");
     let res: Response = await fetch("/api/bid", {
       method: "POST",
       body: JSON.stringify(newBid),
@@ -34,16 +32,15 @@ const BidContextProvider: FC<Props> = ({ children }: Props) => {
   };
   
   const getHighestBid = async (id: Number) => {
-    console.log("---10.2 HIGHEST BID----");
     let res: Response = await fetch(`/api/${id}/highest-bid`);
     
     if (res.status == 200) {
       let data = await res.json();
-      console.log(data.price);
+      // console.log(data.price);
       
       setHighestBid(data.price);
     } else {
-      console.log("opsi, something went wrong");
+      // console.log("opsi, something went wrong");
       // add toaster saying something went wrong
     }
   };

@@ -9,7 +9,6 @@ const NavigationContext = createContext<any>(null);
 export const useNav = () => useContext(NavigationContext);
 
 const NavigationContextProvider: FC<Props> = ({ children }: Props) => {
-  console.log("---8. NAV CONTEXT----");
 
   const [home, setHome] = useState<boolean>(false);
   const [auction, setAuction] = useState<boolean>(false);

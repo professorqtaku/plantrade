@@ -17,7 +17,6 @@ interface Props {
 }
 
 const AllContextProviders: React.FC<Props> = ({ children }) => {
-  console.log("---1. ALL CONTEXT----");
   
   return (
     <>

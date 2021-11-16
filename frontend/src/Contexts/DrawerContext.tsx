@@ -9,7 +9,6 @@ const DrawerContext = createContext<any>(null);
 export const useDrawer = () => useContext(DrawerContext);
 
 const DrawerContextProvider: FC<Props> = ({ children }: Props) => {
-  console.log("---9. DRAWER CONTEXT----");
 
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
   const [showChatRoom, setShowChatRoom] = useState(false);

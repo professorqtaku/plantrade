@@ -24,6 +24,7 @@ const SocketContext = createContext<any>(null);
 export const useSocket = () => useContext(SocketContext);
 
 const SocketContextProvider = ({ children }: Props) => {
+
   const { getHighestBid } = useBid();
   const { getAuctionsByOptions } = useSearch();
   const { whoAmI, setInvisibleMsgBadge, whoIsOnline } = useAuth();
@@ -34,15 +35,13 @@ const SocketContextProvider = ({ children }: Props) => {
   const { showChatRoom } = useDrawer();
   const [isRead, setIsRead] = useState(false);
 
-  // console.log("----WS CONNECTION ----", isConnected);
   useEffect(() => {
     socket.on("connect", () => {
-      console.log("conneted to ws");
+      // console.log("conneted to ws");
     });
   }, []);
 
   socket.on("bid", async function (data: BidUpdateSocket) {
-    console.log("---10 Socket trigger bid update", data.auction.id);
     const isInDetailView = window.location.href.includes(
       `auctions/${data.auction.id}`
     );
@@ -51,20 +50,19 @@ const SocketContextProvider = ({ children }: Props) => {
       await getHighestBid(data.auction.id);
     }
     else if (isInListView) {
-      console.log("---10 GET ALL AUCTIONS", data.auction.id);
       await getAuctionsByOptions();
     }
   });
 
   socket.on("join", (data: number) => {
-    console.log("Client joined the room");
+    // console.log("Client joined the room");
     if (data === 2) {
       setIsRead(true);
     }
   });
 
   socket.on("leave", async (data: number) => {
-    console.log("Client left room");
+    // console.log("Client left room");
     if (data === 1) {
       await getAllChatMsg(chatId);
     }
@@ -81,7 +79,7 @@ const SocketContextProvider = ({ children }: Props) => {
   socket.on("newMsg", async (data: any) => {
     if (whoAmI) {
       if (data === whoAmI.id + "" && !showChatRoom) {
-        console.log("Snälla...");
+        // console.log("Snälla...");
         const readMsg = await checkReadMsg();
         if (readMsg === 0) {
           setInvisibleMsgBadge(false);

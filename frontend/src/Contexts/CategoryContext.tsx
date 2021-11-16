@@ -10,7 +10,6 @@ const CategoryContext = createContext<any>(null);
 export const useCategory = () => useContext(CategoryContext);
 
 const CategoryContextProvider: FC<Props> = ({ children }: Props) => {
-  console.log("---3. CATEGORY CONTEXT----");
   const [allCategories, setAllCategories] = useState<Array<Category>>([]);
 
   useEffect(() => {

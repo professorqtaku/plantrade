@@ -10,7 +10,6 @@ export const useModal = () => useContext(ModalContext);
 
 
 const ModalContextProvider: FC<Props> = ({ children }: Props) => {
-  console.log("---7. MODAL CONTEXT----");
 
   const [showLoginModal, setShowLoginModal] = useState<Boolean>(false);
   const toggleLoginModal = () => {
