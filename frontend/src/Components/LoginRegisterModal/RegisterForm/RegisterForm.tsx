@@ -57,7 +57,7 @@ const RegisterForm = ({ toggleRegister }: Props) => {
           <StyledPorfileIcon />
           <InputField
             value={username}
-            label="username"
+            label="Användarnamn"
             updateState={(e) => setUsername(e)}
             required
           />
@@ -65,7 +65,7 @@ const RegisterForm = ({ toggleRegister }: Props) => {
           <InputField
             value={email}
             type="email"
-            label="email"
+            label="E-mail"
             updateState={(e) => setEmail(e)}
             required
           />
@@ -73,7 +73,7 @@ const RegisterForm = ({ toggleRegister }: Props) => {
           <InputField
             value={password}
             type="password"
-            label="password"
+            label="Lösenord"
             updateState={(e) => setPassword(e)}
             required
           />

@@ -52,14 +52,14 @@ const LoginForm = ({ toggleRegister }: Props) => {
         <StyledDiv>
           <StyledPorfileIcon />
           <InputField
-            label="username"
+            label="Användarnamn"
             updateState={(e) => setUsername(e)}
             value={username}
             required
           />
           <StyledPwIcon />
           <InputField
-            label="password"
+            label="Lösenord"
             margintop={10}
             type="password"
             updateState={(e) => setPassword(e)}
