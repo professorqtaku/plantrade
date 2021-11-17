@@ -165,7 +165,7 @@ const HomePage = () => {
           alt=""
         />
         {whoAmI && <StyledUsername>Hej {whoAmI.username}</StyledUsername>}
-        {whoAmI && <StyledAvatar>{whoAmI.username.charAt(0)}</StyledAvatar>}
+        {whoAmI && <StyledAvatar>{whoAmI.username.charAt(0).toUpperCase()}</StyledAvatar>}
         <StyledSearchFieldWrapper>
           <SearchForm searchWord={searchText} />
         </StyledSearchFieldWrapper>
