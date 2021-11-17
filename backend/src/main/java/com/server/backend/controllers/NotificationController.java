@@ -29,6 +29,8 @@ public class NotificationController {
         return ResponseEntity.ok(notifications);
       }
     } catch (Exception e) {
+      System.out.println("---HERE---");
+      System.out.println(e);
       e.printStackTrace();
     }
     return ResponseEntity.status(403).build();

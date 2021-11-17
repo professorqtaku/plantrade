@@ -44,8 +44,6 @@ public class AuthController {
             return ResponseEntity.ok(currentUser);
         }
         catch (Exception e) {
-            System.out.println("----HERE-----");
-            System.out.println(e);
             return ResponseEntity.badRequest().build();
         }
     }
