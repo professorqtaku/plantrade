@@ -66,8 +66,8 @@ const DrawerItem = ({ chat }: Props) => {
   );
 
   const renderBadge = (
-    <StyledBadge badgeContent={100}>
-      <StyledAvatar>{chat.receiver.username.charAt(0)}</StyledAvatar>
+    <StyledBadge> 
+      <StyledAvatar>{chat.receiver.username.charAt(0).toLocaleUpperCase()}</StyledAvatar>
     </StyledBadge>
   );
 

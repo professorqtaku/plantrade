@@ -56,19 +56,20 @@ export const StyledSwipe = styled(SwipeableList)`
 
 export const StyledDelete = styled.div`
   background: rgba(169, 0, 11, 0.47);
-  height: 78px;
+  height: 56px;
   margin-top: 5px;
 `;
 
 export const StyledTrashCan = styled(DeleteIcon)`
   color: white;
   margin: 0;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   margin-left: 1rem;
+  width: 20px;
 `;
 
 export const StyledDeleteText = styled.p`
-  font-size: 1rem;
+  font-size: 0.85rem;
   color: white;
   margin: 0;
   margin-left: 0.5rem;
