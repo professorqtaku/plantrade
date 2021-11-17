@@ -19,6 +19,7 @@ interface Props {
 const AllContextProviders: React.FC<Props> = ({ children }) => {
   return (
     <>
+                              <SocketContextProvider>
       <SnackBarContextProvider>
         <CategoryContextProvider>
           <AuthContextProvider>
@@ -31,9 +32,7 @@ const AllContextProviders: React.FC<Props> = ({ children }) => {
                         <ChatContextProvider>
                           <MessageContextProvider>
                             <SearchContextProvider>
-                              <SocketContextProvider>
                                 {children}
-                              </SocketContextProvider>
                             </SearchContextProvider>
                           </MessageContextProvider>
                         </ChatContextProvider>
@@ -46,6 +45,7 @@ const AllContextProviders: React.FC<Props> = ({ children }) => {
           </AuthContextProvider>
         </CategoryContextProvider>
       </SnackBarContextProvider>
+                              </SocketContextProvider>
     </>
   );
 };

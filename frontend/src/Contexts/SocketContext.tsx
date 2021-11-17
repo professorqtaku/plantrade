@@ -23,14 +23,14 @@ const SocketContextProvider = ({ children }: Props) => {
   const endpoint = "http://localhost:9092";
   const socket = io(endpoint, { upgrade: false, transports: ["websocket"] });
   const [isConnected, setIsConnected] = useState(false);
-  const { getHighestBid } = useBid();
-  const { getAuctionsByOptions } = useSearch();
-  const { whoAmI } = useAuth();
-  const { addSnackbar } = useSnackBar();
-  const { getNotificationsByCurrentUser } = useNotification();
-  const { getAllChatMsg } = useMessage();
-  const { chatId } = useChat();
-  const [isRead, setIsRead] = useState(false);
+  // const { getHighestBid } = useBid();
+  // const { getAuctionsByOptions } = useSearch();
+  // const { whoAmI } = useAuth();
+  // const { addSnackbar } = useSnackBar();
+  // const { getNotificationsByCurrentUser } = useNotification();
+  // const { getAllChatMsg } = useMessage();
+  // const { chatId } = useChat();
+  // const [isRead, setIsRead] = useState(false);
 
   useEffect(() => {
     socket.on("connect", () => {
@@ -39,51 +39,44 @@ const SocketContextProvider = ({ children }: Props) => {
     });
   }, []);
 
-  socket.on("bid", async function (data: BidUpdateSocket) {
-    const isInDetailView = window.location.href.includes(
-      `auctions/${data.auction.id}`
-    );
-    const isInListView = window.location.href.includes("auctions");
-    if (isInDetailView) {
-      await getHighestBid(data.auction.id);
-      // await getAuctionsByOptions();
-    } else if (isInListView) {
-      await getAuctionsByOptions();
-    }
-  });
+  // socket.on("bid", async function (data: BidUpdateSocket) {
+  //   const isInDetailView = window.location.href.includes(
+  //     `auctions/${data.auction.id}`
+  //   );
+  //   const isInListView = window.location.href.includes("auctions");
+  //   if (isInDetailView) {
+  //     await getHighestBid(data.auction.id);
+  //     // await getAuctionsByOptions();
+  //   } else if (isInListView) {
+  //     await getAuctionsByOptions();
+  //   }
+  // });
 
-  socket.on("join", (data: number) => {
-    console.log("Client joined the room");
-    if (data === 2) {
-      setIsRead(true);
-    }
-  });
+  // socket.on("join", (data: number) => {
+  //   console.log("Client joined the room");
+  //   if (data === 2) {
+  //     setIsRead(true);
+  //   }
+  // });
 
-  socket.on("leave", async (data: number) => {
-    console.log("Client left room");
-    if (data === 1) {
-      await getAllChatMsg(chatId);
-    }
-    setIsRead(false);
-  });
+  // socket.on("leave", async (data: number) => {
+  //   console.log("Client left room");
+  //   if (data === 1) {
+  //     await getAllChatMsg(chatId);
+  //   }
+  //   setIsRead(false);
+  // });
 
-  socket.on("message", async (data: any) => {
-    if (data.id === whoAmI.id) {
-      return;
-    }
-    await getAllChatMsg(chatId);
-  });
-
-  socket.on("notification", (data: Notification) => {
-    if (whoAmI?.id === data.user.id) {
-      addSnackbar(data);
-      getNotificationsByCurrentUser();
-    }
-  });
+  // socket.on("message", async (data: any) => {
+  //   if (data.id === whoAmI.id) {
+  //     return;
+  //   }
+  //   await getAllChatMsg(chatId);
+  // });
 
   const values = {
     socket,
-    isRead,
+    // isRead,
   };
 
   return (
