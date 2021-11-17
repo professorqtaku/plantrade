@@ -32,12 +32,12 @@ const SocketContextProvider = ({ children }: Props) => {
   const { chatId } = useChat();
   const [isRead, setIsRead] = useState(false);
 
-  if (!isConnected) {
+  useEffect(() => {
     socket.on("connect", () => {
       console.log("conneted to ws");
       setIsConnected(true);
     });
-  }
+  }, []);
 
   socket.on("bid", async function (data: BidUpdateSocket) {
     const isInDetailView = window.location.href.includes(
