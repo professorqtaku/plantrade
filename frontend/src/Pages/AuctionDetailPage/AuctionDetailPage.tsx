@@ -110,7 +110,8 @@ const AuctionDetailPage = () => {
     if (createdBid != null) {
       addSnackbar("Giltigt bud!");
       //rerender the new currently highest bid
-      getHighestBid(auction?.id);
+      // getHighestBid(auction?.id);
+      handleGetAuctionById();
     } else {
       addSnackbar({ message: "Ogiltigt bud", status: "error" });
     }

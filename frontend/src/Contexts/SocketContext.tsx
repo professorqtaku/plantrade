@@ -46,6 +46,7 @@ const SocketContextProvider = ({ children }: Props) => {
     const isInListView = window.location.href.includes("auctions");
     if (isInDetailView) {
       await getHighestBid(data.auction.id);
+      // await getAuctionsByOptions();
     } else if (isInListView) {
       await getAuctionsByOptions();
     }
