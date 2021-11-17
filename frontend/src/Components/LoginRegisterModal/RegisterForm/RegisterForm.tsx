@@ -64,7 +64,7 @@ const RegisterForm = ({ toggleRegister }: Props) => {
           <InputField
             value={email}
             type="email"
-            label="Lösenord"
+            label="E-mail"
             updateState={(e) => setEmail(e)}
             required
           />
@@ -72,7 +72,7 @@ const RegisterForm = ({ toggleRegister }: Props) => {
           <InputField
             value={password}
             type="password"
-            label="password"
+            label="Lösenord"
             updateState={(e) => setPassword(e)}
             required
           />

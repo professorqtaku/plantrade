@@ -103,7 +103,7 @@ const AuctionPage = () => {
                     xs={12}
                     sm={6}
                     md={4}
-                    key={`auction-card-${auction.id}`}
+                    key={`auction-card-grid-${auction.id}`}
                   >
                     <AuctionCard
                       key={`auction-card-${auction.id}`}
@@ -118,7 +118,7 @@ const AuctionPage = () => {
                     xs={12}
                     sm={6}
                     md={4}
-                    key={`auction-card-${auction.id}`}
+                    key={`auction-card-grid-${auction.id}`}
                   >
                     <AuctionCard
                       key={`auction-card-${auction.id}`}
