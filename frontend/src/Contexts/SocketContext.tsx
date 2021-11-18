@@ -26,7 +26,7 @@ export const useSocket = () => useContext(SocketContext);
 const SocketContextProvider = ({ children }: Props) => {
   const { getHighestBid } = useBid();
   const { getAuctionsByOptions } = useSearch();
-  const { whoAmI, whoIsOnline } = useAuth();
+  const { whoAmI } = useAuth();
   const { addSnackbar } = useSnackBar();
   const { getNotificationsByCurrentUser } = useNotification();
   const { getAllChatMsg } = useMessage();

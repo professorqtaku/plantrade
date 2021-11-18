@@ -48,15 +48,15 @@ public class NotificationService {
   }
 
   public void createNotificationForUser(Auction auction, User user, int price) {
-      Notification notification = Notification.builder()
-              .auction(auction)
-              .user(user)
-              .message("Någon har lagt ett högre bud (" + price + " SEK) på: " + auction.getTitle())
-              .isRead(false)
-              .createdDate(new Date())
-              .build();
+    Notification notification = Notification.builder()
+            .auction(auction)
+            .user(user)
+            .message("Någon har lagt ett högre bud (" + price + " SEK) på: " + auction.getTitle())
+            .isRead(false)
+            .createdDate(new Date())
+            .build();
 
-      notificationRepository.save(notification);
+    notificationRepository.save(notification);
     sendNotificationWithClientId(user.getClientId(), notification);
   }
 
@@ -76,16 +76,16 @@ public class NotificationService {
   public void createNotificationForBidders(List<Bid> bids, int price, Bid highestBidder) {
     List<Long> ids = new ArrayList<>();
 
-    for(Bid bid : bids) {
+    for (Bid bid : bids) {
       if (bid.getUser() != highestBidder.getUser()) {
         if (!ids.contains(bid.getUser().getId())) {
           Notification notification = Notification.builder()
-                .auction(bid.getAuction())
-                .user(bid.getUser())
-                .message("avslutades på " + price + " SEK")
-                .isRead(false)
-                .createdDate(new Date())
-                .build();
+                  .auction(bid.getAuction())
+                  .user(bid.getUser())
+                  .message("avslutades på " + price + " SEK")
+                  .isRead(false)
+                  .createdDate(new Date())
+                  .build();
           notificationRepository.save(notification);
           sendNotificationWithClientId(bid.getUser().getClientId(), notification);
           ids.add(bid.getUser().getId());
@@ -108,7 +108,7 @@ public class NotificationService {
 
   public List<Notification> getNotificationsByUser() {
     User currentUser = userService.findCurrentUser();
-    if (currentUser == null){
+    if (currentUser == null) {
       return null;
     }
     return notificationRepository.findNotificationsByUserId(currentUser.getId());
@@ -128,17 +128,11 @@ public class NotificationService {
   }
 
   private void sendNotificationWithClientId(String clientId, Notification notification) {
-    if(clientId != null) {
-      try{
-        UUID uuid = UUID.fromString(clientId);
-        SocketIOClient socketClient = socketModule.server.getClient(uuid);
-        if(socketClient != null) {
-          socketClient.sendEvent("notification", notification);
-        }
-      }
-      catch(Exception e) {
-        System.out.println(clientId);
-        System.out.println("----CANNOT FIND UUID----");
+    if (clientId != null) {
+      UUID uuid = UUID.fromString(clientId);
+      SocketIOClient socketClient = socketModule.server.getClient(uuid);
+      if (socketClient != null) {
+        socketClient.sendEvent("notification", notification);
       }
     }
   }
