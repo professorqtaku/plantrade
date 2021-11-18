@@ -1,4 +1,4 @@
-import { createContext, FC, useContext, useState } from "react";
+import { createContext, FC, useContext, useState, useEffect } from "react";
 import { Notification } from "../Interfaces/Interfaces";
 
 type Props = {

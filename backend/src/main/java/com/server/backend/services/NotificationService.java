@@ -42,7 +42,7 @@ public class NotificationService {
             .build();
 
     notificationRepository.save(notification);
-//    socketModule.emit("notification", notification);
+    socketModule.emit("notification", notification);
   }
 
   public void createNotificationForUser(Auction auction, User user) {
@@ -55,7 +55,7 @@ public class NotificationService {
               .build();
 
       notificationRepository.save(notification);
-//      socketModule.emit("notification", notification);
+      socketModule.emit("notification", notification);
   }
 
   public void createNotificationForWinner(Auction auction, User user) {
@@ -68,7 +68,7 @@ public class NotificationService {
             .build();
 
     notificationRepository.save(notification);
-//    socketModule.emit("notification", notification);
+    socketModule.emit("notification", notification);
   }
 
   public void createNotificationForBidders(List<Bid> bids, int price, Bid highestBidder) {
@@ -85,7 +85,7 @@ public class NotificationService {
                 .createdDate(new Date())
                 .build();
           notificationRepository.save(notification);
-//          socketModule.emit("notification", notification);
+          socketModule.emit("notification", notification);
 
           ids.add(bid.getUser().getId());
         }
@@ -102,7 +102,7 @@ public class NotificationService {
             .createdDate(new Date())
             .build();
     notificationRepository.save(notification);
-//    socketModule.emit("notification", notification);
+    socketModule.emit("notification", notification);
   }
 
   public List<Notification> getNotificationsByUser() {

@@ -35,8 +35,17 @@ public class AuthController {
 
 
     @GetMapping("/whoami")
-    public User whoAmI(){
-        return userService.findCurrentUser();
+    public ResponseEntity<User> whoAmI(){
+        try{
+            User currentUser = userService.findCurrentUser();
+            if(currentUser == null ){
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(currentUser);
+        }
+        catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @DeleteMapping("/logout")
