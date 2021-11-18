@@ -65,29 +65,6 @@
 
 <hr>
 
-## USER
-### /rest/users
-*send in one to many fields to update on current user*
-#### **Method**: POST
-**Body**: application/json
-```json
-{
-  "username": "string",
-  "email": "string",
-  "password": "string"
-}
-```
-
-#### **Response**
-```json
-{
-  "id": "Number",
-  "username": "string",
-  "email": "string",
-}
-```
-<hr>
-
 ## AUCTION
 
 ### /rest/auctions
@@ -679,15 +656,3 @@ files: List<MultipartFile> files
 ```
 
 <hr>
-
-## IMAGE
-
-### /api/upload
-*upload images*
-#### **Method**: POST
-**Response**
-```json
-[
-
-]
-```
