@@ -29,8 +29,9 @@ interface Props {
 
   const DrawerItem = ({ chat }: Props) => {
   const { setShowChatRoom } = useDrawer();
-  const { setChatTitle, setChatId } = useChat();
+  const { setChatTitle, setChatId, getChatsByCurrentUser } = useChat();
   const { messages, getAllChatMsg } = useMessage();
+
     
   const handleShowMessageView = () => {
     setChatId(chat.id)
@@ -38,9 +39,10 @@ interface Props {
     setChatTitle(chat.auction.title);
   }
 
-  useEffect(() => {
-    getAllChatMsg(chat.id)
-  }, []);
+    useEffect(() => {
+      getAllChatMsg(chat?.id);
+      getChatsByCurrentUser();
+    }, []);
     
 
   const trailingActions = () => (
