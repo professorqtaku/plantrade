@@ -105,6 +105,7 @@ const AuctionCard = ({ auction, fetchAuctions, forwardRef}: Props) => {
   };
 
   const handleBid = async () => {
+    console.log('i want to bid on', auction)
     if (whoAmI == null) {
       toggleLoginModal();
       return
@@ -118,6 +119,8 @@ const AuctionCard = ({ auction, fetchAuctions, forwardRef}: Props) => {
     };
 
     await createBid(newBid);
+    handleHighestBid();
+    handleQuickBid();
   };
 
   const toDetailPage = () => {
