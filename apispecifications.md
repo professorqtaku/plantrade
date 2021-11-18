@@ -192,6 +192,7 @@
 <hr>
 
 ### /rest/auctions
+*create an auction*
 #### **Method**: POST
 **Body**: formdata
 
