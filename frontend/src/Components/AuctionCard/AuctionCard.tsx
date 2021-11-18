@@ -122,8 +122,6 @@ const AuctionCard = ({ auction, fetchAuctions, forwardRef }: Props) => {
     history.push(`/auctions/${auction.id}`);
   };
 
-  console.log('auction', auction)
-
   return (
     <StyledCard ref={forwardRef}>
       <StyledImgWrapper>
