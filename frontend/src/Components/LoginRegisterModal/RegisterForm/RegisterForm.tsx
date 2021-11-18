@@ -80,7 +80,7 @@ const RegisterForm = ({ toggleRegister }: Props) => {
         {userExists && (
           <StyledWarningText>The user already exists.</StyledWarningText>
         )}
-        <StyledBtn>Skapa Konto</StyledBtn>
+        <StyledBtn>Skapa konto</StyledBtn>
         <StyledDivider />
         <StyledText>
           Har du redan ett konto?{" "}
