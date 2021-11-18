@@ -34,18 +34,14 @@ const AuctionCard = ({ auction, fetchAuctions, forwardRef}: Props) => {
   
 
   const history = useHistory();
-  const { createBid } = useBid();
+  const { createBid, getHighestBid } = useBid();
   const { whoAmI } = useAuth();
   const { toggleLoginModal } = useModal();
   const isHost =
     whoAmI && auction.host && auction.host.id && whoAmI.id == auction.host.id;
   
   useEffect(() => {
-    if (auction.bids?.length) {
-      setBid(auction.bids[auction.bids?.length - 1].price);
-    } else {
-      setBid(auction.startPrice);
-    }
+    handleHighestBid();
   }, [auction.bids])
   
   useEffect(() => {
@@ -59,6 +55,15 @@ const AuctionCard = ({ auction, fetchAuctions, forwardRef}: Props) => {
   useEffect(() => {
     handleCounter();
   }, [counter]);
+
+  const handleHighestBid = async () => {
+    if (auction.bids?.length) {
+      let auctionHighestBid = await getHighestBid(auction.id)
+      setBid(auctionHighestBid);
+    } else {
+      setBid(auction.startPrice);
+    }
+  }
 
   const handleTime = async () => {
     const endDateInMillis = new Date(auction.endDate + "").getTime();

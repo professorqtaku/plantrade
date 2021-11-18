@@ -22,7 +22,7 @@ const SocketContextProvider = ({ children }: Props) => {
   const endpoint = "http://localhost:9092";
   const socket = io(endpoint, { upgrade: false, transports: ["websocket"] });
   const { getHighestBid } = useBid();
-  const { getAuctionsByOptions } = useSearch();
+  const { getAuctionsByOptions, getAuctionsById } = useSearch();
   const { whoAmI } = useAuth();
   const { addSnackbar } = useSnackBar();
   const { getNotificationsByCurrentUser } = useNotification();
@@ -37,16 +37,16 @@ const SocketContextProvider = ({ children }: Props) => {
   }, []);
 
   useEffect(() => {
-    console.log("---1.0 ON SOCKET NOTIFICATION ---");
+    // console.log("---1.0 ON SOCKET NOTIFICATION ---");
     socket.on("notification", onNotification);
     return () => {
-      console.log("---1.1 OFF SOCKET NOTIFICATION ---");
+      // console.log("---1.1 OFF SOCKET NOTIFICATION ---");
       socket.off("notification", onNotification);
     };
   }, [socket, whoAmI]);
 
   const onNotification = (data: Notification) => {
-    console.log("---1.2 NOTIFICATION HAPPENED---");
+    // console.log("---1.2 NOTIFICATION HAPPENED---");
     console.log(whoAmI);
 
     if (whoAmI?.id === data.user.id) {
@@ -56,10 +56,10 @@ const SocketContextProvider = ({ children }: Props) => {
   };
 
   useEffect(() => {
-    console.log("---2.0 ON SOCKET NOTIFICATION ---");
+    // console.log("---2.0 ON SOCKET NOTIFICATION ---");
     socket.on("bid", onBid);
     return () => {
-      console.log("---2.1 OFF SOCKET NOTIFICATION ---");
+      // console.log("---2.1 OFF SOCKET NOTIFICATION ---");
       socket.off("bid", onBid);
     };
   }, [socket]);
@@ -74,39 +74,41 @@ const SocketContextProvider = ({ children }: Props) => {
       await getHighestBid(data.auction.id);
       // await getAuctionsByOptions();
     } else if (isInListView) {
-      await getAuctionsByOptions();
+      console.log('2.3 -- IN BID LIST VY --');
+      await getHighestBid(data.auction.id);
+      // await getAuctionsByOptions();
     }
   };
 
   useEffect(() => {
-    console.log("---3.0 ON SOCKET NOTIFICATION ---");
+    // console.log("---3.0 ON SOCKET NOTIFICATION ---");
     socket.on("join", onJoin);
     return () => {
-      console.log("---3.1 OFF SOCKET NOTIFICATION ---");
+      // console.log("---3.1 OFF SOCKET NOTIFICATION ---");
       socket.off("join", onJoin);
     };
   }, [socket]);
 
   const onJoin = (data: number) => {
-    console.log("---3.2 JOIN HAPPENED---");
-    console.log("Client joined the room");
+    // console.log("---3.2 JOIN HAPPENED---");
+    // console.log("Client joined the room");
     if (data === 2) {
       setIsRead(true);
     }
   };
 
   useEffect(() => {
-    console.log("---4.0 ON SOCKET NOTIFICATION ---");
+    // console.log("---4.0 ON SOCKET NOTIFICATION ---");
     socket.on("leave", onLeave);
     return () => {
-      console.log("---4.1 OFF SOCKET NOTIFICATION ---");
+      // console.log("---4.1 OFF SOCKET NOTIFICATION ---");
       socket.off("leave", onLeave);
     };
   }, [socket, chatId, getAllChatMsg]);
 
   const onLeave = async (data: number) => {
-    console.log("---4.2 LEAVE HAPPENED---");
-    console.log("Client left room");
+    // console.log("---4.2 LEAVE HAPPENED---");
+    // console.log("Client left room");
     if (data === 1) {
       await getAllChatMsg(chatId);
     }
@@ -114,16 +116,16 @@ const SocketContextProvider = ({ children }: Props) => {
   };
 
   useEffect(() => {
-    console.log("---5.0 ON SOCKET NOTIFICATION ---");
+    // console.log("---5.0 ON SOCKET NOTIFICATION ---");
     socket.on("message", onMessage);
     return () => {
-      console.log("---5.1 OFF SOCKET NOTIFICATION ---");
+      // console.log("---5.1 OFF SOCKET NOTIFICATION ---");
       socket.off("message", onMessage);
     };
   }, [socket, chatId, getAllChatMsg]);
 
   const onMessage = async (data: any) => {
-    console.log("---5.2 MESSAGE HAPPENED---");
+    // console.log("---5.2 MESSAGE HAPPENED---");
     
     if (data.id === whoAmI.id) {
       return;
