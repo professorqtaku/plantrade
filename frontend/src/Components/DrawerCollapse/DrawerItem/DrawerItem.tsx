@@ -31,17 +31,18 @@ interface Props {
   const { setShowChatRoom } = useDrawer();
   const { setChatTitle, setChatId } = useChat();
   const { messages, getAllChatMsg } = useMessage();
-
+    
   const handleShowMessageView = () => {
     setChatId(chat.id)
     setShowChatRoom(true);
     setChatTitle(chat.auction.title);
   }
 
-    useEffect(() => {
-      getAllChatMsg(chat.id)
-      console.log(chat.messages && chat.messages.slice(-1).pop(), 'chat?')
-    },[]);
+  useEffect(() => {
+    getAllChatMsg(chat.id)
+  }, []);
+    
+
   const trailingActions = () => (
     <TrailingActions>
       <SwipeAction
