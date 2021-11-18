@@ -17,6 +17,8 @@ import {
   StyledImgWrapper,
 } from "./StyledAuctionCard";
 import { useModal } from "../../Contexts/ModalContext";
+import Box from '@mui/material/Box';
+import LinearProgress from '@mui/material/LinearProgress';
 
 interface Props {
   auction: Auction;
@@ -34,7 +36,7 @@ const AuctionCard = ({ auction, fetchAuctions, forwardRef}: Props) => {
   
 
   const history = useHistory();
-  const { createBid, getHighestBid } = useBid();
+  const { createBid, getHighestBid, highestBid } = useBid();
   const { whoAmI } = useAuth();
   const { toggleLoginModal } = useModal();
   const isHost =
@@ -42,7 +44,10 @@ const AuctionCard = ({ auction, fetchAuctions, forwardRef}: Props) => {
   
   useEffect(() => {
     handleHighestBid();
-  }, [auction.bids])
+    return () => {
+      setBid(0);
+    }
+  }, [])
   
   useEffect(() => {
     handleQuickBid();
@@ -55,6 +60,12 @@ const AuctionCard = ({ auction, fetchAuctions, forwardRef}: Props) => {
   useEffect(() => {
     handleCounter();
   }, [counter]);
+
+  useEffect(() => {
+    console.log('highest bid has changed', highestBid);
+    setBid(highestBid);
+    handleQuickBid();
+  }, [highestBid])
 
   const handleHighestBid = async () => {
     if (auction.bids?.length) {
@@ -105,7 +116,6 @@ const AuctionCard = ({ auction, fetchAuctions, forwardRef}: Props) => {
   };
 
   const handleBid = async () => {
-    console.log('i want to bid on', auction)
     if (whoAmI == null) {
       toggleLoginModal();
       return
@@ -126,6 +136,14 @@ const AuctionCard = ({ auction, fetchAuctions, forwardRef}: Props) => {
   const toDetailPage = () => {
     history.push(`/auctions/${auction.id}`);
   };
+
+  const getLinearBar = () => {
+    return (
+      <Box sx={{ width: '100%' }}>
+        <LinearProgress color="success" />
+      </Box>
+    )
+  }
 
   return (
     <StyledCard ref={forwardRef}>
@@ -156,12 +174,13 @@ const AuctionCard = ({ auction, fetchAuctions, forwardRef}: Props) => {
             <StyledSpan>{remainingTime}</StyledSpan> {daysLeft}
           </StyledDesc>
         </StyledDiv>
-        <ButtonComp
-          label={`Snabb bud ${quickBid} SEK`}
-          callback={handleBid}
-          costumFontSize="0.7rem"
-          disabled={isHost}
-        />
+        {quickBid ?
+          <ButtonComp
+            label={`Snabb bud ${quickBid} SEK`}
+            callback={handleBid}
+            costumFontSize="0.7rem"
+            disabled={isHost}
+          /> : getLinearBar()}
       </StyledCardContent>
     </StyledCard>
   );

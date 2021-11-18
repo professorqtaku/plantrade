@@ -31,8 +31,9 @@ const BidContextProvider: FC<Props> = ({ children }: Props) => {
   };
 
   const getHighestBid = async (id: Number) => {
+    console.log('getting highest bid in context')
     let res: Response = await fetch(`/api/${id}/highest-bid`);
-
+    console.log('what is res', res);
     if (res.status == 200) {
       let data = await res.json();
       setHighestBid(data.price);
