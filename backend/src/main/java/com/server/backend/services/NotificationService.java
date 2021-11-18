@@ -1,5 +1,6 @@
 package com.server.backend.services;
 
+import com.corundumstudio.socketio.SocketIOClient;
 import com.server.backend.entities.Auction;
 import com.server.backend.entities.Bid;
 import com.server.backend.entities.Notification;
@@ -43,9 +44,7 @@ public class NotificationService {
             .build();
 
     notificationRepository.save(notification);
-    if(auction.getHost().getClientId() != null) {
-      socketModule.server.getClient(UUID.fromString(auction.getHost().getClientId())).sendEvent("notification", notification);
-    }
+    sendNotificationWithClientId(auction.getHost().getClientId(), notification);
   }
 
   public void createNotificationForUser(Auction auction, User user, int price) {
@@ -58,9 +57,7 @@ public class NotificationService {
               .build();
 
       notificationRepository.save(notification);
-    if(user.getClientId() != null) {
-      socketModule.server.getClient(UUID.fromString(user.getClientId())).sendEvent("notification", notification);
-    }
+    sendNotificationWithClientId(user.getClientId(), notification);
   }
 
   public void createNotificationForWinner(Auction auction, User user) {
@@ -73,9 +70,7 @@ public class NotificationService {
             .build();
 
     notificationRepository.save(notification);
-    if(user.getClientId() != null) {
-      socketModule.server.getClient(UUID.fromString(user.getClientId())).sendEvent("notification", notification);
-    }
+    sendNotificationWithClientId(user.getClientId(), notification);
   }
 
   public void createNotificationForBidders(List<Bid> bids, int price, Bid highestBidder) {
@@ -92,9 +87,7 @@ public class NotificationService {
                 .createdDate(new Date())
                 .build();
           notificationRepository.save(notification);
-          if(bid.getUser().getClientId() != null) {
-            socketModule.server.getClient(UUID.fromString(bid.getUser().getClientId())).sendEvent("notification", notification);
-          }
+          sendNotificationWithClientId(bid.getUser().getClientId(), notification);
           ids.add(bid.getUser().getId());
         }
       }
@@ -110,7 +103,7 @@ public class NotificationService {
             .createdDate(new Date())
             .build();
     notificationRepository.save(notification);
-    socketModule.emit("notification", notification);
+    sendNotificationWithClientId(auction.getHost().getClientId(), notification);
   }
 
   public List<Notification> getNotificationsByUser() {
@@ -132,5 +125,21 @@ public class NotificationService {
       notificationRepository.save(notification);
     }
     return notifications;
+  }
+
+  private void sendNotificationWithClientId(String clientId, Notification notification) {
+    if(clientId != null) {
+      try{
+        UUID uuid = UUID.fromString(clientId);
+        SocketIOClient socketClient = socketModule.server.getClient(uuid);
+        if(socketClient != null) {
+          socketClient.sendEvent("notification", notification);
+        }
+      }
+      catch(Exception e) {
+        System.out.println(clientId);
+        System.out.println("----CANNOT FIND UUID----");
+      }
+    }
   }
 }
