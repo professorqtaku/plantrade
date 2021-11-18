@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/messages")
@@ -24,7 +25,8 @@ public class MessageController {
         try{
             Message saved = messageService.sendMessage(message, chatId);
             if (saved != null) {
-                socketModule.emitToRoom(chatId + "", "message", message.getWriter());
+                //socketModule.emitToRoom(chatId + "", "message", message.getWriter());
+                socketModule.server.getClient(UUID.fromString(messageService.getTheReceiverClientId(chatId, message.getWriter()))).sendEvent("message", message.getWriter());
                 return ResponseEntity.ok(saved);
             }
         } catch (Exception e) {

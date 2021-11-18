@@ -28,18 +28,9 @@ const Message = () => {
   const { socket, isRead, setIsRead } = useSocket();
 
   useEffect(() => {
-    socket.on("message", (data: any) => onMessage(data));
     socket.once("join", (data: any) => onJoin(data));
     socket.once("leave", (data: any) => onLeave(data));
 
-    const onMessage = async (data: any) => {
-      if (data && whoAmI && chatId) {
-        if (data.id === whoAmI.id) {
-          return;
-        }
-        await getAllChatMsg(chatId);
-      }
-    };
 
     const onJoin = (data: number) => {
       console.log("Client joined the room, clients: ", data);
@@ -62,7 +53,6 @@ const Message = () => {
     return () => {
       console.log("hallå???");
       socket.emit("leave", chatId);
-      socket.off("message", (data: any) => onMessage(data));
       socket.off("join", (data: any) => onJoin(data));
        socket.off("leave", (data: any) => onLeave(data));
     };

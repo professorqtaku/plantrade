@@ -19,7 +19,6 @@ type Props = {
   children?: JSX.Element;
 };
 
-  
 const SocketContext = createContext<any>(null);
 
 export const useSocket = () => useContext(SocketContext);
@@ -27,13 +26,13 @@ export const useSocket = () => useContext(SocketContext);
 const SocketContextProvider = ({ children }: Props) => {
   const { getHighestBid } = useBid();
   const { getAuctionsByOptions } = useSearch();
-  const { whoAmI, whoIsOnline} = useAuth();
+  const { whoAmI, whoIsOnline } = useAuth();
   const { addSnackbar } = useSnackBar();
   const { getNotificationsByCurrentUser } = useNotification();
   const { getAllChatMsg } = useMessage();
   const { chatId } = useChat();
   const [isRead, setIsRead] = useState(false);
-  
+
   useEffect(() => {
     socket.on("connect", async () => {
       console.log("conneted to ws");
@@ -54,8 +53,10 @@ const SocketContextProvider = ({ children }: Props) => {
 
   const onNotification = (data: Notification) => {
     console.log("-------NOTIFICATION--------");
+    if (data.id === whoAmI.id) {
       addSnackbar(data);
       getNotificationsByCurrentUser();
+    }
   };
 
   useEffect(() => {
@@ -107,20 +108,19 @@ const SocketContextProvider = ({ children }: Props) => {
   //   setIsRead(false);
   // };
 
+  useEffect(() => {
+    socket.on("message", (data: any) => onMessage(data));
+    return () => socket.off("message", (data: any) => onMessage(data));
+  }, [whoAmI, chatId, socket]);
 
-  //   socket.on("message", (data: any) => onMessage(data));
-
-
-  // const onMessage = async (data: any) => {
-  //   console.log("--------IN ON MESSAGE--------")
-  //   console.log("who am i: ", whoAmI)
-  //   if (data && whoAmI && chatId) {
-  //     if (data.id === whoAmI.id) {
-  //       return;
-  //     }
-  //     await getAllChatMsg(chatId);
-  //   }
-  // };
+  const onMessage = async (data: any) => {
+    if (data && whoAmI && chatId) {
+      if (data.id === whoAmI.id) {
+        return;
+      }
+      await getAllChatMsg(chatId);
+    }
+  };
 
   const values = {
     socket,
