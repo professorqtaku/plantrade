@@ -33,7 +33,7 @@ const Message = () => {
 
 
     const onJoin = (data: number) => {
-      console.log("Client joined the room, clients: ", data);
+      console.log("Client joined the room",);
       if (data === 2) {
         setIsRead(true);
       }
@@ -51,7 +51,6 @@ const Message = () => {
     socket.emit("join", chatId);
     scrollToBottom(msgWrapper);
     return () => {
-      console.log("hallå???");
       socket.emit("leave", chatId);
       socket.off("join", (data: any) => onJoin(data));
        socket.off("leave", (data: any) => onLeave(data));

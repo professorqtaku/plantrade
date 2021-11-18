@@ -101,7 +101,7 @@ const HomePage = () => {
   );
 
   const renderNews = () => (
-    <StyledNewsWrapper onClick={() => console.log("klicka på bild item")}>
+    <StyledNewsWrapper>
       <StyledImageListItem>
         <StyledNewsImg
           src="https://i2.wp.com/www.livingloving.net/wp-content/uploads/2017/01/living-loving-indoor-plants-3.jpg?resize=1769%2C1000&ssl=1"

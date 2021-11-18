@@ -40,7 +40,6 @@ const SocketContextProvider = ({ children }: Props) => {
   }, []);
 
   useEffect(() => {
-    console.log("works");
     whoAmI && socket.emit("updateClientId", whoAmI.id);
   }, [whoAmI]);
 
@@ -52,7 +51,6 @@ const SocketContextProvider = ({ children }: Props) => {
   }, [socket, whoAmI]);
 
   const onNotification = (data: Notification) => {
-    console.log("-------NOTIFICATION--------");
     if (data.id === whoAmI.id) {
       addSnackbar(data);
       getNotificationsByCurrentUser();
@@ -78,35 +76,6 @@ const SocketContextProvider = ({ children }: Props) => {
       await getAuctionsByOptions();
     }
   };
-
-  // useEffect(() => {
-  //   socket.on("join", (data: any) => onJoin(data));
-  //   return () => {
-  //     socket.off("join", (data: any) => onJoin(data));
-  //   };
-  // }, [socket]);
-
-  // const onJoin = (data: number) => {
-  //   console.log("Client joined the room");
-  //   if (data === 2) {
-  //     setIsRead(true);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   socket.on("leave", (data: any) => onLeave(data));
-  //   return () => {
-  //     socket.off("leave", (data: any) => onLeave(data));
-  //   };
-  // }, [socket, chatId, getAllChatMsg]);
-
-  // const onLeave = async (data: number) => {
-  //   console.log("Client left room");
-  //   if (data === 1) {
-  //     await getAllChatMsg(chatId);
-  //   }
-  //   setIsRead(false);
-  // };
 
   useEffect(() => {
     socket.on("message", (data: any) => onMessage(data));

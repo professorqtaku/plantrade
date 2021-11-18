@@ -37,7 +37,6 @@ const AuctionContextProvider: FC<Props> = ({ children }: Props) => {
       body: formData,
     });
     const auctionResponse = await res.json();
-    console.log(auctionResponse, "what is here");
     return auctionResponse;
   };
   const getUsersAuctions = async () => {
