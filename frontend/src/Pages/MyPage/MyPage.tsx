@@ -12,6 +12,7 @@ import {
   StyledCheckWrapper,
   StyledNavigationBox,
   StyledButton,
+  StyledNotInUse
 } from "./StyledMyPage";
 import Header from "../../Components/Header/Header";
 import { useEffect, useState } from "react";
@@ -41,6 +42,7 @@ const MyPage = () => {
     handleSelect(setProfile);
   }, []);
 
+  // to be added during sprint three?
   const renderEditFields = (
     <StyledEditWrapper>
       {!onEditEmail ? (
@@ -79,6 +81,7 @@ const MyPage = () => {
         onClick={() => history.push("/createAuction")}
         justify="end"
         background={IMAGE1}
+        opacity=""
       >
         <StyledText color="white">Skapa auktion</StyledText>
       </StyledNavigationBox>
@@ -86,20 +89,23 @@ const MyPage = () => {
       <StyledNavigationBox
         onClick={() => history.push('/my-page/my-won-auctions')}
         justify="start"
-        background={IMAGE2}>
+        background={IMAGE2}
+        opacity="">
         <StyledText color="white">Vunna auktioner</StyledText>
-      </StyledNavigationBox>
-
-      <StyledNavigationBox justify="end" background={IMAGE3}>
-        <StyledText color="white">Statistik</StyledText>
       </StyledNavigationBox>
 
       <StyledNavigationBox
         onClick={() => history.push("/my-page/my-auctions")}
-        justify="start"
+        justify="end"
         background={IMAGE4}
+        opacity=""
       >
         <StyledText color="white">Mina auktioner</StyledText>
+      </StyledNavigationBox>
+
+      {/* to come during sprint three */}
+      <StyledNavigationBox justify="end" background={IMAGE3} opacity="0">
+        <StyledText color="white">Kommer snart</StyledText>
       </StyledNavigationBox>
     </StyledNavigationWrapper>
   );
@@ -120,7 +126,7 @@ const MyPage = () => {
         <StyledAvatar>{whoAmI.username.charAt(0).toUpperCase()}</StyledAvatar>
       </Header>}
       <StyledWrapper>
-        {renderEditFields}
+        {/* {renderEditFields} */}
         {renderNavigations}
         <StyledButton onClick={handleLogout}>Logga ut</StyledButton>
       </StyledWrapper>
