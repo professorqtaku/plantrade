@@ -146,7 +146,7 @@ const AuctionPage = () => {
               <StyledEndAuctions>{endOfScroll}</StyledEndAuctions>
             )}
           </Grid>
-          {isLoading && 
+          {!lastItem && isLoading && 
             <Grid item xs={12} md={12} alignItems="center" justifyContent="center">
                 {getSpinner(false)}
             </Grid>
