@@ -120,7 +120,7 @@ const HomePage = () => {
     <StyledSoonEndingWrapper>
       <Carousel
         isRTL={true}
-        itemsToShow={4}
+        itemsToShow={3}
         outerSpacing={0}
         pagination={false}
         initialFirstItem={0}

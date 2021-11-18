@@ -12,7 +12,6 @@ import {
   StyledCheckWrapper,
   StyledNavigationBox,
   StyledButton,
-  StyledNotInUse
 } from "./StyledMyPage";
 import Header from "../../Components/Header/Header";
 import { useEffect, useState } from "react";
