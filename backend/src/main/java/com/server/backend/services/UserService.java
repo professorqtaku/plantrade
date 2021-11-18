@@ -58,11 +58,9 @@ public class UserService {
     }
 
     public User updateClientId(Long userId,String clientId) {
-        System.out.println("----1.0------");
+        // the userId comes from frontend, it should instead come from the findCurrentUser method.
         User user = getUserById(userId).get();
-        System.out.println("----1.1------");
         user.setClientId(clientId);
-        System.out.println("----1.2------");
         return userRepository.save(user);
     }
 
