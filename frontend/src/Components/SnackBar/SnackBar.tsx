@@ -5,7 +5,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import { StyledCard, StyledCardActions } from "./StyledSnackBar";
 import { Notification } from "../../Interfaces/Interfaces";
 
-const SnackMessage = forwardRef<
+const SnackBar = forwardRef<
   HTMLDivElement,
   {
     id: string | number;
@@ -19,6 +19,11 @@ const SnackMessage = forwardRef<
       error: "var(--status-red)",
       warning: "var(--status-yellow)",
       info: "var(--dark-grey)",
+  }
+
+  const goToAuctionDetails = () => {
+    if(typeof props.message === "object" && typeof props.message.auction === "object")
+    location.href = `auctions/${props.message.auction.id}`;
   }
 
   const variant =
@@ -36,7 +41,11 @@ const SnackMessage = forwardRef<
         <StyledCardActions>
           <Typography variant="subtitle2">
             {typeof props.message === "object"
-              ? props.message.message
+              ? <>
+              {props.message.message}
+              {props.message.auction && <p onClick={goToAuctionDetails}
+              >Tryck här för att komma till auktionen</p>}
+              </>
               : props.message}
           </Typography>
           <div>
@@ -50,4 +59,4 @@ const SnackMessage = forwardRef<
   );
 });
 
-export default SnackMessage;
+export default SnackBar;

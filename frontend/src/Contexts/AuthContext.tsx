@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useContext } from "react";
-import {User} from '../Interfaces/Interfaces'
+import { User } from "../Interfaces/Interfaces";
 
 interface Props {
   children?: JSX.Element;
@@ -89,4 +89,3 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
 };
 
 export default AuthContextProvider;
-

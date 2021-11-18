@@ -72,7 +72,7 @@ function FilterCollapse({
           />
         </Box>
         <Box>
-          <StyledTitle>ANNONSER SOM AVSLUTAS INOM</StyledTitle>
+          <StyledTitle>SORTERA ANNONSER</StyledTitle>
           <SelectRadio
             isRerender={isRerender}
             options={sortByTimes}

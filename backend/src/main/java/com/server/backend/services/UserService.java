@@ -57,6 +57,13 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public User updateClientId(Long userId,String clientId) {
+        // the userId comes from frontend, it should instead come from the findCurrentUser method.
+        User user = getUserById(userId).get();
+        user.setClientId(clientId);
+        return userRepository.save(user);
+    }
+
 
     public void logout(HttpServletRequest req){
         SecurityContext sc = SecurityContextHolder.createEmptyContext();

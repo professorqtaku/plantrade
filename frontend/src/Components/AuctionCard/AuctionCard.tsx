@@ -19,6 +19,7 @@ import {
 import { useModal } from "../../Contexts/ModalContext";
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
+import { useSearch } from '../../Contexts/SearchContext';
 
 interface Props {
   auction: Auction;
@@ -26,7 +27,8 @@ interface Props {
   forwardRef?: any;
 }
 
-const AuctionCard = ({ auction, fetchAuctions, forwardRef}: Props) => {
+const AuctionCard = ({ auction, fetchAuctions, forwardRef }: Props) => {
+  const { setNoContent } = useSearch();
   const [daysLeft, setDaysLeft] = useState<number | null>(null);
   const [differenceInMillis, setDifferenceInMillis] = useState(0);
   const [counter, setCounter] = useState<number | null>(null);
@@ -134,6 +136,7 @@ const AuctionCard = ({ auction, fetchAuctions, forwardRef}: Props) => {
   };
 
   const toDetailPage = () => {
+    setNoContent(false);
     history.push(`/auctions/${auction.id}`);
   };
 
@@ -159,7 +162,7 @@ const AuctionCard = ({ auction, fetchAuctions, forwardRef}: Props) => {
       </StyledImgWrapper>
       <StyledCardContent>
         <div>
-          <StyledAvatar>{auction.title.charAt(0)}</StyledAvatar>
+          <StyledAvatar>{auction.host?.username.charAt(0).toUpperCase()}</StyledAvatar>
           <StyledTitle onClick={toDetailPage}>{auction.title}</StyledTitle>
         </div>
         <StyledDiv onClick={toDetailPage}>
