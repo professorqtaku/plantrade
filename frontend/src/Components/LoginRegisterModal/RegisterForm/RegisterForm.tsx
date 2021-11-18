@@ -50,7 +50,7 @@ const RegisterForm = ({ toggleRegister }: Props) => {
 
   return (
     <StyledWrapper>
-      <StyledTitle>Skapa Konto</StyledTitle>
+      <StyledTitle>SKAPA KONTO</StyledTitle>
       <StyledForm onSubmit={(e) => handleRegister(e)}>
         <StyledInputDiv>
           <StyledPorfileIcon />

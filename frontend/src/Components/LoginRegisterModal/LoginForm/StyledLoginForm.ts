@@ -29,11 +29,9 @@ export const StyledLoginBtn = styled.button`
   background-color: #619463;
   color: white;
   padding: 10px;
-  margin-top: 15px;
   width: 200px;
-  align-items: center;
-  margin-left: 25px;
-  font-size: px;
+  margin: 15px 0 0 28px;
+  font-size: 15px;
 `;
 
 export const StyledText = styled.p`

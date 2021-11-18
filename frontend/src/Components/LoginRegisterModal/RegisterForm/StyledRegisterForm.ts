@@ -15,10 +15,8 @@ export const StyledForm = styled.form`
 
 export const StyledInputDiv = styled.div`
   display: grid;
-  grid-gap: 10px;
-
-  grid-template-columns: 12% 1fr;
-
+  grid-gap: 8px;
+  grid-template-columns: 9% 1fr;
 `;
 
 export const StyledInput = styled.input`
@@ -40,8 +38,8 @@ export const StyledBtn = styled.button`
   border-radius: 3px;
   background-color: #619463;
   color: white;
-  width: 100%;
-  margin-top: 15px;
+  width: 200px;
+  margin: 15px 0 0 30px;
 `;
 
 export const StyledPorfileIcon = styled(PersonIcon)`
