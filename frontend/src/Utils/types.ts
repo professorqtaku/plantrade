@@ -45,6 +45,6 @@ export const sortByTimes: SortByTimes[] = [
   },
   {
     sort: 'none',
-    title: "Ingen sortering"
+    title: "Senast tillagda"
   }
 ]

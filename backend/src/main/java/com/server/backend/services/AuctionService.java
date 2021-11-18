@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,15 +41,15 @@ public class AuctionService {
         // aka if size is 3 at page 1, it will show the next 3 items (ex id 4 to 6)
         // at page 2 and so on, size should add the number of elements size was at page 0,
         // aka if size is 3 at page 0, size should be 6 at page 2, size 9 at page 3, size 12 at page 4 etc
-        var offset = 5; // will be added on as scrolling
-        var size = 5; // the constant size of elements showing at a time
+        var offset = 10; // will be added on as scrolling
+        int size = 10;
         if(page > 1){
             offset *= page;
         }
         long counter = auctionRepository.count(specification); // how many elements in total
         var sortBy = Objects.equals(sort, "asc") ? Sort.Order.asc("endDate")
                 : Objects.equals(sort, "desc") ? Sort.Order.desc("endDate") : Sort.Order.asc("id");
-        if(page > Math.floor((double)counter / size)){
+        if(page > Math.floor((double)counter / size)) {
             return null;
         }
         return PageRequest.of(page, offset, Sort.by(sortBy));
