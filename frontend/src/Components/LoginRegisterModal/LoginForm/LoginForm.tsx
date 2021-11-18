@@ -15,6 +15,9 @@ import InputField from "../../InputField/InputField";
 import { useAuth } from "../../../Contexts/AuthContext";
 import { useModal } from "../../../Contexts/ModalContext";
 import { useSnackBar } from "../../../Contexts/SnackBarContext";
+import { useMessage } from "../../../Contexts/MessageContext";
+import { useChat } from "../../../Contexts/ChatContext";
+import { useNav } from "../../../Contexts/NavigationContext";
 
 interface Props {
   toggleRegister: Function;
@@ -26,6 +29,9 @@ const LoginForm = ({ toggleRegister }: Props) => {
   const [password, setPassword] = useState("");
   const { toggleLoginModal } = useModal();
   const { addSnackbar } = useSnackBar();
+  const { getAllChatMsg } = useMessage();
+  const { getChatsByCurrentUser } = useChat();
+  const { setHasReadMsg } = useNav();
 
   const handleLogin = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
@@ -37,6 +43,18 @@ const LoginForm = ({ toggleRegister }: Props) => {
 
     const isSucceed = await login(userObj);
     if (isSucceed) {
+      const chats = await getChatsByCurrentUser(isSucceed.id);
+      if (chats && chats.length) {
+        chats.map(async (chat: any) => {
+          const chatMsg = await getAllChatMsg(chat.id);
+          chatMsg.map((msg: any) => {
+            if (msg.isRead === false) {
+              setHasReadMsg(false);
+              return;
+            }
+          });
+        });
+      }
       toggleLoginModal();
       addSnackbar("Inloggning lyckades!");
     } else {

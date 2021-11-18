@@ -15,6 +15,7 @@ import { Message as MessageProps } from "../../../Interfaces/Interfaces";
 import { useAuth } from "../../../Contexts/AuthContext";
 import { useChat } from "../../../Contexts/ChatContext";
 import { useSocket } from "../../../Contexts/SocketContext";
+import { useNav } from "../../../Contexts/NavigationContext";
 
 const msgWrapper = document.getElementsByClassName("msgWrapper");
 const scrollToBottom = (node: HTMLCollectionOf<Element>) => {
@@ -26,6 +27,7 @@ const Message = () => {
   const { chatId } = useChat();
   const { whoAmI } = useAuth();
   const { socket, isRead, setIsRead } = useSocket();
+  const { setHasReadMsg } = useNav();
 
   useEffect(() => {
     socket.once("join", (data: any) => onJoin(data));

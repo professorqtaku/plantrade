@@ -1,3 +1,4 @@
+import { TramRounded } from "@mui/icons-material";
 import { createContext, FC, useContext, useState } from "react";
 import { Message } from "../Interfaces/Interfaces";
 import { useSocket } from "./SocketContext";
@@ -18,7 +19,7 @@ const MessageContextProvider: FC<Props> = ({ children }: Props) => {
     let res: Response = await fetch(`/api/messages/${chatId}`);
     if (res.status === 200) {
       let newMessages = await res.json();
-      setMessages(newMessages);
+        setMessages(newMessages);
     } else {
       setMessages([]);
     }

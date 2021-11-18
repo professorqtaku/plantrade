@@ -20,6 +20,9 @@ import "react-swipeable-list/dist/styles.css";
 import { useDrawer } from "../../../Contexts/DrawerContext";
 import { Chat } from "../../../Interfaces/Interfaces";
 import { useChat } from "../../../Contexts/ChatContext";
+import { useMessage } from "../../../Contexts/MessageContext";
+import { useEffect } from "react";
+import { useNav } from "../../../Contexts/NavigationContext";
 
 interface Props {
   chat: Chat;
@@ -28,6 +31,11 @@ interface Props {
 const DrawerItem = ({ chat }: Props) => {
   const { setShowChatRoom } = useDrawer();
   const { setChatTitle, setChatId } = useChat();
+  const { setHasReadMsg } = useNav();
+
+  useEffect(() => {
+    setHasReadMsg(true);
+  }, [])
 
 
   const handleShowMessageView = () => {

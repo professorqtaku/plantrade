@@ -19,6 +19,8 @@ import { useChat } from "../../Contexts/ChatContext";
 import { useNotification } from "../../Contexts/NotificationContext";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import Badge from "@mui/material/Badge";
+import { useMessage } from "../../Contexts/MessageContext";
 
 
 const Navigation = () => {
@@ -43,6 +45,8 @@ const Navigation = () => {
   const { clearFilter } = useSearch();
   const { getChatsByCurrentUser } = useChat();
   const { getNotificationsByCurrentUser } = useNotification();
+  const { hasReadMsg } = useMessage();
+
 
   const paths: Record<string, Function> = {
     "/": setHome,
@@ -115,10 +119,12 @@ const Navigation = () => {
       </StyledInnerWrapper>
 
       <StyledInnerWrapper selected={message}>
-        <StyledMsgIcon
-          selected={message}
-          onClick={() => handleDrawer(setMessage, "message")}
-        />
+        <Badge color="error" variant="dot" invisible={hasReadMsg}>
+          <StyledMsgIcon
+            selected={message}
+            onClick={() => handleDrawer(setMessage, "message")}
+          />
+        </Badge>
       </StyledInnerWrapper>
 
       <StyledInnerWrapper selected={profile}>

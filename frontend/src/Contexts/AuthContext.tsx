@@ -1,5 +1,7 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { User } from "../Interfaces/Interfaces";
+import { useChat } from "./ChatContext";
+import { useMessage } from "./MessageContext";
 
 interface Props {
   children?: JSX.Element;
@@ -45,10 +47,10 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
       let resUser = await res.json();
       setWhoAmI(resUser);
       setWrongPassword(false);
-      return true;
+      return resUser;
     } else {
       setWrongPassword(true);
-      return false;
+      return null;
     }
   };
 

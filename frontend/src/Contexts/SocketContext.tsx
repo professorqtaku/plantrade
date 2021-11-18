@@ -8,6 +8,7 @@ import { useBid } from "./BidContext";
 import { useSearch } from "./SearchContext";
 import { useChat } from "./ChatContext";
 import io from "socket.io-client";
+import { useNav } from "./NavigationContext";
 
 const endpoint = "http://localhost:9092";
 export const socket = io(endpoint, {
@@ -32,6 +33,7 @@ const SocketContextProvider = ({ children }: Props) => {
   const { getAllChatMsg } = useMessage();
   const { chatId } = useChat();
   const [isRead, setIsRead] = useState(false);
+  const { setHasReadMsg } = useNav();
 
   useEffect(() => {
     socket.on("connect", async () => {
@@ -84,10 +86,13 @@ const SocketContextProvider = ({ children }: Props) => {
 
   const onMessage = async (data: any) => {
     if (data && whoAmI && chatId) {
-      if (data.id === whoAmI.id) {
+      if (data.writer.id === whoAmI.id) {
         return;
       }
       await getAllChatMsg(chatId);
+      if (data.isRead === false) {
+        setHasReadMsg(false);
+      }
     }
   };
 
