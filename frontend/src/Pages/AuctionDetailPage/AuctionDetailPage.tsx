@@ -157,7 +157,7 @@ const AuctionDetailPage = () => {
   const renderLoginToggle = (
     <>
       <p>Logga in för att placera ett bud.</p>
-      <ButtonComp label="Login" callback={() => toggleLoginModal()} />
+      <ButtonComp label="Logga in" callback={() => toggleLoginModal()} />
     </>
   );
 
