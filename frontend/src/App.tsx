@@ -1,20 +1,24 @@
-import { useState } from 'react'
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import './App.css'
+import AllRoutes from "./Router/AllRoutes";
+import Navigation from "./Components/Navigation/Navigation";
+import LoginRegisterModal from "./Components/LoginRegisterModal/LoginRegisterModal";
+import FloatingAddBtn from "./Components/FloatingAddBtn/FloatingAddBtn";
+import { useAuth } from "./Contexts/AuthContext";
+import Drawer from "./Components/DrawerCollapse/DrawerCollapse";
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const { whoAmI } = useAuth();
   return (
-    <div className="App">
-      <Router>
-        <header className="App-header">
-        </header>
-        <main>
-        </main>
-      </Router>
-    </div>
-  )
+      <div className="App">
+        <AllRoutes>
+          <>
+            <Navigation />
+            {whoAmI && <FloatingAddBtn />}
+            <Drawer />
+          </>
+        </AllRoutes>
+        <LoginRegisterModal />
+      </div>
+  );
 }
 
-export default App
+export default App;

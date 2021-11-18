@@ -22,8 +22,9 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @PostConstruct
     private void createDefaultUsers(){
-        if (userRepository.findByUsername("user") == null) {
+        if (userRepository.findByUsernameIgnoreCase("user") == null) {
             User user = User.builder()
+                    .email("user@user.se")
                     .username("user")
                     .password("password")
                     .build();
@@ -33,7 +34,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByUsernameIgnoreCase(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not found by name: " + username);
         }

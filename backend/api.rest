@@ -1,0 +1,101 @@
+### USERS
+
+POST http://localhost:4000/api/register
+Content-Type: application/json
+
+{
+  "username": "rebbe",
+  "email": "rebbe@haha.se",
+  "password": 123
+}
+
+### 
+GET http://localhost:4000/api/whoami
+
+### 
+POST http://localhost:4000/api/login
+Content-Type: application/json
+
+{
+  "username": "postila",
+  "password": 123
+}
+
+###
+DELETE http://localhost:4000/api/logout
+
+
+### AUCTIONS
+### Get all OPEN auctions
+GET http://localhost:4000/rest/auctions?page=1
+
+### Get auctions by id
+GET http://localhost:4000/rest/auctions/6
+
+### Get auctions by id sorted by priece DESC
+GET http://localhost:4000/rest/auctions/6?sorted=true
+
+### Get current users auctions
+GET http://localhost:4000/rest/auctions/user
+
+### Create auction
+POST http://localhost:4000/rest/auctions
+Content-Type: application/json
+
+{
+  "title": "Stickling 1",
+  "description": "Orotad stickling av plattblads sorten Chocolate Coverd Cherry",
+  "startPrice": 1,
+  "endDate": 	1637672365
+}
+
+### Create Bid on an auction
+POST http://localhost:4000/api/bid
+Content-Type: application/json
+
+{
+  "userId": 3,
+  "auctionId": 21,
+  "price": 6,
+  "createdDate": 1637843777000
+}
+
+### get auctions by title
+GET http://localhost:4000/rest/auctions/search?title=test
+
+### get auctions by title and category
+GET http://localhost:4000/api/auctions/search?title=china&status=SOLD&page=0&sort=asc
+
+### get won auctions by current user
+GET http://localhost:4000/rest/auctions/won
+
+### get highest bid
+
+GET http://localhost:4000/api/6/highest-bid
+### get highest bid
+
+GET http://localhost:4000/api/chats
+### get currentUser's chats
+
+### create chat
+POST http://localhost:4000/api/chats
+Content-Type: application/json
+
+{
+  "auctionId": 115
+}
+
+###
+
+POST http://localhost:4000/api/messages/3
+Content-Type: application/json
+
+{
+  "message": "hej hej"
+}
+
+### get messages in chat
+GET http://localhost:4000/api/messages/3
+
+### get notifications by userId
+GET http://localhost:4000/api/notifications
