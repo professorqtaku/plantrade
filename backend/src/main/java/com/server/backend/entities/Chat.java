@@ -34,7 +34,7 @@ public class Chat {
 
     // mappedBy="chat" is the variable in the Message class
     @OneToMany(mappedBy = "chat", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    @JsonIgnore// prevent circular reference between relations
+    //   @JsonIgnore// prevent circular reference between relations
     private List<Message> messages;
 
     public void addMessage(Message message) {

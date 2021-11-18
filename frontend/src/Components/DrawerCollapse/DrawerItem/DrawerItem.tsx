@@ -20,15 +20,17 @@ import "react-swipeable-list/dist/styles.css";
 import { useDrawer } from "../../../Contexts/DrawerContext";
 import { Chat } from "../../../Interfaces/Interfaces";
 import { useChat } from "../../../Contexts/ChatContext";
+import { useMessage } from "../../../Contexts/MessageContext";
+import { useEffect } from "react";
 
 interface Props {
   chat: Chat;
 }
 
-const DrawerItem = ({ chat }: Props) => {
+  const DrawerItem = ({ chat }: Props) => {
   const { setShowChatRoom } = useDrawer();
   const { setChatTitle, setChatId } = useChat();
-
+  const { messages, getAllChatMsg } = useMessage();
 
   const handleShowMessageView = () => {
     setChatId(chat.id)
@@ -36,7 +38,10 @@ const DrawerItem = ({ chat }: Props) => {
     setChatTitle(chat.auction.title);
   }
 
-
+    useEffect(() => {
+      getAllChatMsg(chat.id)
+      console.log(chat.messages && chat.messages.slice(-1).pop(), 'chat?')
+    },[]);
   const trailingActions = () => (
     <TrailingActions>
       <SwipeAction
@@ -54,12 +59,12 @@ const DrawerItem = ({ chat }: Props) => {
   const renderMsgContent = (
     <StyledInnerWrapper>
       <StyledTitle>{chat.auction.title}</StyledTitle>
-      {chat.messages && (
+      {chat?.messages && chat.messages.slice(-1).pop() && (
         <StyledLastMsg>
           <StyledName>
-            {chat.messages[chat.messages.length - 1].writer.username}:{" "}
+             {chat.messages && chat.messages.slice(-1).pop()?.writer.username}:
           </StyledName>
-          {chat.messages[chat.messages.length - 1].message}
+          {chat.messages && chat.messages.slice(-1).pop()?.message}
         </StyledLastMsg>
       )}
     </StyledInnerWrapper>

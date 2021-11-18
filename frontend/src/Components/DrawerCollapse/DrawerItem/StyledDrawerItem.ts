@@ -34,10 +34,12 @@ export const StyledLastMsg = styled.p`
   text-overflow: ellipsis;
   width: 20rem;
   margin: 0.5rem 0;
+  font-weight: bolder;
 `;
 
 export const StyledName = styled.span`
   font-weight: bolder;
+  padding-right: 5px;
 `;
 
 export const StyledAvatar = styled(Avatar)`
