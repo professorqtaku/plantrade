@@ -18,6 +18,8 @@ import {
 } from "./StyledAuctionCard";
 import { useModal } from "../../Contexts/ModalContext";
 import { useSearch } from '../../Contexts/SearchContext';
+import Box from '@mui/material/Box';
+import LinearProgress from '@mui/material/LinearProgress';
 
 interface Props {
   auction: Auction;
@@ -122,6 +124,16 @@ const AuctionCard = ({ auction, fetchAuctions, forwardRef }: Props) => {
     history.push(`/auctions/${auction.id}`);
   };
 
+  const getLinearBar = () => {
+    return (
+      <Box sx={{ width: '100%' }}>
+        <LinearProgress color="success" />
+      </Box>
+    )
+  }
+
+
+
   return (
     <StyledCard ref={forwardRef}>
       <StyledImgWrapper>
@@ -151,12 +163,12 @@ const AuctionCard = ({ auction, fetchAuctions, forwardRef }: Props) => {
             <StyledSpan>{remainingTime}</StyledSpan> {daysLeft}
           </StyledDesc>
         </StyledDiv>
-        <ButtonComp
+        {quickBid ? <ButtonComp
           label={`Snabb bud ${quickBid} SEK`}
           callback={handleBid}
           costumFontSize="0.7rem"
           disabled={isHost}
-        />
+        /> : getLinearBar()}
       </StyledCardContent>
     </StyledCard>
   );
