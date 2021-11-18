@@ -29,7 +29,7 @@ public class NotificationService {
   public void sendNotifications(Auction auction, User user, int price) {
     createNotificationForHost(auction, price);
     if (user != null) {
-      createNotificationForUser(auction, user);
+      createNotificationForUser(auction, user, price);
     }
   }
 
@@ -37,7 +37,7 @@ public class NotificationService {
     Notification notification = Notification.builder()
             .auction(auction)
             .user(auction.getHost())
-            .message("har fått ett nytt bud: " + price + " SEK")
+            .message(auction.getTitle() + " har fått ett nytt bud: " + price + " SEK")
             .isRead(false)
             .createdDate(new Date())
             .build();
@@ -48,11 +48,11 @@ public class NotificationService {
     }
   }
 
-  public void createNotificationForUser(Auction auction, User user) {
+  public void createNotificationForUser(Auction auction, User user, int price) {
       Notification notification = Notification.builder()
               .auction(auction)
               .user(user)
-              .message("Någon har lagt ett högre bud på: ")
+              .message("Någon har lagt ett högre bud (" + price + " SEK) på: " + auction.getTitle())
               .isRead(false)
               .createdDate(new Date())
               .build();
