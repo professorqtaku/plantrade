@@ -20,6 +20,7 @@ export const StyledWrapper = styled.div`
 
 export const StyledInnerWrapper = styled.div`
   display: grid;
+  min-height: 3.8rem;
 `;
 
 export const StyledTitle = styled.p`
@@ -58,8 +59,9 @@ export const StyledSwipe = styled(SwipeableList)`
 
 export const StyledDelete = styled.div`
   background: rgba(169, 0, 11, 0.47);
-  height: 56px;
+  height: 66.5px;
   margin-top: 5px;
+  padding-top: 10px;
 `;
 
 export const StyledTrashCan = styled(DeleteIcon)`
