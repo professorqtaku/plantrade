@@ -24,6 +24,7 @@ public class MessageController {
         try{
             Message saved = messageService.sendMessage(message, chatId);
             if (saved != null) {
+                System.out.println("-----------How many times?-----------");
                 socketModule.emitToRoom(chatId + "", "message", message.getWriter());
                 return ResponseEntity.ok(saved);
             }
