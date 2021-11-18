@@ -5,6 +5,7 @@ import {
   StyledSearchWrapper,
   StyledSearchFieldWrapper,
   StyledEndAuctions,
+  StyledBox
 } from "./StyledAuctionPage";
 import Grid from "@mui/material/Grid";
 import AuctionCard from "../../Components/AuctionCard/AuctionCard";
@@ -14,7 +15,6 @@ import { useSearch } from "../../Contexts/SearchContext";
 import { Auction } from "../../Interfaces/Interfaces";
 import { useNav } from "../../Contexts/NavigationContext";
 import CircularProgress from "@mui/material/CircularProgress";
-import Box from "@mui/material/Box";
 
 export interface Category {
   id: number;
@@ -28,6 +28,11 @@ const AuctionPage = () => {
   const observer = useRef<IntersectionObserver>();
   const [pageNumber, setPageNumber] = useState<number>(0);
   const [endOfScroll, setEndOfScroll] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    console.log('what is auctions', auctions)
+  }, [auctions])
 
   useEffect(() => {
     handleGetAuctions();
@@ -46,6 +51,7 @@ const AuctionPage = () => {
 
   useEffect(() => {
     if (lastItem) {
+      setIsLoading(false);
       setEndOfScroll("Inga fler auktioner");
     } else {
       setEndOfScroll("");
@@ -59,6 +65,7 @@ const AuctionPage = () => {
   };
 
   const handleScroll = async () => {
+    setIsLoading(true);
     await getAuctionsByOptions(pageNumber);
   };
 
@@ -76,12 +83,18 @@ const AuctionPage = () => {
           handleScroll();
         }
       });
-      if (node) {
-        observer.current.observe(node);
-      }
+      if (node) observer.current.observe(node);
     },
     [auctions]
   );
+
+  const getSpinner = (isFirstLoad: boolean) => {
+    return (
+      <StyledBox isFirstLoad={isFirstLoad}>
+          <CircularProgress sx={{ color: "var(--light-green)" }} />
+        </StyledBox>
+    )
+  }
 
   return (
     <StyledWrapper>
@@ -131,16 +144,17 @@ const AuctionPage = () => {
             })
           ) : noContent ? (
             <p>Inga resultat av din sökning :/</p>
-          ) : (
-            <Box sx={{ display: "flex" }}>
-              <CircularProgress sx={{ color: "var(--light-green)" }} />
-            </Box>
-          )}
+          ) : getSpinner(true) }
           <Grid item xs={12} md={12}>
             {endOfScroll && (
               <StyledEndAuctions>{endOfScroll}</StyledEndAuctions>
             )}
           </Grid>
+          {isLoading && 
+            <Grid item xs={12} md={12} alignItems="center" justifyContent="center">
+                {getSpinner(false)}
+            </Grid>
+          }
         </Grid>
       </StyledContentWrapper>
     </StyledWrapper>

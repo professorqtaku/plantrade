@@ -54,15 +54,21 @@ const SearchContextProvider: FC<Props> = ({ children }: Props) => {
       page,
     };
 
+    console.log('what is pagenumber in search context', pageNumber);
+    console.log('what is option', option)
+
     let categoryQuery: string = getCategoryQuery(option.categories);
     let statusQuery: string = getStatusQuery(option.status);
     let sortQuery: string = getSortQuery(option.sort);
+    let bla = `/api/auctions/search?title=${option.title}${categoryQuery}${statusQuery}&page=${option.page}${sortQuery}`;
+    console.log('what is query', bla)
 
     let res: Response = await fetch(
       `/api/auctions/search?title=${option.title}${categoryQuery}${statusQuery}&page=${option.page}${sortQuery}`
     );
     if (res.ok && res.status == 200) {
       let newAuctions: Array<Auction> = await res.json();
+      console.log('what is await res json', newAuctions)
       let updateAuctionslist: Array<Auction> =
         option.page === 0 ? auctionResult : Object.assign([], auctions);
       setAuctions([...updateAuctionslist, ...newAuctions]);
