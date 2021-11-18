@@ -22,7 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class SocketModule {
-    private SocketIOServer server;
+    public SocketIOServer server;
 
     @Autowired
     private UserService userService;

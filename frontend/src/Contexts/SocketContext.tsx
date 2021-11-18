@@ -53,12 +53,9 @@ const SocketContextProvider = ({ children }: Props) => {
   }, [socket, whoAmI]);
 
   const onNotification = (data: Notification) => {
-    console.log(whoAmI);
-
-    if (whoAmI?.id === data.user.id) {
+    console.log("-------NOTIFICATION--------");
       addSnackbar(data);
       getNotificationsByCurrentUser();
-    }
   };
 
   useEffect(() => {

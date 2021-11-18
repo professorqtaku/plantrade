@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class NotificationService {
@@ -42,7 +43,9 @@ public class NotificationService {
             .build();
 
     notificationRepository.save(notification);
-    socketModule.emit("notification", notification);
+    if(auction.getHost().getClientId() != null) {
+      socketModule.server.getClient(UUID.fromString(auction.getHost().getClientId())).sendEvent("notification", notification);
+    }
   }
 
   public void createNotificationForUser(Auction auction, User user) {
@@ -55,7 +58,9 @@ public class NotificationService {
               .build();
 
       notificationRepository.save(notification);
-      socketModule.emit("notification", notification);
+    if(user.getClientId() != null) {
+      socketModule.server.getClient(UUID.fromString(user.getClientId())).sendEvent("notification", notification);
+    }
   }
 
   public void createNotificationForWinner(Auction auction, User user) {
@@ -68,7 +73,9 @@ public class NotificationService {
             .build();
 
     notificationRepository.save(notification);
-    socketModule.emit("notification", notification);
+    if(user.getClientId() != null) {
+      socketModule.server.getClient(UUID.fromString(user.getClientId())).sendEvent("notification", notification);
+    }
   }
 
   public void createNotificationForBidders(List<Bid> bids, int price, Bid highestBidder) {
@@ -85,8 +92,9 @@ public class NotificationService {
                 .createdDate(new Date())
                 .build();
           notificationRepository.save(notification);
-          socketModule.emit("notification", notification);
-
+          if(bid.getUser().getClientId() != null) {
+            socketModule.server.getClient(UUID.fromString(bid.getUser().getClientId())).sendEvent("notification", notification);
+          }
           ids.add(bid.getUser().getId());
         }
       }

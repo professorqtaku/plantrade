@@ -1,5 +1,6 @@
 import { createContext, FC, useContext, useState } from "react";
 import { Message } from "../Interfaces/Interfaces";
+import { useSocket } from "./SocketContext";
 
 type Props = {
   children?: JSX.Element;
@@ -10,7 +11,7 @@ const MessageContext = createContext<any>(null);
 export const useMessage = () => useContext(MessageContext);
 
 const MessageContextProvider: FC<Props> = ({ children }: Props) => {
-  const [messages, setMessages] = useState <Message[] | undefined>([]);
+  const [messages, setMessages] = useState<Message[] | undefined>([]);
 
 
   const getAllChatMsg = async (chatId: number) => {
