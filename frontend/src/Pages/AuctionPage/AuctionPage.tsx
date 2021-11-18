@@ -31,10 +31,6 @@ const AuctionPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    console.log('what is auctions', auctions)
-  }, [auctions])
-
-  useEffect(() => {
     handleGetAuctions();
     handleSelect(setAuction);
     return () => {
@@ -91,8 +87,8 @@ const AuctionPage = () => {
   const getSpinner = (isFirstLoad: boolean) => {
     return (
       <StyledBox isFirstLoad={isFirstLoad}>
-          <CircularProgress sx={{ color: "var(--light-green)" }} />
-        </StyledBox>
+        <CircularProgress sx={{ color: "var(--light-green)" }} />
+      </StyledBox>
     )
   }
 
