@@ -12,6 +12,7 @@ interface TextProps {
 interface BoxProps {
   justify: string;
   background: string;
+  opacity: string;
 }
 
 export const StyledWrapper = styled.div`
@@ -76,6 +77,7 @@ export const StyledNavigationBox = styled.div<BoxProps>`
   display: grid;
   align-items: center;
   justify-items: center;
+  opacity: ${(props) => (props.opacity ? props.opacity : "none")};
 `;
 
 export const StyledCheckWrapper = styled.div`
@@ -104,6 +106,3 @@ export const StyledButton = styled.button`
   font-family: var(--font-text);
   border-radius: 0.4rem;
 `;
-
-// Is not used, but is required to not crash
-export const StyledAvatarWrapper = styled.div``;
