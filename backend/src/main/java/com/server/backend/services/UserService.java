@@ -57,6 +57,15 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public User updateClientId(Long userId,String clientId) {
+        System.out.println("----1.0------");
+        User user = getUserById(userId).get();
+        System.out.println("----1.1------");
+        user.setClientId(clientId);
+        System.out.println("----1.2------");
+        return userRepository.save(user);
+    }
+
 
     public void logout(HttpServletRequest req){
         SecurityContext sc = SecurityContextHolder.createEmptyContext();

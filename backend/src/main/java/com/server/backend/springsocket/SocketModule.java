@@ -8,16 +8,24 @@ import com.corundumstudio.socketio.listener.ConnectListener;
 import com.corundumstudio.socketio.listener.DataListener;
 import com.corundumstudio.socketio.listener.DisconnectListener;
 import com.server.backend.entities.Bid;
+import com.server.backend.entities.User;
+import com.server.backend.services.UserService;
 import lombok.val;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
 
 @Component
 public class SocketModule {
     private SocketIOServer server;
+
+    @Autowired
+    private UserService userService;
 
     public SocketModule() {
         // prevent accidental starting multiple servers
@@ -42,6 +50,7 @@ public class SocketModule {
 //        server.addEventListener("auctionUpdate", String.class, onAuctionReceived());
         server.addEventListener("bid", Bid.class, onBidReceived());
         server.addEventListener("message", String.class, onMessage());
+        server.addEventListener("updateClientId", Long.class, onUpdateClientId());
 
         // start socket.io server
         server.start();
@@ -103,6 +112,16 @@ public class SocketModule {
     private DisconnectListener onDisconnected() {
         return client -> {
             System.out.printf("Client[%s] - Disconnected\n", client.getSessionId().toString());
+        };
+    }
+
+    private DataListener<Long> onUpdateClientId() {
+        return (client, data, ackSender) -> {
+            try{
+                userService.updateClientId(data ,client.getSessionId().toString());
+            }catch(Exception e){
+                System.out.println("----ERROR-----" + e);
+            }
         };
     }
 

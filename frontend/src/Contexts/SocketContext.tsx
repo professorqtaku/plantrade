@@ -27,7 +27,7 @@ export const useSocket = () => useContext(SocketContext);
 const SocketContextProvider = ({ children }: Props) => {
   const { getHighestBid } = useBid();
   const { getAuctionsByOptions } = useSearch();
-  const { whoAmI } = useAuth();
+  const { whoAmI, whoIsOnline} = useAuth();
   const { addSnackbar } = useSnackBar();
   const { getNotificationsByCurrentUser } = useNotification();
   const { getAllChatMsg } = useMessage();
@@ -39,6 +39,11 @@ const SocketContextProvider = ({ children }: Props) => {
       console.log("conneted to ws");
     });
   }, []);
+
+  useEffect(() => {
+    console.log("works");
+    whoAmI && socket.emit("updateClientId", whoAmI.id);
+  }, [whoAmI]);
 
   useEffect(() => {
     socket.on("notification", onNotification);
