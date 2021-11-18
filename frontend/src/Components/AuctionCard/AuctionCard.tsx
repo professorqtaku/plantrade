@@ -42,6 +42,9 @@ const AuctionCard = ({ auction, fetchAuctions, forwardRef}: Props) => {
   
   useEffect(() => {
     handleHighestBid();
+    return () => {
+      setBid(0);
+    }
   }, [auction.bids])
   
   useEffect(() => {
@@ -118,6 +121,8 @@ const AuctionCard = ({ auction, fetchAuctions, forwardRef}: Props) => {
     };
 
     await createBid(newBid);
+    handleHighestBid();
+    handleQuickBid();
   };
 
   const toDetailPage = () => {
