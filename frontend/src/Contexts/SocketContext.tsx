@@ -50,7 +50,7 @@ const SocketContextProvider = ({ children }: Props) => {
   }, [socket, whoAmI]);
 
   const onNotification = (data: Notification) => {
-    if (data.id === whoAmI.id) {
+    if (whoAmI && data.user.id === whoAmI.id) {
       addSnackbar(data);
       getNotificationsByCurrentUser();
     }
