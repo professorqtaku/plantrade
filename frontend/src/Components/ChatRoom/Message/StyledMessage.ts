@@ -45,7 +45,7 @@ export const StyledDateOrRead = styled.p<MessageProps>`
   color: black;
   font-style: italic;
   width: fit-content;
-  height: ${(props) => (props.read ? "auto" : "2rem")};
+  height: 2rem;
   justify-self: ${(props) => (props.sender ? "end" : "start")};
   margin: ${(props) => (props.sender ? "0 2rem 0 0" : "0 0 0 5rem")};
 `;

@@ -53,9 +53,7 @@ const Message = () => {
           <StyledText>{message.message}</StyledText>
         </StyledMessage>
       )}
-      {index === messages.length - 1 &&
-      message.writer.id === whoAmI.id &&
-      message.isRead === true ? (
+      {index === messages.length - 1 && message.writer.id === whoAmI.id ? (
         renderDateAndRead(message)
       ) : (
         <StyledDateOrRead sender={message.writer.id === whoAmI.id}>
@@ -80,10 +78,6 @@ const Message = () => {
     <StyledDateAndRead>
       <StyledDateOrRead sender={message.writer.id === whoAmI.id} read={true}>
         {getDate(message)}
-      </StyledDateOrRead>
-      <StyledDateOrRead sender={message.writer.id === whoAmI.id}>
-        <StyledCheckedIcon />
-        Läst
       </StyledDateOrRead>
     </StyledDateAndRead>
   );

@@ -25,7 +25,7 @@ const ChatContextProvider = ({ children }: Props) => {
     }
   };
 
-   const getUnreadMsg = async () => {
+  const getUnreadMsg = async () => {
      let res: Response = await fetch(`/api/chats/unreadMsg`);
      if (res.status == 200) {
        const chatResponse = await res.json();

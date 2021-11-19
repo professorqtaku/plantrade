@@ -35,7 +35,9 @@ const MessageContextProvider: FC<Props> = ({ children }: Props) => {
       },
     });
     if (res.status === 200) {
-        await getAllChatMsg(chatId);
+      setTimeout(() => {
+        getAllChatMsg(chatId);
+      }, 150);
     }
   };
 
