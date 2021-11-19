@@ -40,12 +40,11 @@ const Navigation = () => {
     setMessage,
   } = useNav();
   const { toggleLoginModal } = useModal();
-  const { whoAmI } = useAuth();
+  const { whoAmI, hasReadMsg } = useAuth();
   const { showDrawer, setShowDrawer } = useDrawer();
   const { clearFilter } = useSearch();
   const { getChatsByCurrentUser } = useChat();
   const { getNotificationsByCurrentUser } = useNotification();
-  const { hasReadMsg } = useMessage();
 
 
   const paths: Record<string, Function> = {

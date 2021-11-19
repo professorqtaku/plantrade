@@ -24,14 +24,13 @@ interface Props {
 }
 
 const LoginForm = ({ toggleRegister }: Props) => {
-  const { login, wrongPassword } = useAuth();
+  const { login, wrongPassword, setHasReadMsg } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { toggleLoginModal } = useModal();
   const { addSnackbar } = useSnackBar();
   const { getAllChatMsg } = useMessage();
-  const { getChatsByCurrentUser } = useChat();
-  const { setHasReadMsg } = useNav();
+  const { getChatsByCurrentUser, getUnreadMsg } = useChat();
 
   const handleLogin = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
@@ -43,17 +42,10 @@ const LoginForm = ({ toggleRegister }: Props) => {
 
     const isSucceed = await login(userObj);
     if (isSucceed) {
-      const chats = await getChatsByCurrentUser(isSucceed.id);
-      if (chats && chats.length) {
-        chats.map(async (chat: any) => {
-          const chatMsg = await getAllChatMsg(chat.id);
-          chatMsg.map((msg: any) => {
-            if (msg.isRead === false) {
-              setHasReadMsg(false);
-              return;
-            }
-          });
-        });
+      const unreadMsg = await getUnreadMsg();
+      console.log(unreadMsg);
+      if (unreadMsg === 1) {
+        setHasReadMsg(false);
       }
       toggleLoginModal();
       addSnackbar("Inloggning lyckades!");

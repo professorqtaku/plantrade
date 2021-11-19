@@ -27,13 +27,12 @@ export const useSocket = () => useContext(SocketContext);
 const SocketContextProvider = ({ children }: Props) => {
   const { getHighestBid } = useBid();
   const { getAuctionsByOptions } = useSearch();
-  const { whoAmI, whoIsOnline } = useAuth();
+  const { whoAmI, setHasReadMsg } = useAuth();
   const { addSnackbar } = useSnackBar();
   const { getNotificationsByCurrentUser } = useNotification();
   const { getAllChatMsg } = useMessage();
   const { chatId } = useChat();
   const [isRead, setIsRead] = useState(false);
-  const { setHasReadMsg } = useNav();
 
   useEffect(() => {
     socket.on("connect", async () => {
@@ -79,10 +78,10 @@ const SocketContextProvider = ({ children }: Props) => {
     }
   };
 
-  useEffect(() => {
+  // useEffect(() => {
     socket.on("message", (data: any) => onMessage(data));
-    return () => socket.off("message", (data: any) => onMessage(data));
-  }, [whoAmI, chatId, socket]);
+  //   return () => socket.off("message", (data: any) => onMessage(data));
+  // }, [whoAmI, chatId, socket]);
 
   const onMessage = async (data: any) => {
     if (data && whoAmI && chatId) {

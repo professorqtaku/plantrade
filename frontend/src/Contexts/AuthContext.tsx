@@ -14,6 +14,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
   const [whoAmI, setWhoAmI] = useState(null);
   const [wrongPassword, setWrongPassword] = useState(false);
   const [userExists, setUserExists] = useState(false);
+  const [hasReadMsg, setHasReadMsg] = useState(true);
 
   useEffect(() => {
     whoIsOnline();
@@ -85,6 +86,8 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
     userExists,
     whoIsOnline,
     whoAmI,
+    hasReadMsg,
+    setHasReadMsg,
   };
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;

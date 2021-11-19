@@ -41,4 +41,14 @@ public class ChatController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    @GetMapping("/unreadMsg")
+    public ResponseEntity<Integer> getUnReadMsg(){
+        try{
+           var unReadMsg = chatService.getUnreadMsg();
+           return ResponseEntity.ok(unReadMsg);
+        }catch(Exception e){
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }

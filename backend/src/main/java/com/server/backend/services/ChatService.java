@@ -64,4 +64,20 @@ public class ChatService {
         }
         return chatRepository.customFindByCreatorIdOrReceiverId((currentUser.getId()));
     }
+
+    public int getUnreadMsg() {
+        User currentUser = userService.findCurrentUser();
+        if (currentUser == null) {
+            return 0;
+        }
+        var chats = chatRepository.customFindByCreatorIdOrReceiverId((currentUser.getId()));
+        for(var chat : chats){
+            for(var msg : chat.getMessages()){
+                if(msg.getIsRead() == false && msg.getWriter().getId() != currentUser.getId()){
+                    return 1;
+                }
+            }
+        }
+        return 0;
+    }
 }

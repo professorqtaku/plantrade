@@ -19,9 +19,11 @@ const MessageContextProvider: FC<Props> = ({ children }: Props) => {
     let res: Response = await fetch(`/api/messages/${chatId}`);
     if (res.status === 200) {
       let newMessages = await res.json();
-        setMessages(newMessages);
+      setMessages(newMessages);
+      return newMessages;
     } else {
       setMessages([]);
+      return null;
     }
   };
 

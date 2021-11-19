@@ -25,7 +25,7 @@ public class MessageController {
         try{
             Message saved = messageService.sendMessage(message, chatId);
             if (saved != null) {
-                //socketModule.emitToRoom(chatId + "", "message", message.getWriter());
+                System.out.println("here " + messageService.getTheReceiverClientId(chatId, message.getWriter()));
                 socketModule.server.getClient(UUID.fromString(messageService.getTheReceiverClientId(chatId, message.getWriter()))).sendEvent("message", message);
                 return ResponseEntity.ok(saved);
             }

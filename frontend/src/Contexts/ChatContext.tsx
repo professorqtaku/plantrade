@@ -18,10 +18,22 @@ const ChatContextProvider = ({ children }: Props) => {
     if (res.status == 200) {
       const chatResponse = await res.json();
       setChats(chatResponse);
+      return chatResponse;
     } else {
       setChats([]);
+      return null;
     }
   };
+
+   const getUnreadMsg = async () => {
+     let res: Response = await fetch(`/api/chats/unreadMsg`);
+     if (res.status == 200) {
+       const chatResponse = await res.json();
+       return chatResponse;
+     } else {
+       return 0;
+     }
+   };
 
   const createChat = async (auctionId: any) => {
     let res: Response = await fetch(`/api/chats`, {
@@ -46,6 +58,7 @@ const ChatContextProvider = ({ children }: Props) => {
     createChat,
     setChatTitle,
     chatTitle,
+    getUnreadMsg,
   };
 
   return <ChatContext.Provider value={values}>{children}</ChatContext.Provider>;

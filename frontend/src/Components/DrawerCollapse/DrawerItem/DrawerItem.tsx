@@ -23,6 +23,7 @@ import { useChat } from "../../../Contexts/ChatContext";
 import { useMessage } from "../../../Contexts/MessageContext";
 import { useEffect } from "react";
 import { useNav } from "../../../Contexts/NavigationContext";
+import { useAuth } from "../../../Contexts/AuthContext";
 
 interface Props {
   chat: Chat;
@@ -31,7 +32,7 @@ interface Props {
 const DrawerItem = ({ chat }: Props) => {
   const { setShowChatRoom } = useDrawer();
   const { setChatTitle, setChatId } = useChat();
-  const { setHasReadMsg } = useNav();
+  const { setHasReadMsg } = useAuth();
 
   useEffect(() => {
     setHasReadMsg(true);

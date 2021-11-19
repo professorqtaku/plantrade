@@ -9,7 +9,6 @@ const NavigationContext = createContext<any>(null);
 export const useNav = () => useContext(NavigationContext);
 
 const NavigationContextProvider: FC<Props> = ({ children }: Props) => {
-  const [hasReadMsg, setHasReadMsg] = useState(true);
   const [home, setHome] = useState<boolean>(false);
   const [auction, setAuction] = useState<boolean>(false);
   const [notis, setNotis] = useState<boolean>(false);
@@ -39,8 +38,6 @@ const NavigationContextProvider: FC<Props> = ({ children }: Props) => {
     setNotis,
     setMessage,
     setProfile,
-    hasReadMsg,
-    setHasReadMsg,
   };
 
   return (

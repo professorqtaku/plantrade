@@ -25,38 +25,12 @@ const scrollToBottom = (node: HTMLCollectionOf<Element>) => {
 const Message = () => {
   const { messages, getAllChatMsg } = useMessage();
   const { chatId } = useChat();
-  const { whoAmI } = useAuth();
+  const { whoAmI, setHasReadMsg } = useAuth();
   const { socket, isRead, setIsRead } = useSocket();
-  const { setHasReadMsg } = useNav();
 
   useEffect(() => {
-    socket.once("join", (data: any) => onJoin(data));
-    socket.once("leave", (data: any) => onLeave(data));
-
-
-    const onJoin = (data: number) => {
-      console.log("Client joined the room",);
-      if (data === 2) {
-        setIsRead(true);
-      }
-    };
-
-    const onLeave = async (data: number) => {
-      console.log("Client left room");
-      if (data === 1) {
-        await getAllChatMsg(chatId);
-      }
-      setIsRead(false);
-    };
-
     getAllChatMsg(chatId);
-    socket.emit("join", chatId);
     scrollToBottom(msgWrapper);
-    return () => {
-      socket.emit("leave", chatId);
-      socket.off("join", (data: any) => onJoin(data));
-       socket.off("leave", (data: any) => onLeave(data));
-    };
   }, []);
 
   useEffect(() => {
