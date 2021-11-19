@@ -86,7 +86,6 @@ const SocketContextProvider = ({ children }: Props) => {
       if (data.writer.id === whoAmI.id) {
         return;
       }
-      console.log("Times?")
       chatId && await getAllChatMsg(chatId);
       if (data.isRead === false) {
         setHasReadMsg(false);

@@ -17,6 +17,7 @@ import Header from "../../Components/Header/Header";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { useNav } from "../../Contexts/NavigationContext";
+import { useDrawer } from "../../Contexts/DrawerContext";
 
 const IMAGE1 =
   "https://i.pinimg.com/736x/0f/0f/99/0f0f99b410e810c32aa5fdb78b2710e0.jpg";
@@ -36,6 +37,7 @@ const MyPage = () => {
   const history = useHistory();
   const { logout, whoAmI } = useAuth();
   const { addSnackbar } = useSnackBar();
+    const { setShowChatRoom } = useDrawer();
 
   useEffect(() => {
     handleSelect(setProfile);
@@ -111,6 +113,7 @@ const MyPage = () => {
 
   const handleLogout = (e: any) => {
     e.preventDefault();
+    setShowChatRoom(false);
     logout();
     history.push("/");
     addSnackbar("Utloggning lyckades!");

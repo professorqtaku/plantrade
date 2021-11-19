@@ -68,7 +68,7 @@ function FilterCollapse({
             options={allCategories}
             selected={selectedCategories}
             setSelected={setSelectedCategories}
-            limitTags={1} // 1 for now (console.log)
+            limitTags={1}
           />
         </Box>
         <Box>

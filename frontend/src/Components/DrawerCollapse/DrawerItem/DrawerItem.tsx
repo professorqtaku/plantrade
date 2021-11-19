@@ -21,7 +21,7 @@ import { useDrawer } from "../../../Contexts/DrawerContext";
 import { Chat } from "../../../Interfaces/Interfaces";
 import { useChat } from "../../../Contexts/ChatContext";
 import { useMessage } from "../../../Contexts/MessageContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNav } from "../../../Contexts/NavigationContext";
 import { useAuth } from "../../../Contexts/AuthContext";
 
@@ -33,11 +33,11 @@ const DrawerItem = ({ chat }: Props) => {
   const { setShowChatRoom } = useDrawer();
   const { setChatTitle, setChatId } = useChat();
   const { setHasReadMsg } = useAuth();
+  const [unReadMsg] = useState(true);
 
   useEffect(() => {
     setHasReadMsg(true);
   }, [])
-
 
   const handleShowMessageView = () => {
     setChatId(chat.id)
@@ -75,8 +75,10 @@ const DrawerItem = ({ chat }: Props) => {
   );
 
   const renderBadge = (
-    <StyledBadge> 
-      <StyledAvatar>{chat.receiver.username.charAt(0).toLocaleUpperCase()}</StyledAvatar>
+    <StyledBadge>
+      <StyledAvatar>
+        {chat.receiver.username.charAt(0).toLocaleUpperCase()}
+      </StyledAvatar>
     </StyledBadge>
   );
 

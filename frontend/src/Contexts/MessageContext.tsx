@@ -1,7 +1,5 @@
-import { TramRounded } from "@mui/icons-material";
 import { createContext, FC, useContext, useState } from "react";
 import { Message } from "../Interfaces/Interfaces";
-import { useSocket } from "./SocketContext";
 
 type Props = {
   children?: JSX.Element;

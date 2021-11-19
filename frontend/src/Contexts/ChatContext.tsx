@@ -33,7 +33,7 @@ const ChatContextProvider = ({ children }: Props) => {
      } else {
        return 0;
      }
-   };
+  };
 
   const createChat = async (auctionId: any) => {
     let res: Response = await fetch(`/api/chats`, {

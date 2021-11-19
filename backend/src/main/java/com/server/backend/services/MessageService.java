@@ -62,11 +62,11 @@ public class MessageService {
 
         if(chat.getCreator() == currentUser || chat.getReceiver() == currentUser){
                 for (Message message : messages) {
-                    if (message.getWriter() != currentUser) {
+                    if (message.getWriter().getId() != currentUser.getId()) {
                         message.setIsRead(true);
                         messageRepository.save(message);
                     }
-                }
+            }
         return messages;
         }
         return null;
