@@ -72,4 +72,16 @@ public class MessageService {
         return null;
     }
 
+    public String getTheReceiverClientId(Long chatId, User sender){
+        Optional<Chat> chatOptional = chatService.getById(chatId);
+        if(chatOptional.isPresent()) {
+            Chat chat = chatOptional.get();
+            if (chat.getReceiver().getId() == sender.getId()){
+                return chat.getCreator().getClientId();
+            }
+            return chat.getReceiver().getClientId();
+        }
+        return null;
+    }
+
 }

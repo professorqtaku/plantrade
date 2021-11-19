@@ -11,8 +11,7 @@ export const StyledButton = styled.span`
   font-weight: 900;
   letter-spacing: 0.1px;
   color: var(--dark-green);
-  margin: 0.3rem;
-  padding: 0.1rem 0.5rem;
+  padding: 0.1rem 0.3rem;
   border: 0.5px solid var(--dark-green);
   border-radius: 30px;
   &:hover{

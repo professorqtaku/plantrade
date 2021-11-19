@@ -36,9 +36,6 @@ const BidContextProvider: FC<Props> = ({ children }: Props) => {
     if (res.status == 200) {
       let data = await res.json();
       setHighestBid(data.price);
-    } else {
-      console.log("opsi, something went wrong");
-      // add toaster saying something went wrong
     }
   };
 

@@ -126,6 +126,7 @@ const SearchContextProvider: FC<Props> = ({ children }: Props) => {
     isRerender,
     noContent,
     lastItem,
+    setNoContent
   };
 
   return (

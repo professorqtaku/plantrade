@@ -36,6 +36,7 @@ import {
   StyledImg,
   StyledCarousel,
   StyledChatWrapper,
+  StyledParagraph
 } from "./StyledAuctionDetailPage";
 import { useModal } from "../../Contexts/ModalContext";
 import BidHistoryContainer from "../../Components/BidHistory/BidHistoryContainer";
@@ -156,8 +157,8 @@ const AuctionDetailPage = () => {
 
   const renderLoginToggle = (
     <>
-      <p>Logga in för att placera ett bud.</p>
-      <ButtonComp label="Login" callback={() => toggleLoginModal()} />
+      <StyledParagraph>Logga in för att placera ett bud.</StyledParagraph>
+      <ButtonComp label="Logga in" callback={() => toggleLoginModal()} />
     </>
   );
 
@@ -172,7 +173,6 @@ const AuctionDetailPage = () => {
             Tillbaka
           </StyledBackBtn>
           <Grid container spacing={2}>
-            {/* images carousel */}
             <Grid item xs={12} md={12}>
               <StyledCarousel
                 initialActiveIndex={0}

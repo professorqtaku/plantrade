@@ -17,12 +17,11 @@ const SnackBarContextProvider = ({ children }: Props) => {
   
   return (
     <SnackbarProvider
-      preventDuplicate
       anchorOrigin={{
         vertical: "top",
         horizontal: "right",
       }}
-      content={(key, message: string | Notification) => <SnackBar id={key} message={message} />}
+      content={(key: string | number, message: string | Notification) => <SnackBar id={key} message={message}/>}
     >
       <SnackBarStackProvider>{children}</SnackBarStackProvider>
     </SnackbarProvider>

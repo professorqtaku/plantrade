@@ -30,7 +30,8 @@ public class User {
 
     @Column(nullable=false)
     private String password;
-    
+
+    private String clientId;
 
     @JsonIgnore
     public String getPassword() {

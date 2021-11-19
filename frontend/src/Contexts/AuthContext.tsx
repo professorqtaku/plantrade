@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useContext } from "react";
-import {User} from '../Interfaces/Interfaces'
+import { User } from "../Interfaces/Interfaces";
 
 interface Props {
   children?: JSX.Element;
@@ -54,14 +54,13 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
 
   const whoIsOnline = async () => {
     let res = await fetch("/api/whoami");
-    try {
+    if (res.ok && res.status === 200) {
       let data = await res.json();
       setWhoAmI(data);
       return data;
-    } catch (e) {
-      setWhoAmI(null);
-      return null;
     }
+    setWhoAmI(null);
+    return null;
   };
 
   const logout = async () => {
@@ -89,4 +88,3 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
 };
 
 export default AuthContextProvider;
-

@@ -1,4 +1,9 @@
 import styled from "styled-components";
+import Box from "@mui/material/Box";
+
+interface BoxProps {
+  isFirstLoad: boolean
+}
 
 export const StyledWrapper = styled.div`
   max-height: 100vh;
@@ -40,4 +45,8 @@ export const StyledEndAuctions = styled.div`
   margin: 20px 0 100px 0;
   text-align: center;
   font-family: var(--font-text);
+`;
+
+export const StyledBox = styled(Box)<BoxProps>`
+  margin: ${(props) => !props.isFirstLoad && '40px auto 80px 45%'};
 `;

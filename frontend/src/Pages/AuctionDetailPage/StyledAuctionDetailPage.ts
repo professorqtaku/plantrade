@@ -129,3 +129,7 @@ display: grid;
 export const StyledImg = styled.img`
   width: 100%;
 `;
+
+export const StyledParagraph = styled.p`
+  text-align: center;
+`;
