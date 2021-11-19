@@ -78,19 +78,23 @@ const SocketContextProvider = ({ children }: Props) => {
     }
   };
 
-  // useEffect(() => {
+  useEffect(() => {
     socket.on("message", (data: any) => onMessage(data));
-  //   return () => socket.off("message", (data: any) => onMessage(data));
-  // }, [whoAmI, chatId, socket]);
+    return () => socket.off("message", (data: any) => onMessage(data));
+  }, [whoAmI, chatId, socket]);
 
   const onMessage = async (data: any) => {
-    if (data && whoAmI && chatId) {
+    if (data && whoAmI) {
       if (data.writer.id === whoAmI.id) {
         return;
       }
-      await getAllChatMsg(chatId);
+      chatId && await getAllChatMsg(chatId);
       if (data.isRead === false) {
+        setIsRead(false);
         setHasReadMsg(false);
+      } else {
+        setIsRead(true);
+        setHasReadMsg(true);
       }
     }
   };

@@ -74,6 +74,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
         "content-type": "application/json",
       },
     });
+    setHasReadMsg(true);
     setWhoAmI(null);
   };
 

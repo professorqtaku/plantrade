@@ -15,7 +15,6 @@ import { Message as MessageProps } from "../../../Interfaces/Interfaces";
 import { useAuth } from "../../../Contexts/AuthContext";
 import { useChat } from "../../../Contexts/ChatContext";
 import { useSocket } from "../../../Contexts/SocketContext";
-import { useNav } from "../../../Contexts/NavigationContext";
 
 const msgWrapper = document.getElementsByClassName("msgWrapper");
 const scrollToBottom = (node: HTMLCollectionOf<Element>) => {
@@ -26,15 +25,17 @@ const Message = () => {
   const { messages, getAllChatMsg } = useMessage();
   const { chatId } = useChat();
   const { whoAmI, setHasReadMsg } = useAuth();
-  const { socket, isRead, setIsRead } = useSocket();
+  const { isRead, setIsRead } = useSocket();
 
   useEffect(() => {
     getAllChatMsg(chatId);
     scrollToBottom(msgWrapper);
+    setHasReadMsg(true);
   }, []);
 
   useEffect(() => {
     scrollToBottom(msgWrapper);
+    setHasReadMsg(true);
   }, [messages]);
 
   const getDate = (message: MessageProps) => {

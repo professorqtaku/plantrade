@@ -40,7 +40,7 @@ const Navigation = () => {
     setMessage,
   } = useNav();
   const { toggleLoginModal } = useModal();
-  const { whoAmI, hasReadMsg } = useAuth();
+  const { whoAmI, hasReadMsg, setHasReadMsg } = useAuth();
   const { showDrawer, setShowDrawer } = useDrawer();
   const { clearFilter } = useSearch();
   const { getChatsByCurrentUser } = useChat();
@@ -65,7 +65,8 @@ const Navigation = () => {
         handleSelect(setter);
       }
     }
-  },[showDrawer])
+  }, [showDrawer])
+  
 
   const handleSelectedIcon = (setter: Function, url?: string) => {
     if (whoAmI == null && url == "/my-page") {
@@ -118,7 +119,7 @@ const Navigation = () => {
       </StyledInnerWrapper>
 
       <StyledInnerWrapper selected={message}>
-        <Badge color="error" variant="dot" invisible={hasReadMsg}>
+        <Badge color="error" variant="dot" invisible={message ? true : hasReadMsg}>
           <StyledMsgIcon
             selected={message}
             onClick={() => handleDrawer(setMessage, "message")}

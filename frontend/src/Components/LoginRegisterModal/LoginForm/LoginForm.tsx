@@ -43,7 +43,6 @@ const LoginForm = ({ toggleRegister }: Props) => {
     const isSucceed = await login(userObj);
     if (isSucceed) {
       const unreadMsg = await getUnreadMsg();
-      console.log(unreadMsg);
       if (unreadMsg === 1) {
         setHasReadMsg(false);
       }
