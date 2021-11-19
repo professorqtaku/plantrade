@@ -61,12 +61,12 @@ public class MessageService {
         List<Message> messages = messageRepository.findAllByChatIdOrderByCreatedDateAsc(chatId);
 
         if(chat.getCreator() == currentUser || chat.getReceiver() == currentUser){
-            for(Message message : messages){
-                if(message.getWriter() != currentUser){
-                    message.setIsRead(true);
-                    messageRepository.save(message);
+                for (Message message : messages) {
+                    if (message.getWriter() != currentUser) {
+                        message.setIsRead(true);
+                        messageRepository.save(message);
+                    }
                 }
-            }
         return messages;
         }
         return null;

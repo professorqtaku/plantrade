@@ -14,7 +14,6 @@ export const useMessage = () => useContext(MessageContext);
 const MessageContextProvider: FC<Props> = ({ children }: Props) => {
   const [messages, setMessages] = useState<Message[] | undefined>([]);
 
-
   const getAllChatMsg = async (chatId: number) => {
     let res: Response = await fetch(`/api/messages/${chatId}`);
     if (res.status === 200) {
@@ -36,9 +35,7 @@ const MessageContextProvider: FC<Props> = ({ children }: Props) => {
       },
     });
     if (res.status === 200) {
-      let newMessages = await res.json();
-      if (messages) setMessages([...messages, newMessages]);
-      else setMessages([newMessages]);
+        await getAllChatMsg(chatId);
     }
   };
 

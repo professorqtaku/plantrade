@@ -8,7 +8,6 @@ import { useBid } from "./BidContext";
 import { useSearch } from "./SearchContext";
 import { useChat } from "./ChatContext";
 import io from "socket.io-client";
-import { useNav } from "./NavigationContext";
 
 const endpoint = "http://localhost:9092";
 export const socket = io(endpoint, {
@@ -32,7 +31,6 @@ const SocketContextProvider = ({ children }: Props) => {
   const { getNotificationsByCurrentUser } = useNotification();
   const { getAllChatMsg } = useMessage();
   const { chatId } = useChat();
-  const [isRead, setIsRead] = useState(false);
 
   useEffect(() => {
     socket.on("connect", async () => {
@@ -47,7 +45,7 @@ const SocketContextProvider = ({ children }: Props) => {
   useEffect(() => {
     socket.on("notification", onNotification);
     return () => {
-      socket.off("notification", onNotification);
+      socket.off("notification");
     };
   }, [socket, whoAmI]);
 
@@ -61,7 +59,7 @@ const SocketContextProvider = ({ children }: Props) => {
   useEffect(() => {
     socket.on("bid", onBid);
     return () => {
-      socket.off("bid", onBid);
+      socket.off("bid");
     };
   }, [socket]);
 
@@ -80,7 +78,7 @@ const SocketContextProvider = ({ children }: Props) => {
 
   useEffect(() => {
     socket.on("message", (data: any) => onMessage(data));
-    return () => socket.off("message", (data: any) => onMessage(data));
+    return () => { socket.off("message"); }
   }, [whoAmI, chatId, socket]);
 
   const onMessage = async (data: any) => {
@@ -88,12 +86,11 @@ const SocketContextProvider = ({ children }: Props) => {
       if (data.writer.id === whoAmI.id) {
         return;
       }
+      console.log("Times?")
       chatId && await getAllChatMsg(chatId);
       if (data.isRead === false) {
-        setIsRead(false);
         setHasReadMsg(false);
       } else {
-        setIsRead(true);
         setHasReadMsg(true);
       }
     }
@@ -101,8 +98,6 @@ const SocketContextProvider = ({ children }: Props) => {
 
   const values = {
     socket,
-    isRead,
-    setIsRead,
   };
 
   return (

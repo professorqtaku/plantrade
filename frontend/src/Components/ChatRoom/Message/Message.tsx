@@ -15,6 +15,7 @@ import { Message as MessageProps } from "../../../Interfaces/Interfaces";
 import { useAuth } from "../../../Contexts/AuthContext";
 import { useChat } from "../../../Contexts/ChatContext";
 import { useSocket } from "../../../Contexts/SocketContext";
+import { TramRounded } from "@mui/icons-material";
 
 const msgWrapper = document.getElementsByClassName("msgWrapper");
 const scrollToBottom = (node: HTMLCollectionOf<Element>) => {
@@ -25,7 +26,6 @@ const Message = () => {
   const { messages, getAllChatMsg } = useMessage();
   const { chatId } = useChat();
   const { whoAmI, setHasReadMsg } = useAuth();
-  const { isRead, setIsRead } = useSocket();
 
   useEffect(() => {
     getAllChatMsg(chatId);
@@ -55,7 +55,7 @@ const Message = () => {
       )}
       {index === messages.length - 1 &&
       message.writer.id === whoAmI.id &&
-      (message.isRead || isRead) ? (
+      message.isRead === true ? (
         renderDateAndRead(message)
       ) : (
         <StyledDateOrRead sender={message.writer.id === whoAmI.id}>

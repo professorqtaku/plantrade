@@ -49,7 +49,7 @@ public class SocketModule {
         server.addEventListener("leave", String.class, onLeaveRoom());
 //        server.addEventListener("auctionUpdate", String.class, onAuctionReceived());
         server.addEventListener("bid", Bid.class, onBidReceived());
-        server.addEventListener("message", String.class, onMessage());
+        //server.addEventListener("message", String.class, onMessage());
         server.addEventListener("updateClientId", Long.class, onUpdateClientId());
 
         // start socket.io server
@@ -62,12 +62,6 @@ public class SocketModule {
 
     public void emitToRoom(String room, String event, Object data) {
         server.getRoomOperations(room).sendEvent(event, data);
-    }
-
-    private DataListener<String> onMessage() {
-        return (client, room, ackSender) -> {
-            emitToRoom(room,"message", "messageUpdate");
-        };
     }
 
     private DataListener<Bid> onBidReceived() {
@@ -93,7 +87,6 @@ public class SocketModule {
     private DataListener<String> onLeaveRoom() {
         return (client, roomName, ackSender) -> {
             System.out.printf("Client[%s] - Left room '%s'\n", client.getSessionId().toString(), roomName);
-            System.out.println("-----LEAVING THE ROOM------");
             var amountOfClients = server.getRoomOperations(roomName).getClients().size() -1;
             // message room that client disconnected
             emitToRoom(roomName, "leave", amountOfClients);
