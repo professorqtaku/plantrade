@@ -6,13 +6,13 @@ import DrawerContent from "./DrawerContent/DrawerContent";
 import ChatRoom from "../ChatRoom/ChatRoom";
 
 const DrawerCollapse = () => {
-  const { showDrawer, toggleDrawer, showChatRoom } = useDrawer();
+  const { showDrawer, showChatRoom } = useDrawer();
 
   const emptyFooter = <div></div>;
 
   const drawer = (
     <StyledDiv>
-      <DrawerHeader toggle={toggleDrawer} />
+      <DrawerHeader />
       <Divider style={{marginBottom: '1rem'}}/>
       {!showChatRoom ? <DrawerContent /> : <ChatRoom/>}
       {emptyFooter}

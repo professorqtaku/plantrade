@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect } from "react";
 import { useAuth } from "./AuthContext";
 import { useSnackBar } from "./SnackBarContext";
 import { useNotification } from "./NotificationContext";
@@ -70,7 +70,6 @@ const SocketContextProvider = ({ children }: Props) => {
     const isInListView = window.location.href.includes("auctions");
     if (isInDetailView) {
       await getHighestBid(data.auction.id);
-      // await getAuctionsByOptions();
     } else if (isInListView) {
       await getAuctionsByOptions();
     }
