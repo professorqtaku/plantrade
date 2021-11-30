@@ -1,1 +1,1 @@
-web: java -jar backend/dist/plantrade-0.0.1.jar
+web: java -jar dist/plantrade-0.0.1.jar
