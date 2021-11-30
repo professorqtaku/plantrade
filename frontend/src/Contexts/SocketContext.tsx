@@ -7,6 +7,7 @@ import { useMessage } from "./MessageContext";
 import { useBid } from "./BidContext";
 import { useSearch } from "./SearchContext";
 import { useChat } from "./ChatContext";
+// @ts-ignore
 import io from "socket.io-client";
 
 const endpoint = "http://localhost:9092";

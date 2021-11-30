@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     host: true,
     proxy: {
-      "*": "ws://localhost:9092",
+      // "*": "ws://localhost:9092",
       "/api": "/api",
       "/rest": "/rest",
       "/login": "/login",
