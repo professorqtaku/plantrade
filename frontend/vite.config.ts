@@ -8,11 +8,11 @@ export default defineConfig({
     host: true,
     proxy: {
       "*": "ws://localhost:9092",
-      "/api": "http://localhost:4000",
-      "/rest": "http://localhost:4000",
-      "/login": "http://localhost:4000",
-      "/logout": "http://localhost:4000",
-      "/uploads": "http://localhost:4000"
+      "/api": "/api",
+      "/rest": "/rest",
+      "/login": "/login",
+      "/logout": "/logout",
+      "/uploads": "/uploads",
     },
   },
 });
