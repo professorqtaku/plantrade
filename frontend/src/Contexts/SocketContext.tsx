@@ -9,7 +9,7 @@ import { useSearch } from "./SearchContext";
 import { useChat } from "./ChatContext";
 import io from "socket.io-client";
 
-const endpoint = "http://localhost:9092";
+const endpoint = `${location.origin}/rest/websocket`;
 export const socket = io(endpoint, {
   upgrade: false,
   transports: ["websocket"],

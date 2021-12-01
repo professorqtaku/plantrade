@@ -5,6 +5,7 @@ import com.server.backend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Map;
 
@@ -24,5 +25,10 @@ public class UserController {
         catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @GetMapping("/websocket")
+    public RedirectView socketRedirect(){
+        return new RedirectView("http://localhost:9092");
     }
 }
